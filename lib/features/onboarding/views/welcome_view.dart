@@ -94,7 +94,7 @@ class WelcomeView extends StatelessWidget {
         Container(
           width: 36,
           height: 36,
-          decoration: BoxDecoration(color: color.withOpacity(0.12), borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
           child: Icon(icon, color: color, size: 18),
         ),
         const SizedBox(width: 12),

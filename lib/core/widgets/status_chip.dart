@@ -43,7 +43,7 @@ class CategoryChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: filled ? color.withOpacity(0.12) : Colors.transparent,
+        color: filled ? color.withValues(alpha: 0.12) : Colors.transparent,
         borderRadius: BorderRadius.circular(20),
         border: filled ? null : Border.all(color: color),
       ),

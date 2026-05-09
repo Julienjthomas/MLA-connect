@@ -72,7 +72,7 @@ class AppreciationVisibilityStep extends GetView<AppreciationController> {
                   Switch.adaptive(
                     value: controller.anonymous.value,
                     onChanged: (v) => controller.anonymous.value = v,
-                    activeColor: AppColors.appreciateGreen,
+                    activeThumbColor: AppColors.appreciateGreen,
                   ),
                 ]),
               )),

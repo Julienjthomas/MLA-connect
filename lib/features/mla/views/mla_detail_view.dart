@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/widgets/shimmer_loader.dart';
 import '../../../data/models/mla_model.dart';
 import '../controllers/mla_controller.dart';
 
@@ -14,7 +15,20 @@ class MlaDetailView extends GetView<MlaController> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.loading.value) {
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        return const Scaffold(
+          body: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(children: [
+              ShimmerBox(height: 240),
+              SizedBox(height: 16),
+              ShimmerBox(height: 80, borderRadius: 16),
+              SizedBox(height: 16),
+              ShimmerBox(height: 120, borderRadius: 16),
+              SizedBox(height: 16),
+              ShimmerBox(height: 160, borderRadius: 14),
+            ]),
+          ),
+        );
       }
       final mla = controller.mla.value ?? MlaModel.placeholder;
       return Scaffold(
@@ -74,7 +88,7 @@ class MlaDetailView extends GetView<MlaController> {
                             const SizedBox(height: 4),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                              decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(12)),
+                              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
                               child: Text(mla.term, style: AppTextStyles.caption.copyWith(color: Colors.white)),
                             ),
                           ],
@@ -97,7 +111,7 @@ class MlaDetailView extends GetView<MlaController> {
                 decoration: BoxDecoration(
                   color: AppColors.surface,
                   borderRadius: BorderRadius.circular(16),
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8)],
+                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8)],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

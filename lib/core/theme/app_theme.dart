@@ -86,7 +86,7 @@ ThemeData buildAppTheme() {
     ),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: AppColors.surface,
-      indicatorColor: AppColors.primary.withOpacity(0.12),
+      indicatorColor: AppColors.primary.withValues(alpha: 0.12),
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return AppTextStyles.labelSmall.copyWith(color: AppColors.primary);

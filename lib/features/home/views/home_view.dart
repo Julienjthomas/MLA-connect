@@ -7,6 +7,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
+import '../../../core/widgets/shimmer_loader.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/mla_hero_banner.dart';
@@ -174,15 +175,29 @@ class HomeView extends GetView<HomeController> {
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 180,
-        child: Obx(() => ListView.builder(
+        child: Obx(() {
+          if (controller.loading.value) {
+            return ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: controller.recentActivity.length,
-              itemBuilder: (_, i) {
-                final item = controller.recentActivity[i];
-                return _activityCard(item.title, item.imageUrl, item.timeAgo);
-              },
-            )),
+              itemCount: 3,
+              itemBuilder: (_, __) => Container(
+                width: 200,
+                margin: const EdgeInsets.only(right: 12),
+                child: const ShimmerCard(),
+              ),
+            );
+          }
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: controller.recentActivity.length,
+            itemBuilder: (_, i) {
+              final item = controller.recentActivity[i];
+              return _activityCard(item.title, item.imageUrl, item.timeAgo);
+            },
+          );
+        }),
       ),
     );
   }
@@ -225,7 +240,7 @@ class HomeView extends GetView<HomeController> {
                       margin: const EdgeInsets.only(right: 10),
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.12),
+                        color: Colors.white.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -297,7 +312,7 @@ class HomeView extends GetView<HomeController> {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(14),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 6, offset: const Offset(0, 2))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

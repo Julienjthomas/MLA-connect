@@ -102,7 +102,7 @@ class _UserCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8, offset: const Offset(0, 2))],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
       ),
       child: Obx(() {
         final avatar = controller.userAvatar;
@@ -114,7 +114,7 @@ class _UserCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.surfaceVariant,
-                border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 2),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 2),
               ),
               child: ClipOval(
                 child: avatar != null && avatar.isNotEmpty
@@ -244,7 +244,7 @@ class _SwitchTile extends StatelessWidget {
           trailing: Switch.adaptive(
             value: value,
             onChanged: onChanged,
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
         ),

@@ -77,10 +77,24 @@ class AppreciationController extends GetxController {
     }
   }
 
+  bool get _hasUnsavedData =>
+      recipientCategory.value.isNotEmpty ||
+      staffController.text.isNotEmpty ||
+      messageController.text.isNotEmpty;
+
   void previousStep() {
     if (currentStep.value > 0) {
       currentStep.value--;
       pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    } else if (_hasUnsavedData) {
+      Get.dialog(AlertDialog(
+        title: const Text('Discard appreciation?'),
+        content: const Text('Your progress will be lost.'),
+        actions: [
+          TextButton(onPressed: Get.back, child: const Text('Keep editing')),
+          TextButton(onPressed: () { Get.back(); Get.back(); }, child: const Text('Discard')),
+        ],
+      ));
     } else {
       Get.back();
     }

@@ -76,7 +76,7 @@ class IdeaVisibilityStep extends GetView<IdeaController> {
           Text(title, style: AppTextStyles.titleSmall),
           Text(subtitle, style: AppTextStyles.caption),
         ])),
-        Switch.adaptive(value: value, onChanged: onChanged, activeColor: AppColors.ideaPurple),
+        Switch.adaptive(value: value, onChanged: onChanged, activeThumbColor: AppColors.ideaPurple),
       ]),
     );
   }

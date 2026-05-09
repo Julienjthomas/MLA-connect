@@ -121,7 +121,7 @@ class _NotificationsSetupViewState extends State<NotificationsSetupView> {
         children: [
           Container(
             width: 36, height: 36,
-            decoration: BoxDecoration(color: iconColor.withOpacity(0.12), borderRadius: BorderRadius.circular(10)),
+            decoration: BoxDecoration(color: iconColor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
             child: Icon(icon, color: iconColor, size: 18),
           ),
           const SizedBox(width: 14),
@@ -137,7 +137,7 @@ class _NotificationsSetupViewState extends State<NotificationsSetupView> {
           Switch.adaptive(
             value: value,
             onChanged: onChanged,
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
         ],
       ),

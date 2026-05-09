@@ -70,7 +70,7 @@ class _SplashViewState extends State<SplashView> with SingleTickerProviderStateM
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
-                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 20, offset: const Offset(0, 8))],
+                    boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 20, offset: const Offset(0, 8))],
                   ),
                   child: const Icon(Icons.rocket_launch_rounded, color: AppColors.primary, size: 52),
                 ),
