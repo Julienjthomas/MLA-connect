@@ -7,40 +7,10 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/utils/validators.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/primary_button.dart';
-import '../../../routes/app_routes.dart';
-import '../controllers/auth_controller.dart';
+import '../controllers/phone_controller.dart';
 
-class PhoneView extends StatefulWidget {
+class PhoneView extends GetView<PhoneController> {
   const PhoneView({super.key});
-
-  @override
-  State<PhoneView> createState() => _PhoneViewState();
-}
-
-class _PhoneViewState extends State<PhoneView> {
-  final _formKey = GlobalKey<FormState>();
-  final _phoneController = TextEditingController();
-  bool _loading = false;
-
-  @override
-  void dispose() {
-    _phoneController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _sendOtp() async {
-    if (!_formKey.currentState!.validate()) return;
-    setState(() => _loading = true);
-    try {
-      await Get.find<AuthController>().sendOtp(_phoneController.text.trim());
-      Get.toNamed(Routes.otp, arguments: _phoneController.text.trim());
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to send OTP. Please try again.',
-          backgroundColor: AppColors.statusRejected, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +20,17 @@ class _PhoneViewState extends State<PhoneView> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Form(
-            key: _formKey,
+            key: controller.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 32),
-                Text(AppStrings.enterMobile, style: AppTextStyles.headlineLarge),
+                const Text(AppStrings.enterMobile, style: AppTextStyles.headlineLarge),
                 const SizedBox(height: 8),
-                Text(AppStrings.mobileSubtitle, style: AppTextStyles.bodyMedium),
+                const Text(AppStrings.mobileSubtitle, style: AppTextStyles.bodyMedium),
                 const SizedBox(height: 32),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: controller.phoneController,
                   keyboardType: TextInputType.phone,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
                   validator: Validators.phone,
@@ -73,21 +43,27 @@ class _PhoneViewState extends State<PhoneView> {
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(color: AppColors.grey300),
                       ),
-                      child: Text('+91', style: AppTextStyles.titleSmall),
+                      child: const Text('+91', style: AppTextStyles.titleSmall),
                     ),
                     hintText: 'Enter 10 digit mobile number',
                   ),
                 ),
                 const SizedBox(height: 16),
-                Row(
+                const Row(
                   children: [
-                    const Icon(Icons.shield_outlined, size: 14, color: AppColors.textTertiary),
-                    const SizedBox(width: 6),
+                    Icon(Icons.shield_outlined, size: 14, color: AppColors.textTertiary),
+                    SizedBox(width: 6),
                     Text(AppStrings.privacyNote, style: AppTextStyles.caption),
                   ],
                 ),
                 const Spacer(),
-                PrimaryButton(text: AppStrings.sendOtp, onPressed: _sendOtp, isLoading: _loading),
+                Obx(
+                  () => PrimaryButton(
+                    text: AppStrings.sendOtp,
+                    onPressed: controller.sendOtp,
+                    isLoading: controller.loading.value,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Center(
                   child: RichText(
@@ -98,7 +74,10 @@ class _PhoneViewState extends State<PhoneView> {
                         const TextSpan(text: 'By continuing, you agree to our '),
                         TextSpan(
                           text: 'Terms & Privacy Policy',
-                          style: AppTextStyles.caption.copyWith(color: AppColors.primary, decoration: TextDecoration.underline),
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.primary,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ],
                     ),

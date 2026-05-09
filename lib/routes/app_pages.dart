@@ -1,24 +1,29 @@
 import 'package:get/get.dart';
 
 import '../features/onboarding/bindings/onboarding_binding.dart';
+import '../features/onboarding/bindings/splash_binding.dart';
 import '../features/onboarding/views/splash_view.dart';
 import '../features/onboarding/views/welcome_view.dart';
 import '../features/onboarding/views/language_view.dart';
 import '../features/onboarding/views/panchayat_view.dart';
 import '../features/onboarding/views/ward_view.dart';
 import '../features/onboarding/views/onboarding_success_view.dart';
-import '../features/auth/bindings/auth_binding.dart';
+import '../features/auth/bindings/notifications_setup_binding.dart';
+import '../features/auth/bindings/otp_binding.dart';
+import '../features/auth/bindings/phone_binding.dart';
+import '../features/auth/bindings/profile_setup_binding.dart';
 import '../features/auth/views/phone_view.dart';
 import '../features/auth/views/otp_view.dart';
 import '../features/auth/views/profile_setup_view.dart';
 import '../features/auth/views/notifications_setup_view.dart';
+import '../features/report/bindings/report_binding.dart';
+import '../features/report/bindings/report_detail_binding.dart';
+import '../features/report/views/report_flow_view.dart';
+import '../features/report/views/report_detail_view.dart';
 import '../features/shell/bindings/shell_binding.dart';
 import '../features/shell/views/main_shell_view.dart';
 import '../features/mla/bindings/mla_binding.dart';
 import '../features/mla/views/mla_detail_view.dart';
-import '../features/report/bindings/report_binding.dart';
-import '../features/report/views/report_flow_view.dart';
-import '../features/report/views/report_detail_view.dart';
 import '../features/appreciation/bindings/appreciation_binding.dart';
 import '../features/appreciation/views/appreciation_flow_view.dart';
 import '../features/ideas/bindings/idea_binding.dart';
@@ -33,51 +38,33 @@ class AppPages {
   AppPages._();
 
   static final pages = [
-    GetPage(
-      name: Routes.splash,
-      page: () => const SplashView(),
-      binding: OnboardingBinding(),
-    ),
+    GetPage(name: Routes.splash, page: () => const SplashView(), binding: SplashBinding()),
     GetPage(
       name: Routes.welcome,
       page: () => const WelcomeView(),
       binding: OnboardingBinding(),
       transition: Transition.fadeIn,
     ),
-    GetPage(
-      name: Routes.language,
-      page: () => const LanguageView(),
-      transition: Transition.rightToLeft,
-    ),
+    GetPage(name: Routes.language, page: () => const LanguageView(), transition: Transition.rightToLeft),
     GetPage(
       name: Routes.phone,
       page: () => const PhoneView(),
-      binding: AuthBinding(),
+      binding: PhoneBinding(),
       transition: Transition.rightToLeft,
     ),
-    GetPage(
-      name: Routes.otp,
-      page: () => const OtpView(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage(
-      name: Routes.panchayat,
-      page: () => const PanchayatView(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage(
-      name: Routes.ward,
-      page: () => const WardView(),
-      transition: Transition.rightToLeft,
-    ),
+    GetPage(name: Routes.otp, page: () => const OtpView(), binding: OtpBinding(), transition: Transition.rightToLeft),
+    GetPage(name: Routes.panchayat, page: () => const PanchayatView(), transition: Transition.rightToLeft),
+    GetPage(name: Routes.ward, page: () => const WardView(), transition: Transition.rightToLeft),
     GetPage(
       name: Routes.profileSetup,
       page: () => const ProfileSetupView(),
+      binding: ProfileSetupBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.notificationsSetup,
       page: () => const NotificationsSetupView(),
+      binding: NotificationsSetupBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
@@ -106,6 +93,7 @@ class AppPages {
     GetPage(
       name: Routes.reportDetail,
       page: () => const ReportDetailView(),
+      binding: ReportDetailBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
