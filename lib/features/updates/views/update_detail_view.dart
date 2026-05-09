@@ -1,0 +1,87 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../core/constants/app_enums.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
+import '../../../core/widgets/status_chip.dart';
+import '../controllers/updates_controller.dart';
+
+class UpdateDetailView extends GetView<UpdatesController> {
+  const UpdateDetailView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final id = Get.arguments as String?;
+    final update = controller.updates.firstWhereOrNull((u) => u.id == id);
+    if (update == null) return const Scaffold(body: Center(child: Text('Not found')));
+
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: update.imageUrl != null ? 280 : 0,
+            pinned: true,
+            backgroundColor: AppColors.surface,
+            flexibleSpace: update.imageUrl != null
+                ? FlexibleSpaceBar(
+                    background: CachedNetworkImage(
+                      imageUrl: update.imageUrl!,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : null,
+            actions: [
+              IconButton(icon: const Icon(Icons.share_outlined), onPressed: () {}),
+            ],
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CategoryChip(label: update.category.label, color: update.category.color),
+                  const SizedBox(height: 12),
+                  Text(update.title, style: AppTextStyles.headlineMedium),
+                  const SizedBox(height: 8),
+                  Text(update.timeAgo, style: AppTextStyles.caption),
+                  const SizedBox(height: 20),
+                  Text(update.body, style: AppTextStyles.bodyLarge),
+                  const SizedBox(height: 24),
+                  // Engagement row
+                  Row(children: [
+                    const Icon(Icons.visibility_outlined, size: 16, color: AppColors.grey500),
+                    const SizedBox(width: 4),
+                    Text('${update.views} views', style: AppTextStyles.caption),
+                    const SizedBox(width: 16),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Row(children: [
+                        const Icon(Icons.favorite_outline, size: 16, color: AppColors.statusRejected),
+                        const SizedBox(width: 4),
+                        Text('${update.likes} likes', style: AppTextStyles.caption),
+                      ]),
+                    ),
+                    const Spacer(),
+                    OutlinedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.share, size: 16),
+                      label: const Text('Share'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        minimumSize: Size.zero,
+                        side: const BorderSide(color: AppColors.grey300),
+                        foregroundColor: AppColors.textSecondary,
+                      ),
+                    ),
+                  ]),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

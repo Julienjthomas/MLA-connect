@@ -1,0 +1,132 @@
+class MlaModel {
+  final String id;
+  final String name;
+  final String? photoUrl;
+  final String bio;
+  final String term;
+  final String constituency;
+  final MlaStats stats;
+  final MlaContact contact;
+  final List<MlaInitiative> initiatives;
+
+  const MlaModel({
+    required this.id,
+    required this.name,
+    this.photoUrl,
+    required this.bio,
+    required this.term,
+    required this.constituency,
+    required this.stats,
+    required this.contact,
+    this.initiatives = const [],
+  });
+
+  factory MlaModel.fromJson(Map<String, dynamic> json) {
+    final stats = json['stats'] as Map<String, dynamic>? ?? {};
+    final contact = json['contact'] as Map<String, dynamic>? ?? {};
+    return MlaModel(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      photoUrl: json['photo_url'] as String?,
+      bio: json['bio'] as String? ?? '',
+      term: json['term'] as String? ?? '',
+      constituency: json['constituency'] as String? ?? '',
+      stats: MlaStats(
+        issuesResolved: stats['issues_resolved'] as int? ?? 0,
+        activeProjects: stats['active_projects'] as int? ?? 0,
+        appreciations: stats['appreciations'] as int? ?? 0,
+        ideasImplemented: stats['ideas_implemented'] as int? ?? 0,
+      ),
+      contact: MlaContact(
+        phone: contact['phone'] as String? ?? '',
+        whatsapp: contact['whatsapp'] as String?,
+        email: contact['email'] as String?,
+        officeAddress: contact['office_address'] as String?,
+      ),
+    );
+  }
+
+  static MlaModel get placeholder => MlaModel(
+        id: '1',
+        name: 'MLA V T Sooraj',
+        photoUrl: 'https://i.pravatar.cc/300?img=68',
+        bio:
+            'Working for the overall development of Balussery. Focused on infrastructure, education, health and environment sustainability.',
+        term: '3rd Term MLA',
+        constituency: 'Balussery Constituency',
+        stats: const MlaStats(
+          issuesResolved: 1248,
+          activeProjects: 86,
+          appreciations: 2431,
+          ideasImplemented: 18,
+        ),
+        contact: const MlaContact(
+          phone: '+91 9847 123 456',
+          whatsapp: '+91 9847 123 456',
+          email: 'mla@balussery.kerala.gov.in',
+          officeAddress: 'MLA Office, Balussery, Kozhikode, Kerala – 673612',
+        ),
+        initiatives: [
+          MlaInitiative(
+            title: 'Amrita Setu Bridge Project',
+            description: 'New road connectivity for 3 panchayats',
+            imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&q=80',
+            progress: 0.65,
+          ),
+          MlaInitiative(
+            title: 'Drinking Water Scheme',
+            description: '₹4.2 Crore pipeline project for 5 wards',
+            imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
+            progress: 0.85,
+          ),
+          MlaInitiative(
+            title: 'School Renovation Drive',
+            description: '12 government schools upgraded',
+            imageUrl: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=80',
+            progress: 1.0,
+          ),
+        ],
+      );
+}
+
+class MlaStats {
+  final int issuesResolved;
+  final int activeProjects;
+  final int appreciations;
+  final int ideasImplemented;
+
+  const MlaStats({
+    required this.issuesResolved,
+    required this.activeProjects,
+    required this.appreciations,
+    required this.ideasImplemented,
+  });
+}
+
+class MlaContact {
+  final String phone;
+  final String? whatsapp;
+  final String? email;
+  final String? officeAddress;
+
+  const MlaContact({
+    required this.phone,
+    this.whatsapp,
+    this.email,
+    this.officeAddress,
+  });
+}
+
+class MlaInitiative {
+  final String title;
+  final String description;
+  final String? imageUrl;
+  final double progress;
+
+  const MlaInitiative({
+    required this.title,
+    required this.description,
+    this.imageUrl,
+    required this.progress,
+  });
+}

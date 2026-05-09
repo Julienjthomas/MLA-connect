@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "iPhone Simulator",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "37C97B2C-E0B4-4F58-8452-E97FE06FA8E1"
+    },
+    {
+      "name": "Android Emulator",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "emulator-5554"
+    },
+    {
+      "name": "macOS",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "macos"
+    },
+    {
+      "name": "Chrome",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "chrome"
+    }
+  ]
+}
