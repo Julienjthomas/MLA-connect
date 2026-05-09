@@ -22,12 +22,14 @@ class WardView extends GetView<OnboardingController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 4),
-              Text(AppStrings.selectWard, style: AppTextStyles.headlineSmall),
+              const Text(AppStrings.selectWard, style: AppTextStyles.headlineSmall),
               const SizedBox(height: 4),
-              Obx(() => Text(
-                    'Choose your ward in ${controller.selectedPanchayat.value?.name ?? ''} Panchayat',
-                    style: AppTextStyles.bodySmall,
-                  )),
+              Obx(
+                () => Text(
+                  'Choose your ward in ${controller.selectedPanchayat.value?.name ?? ''} Panchayat',
+                  style: AppTextStyles.bodySmall,
+                ),
+              ),
               const SizedBox(height: 16),
               TextField(
                 onChanged: (v) => controller.wardSearch.value = v,
@@ -56,16 +58,23 @@ class WardView extends GetView<OnboardingController> {
                           decoration: BoxDecoration(
                             color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: isSelected ? AppColors.primary : AppColors.grey200, width: isSelected ? 2 : 1),
+                            border: Border.all(
+                              color: isSelected ? AppColors.primary : AppColors.grey200,
+                              width: isSelected ? 2 : 1,
+                            ),
                           ),
                           child: Row(
                             children: [
                               Container(
-                                width: 20, height: 20,
+                                width: 20,
+                                height: 20,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: isSelected ? AppColors.primary : Colors.transparent,
-                                  border: Border.all(color: isSelected ? AppColors.primary : AppColors.grey400, width: 2),
+                                  border: Border.all(
+                                    color: isSelected ? AppColors.primary : AppColors.grey400,
+                                    width: 2,
+                                  ),
                                 ),
                                 child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
                               ),
@@ -79,10 +88,12 @@ class WardView extends GetView<OnboardingController> {
                   );
                 }),
               ),
-              Obx(() => PrimaryButton(
-                    text: AppStrings.next,
-                    onPressed: controller.selectedWard.value != null ? () => Get.toNamed(Routes.profileSetup) : null,
-                  )),
+              Obx(
+                () => PrimaryButton(
+                  text: AppStrings.next,
+                  onPressed: controller.selectedWard.value != null ? () => Get.toNamed(Routes.profileSetup) : null,
+                ),
+              ),
             ],
           ),
         ),

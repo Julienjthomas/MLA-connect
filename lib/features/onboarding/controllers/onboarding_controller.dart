@@ -18,13 +18,11 @@ class OnboardingController extends GetxController {
   final RxString panchayatSearch = ''.obs;
   final RxString wardSearch = ''.obs;
 
-  List<PanchayatModel> get filteredPanchayats => panchayats
-      .where((p) => p.name.toLowerCase().contains(panchayatSearch.value.toLowerCase()))
-      .toList();
+  List<PanchayatModel> get filteredPanchayats =>
+      panchayats.where((p) => p.name.toLowerCase().contains(panchayatSearch.value.toLowerCase())).toList();
 
-  List<WardModel> get filteredWards => wards
-      .where((w) => w.displayName.toLowerCase().contains(wardSearch.value.toLowerCase()))
-      .toList();
+  List<WardModel> get filteredWards =>
+      wards.where((w) => w.displayName.toLowerCase().contains(wardSearch.value.toLowerCase())).toList();
 
   @override
   void onInit() {
@@ -72,8 +70,20 @@ class OnboardingController extends GetxController {
   );
 
   static const _wardNames = [
-    'Puthiyangadi', 'Chemmad', 'Kuttikattoor Town', 'Valayamkulam',
-    'Parappanangadi', 'Edavanna', 'Mampad', 'Tiruvali', 'Koottilangadi',
-    'Tanur', 'Tirur', 'Vettom', 'Vengara', 'Moothedam', 'Thazhekode',
+    'Puthiyangadi',
+    'Chemmad',
+    'Kuttikattoor Town',
+    'Valayamkulam',
+    'Parappanangadi',
+    'Edavanna',
+    'Mampad',
+    'Tiruvali',
+    'Koottilangadi',
+    'Tanur',
+    'Tirur',
+    'Vettom',
+    'Vengara',
+    'Moothedam',
+    'Thazhekode',
   ];
 }

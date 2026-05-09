@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/theme/app_theme.dart';
 import 'data/supabase/supabase_config.dart';
 import 'features/auth/controllers/auth_controller.dart';
+import 'l10n/app_localizations.dart';
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';
 
@@ -33,6 +34,10 @@ class SuperBalusseryApp extends StatelessWidget {
       title: 'Super Balussery',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
+      localizationsDelegates: S.localizationsDelegates,
+      supportedLocales: S.supportedLocales,
+      locale: const Locale('en'),
+      fallbackLocale: const Locale('en'),
       initialRoute: Routes.splash,
       getPages: AppPages.pages,
       defaultTransition: Transition.rightToLeft,

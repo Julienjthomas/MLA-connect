@@ -16,26 +16,30 @@ class MessageStep extends GetView<AppreciationController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Your Appreciation', style: AppTextStyles.headlineSmall),
+          const Text('Your Appreciation', style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Write your appreciation message', style: AppTextStyles.bodySmall),
+          const Text('Write your appreciation message', style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
           TextField(
             controller: controller.messageController,
             maxLines: 6,
             maxLength: 500,
-            decoration: const InputDecoration(
-              hintText: 'I appreciate the quick action taken by the team...',
-            ),
+            decoration: const InputDecoration(hintText: 'I appreciate the quick action taken by the team...'),
           ),
           const SizedBox(height: 16),
-          Obx(() => UploadWidget(
-                files: controller.selectedImages,
-                onChanged: (files) => controller.selectedImages.value = files,
-                label: 'Add Photo / Video (Optional)',
-              )),
+          Obx(
+            () => UploadWidget(
+              files: controller.selectedImages.value,
+              onChanged: (files) => controller.selectedImages.value = files,
+              label: 'Add Photo / Video (Optional)',
+            ),
+          ),
           const SizedBox(height: 32),
-          PrimaryButton(text: 'Next: Visibility →', onPressed: controller.nextStep, backgroundColor: AppColors.appreciateGreen),
+          PrimaryButton(
+            text: 'Next: Visibility →',
+            onPressed: controller.nextStep,
+            backgroundColor: AppColors.appreciateGreen,
+          ),
           const SizedBox(height: 20),
         ],
       ),

@@ -17,30 +17,33 @@ class ReportDetailsStep extends GetView<ReportController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Describe the Problem', style: AppTextStyles.headlineSmall),
+          const Text('Describe the Problem', style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Please provide details about the issue', style: AppTextStyles.bodySmall),
+          const Text('Please provide details about the issue', style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
 
           // Category selection
-          Text('Category *', style: AppTextStyles.titleSmall),
+          const Text('Category *', style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
-          Obx(() => Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: ReportCategory.values.map((cat) {
-                  final isSelected = controller.selectedCategory.value == cat;
-                  return GestureDetector(
-                    onTap: () => controller.selectedCategory.value = cat,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: isSelected ? AppColors.reportOrange : AppColors.grey100,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: isSelected ? AppColors.reportOrange : AppColors.grey300),
-                      ),
-                      child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Obx(
+            () => Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: ReportCategory.values.map((cat) {
+                final isSelected = controller.selectedCategory.value == cat;
+                return GestureDetector(
+                  onTap: () => controller.selectedCategory.value = cat,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColors.reportOrange : AppColors.grey100,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: isSelected ? AppColors.reportOrange : AppColors.grey300),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
                         Icon(cat.icon, size: 14, color: isSelected ? Colors.white : AppColors.grey600),
                         const SizedBox(width: 6),
                         Text(
@@ -50,16 +53,18 @@ class ReportDetailsStep extends GetView<ReportController> {
                             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                           ),
                         ),
-                      ]),
+                      ],
                     ),
-                  );
-                }).toList(),
-              )),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
 
           const SizedBox(height: 20),
 
           // Problem description
-          Text('Problem Description *', style: AppTextStyles.titleSmall),
+          const Text('Problem Description *', style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
             controller: controller.titleController,
@@ -83,22 +88,26 @@ class ReportDetailsStep extends GetView<ReportController> {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.grey300),
             ),
-            child: Row(children: [
-              const Icon(Icons.mic_outlined, color: AppColors.grey500),
-              const SizedBox(width: 10),
-              Text('Add Voice Message', style: AppTextStyles.bodySmall),
-              const Spacer(),
-              Text('Optional', style: AppTextStyles.caption),
-            ]),
+            child: const Row(
+              children: [
+                Icon(Icons.mic_outlined, color: AppColors.grey500),
+                SizedBox(width: 10),
+                Text('Add Voice Message', style: AppTextStyles.bodySmall),
+                Spacer(),
+                Text('Optional', style: AppTextStyles.caption),
+              ],
+            ),
           ),
 
           const SizedBox(height: 16),
 
           // Media upload
-          Obx(() => UploadWidget(
-                files: controller.selectedImages,
-                onChanged: (files) => controller.selectedImages.value = files,
-              )),
+          Obx(
+            () => UploadWidget(
+              files: controller.selectedImages.value,
+              onChanged: (files) => controller.selectedImages.value = files,
+            ),
+          ),
 
           const SizedBox(height: 32),
 

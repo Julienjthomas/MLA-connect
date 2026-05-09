@@ -8,6 +8,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shimmer_loader.dart';
+import '../../../core/utils/app_locale.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/mla_hero_banner.dart';
@@ -53,28 +54,57 @@ class HomeView extends GetView<HomeController> {
       backgroundColor: AppColors.surface,
       elevation: 0,
       scrolledUnderElevation: 1,
-      title: Row(children: [
-        Container(
-          width: 32, height: 32,
-          decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(8)),
-          child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 16),
-        ),
-        const SizedBox(width: 8),
-        RichText(
-          text: const TextSpan(children: [
-            TextSpan(text: 'Super ', style: TextStyle(fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.primary)),
-            TextSpan(text: 'Balussery', style: TextStyle(fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.w400, color: AppColors.textPrimary)),
-          ]),
-        ),
-      ]),
-      actions: [
-        Stack(children: [
-          IconButton(icon: const Icon(Icons.notifications_outlined), onPressed: () {}),
-          Positioned(
-            right: 10, top: 10,
-            child: Container(width: 8, height: 8, decoration: const BoxDecoration(color: AppColors.reportOrange, shape: BoxShape.circle)),
+      title: Row(
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(8)),
+            child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 16),
           ),
-        ]),
+          const SizedBox(width: 8),
+          RichText(
+            text: const TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Super ',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Balussery',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        Stack(
+          children: [
+            IconButton(icon: const Icon(Icons.notifications_outlined), onPressed: () {}),
+            Positioned(
+              right: 10,
+              top: 10,
+              child: Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(color: AppColors.reportOrange, shape: BoxShape.circle),
+              ),
+            ),
+          ],
+        ),
+        _LanguageSwitcher(currentLocale: Get.locale?.languageCode ?? 'en'),
         const SizedBox(width: 8),
       ],
     );
@@ -85,10 +115,7 @@ class HomeView extends GetView<HomeController> {
       child: Obx(() {
         final mla = controller.mla.value;
         if (mla == null) {
-          return const SizedBox(
-            height: 140,
-            child: Center(child: CircularProgressIndicator()),
-          );
+          return const SizedBox(height: 140, child: Center(child: CircularProgressIndicator()));
         }
         return MlaHeroBanner(mla: mla);
       }),
@@ -104,10 +131,19 @@ class HomeView extends GetView<HomeController> {
           children: [
             Text(
               'What would you like to\nshare today?',
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textPrimary, height: 1.3),
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+                height: 1.3,
+              ),
             ),
             SizedBox(height: 2),
-            Text(AppStrings.tagline, style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textTertiary)),
+            Text(
+              AppStrings.tagline,
+              style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textTertiary),
+            ),
           ],
         ),
       ),
@@ -152,7 +188,7 @@ class HomeView extends GetView<HomeController> {
           crossAxisCount: 2,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          childAspectRatio: 0.85,
+          childAspectRatio: 1,
         ),
       ),
     );
@@ -181,11 +217,8 @@ class HomeView extends GetView<HomeController> {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: 3,
-              itemBuilder: (_, __) => Container(
-                width: 200,
-                margin: const EdgeInsets.only(right: 12),
-                child: const ShimmerCard(),
-              ),
+              itemBuilder: (_, __) =>
+                  Container(width: 200, margin: const EdgeInsets.only(right: 12), child: const ShimmerCard()),
             );
           }
           return ListView.builder(
@@ -219,17 +252,21 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                const Icon(Icons.emoji_events_rounded, color: Color(0xFFFFD700), size: 20),
-                const SizedBox(width: 8),
-                Text(AppStrings.hallOfExcellence,
-                    style: AppTextStyles.titleSmall.copyWith(color: Colors.white, letterSpacing: 1.2)),
-              ]),
+              Row(
+                children: [
+                  const Icon(Icons.emoji_events_rounded, color: Color(0xFFFFD700), size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    AppStrings.hallOfExcellence,
+                    style: AppTextStyles.titleSmall.copyWith(color: Colors.white, letterSpacing: 1.2),
+                  ),
+                ],
+              ),
               const SizedBox(height: 4),
               Text('SSLC Full A+ Achievers 2024', style: AppTextStyles.caption.copyWith(color: Colors.white70)),
               const SizedBox(height: 12),
               SizedBox(
-                height: 90,
+                height: 100,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: controller.hallOfExcellence.length,
@@ -245,15 +282,29 @@ class HomeView extends GetView<HomeController> {
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           CircleAvatar(
-                            radius: 18,
+                            radius: 16,
                             backgroundColor: Colors.white24,
-                            child: Text(s['grade']!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 11)),
+                            child: Text(
+                              s['grade']!,
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 10),
+                            ),
                           ),
-                          const SizedBox(height: 6),
-                          Text(s['name']!, style: AppTextStyles.caption.copyWith(color: Colors.white, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
-                          Text(s['school']!, style: const TextStyle(fontSize: 9, color: Colors.white54), maxLines: 1, overflow: TextOverflow.ellipsis),
+                          const SizedBox(height: 4),
+                          Text(
+                            s['name']!,
+                            style: AppTextStyles.caption.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            s['school']!,
+                            style: const TextStyle(fontSize: 9, color: Colors.white54),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ],
                       ),
                     );
@@ -278,28 +329,31 @@ class HomeView extends GetView<HomeController> {
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.grey200),
           ),
-          child: Row(children: [
-            Container(
-              width: 40, height: 40,
-              decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(controller.grievanceEvent['title']!, style: AppTextStyles.titleSmall),
-                  Text(controller.grievanceEvent['date']!, style: AppTextStyles.caption),
-                  Text(controller.grievanceEvent['venue']!, style: AppTextStyles.caption),
-                ],
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
+                child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
               ),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text(AppStrings.viewDetails, style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
-            ),
-          ]),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(controller.grievanceEvent['title']!, style: AppTextStyles.titleSmall),
+                    Text(controller.grievanceEvent['date']!, style: AppTextStyles.caption),
+                    Text(controller.grievanceEvent['venue']!, style: AppTextStyles.caption),
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(AppStrings.viewDetails, style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -320,19 +374,131 @@ class HomeView extends GetView<HomeController> {
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
             child: imageUrl != null
-                ? CachedNetworkImage(imageUrl: imageUrl, height: 100, width: double.infinity, fit: BoxFit.cover,
-                    errorWidget: (_, __, ___) => Container(height: 100, color: AppColors.grey200))
-                : Container(height: 100, color: AppColors.grey200, child: const Icon(Icons.image_outlined, color: AppColors.grey400)),
+                ? CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    height: 100,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorWidget: (_, __, ___) => Container(height: 100, color: AppColors.grey200),
+                  )
+                : Container(
+                    height: 100,
+                    color: AppColors.grey200,
+                    child: const Icon(Icons.image_outlined, color: AppColors.grey400),
+                  ),
           ),
           Padding(
             padding: const EdgeInsets.all(8),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title, style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600), maxLines: 2, overflow: TextOverflow.ellipsis),
-              const SizedBox(height: 4),
-              Text(time, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
-            ]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(time, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _LanguageSwitcher extends StatelessWidget {
+  final String currentLocale;
+  const _LanguageSwitcher({required this.currentLocale});
+
+  @override
+  Widget build(BuildContext context) {
+    final isMl = currentLocale == 'ml';
+    return GestureDetector(
+      onTap: () => _showPicker(context, isMl),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.grey300),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              isMl ? 'മലയാളം' : 'English',
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(width: 4),
+            const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: AppColors.textSecondary),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showPicker(BuildContext context, bool isMl) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (_) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 36,
+                height: 4,
+                decoration: BoxDecoration(color: AppColors.grey300, borderRadius: BorderRadius.circular(2)),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text('Select Language', style: AppTextStyles.titleMedium),
+            const SizedBox(height: 16),
+            _tile(context, 'en', 'English', 'English', isMl),
+            const SizedBox(height: 10),
+            _tile(context, 'ml', 'മലയാളം', 'Malayalam', isMl),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _tile(BuildContext context, String code, String native, String english, bool isMl) {
+    final selected = (code == 'ml') == isMl;
+    return GestureDetector(
+      onTap: () {
+        AppLocale.change(code);
+        Navigator.pop(context);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary.withValues(alpha: 0.08) : AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: selected ? AppColors.primary : AppColors.grey300, width: selected ? 2 : 1),
+        ),
+        child: Row(
+          children: [
+            Text(
+              native,
+              style: AppTextStyles.titleSmall.copyWith(color: selected ? AppColors.primary : AppColors.textPrimary),
+            ),
+            const SizedBox(width: 6),
+            Text('· $english', style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
+            const Spacer(),
+            if (selected) const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 20),
+          ],
+        ),
       ),
     );
   }

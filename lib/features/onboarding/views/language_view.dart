@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/app_locale.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/primary_button.dart';
@@ -48,7 +49,10 @@ class LanguageView extends GetView<OnboardingController> {
   Widget _languageTile(String code, String nativeName, String englishName) {
     final isSelected = controller.selectedLanguage.value == code;
     return GestureDetector(
-      onTap: () => controller.selectedLanguage.value = code,
+      onTap: () {
+        controller.selectedLanguage.value = code;
+        AppLocale.change(code);
+      },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(16),

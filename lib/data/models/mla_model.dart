@@ -1,8 +1,11 @@
+import 'package:get/get.dart';
+
 class MlaModel {
   final String id;
   final String name;
   final String? photoUrl;
   final String bio;
+  final String? bioMl;
   final String term;
   final String constituency;
   final MlaStats stats;
@@ -14,6 +17,7 @@ class MlaModel {
     required this.name,
     this.photoUrl,
     required this.bio,
+    this.bioMl,
     required this.term,
     required this.constituency,
     required this.stats,
@@ -29,6 +33,7 @@ class MlaModel {
       name: json['name'] as String,
       photoUrl: json['photo_url'] as String?,
       bio: json['bio'] as String? ?? '',
+      bioMl: json['bio_ml'] as String?,
       term: json['term'] as String? ?? '',
       constituency: json['constituency'] as String? ?? '',
       stats: MlaStats(
@@ -44,6 +49,11 @@ class MlaModel {
         officeAddress: contact['office_address'] as String?,
       ),
     );
+  }
+
+  String get localBio {
+    final isMl = Get.locale?.languageCode == 'ml';
+    return (isMl && bioMl != null && bioMl!.isNotEmpty) ? bioMl! : bio;
   }
 
   static MlaModel get placeholder => MlaModel(

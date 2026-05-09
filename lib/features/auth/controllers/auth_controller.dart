@@ -32,6 +32,7 @@ class AuthController extends GetxController {
     try {
       final profile = await _userService.getProfile(uid);
       user.value = profile;
+      if (profile != null) AppLocale.change(profile.language);
     } catch (_) {}
   }
 
@@ -41,11 +42,7 @@ class AuthController extends GetxController {
 
   Future<bool> verifyOtp(String phone, String otp) async {
     try {
-      final res = await Supabase.instance.client.auth.verifyOTP(
-        phone: '+91$phone',
-        token: otp,
-        type: OtpType.sms,
-      );
+      final res = await Supabase.instance.client.auth.verifyOTP(phone: '+91$phone', token: otp, type: OtpType.sms);
       return res.session != null;
     } catch (_) {
       return false;
