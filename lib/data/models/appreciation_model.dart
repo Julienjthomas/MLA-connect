@@ -32,20 +32,24 @@ class AppreciationModel {
 
   factory AppreciationModel.fromJson(Map<String, dynamic> json) => AppreciationModel(
         id: json['id'] as String,
-        userId: json['user_id'] as String,
-        recipientCategory: json['recipient_category'] as String? ?? '',
-        staffName: json['staff_name'] as String?,
-        department: json['department'] as String?,
-        relatedWork: json['related_work'] as String?,
-        message: json['message'] as String? ?? '',
+        userId: json['reporter_id'] as String,
+        recipientCategory: json['target_type'] as String? ?? '',
+        staffName: json['recipient_staff_name'] as String?,
+        department: json['recipient_department'] as String?,
+        relatedWork: json['related_project_name'] as String?,
+        message: json['description'] as String? ?? '',
         visibility: SubmissionVisibility.values.firstWhere(
           (v) => v.dbValue == json['visibility'],
           orElse: () => SubmissionVisibility.public,
         ),
-        anonymous: json['anonymous'] as bool? ?? false,
+        anonymous: json['is_anonymous'] as bool? ?? false,
         status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
         createdAt: DateTime.parse(json['created_at'] as String),
-        mediaUrls: (json['appreciation_media'] as List?)?.map((m) => m['url'] as String).toList() ?? [],
+        mediaUrls: (json['media_attachments'] as List?)
+                ?.map((m) => m['url'] as String? ?? '')
+                .where((u) => u.isNotEmpty)
+                .toList() ??
+            [],
       );
 
   String get timeAgo => DateFormatter.timeAgo(createdAt);
@@ -72,15 +76,17 @@ class AppreciationFormData {
     this.mediaUrls = const [],
   });
 
-  Map<String, dynamic> toJson(String userId) => {
-        'user_id': userId,
-        'recipient_category': recipientCategory,
-        if (staffName != null && staffName!.isNotEmpty) 'staff_name': staffName,
-        if (department != null && department!.isNotEmpty) 'department': department,
-        if (relatedWork != null && relatedWork!.isNotEmpty) 'related_work': relatedWork,
-        'message': message,
+  Map<String, dynamic> toJson(String userId, String referenceId) => {
+        'reporter_id': userId,
+        'kind': 'appreciation',
+        'reference_id': referenceId,
+        'target_type': recipientCategory,
+        if (staffName != null && staffName!.isNotEmpty) 'recipient_staff_name': staffName,
+        if (department != null && department!.isNotEmpty) 'recipient_department': department,
+        if (relatedWork != null && relatedWork!.isNotEmpty) 'related_project_name': relatedWork,
+        'description': message,
+        'title': message.length > 80 ? '${message.substring(0, 80)}...' : message,
         'visibility': visibility.dbValue,
-        'anonymous': anonymous,
-        'status': 'submitted',
+        'is_anonymous': anonymous,
       };
 }

@@ -6,8 +6,8 @@ class UserService {
 
   Future<UserModel?> getProfile(String userId) async {
     final res = await _db
-        .from('user_profiles')
-        .select('*, panchayats(name), wards(name)')
+        .from('profiles')
+        .select('*, local_bodies(name), wards(name)')
         .eq('id', userId)
         .maybeSingle();
     if (res == null) return null;
@@ -15,29 +15,29 @@ class UserService {
   }
 
   Future<void> createProfile(Map<String, dynamic> data) async {
-    await _db.from('user_profiles').upsert(data);
+    await _db.from('profiles').upsert(data);
   }
 
   Future<void> updateProfile(String userId, Map<String, dynamic> data) async {
-    await _db.from('user_profiles').update(data).eq('id', userId);
+    await _db.from('profiles').update(data).eq('id', userId);
   }
 
-  Future<List<PanchayatModel>> getPanchayats() async {
-    final res = await _db.from('panchayats').select().order('name');
-    return (res as List).map((j) => PanchayatModel.fromJson(j as Map<String, dynamic>)).toList();
+  Future<List<LocalBodyModel>> getLocalBodies() async {
+    final res = await _db.from('local_bodies').select().order('name');
+    return (res as List).map((j) => LocalBodyModel.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  Future<List<WardModel>> getWards(String panchayatId) async {
+  Future<List<WardModel>> getWards(String localBodyId) async {
     final res = await _db
         .from('wards')
         .select()
-        .eq('panchayat_id', panchayatId)
-        .order('number');
+        .eq('local_body_id', localBodyId)
+        .order('ward_number');
     return (res as List).map((j) => WardModel.fromJson(j as Map<String, dynamic>)).toList();
   }
 
   Future<void> saveNotificationPrefs(String userId, Map<String, bool> prefs) async {
-    await _db.from('notification_prefs').upsert({
+    await _db.from('notification_preferences').upsert({
       'user_id': userId,
       ...prefs,
     });

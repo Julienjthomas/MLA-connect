@@ -136,13 +136,13 @@ class _UserCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(controller.userPhone!, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
                   ],
-                  if (controller.wardName != null || controller.panchayatName != null) ...[
+                  if (controller.wardName != null || controller.localBodyName != null) ...[
                     const SizedBox(height: 4),
                     Row(children: [
                       const Icon(Icons.location_on_outlined, size: 13, color: AppColors.primary),
                       const SizedBox(width: 3),
                       Text(
-                        [if (controller.wardName != null) controller.wardName!, if (controller.panchayatName != null) controller.panchayatName!].join(', '),
+                        [if (controller.wardName != null) controller.wardName!, if (controller.localBodyName != null) controller.localBodyName!].join(', '),
                         style: AppTextStyles.caption.copyWith(color: AppColors.primary),
                       ),
                     ]),

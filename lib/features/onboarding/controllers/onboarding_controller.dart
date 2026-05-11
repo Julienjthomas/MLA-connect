@@ -8,18 +8,18 @@ class OnboardingController extends GetxController {
   // Language selection
   final RxString selectedLanguage = 'en'.obs;
 
-  // Panchayat/Ward selection
-  final RxList<PanchayatModel> panchayats = <PanchayatModel>[].obs;
+  // LocalBody/Ward selection
+  final RxList<LocalBodyModel> localBodies = <LocalBodyModel>[].obs;
   final RxList<WardModel> wards = <WardModel>[].obs;
-  final Rx<PanchayatModel?> selectedPanchayat = Rx(null);
+  final Rx<LocalBodyModel?> selectedLocalBody = Rx(null);
   final Rx<WardModel?> selectedWard = Rx(null);
-  final RxBool loadingPanchayats = false.obs;
+  final RxBool loadingLocalBodies = false.obs;
   final RxBool loadingWards = false.obs;
-  final RxString panchayatSearch = ''.obs;
+  final RxString localBodySearch = ''.obs;
   final RxString wardSearch = ''.obs;
 
-  List<PanchayatModel> get filteredPanchayats =>
-      panchayats.where((p) => p.name.toLowerCase().contains(panchayatSearch.value.toLowerCase())).toList();
+  List<LocalBodyModel> get filteredLocalBodies =>
+      localBodies.where((p) => p.name.toLowerCase().contains(localBodySearch.value.toLowerCase())).toList();
 
   List<WardModel> get filteredWards =>
       wards.where((w) => w.displayName.toLowerCase().contains(wardSearch.value.toLowerCase())).toList();
@@ -27,28 +27,27 @@ class OnboardingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadPanchayats();
+    loadLocalBodies();
   }
 
-  Future<void> loadPanchayats() async {
-    loadingPanchayats.value = true;
+  Future<void> loadLocalBodies() async {
+    loadingLocalBodies.value = true;
     try {
-      panchayats.value = await _userService.getPanchayats();
+      localBodies.value = await _userService.getLocalBodies();
     } catch (_) {
-      // Use fallback if DB not set up
-      panchayats.value = _fallbackPanchayats;
+      localBodies.value = _fallbackLocalBodies;
     } finally {
-      loadingPanchayats.value = false;
+      loadingLocalBodies.value = false;
     }
   }
 
-  Future<void> selectPanchayat(PanchayatModel p) async {
-    selectedPanchayat.value = p;
+  Future<void> selectLocalBody(LocalBodyModel lb) async {
+    selectedLocalBody.value = lb;
     selectedWard.value = null;
     wards.clear();
     loadingWards.value = true;
     try {
-      wards.value = await _userService.getWards(p.id);
+      wards.value = await _userService.getWards(lb.id);
     } catch (_) {
       wards.value = _fallbackWards;
     } finally {
@@ -57,16 +56,16 @@ class OnboardingController extends GetxController {
   }
 
   // Fallback data for when DB isn't seeded
-  static final _fallbackPanchayats = [
-    PanchayatModel(id: '1', name: 'Balussery'),
-    PanchayatModel(id: '2', name: 'Kodenchery'),
-    PanchayatModel(id: '3', name: 'Koorachundu'),
-    PanchayatModel(id: '4', name: 'Veliyal'),
+  static final _fallbackLocalBodies = [
+    const LocalBodyModel(id: '1', name: 'Balussery', type: 'panchayat'),
+    const LocalBodyModel(id: '2', name: 'Kodenchery', type: 'panchayat'),
+    const LocalBodyModel(id: '3', name: 'Koorachundu', type: 'panchayat'),
+    const LocalBodyModel(id: '4', name: 'Veliyal', type: 'panchayat'),
   ];
 
   static final _fallbackWards = List.generate(
     15,
-    (i) => WardModel(id: '${i + 1}', panchayatId: '1', number: i + 10, name: _wardNames[i % _wardNames.length]),
+    (i) => WardModel(id: '${i + 1}', localBodyId: '1', wardNumber: i + 10, name: _wardNames[i % _wardNames.length]),
   );
 
   static const _wardNames = [

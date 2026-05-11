@@ -9,7 +9,6 @@ class IdeaModel {
   final String description;
   final String? benefits;
   final List<String> beneficiaries;
-  final String? estimatedResources;
   final SubmissionVisibility visibility;
   final bool allowDiscussion;
   final bool allowContact;
@@ -24,7 +23,6 @@ class IdeaModel {
     required this.description,
     this.benefits,
     this.beneficiaries = const [],
-    this.estimatedResources,
     required this.visibility,
     required this.allowDiscussion,
     required this.allowContact,
@@ -34,19 +32,18 @@ class IdeaModel {
 
   factory IdeaModel.fromJson(Map<String, dynamic> json) => IdeaModel(
         id: json['id'] as String,
-        userId: json['user_id'] as String,
+        userId: json['reporter_id'] as String,
         topic: json['topic'] as String? ?? '',
         title: json['title'] as String? ?? '',
         description: json['description'] as String? ?? '',
         benefits: json['benefits'] as String?,
         beneficiaries: (json['beneficiaries'] as List?)?.cast<String>() ?? [],
-        estimatedResources: json['estimated_resources'] as String?,
         visibility: SubmissionVisibility.values.firstWhere(
           (v) => v.dbValue == json['visibility'],
           orElse: () => SubmissionVisibility.public,
         ),
-        allowDiscussion: json['allow_discussion'] as bool? ?? true,
-        allowContact: json['allow_contact'] as bool? ?? true,
+        allowDiscussion: json['allow_community_discussion'] as bool? ?? true,
+        allowContact: json['allow_mla_office_contact'] as bool? ?? true,
         status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
         createdAt: DateTime.parse(json['created_at'] as String),
       );
@@ -60,7 +57,6 @@ class IdeaFormData {
   final String description;
   final String? benefits;
   final List<String> beneficiaries;
-  final String? estimatedResources;
   final SubmissionVisibility visibility;
   final bool allowDiscussion;
   final bool allowContact;
@@ -71,23 +67,22 @@ class IdeaFormData {
     required this.description,
     this.benefits,
     this.beneficiaries = const [],
-    this.estimatedResources,
     required this.visibility,
     required this.allowDiscussion,
     required this.allowContact,
   });
 
-  Map<String, dynamic> toJson(String userId) => {
-        'user_id': userId,
+  Map<String, dynamic> toJson(String userId, String referenceId) => {
+        'reporter_id': userId,
+        'kind': 'idea',
+        'reference_id': referenceId,
         'topic': topic,
         'title': title,
         'description': description,
         if (benefits != null && benefits!.isNotEmpty) 'benefits': benefits,
         'beneficiaries': beneficiaries,
-        if (estimatedResources != null && estimatedResources!.isNotEmpty) 'estimated_resources': estimatedResources,
         'visibility': visibility.dbValue,
-        'allow_discussion': allowDiscussion,
-        'allow_contact': allowContact,
-        'status': 'submitted',
+        'allow_community_discussion': allowDiscussion,
+        'allow_mla_office_contact': allowContact,
       };
 }

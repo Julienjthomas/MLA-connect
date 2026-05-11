@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../../../data/services/user_service.dart';
+import '../../../features/onboarding/controllers/onboarding_controller.dart';
 import '../../../routes/app_routes.dart';
 import 'auth_controller.dart';
 
@@ -22,8 +23,10 @@ class NotificationsSetupController extends GetxController {
           'event_reminders': eventReminders.value,
         });
       }
+      Get.delete<OnboardingController>(force: true);
       Get.offAllNamed(Routes.onboardingSuccess);
     } catch (_) {
+      Get.delete<OnboardingController>(force: true);
       Get.offAllNamed(Routes.onboardingSuccess);
     } finally {
       loading.value = false;

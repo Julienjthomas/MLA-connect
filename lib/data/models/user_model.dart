@@ -5,8 +5,8 @@ class UserModel {
   final String? email;
   final String? avatarUrl;
   final String language;
-  final String? panchayatId;
-  final String? panchayatName;
+  final String? localBodyId;
+  final String? localBodyName;
   final String? wardId;
   final String? wardName;
 
@@ -17,32 +17,32 @@ class UserModel {
     this.email,
     this.avatarUrl,
     this.language = 'en',
-    this.panchayatId,
-    this.panchayatName,
+    this.localBodyId,
+    this.localBodyName,
     this.wardId,
     this.wardName,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json['id'] as String,
-        name: json['name'] as String? ?? '',
+        name: json['full_name'] as String? ?? '',
         phone: json['phone'] as String? ?? '',
         email: json['email'] as String?,
         avatarUrl: json['avatar_url'] as String?,
         language: json['language'] as String? ?? 'en',
-        panchayatId: json['panchayat_id'] as String?,
-        panchayatName: json['panchayats']?['name'] as String?,
+        localBodyId: json['local_body_id'] as String?,
+        localBodyName: json['local_bodies']?['name'] as String?,
         wardId: json['ward_id'] as String?,
         wardName: json['wards']?['name'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
-        'name': name,
+        'full_name': name,
         'phone': phone,
         if (email != null) 'email': email,
         if (avatarUrl != null) 'avatar_url': avatarUrl,
         'language': language,
-        if (panchayatId != null) 'panchayat_id': panchayatId,
+        if (localBodyId != null) 'local_body_id': localBodyId,
         if (wardId != null) 'ward_id': wardId,
       };
 
@@ -52,8 +52,8 @@ class UserModel {
     String? email,
     String? avatarUrl,
     String? language,
-    String? panchayatId,
-    String? panchayatName,
+    String? localBodyId,
+    String? localBodyName,
     String? wardId,
     String? wardName,
   }) =>
@@ -64,37 +64,46 @@ class UserModel {
         email: email ?? this.email,
         avatarUrl: avatarUrl ?? this.avatarUrl,
         language: language ?? this.language,
-        panchayatId: panchayatId ?? this.panchayatId,
-        panchayatName: panchayatName ?? this.panchayatName,
+        localBodyId: localBodyId ?? this.localBodyId,
+        localBodyName: localBodyName ?? this.localBodyName,
         wardId: wardId ?? this.wardId,
         wardName: wardName ?? this.wardName,
       );
 }
 
-class PanchayatModel {
+class LocalBodyModel {
   final String id;
   final String name;
+  final String type;
 
-  const PanchayatModel({required this.id, required this.name});
+  const LocalBodyModel({required this.id, required this.name, required this.type});
 
-  factory PanchayatModel.fromJson(Map<String, dynamic> json) =>
-      PanchayatModel(id: json['id'] as String, name: json['name'] as String);
+  factory LocalBodyModel.fromJson(Map<String, dynamic> json) => LocalBodyModel(
+        id: json['id'] as String,
+        name: json['name'] as String,
+        type: json['type'] as String? ?? 'panchayat',
+      );
 }
 
 class WardModel {
   final String id;
-  final String panchayatId;
-  final int number;
+  final String localBodyId;
+  final int wardNumber;
   final String name;
 
-  const WardModel({required this.id, required this.panchayatId, required this.number, required this.name});
+  const WardModel({
+    required this.id,
+    required this.localBodyId,
+    required this.wardNumber,
+    required this.name,
+  });
 
   factory WardModel.fromJson(Map<String, dynamic> json) => WardModel(
         id: json['id'] as String,
-        panchayatId: json['panchayat_id'] as String,
-        number: json['number'] as int,
+        localBodyId: json['local_body_id'] as String,
+        wardNumber: json['ward_number'] as int,
         name: json['name'] as String,
       );
 
-  String get displayName => 'Ward $number – $name';
+  String get displayName => 'Ward $wardNumber – $name';
 }

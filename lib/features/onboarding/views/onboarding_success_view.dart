@@ -42,7 +42,7 @@ class OnboardingSuccessView extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      _infoRow(Icons.location_on_outlined, 'Panchayat', user?.panchayatName ?? '–'),
+                      _infoRow(Icons.location_on_outlined, 'Local Body', user?.localBodyName ?? '–'),
                       const SizedBox(height: 12),
                       _infoRow(Icons.map_outlined, 'Ward', user?.wardName ?? '–'),
                     ],

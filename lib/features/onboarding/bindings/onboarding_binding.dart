@@ -4,6 +4,8 @@ import '../controllers/onboarding_controller.dart';
 class OnboardingBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<OnboardingController>(() => OnboardingController());
+    if (!Get.isRegistered<OnboardingController>()) {
+      Get.put<OnboardingController>(OnboardingController(), permanent: true);
+    }
   }
 }

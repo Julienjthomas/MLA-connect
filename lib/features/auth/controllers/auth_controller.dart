@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/utils/app_locale.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/services/user_service.dart';
 import '../../../routes/app_routes.dart';
@@ -11,6 +12,7 @@ class AuthController extends GetxController {
   final RxBool isLoading = false.obs;
 
   bool get isLoggedIn => Supabase.instance.client.auth.currentSession != null;
+
   String? get userId => Supabase.instance.client.auth.currentUser?.id;
 
   @override
@@ -60,7 +62,7 @@ class AuthController extends GetxController {
     required String name,
     String? email,
     String? avatarUrl,
-    required String panchayatId,
+    required String localBodyId,
     required String wardId,
     required String language,
   }) async {
@@ -69,13 +71,14 @@ class AuthController extends GetxController {
     final phone = Supabase.instance.client.auth.currentUser?.phone ?? '';
     final data = {
       'id': uid,
-      'name': name,
+      'full_name': name,
       'phone': phone,
       if (email != null && email.isNotEmpty) 'email': email,
       if (avatarUrl != null) 'avatar_url': avatarUrl,
-      'panchayat_id': panchayatId,
+      'local_body_id': localBodyId,
       'ward_id': wardId,
       'language': language,
+      'onboarded_at': DateTime.now().toIso8601String(),
     };
     await _userService.createProfile(data);
     await _loadUserIfLoggedIn();

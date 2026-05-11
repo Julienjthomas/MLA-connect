@@ -13,7 +13,7 @@ class ProfileController extends GetxController {
   String? get userPhone => _auth.user.value?.phone;
   String? get userAvatar => _auth.user.value?.avatarUrl;
   String? get wardName => _auth.user.value?.wardName;
-  String? get panchayatName => _auth.user.value?.panchayatName;
+  String? get localBodyName => _auth.user.value?.localBodyName;
 
   Future<void> logout() => _auth.logout();
 }

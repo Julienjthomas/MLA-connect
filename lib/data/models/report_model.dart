@@ -38,30 +38,31 @@ class ReportModel {
   });
 
   factory ReportModel.fromJson(Map<String, dynamic> json) {
-    final media = (json['report_media'] as List?)
-            ?.map((m) => m['url'] as String)
+    final media = (json['media_attachments'] as List?)
+            ?.map((m) => m['url'] as String? ?? '')
+            .where((u) => u.isNotEmpty)
             .toList() ??
         [];
-    final timeline = (json['report_timeline'] as List?)
+    final timeline = (json['submission_status_history'] as List?)
             ?.map((t) => TimelineEvent(
                   date: DateFormatter.shortDate(DateTime.parse(t['created_at'] as String)),
-                  title: SubmissionStatusX.fromString(t['status'] as String).label,
-                  subtitle: t['note'] as String? ?? '',
+                  title: SubmissionStatusX.fromString(t['to_status'] as String).label,
+                  subtitle: t['notes'] as String? ?? '',
                 ))
             .toList() ??
         [];
     return ReportModel(
       id: json['id'] as String,
-      userId: json['user_id'] as String,
+      userId: json['reporter_id'] as String,
       category: ReportCategoryX.fromString(json['category'] as String? ?? 'other'),
       title: json['title'] as String,
       description: json['description'] as String,
-      voiceNoteUrl: json['voice_note_url'] as String?,
-      location: json['location'] as String? ?? '',
+      voiceNoteUrl: json['voice_message_url'] as String?,
+      location: json['pin_address'] as String? ?? json['landmark'] as String? ?? '',
       landmark: json['landmark'] as String?,
       wardId: json['ward_id'] as String? ?? '',
       wardName: json['wards']?['name'] as String? ?? json['ward_id'] as String? ?? '',
-      contactNumber: json['contact_number'] as String?,
+      contactNumber: json['contact_phone'] as String?,
       status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
       createdAt: DateTime.parse(json['created_at'] as String),
       mediaUrls: media,
@@ -94,15 +95,16 @@ class ReportFormData {
     this.mediaUrls = const [],
   });
 
-  Map<String, dynamic> toJson(String userId) => {
-        'user_id': userId,
+  Map<String, dynamic> toJson(String userId, String referenceId) => {
+        'reporter_id': userId,
+        'kind': 'report',
+        'reference_id': referenceId,
         'category': category.dbValue,
         'title': title,
         'description': description,
-        'location': location,
+        'pin_address': location,
         if (landmark != null && landmark!.isNotEmpty) 'landmark': landmark,
         if (wardId != null) 'ward_id': wardId,
-        if (contactNumber != null && contactNumber!.isNotEmpty) 'contact_number': contactNumber,
-        'status': 'submitted',
+        if (contactNumber != null && contactNumber!.isNotEmpty) 'contact_phone': contactNumber,
       };
 }

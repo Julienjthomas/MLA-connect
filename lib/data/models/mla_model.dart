@@ -26,27 +26,25 @@ class MlaModel {
   });
 
   factory MlaModel.fromJson(Map<String, dynamic> json) {
-    final stats = json['stats'] as Map<String, dynamic>? ?? {};
-    final contact = json['contact'] as Map<String, dynamic>? ?? {};
     return MlaModel(
       id: json['id'] as String,
-      name: json['name'] as String,
+      name: json['full_name'] as String? ?? json['name'] as String? ?? '',
       photoUrl: json['photo_url'] as String?,
       bio: json['bio'] as String? ?? '',
       bioMl: json['bio_ml'] as String?,
-      term: json['term'] as String? ?? '',
+      term: json['term_label'] as String? ?? json['term'] as String? ?? '',
       constituency: json['constituency'] as String? ?? '',
       stats: MlaStats(
-        issuesResolved: stats['issues_resolved'] as int? ?? 0,
-        activeProjects: stats['active_projects'] as int? ?? 0,
-        appreciations: stats['appreciations'] as int? ?? 0,
-        ideasImplemented: stats['ideas_implemented'] as int? ?? 0,
+        issuesResolved: json['issues_resolved'] as int? ?? 0,
+        activeProjects: json['active_projects'] as int? ?? 0,
+        appreciations: json['appreciations_count'] as int? ?? 0,
+        ideasImplemented: json['ideas_implemented'] as int? ?? 0,
       ),
       contact: MlaContact(
-        phone: contact['phone'] as String? ?? '',
-        whatsapp: contact['whatsapp'] as String?,
-        email: contact['email'] as String?,
-        officeAddress: contact['office_address'] as String?,
+        phone: json['office_phone'] as String? ?? '',
+        whatsapp: json['office_phone'] as String?,
+        email: json['office_email'] as String?,
+        officeAddress: json['office_address'] as String?,
       ),
     );
   }

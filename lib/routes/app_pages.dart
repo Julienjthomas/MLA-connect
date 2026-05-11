@@ -45,7 +45,7 @@ class AppPages {
       binding: OnboardingBinding(),
       transition: Transition.fadeIn,
     ),
-    GetPage(name: Routes.language, page: () => const LanguageView(), transition: Transition.rightToLeft),
+    GetPage(name: Routes.language, page: () => const LanguageView(), binding: OnboardingBinding(), transition: Transition.rightToLeft),
     GetPage(
       name: Routes.phone,
       page: () => const PhoneView(),
@@ -53,12 +53,12 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
     GetPage(name: Routes.otp, page: () => const OtpView(), binding: OtpBinding(), transition: Transition.rightToLeft),
-    GetPage(name: Routes.panchayat, page: () => const PanchayatView(), transition: Transition.rightToLeft),
-    GetPage(name: Routes.ward, page: () => const WardView(), transition: Transition.rightToLeft),
+    GetPage(name: Routes.panchayat, page: () => const PanchayatView(), binding: OnboardingBinding(), transition: Transition.rightToLeft),
+    GetPage(name: Routes.ward, page: () => const WardView(), binding: OnboardingBinding(), transition: Transition.rightToLeft),
     GetPage(
       name: Routes.profileSetup,
       page: () => const ProfileSetupView(),
-      binding: ProfileSetupBinding(),
+      bindings: [OnboardingBinding(), ProfileSetupBinding()],
       transition: Transition.rightToLeft,
     ),
     GetPage(

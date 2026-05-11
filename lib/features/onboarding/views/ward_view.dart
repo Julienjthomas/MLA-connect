@@ -26,11 +26,12 @@ class WardView extends GetView<OnboardingController> {
               const SizedBox(height: 4),
               Obx(
                 () => Text(
-                  'Choose your ward in ${controller.selectedPanchayat.value?.name ?? ''} Panchayat',
+                  'Choose your ward in ${controller.selectedLocalBody.value?.name ?? ''}',
                   style: AppTextStyles.bodySmall,
                 ),
               ),
               const SizedBox(height: 16),
+
               TextField(
                 onChanged: (v) => controller.wardSearch.value = v,
                 decoration: const InputDecoration(
@@ -49,41 +50,43 @@ class WardView extends GetView<OnboardingController> {
                     itemCount: list.length,
                     itemBuilder: (_, i) {
                       final w = list[i];
-                      final isSelected = controller.selectedWard.value?.id == w.id;
-                      return GestureDetector(
-                        onTap: () => controller.selectedWard.value = w,
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 8),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                          decoration: BoxDecoration(
-                            color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: isSelected ? AppColors.primary : AppColors.grey200,
-                              width: isSelected ? 2 : 1,
+                      return Obx(() {
+                        final isSelected = controller.selectedWard.value?.id == w.id;
+                        return GestureDetector(
+                          onTap: () => controller.selectedWard.value = w,
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            decoration: BoxDecoration(
+                              color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: isSelected ? AppColors.primary : AppColors.grey200,
+                                width: isSelected ? 2 : 1,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: isSelected ? AppColors.primary : Colors.transparent,
+                                    border: Border.all(
+                                      color: isSelected ? AppColors.primary : AppColors.grey400,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
+                                ),
+                                const SizedBox(width: 12),
+                                Text(w.displayName, style: AppTextStyles.titleSmall),
+                              ],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: isSelected ? AppColors.primary : Colors.transparent,
-                                  border: Border.all(
-                                    color: isSelected ? AppColors.primary : AppColors.grey400,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
-                              ),
-                              const SizedBox(width: 12),
-                              Text(w.displayName, style: AppTextStyles.titleSmall),
-                            ],
-                          ),
-                        ),
-                      );
+                        );
+                      });
                     },
                   );
                 }),

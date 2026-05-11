@@ -129,7 +129,6 @@ class IdeaController extends GetxController {
         description: descriptionController.text.trim(),
         benefits: benefitsController.text.trim(),
         beneficiaries: List.from(beneficiaries),
-        estimatedResources: estimatedResources.value,
         visibility: visibility.value,
         allowDiscussion: allowDiscussion.value,
         allowContact: allowContact.value,

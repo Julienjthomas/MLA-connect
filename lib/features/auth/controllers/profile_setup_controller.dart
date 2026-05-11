@@ -25,7 +25,7 @@ class ProfileSetupController extends GetxController {
       await Get.find<AuthController>().saveProfile(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
-        panchayatId: onboarding.selectedPanchayat.value!.id,
+        localBodyId: onboarding.selectedLocalBody.value!.id,
         wardId: onboarding.selectedWard.value!.id,
         language: onboarding.selectedLanguage.value,
       );

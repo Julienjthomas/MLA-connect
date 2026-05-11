@@ -24,7 +24,7 @@ class PanchayatView extends GetView<OnboardingController> {
               _stepHeader(context),
               const SizedBox(height: 20),
               TextField(
-                onChanged: (v) => controller.panchayatSearch.value = v,
+                onChanged: (v) => controller.localBodySearch.value = v,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search, size: 20),
                   hintText: AppStrings.searchPanchayat,
@@ -33,61 +33,69 @@ class PanchayatView extends GetView<OnboardingController> {
               const SizedBox(height: 16),
               Expanded(
                 child: Obx(() {
-                  if (controller.loadingPanchayats.value) {
+                  if (controller.loadingLocalBodies.value) {
                     return const Center(child: CircularProgressIndicator());
                   }
-                  final list = controller.filteredPanchayats;
+                  final list = controller.filteredLocalBodies;
                   return ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (_, i) {
-                      final p = list[i];
-                      final isSelected = controller.selectedPanchayat.value?.id == p.id;
-                      return GestureDetector(
-                        onTap: () => controller.selectPanchayat(p),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                          decoration: BoxDecoration(
-                            color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: isSelected ? AppColors.primary : AppColors.grey200,
-                              width: isSelected ? 2 : 1,
+                      return Obx(() {
+                        final p = list[i];
+                        final isSelected = controller.selectedLocalBody.value?.id == p.id;
+                        return GestureDetector(
+                          onTap: () => controller.selectLocalBody(p),
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                            decoration: BoxDecoration(
+                              color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: isSelected ? AppColors.primary : AppColors.grey200,
+                                width: isSelected ? 2 : 1,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: isSelected ? AppColors.primary : Colors.transparent,
+                                    border: Border.all(
+                                      color: isSelected ? AppColors.primary : AppColors.grey400,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(p.name, style: AppTextStyles.titleMedium),
+                                      Text('${p.name} Panchayat', style: AppTextStyles.caption),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 20, height: 20,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: isSelected ? AppColors.primary : Colors.transparent,
-                                  border: Border.all(color: isSelected ? AppColors.primary : AppColors.grey400, width: 2),
-                                ),
-                                child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(p.name, style: AppTextStyles.titleMedium),
-                                    Text('${p.name} Panchayat', style: AppTextStyles.caption),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                        );
+                      });
                     },
                   );
                 }),
               ),
-              Obx(() => PrimaryButton(
-                    text: AppStrings.next,
-                    onPressed: controller.selectedPanchayat.value != null ? () => Get.toNamed(Routes.ward) : null,
-                  )),
+              Obx(
+                () => PrimaryButton(
+                  text: AppStrings.next,
+                  onPressed: controller.selectedLocalBody.value != null ? () => Get.toNamed(Routes.ward) : null,
+                ),
+              ),
             ],
           ),
         ),

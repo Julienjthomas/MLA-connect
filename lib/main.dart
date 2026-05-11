@@ -15,10 +15,7 @@ void main() async {
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  await Supabase.initialize(
-    url: SupabaseConfig.url,
-    anonKey: SupabaseConfig.anonKey,
-  );
+  await Supabase.initialize(url: SupabaseConfig.url, anonKey: SupabaseConfig.anonKey);
 
   Get.put(AuthController(), permanent: true);
 

@@ -34,10 +34,12 @@ class UpdateModel {
         titleMl: json['title_ml'] as String?,
         bodyMl: json['body_ml'] as String?,
         category: UpdateCategoryX.fromString(json['category'] as String? ?? ''),
-        imageUrl: json['image_url'] as String?,
-        likes: json['likes'] as int? ?? 0,
-        views: json['views'] as int? ?? 0,
-        createdAt: DateTime.parse(json['created_at'] as String),
+        imageUrl: json['cover_image_url'] as String?,
+        likes: json['like_count'] as int? ?? 0,
+        views: json['view_count'] as int? ?? 0,
+        createdAt: DateTime.parse(
+          json['published_at'] as String? ?? json['created_at'] as String,
+        ),
       );
 
   // Returns localised title/body based on current app locale
