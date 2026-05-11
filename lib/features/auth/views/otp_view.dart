@@ -63,7 +63,29 @@ class OtpView extends GetView<OtpController> {
                   onCompleted: (_) => controller.verify(),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              Obx(() {
+                if (controller.otpExpired.value) {
+                  return Center(
+                    child: Text(
+                      'OTP expired. Resend to get a new code.',
+                      style: AppTextStyles.bodyMedium.copyWith(color: const Color(0xFFB00020)),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+                final secs = controller.expirySeconds.value;
+                final isWarning = secs <= 15;
+                return Center(
+                  child: Text(
+                    'OTP expires in 00:${secs.toString().padLeft(2, '0')}',
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: isWarning ? const Color(0xFFB00020) : AppColors.grey600,
+                    ),
+                  ),
+                );
+              }),
+              const SizedBox(height: 8),
               Center(
                 child: Obx(
                   () => controller.resendSeconds.value > 0
@@ -84,7 +106,7 @@ class OtpView extends GetView<OtpController> {
               Obx(
                 () => PrimaryButton(
                   text: 'Verify OTP',
-                  onPressed: controller.verify,
+                  onPressed: controller.otpExpired.value ? null : controller.verify,
                   isLoading: controller.loading.value,
                 ),
               ),

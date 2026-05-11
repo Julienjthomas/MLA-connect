@@ -8,21 +8,26 @@ class OtpController extends GetxController {
   final otpController = TextEditingController();
   final RxBool loading = false.obs;
   final RxInt resendSeconds = 25.obs;
+  final RxInt expirySeconds = 60.obs;
+  final RxBool otpExpired = false.obs;
   late final String phone;
 
   Timer? _timer;
+  Timer? _expiryTimer;
 
   @override
   void onInit() {
     super.onInit();
     phone = Get.arguments as String? ?? '';
     _startTimer();
+    _startExpiryTimer();
   }
 
   @override
   void onClose() {
     otpController.dispose();
     _timer?.cancel();
+    _expiryTimer?.cancel();
     super.onClose();
   }
 
@@ -35,9 +40,23 @@ class OtpController extends GetxController {
     });
   }
 
+  void _startExpiryTimer() {
+    expirySeconds.value = 60;
+    otpExpired.value = false;
+    _expiryTimer?.cancel();
+    _expiryTimer = Timer.periodic(const Duration(seconds: 1), (t) {
+      expirySeconds.value--;
+      if (expirySeconds.value <= 0) {
+        otpExpired.value = true;
+        t.cancel();
+      }
+    });
+  }
+
   Future<void> resend() async {
     await Get.find<AuthController>().sendOtp(phone);
     _startTimer();
+    _startExpiryTimer();
   }
 
   Future<void> verify() async {
