@@ -10,6 +10,7 @@ class UpdatesController extends GetxController {
   final Rx<UpdateCategory> selectedCategory = UpdateCategory.all.obs;
   final RxBool loading = false.obs;
   final Rx<UpdateModel?> selectedUpdate = Rx(null);
+  final RxSet<String> likedIds = <String>{}.obs;
 
   List<UpdateModel> get filteredUpdates {
     if (selectedCategory.value == UpdateCategory.all) return updates;
@@ -39,6 +40,31 @@ class UpdatesController extends GetxController {
   }
 
   void selectCategory(UpdateCategory cat) => selectedCategory.value = cat;
+
+  void toggleLike(String id) {
+    final idx = updates.indexWhere((u) => u.id == id);
+    if (idx == -1) return;
+    final u = updates[idx];
+    if (likedIds.contains(id)) {
+      likedIds.remove(id);
+      updates[idx] = UpdateModel(
+        id: u.id, title: u.title, body: u.body,
+        titleMl: u.titleMl, bodyMl: u.bodyMl,
+        category: u.category, imageUrl: u.imageUrl,
+        likes: (u.likes - 1).clamp(0, 999999), views: u.views,
+        createdAt: u.createdAt,
+      );
+    } else {
+      likedIds.add(id);
+      updates[idx] = UpdateModel(
+        id: u.id, title: u.title, body: u.body,
+        titleMl: u.titleMl, bodyMl: u.bodyMl,
+        category: u.category, imageUrl: u.imageUrl,
+        likes: u.likes + 1, views: u.views,
+        createdAt: u.createdAt,
+      );
+    }
+  }
 
   static final _mockUpdates = [
     UpdateModel(

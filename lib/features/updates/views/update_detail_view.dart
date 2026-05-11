@@ -31,9 +31,7 @@ class UpdateDetailView extends GetView<UpdatesController> {
                     ),
                   )
                 : null,
-            actions: [
-              IconButton(icon: const Icon(Icons.share_outlined), onPressed: () {}),
-            ],
+            actions: const [],
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -50,32 +48,41 @@ class UpdateDetailView extends GetView<UpdatesController> {
                   Text(update.body, style: AppTextStyles.bodyLarge),
                   const SizedBox(height: 24),
                   // Engagement row
-                  Row(children: [
-                    const Icon(Icons.visibility_outlined, size: 16, color: AppColors.grey500),
-                    const SizedBox(width: 4),
-                    Text('${update.views} views', style: AppTextStyles.caption),
-                    const SizedBox(width: 16),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Row(children: [
-                        const Icon(Icons.favorite_outline, size: 16, color: AppColors.statusRejected),
-                        const SizedBox(width: 4),
-                        Text('${update.likes} likes', style: AppTextStyles.caption),
-                      ]),
-                    ),
-                    const Spacer(),
-                    OutlinedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.share, size: 16),
-                      label: const Text('Share'),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                        minimumSize: Size.zero,
-                        side: const BorderSide(color: AppColors.grey300),
-                        foregroundColor: AppColors.textSecondary,
+                  Obx(() {
+                    final liked = controller.likedIds.contains(update.id);
+                    final current = controller.updates.firstWhereOrNull((u) => u.id == update.id);
+                    final likes = current?.likes ?? update.likes;
+                    return Row(children: [
+                      const Icon(Icons.visibility_outlined, size: 16, color: AppColors.grey500),
+                      const SizedBox(width: 4),
+                      Text('${update.views} views', style: AppTextStyles.caption),
+                      const SizedBox(width: 16),
+                      GestureDetector(
+                        onTap: () => controller.toggleLike(update.id),
+                        child: Row(children: [
+                          Icon(
+                            liked ? Icons.favorite : Icons.favorite_outline,
+                            size: 16,
+                            color: AppColors.statusRejected,
+                          ),
+                          const SizedBox(width: 4),
+                          Text('$likes likes', style: AppTextStyles.caption),
+                        ]),
                       ),
-                    ),
-                  ]),
+                      const Spacer(),
+                      OutlinedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.share, size: 16),
+                        label: const Text('Share'),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                          minimumSize: Size.zero,
+                          side: const BorderSide(color: AppColors.grey300),
+                          foregroundColor: AppColors.textSecondary,
+                        ),
+                      ),
+                    ]);
+                  }),
                 ],
               ),
             ),

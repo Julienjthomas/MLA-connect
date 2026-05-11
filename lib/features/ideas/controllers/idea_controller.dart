@@ -10,6 +10,7 @@ class IdeaController extends GetxController {
 
   // Form state
   final RxString topic = ''.obs;
+  final customTopicController = TextEditingController();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final benefitsController = TextEditingController();
@@ -50,6 +51,7 @@ class IdeaController extends GetxController {
 
   @override
   void onClose() {
+    customTopicController.dispose();
     titleController.dispose();
     descriptionController.dispose();
     benefitsController.dispose();
@@ -70,6 +72,10 @@ class IdeaController extends GetxController {
       case 0:
         if (topic.value.isEmpty) {
           Get.snackbar('Required', 'Please select a topic', snackPosition: SnackPosition.BOTTOM);
+          return false;
+        }
+        if (topic.value == 'Other' && customTopicController.text.trim().isEmpty) {
+          Get.snackbar('Required', 'Please enter a custom topic', snackPosition: SnackPosition.BOTTOM);
           return false;
         }
         if (titleController.text.trim().length < 5) {
@@ -123,8 +129,11 @@ class IdeaController extends GetxController {
     isSubmitting.value = true;
     try {
       final userId = Get.find<AuthController>().userId ?? '';
+      final effectiveTopic = topic.value == 'Other'
+          ? customTopicController.text.trim()
+          : topic.value;
       final data = IdeaFormData(
-        topic: topic.value,
+        topic: effectiveTopic,
         title: titleController.text.trim(),
         description: descriptionController.text.trim(),
         benefits: benefitsController.text.trim(),

@@ -23,18 +23,8 @@ class ImprovementLocationStep extends GetView<ImprovementController> {
           const SizedBox(height: 8),
           TextField(
             controller: controller.locationController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.location_on_outlined, size: 20),
+            decoration: const InputDecoration(
               hintText: 'e.g. Near Balussery Market',
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.my_location, color: AppColors.improveBlue),
-                onPressed: () async {
-                  controller.isLoadingLocation.value = true;
-                  await Future.delayed(const Duration(seconds: 1));
-                  controller.locationController.text = 'Current location (GPS)';
-                  controller.isLoadingLocation.value = false;
-                },
-              ),
             ),
           ),
           const SizedBox(height: 14),

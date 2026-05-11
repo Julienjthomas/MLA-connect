@@ -18,30 +18,34 @@ class AppreciationFlowView extends GetView<AppreciationController> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) { if (!didPop) controller.previousStep(); },
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: Obx(() => controller.currentStep.value == controller.steps.length - 1
-              ? const SizedBox.shrink()
-              : KeralaAppBar(title: 'Submit Appreciation', onBack: controller.previousStep)),
-        ),
-        body: Column(
-          children: [
-            Obx(() => controller.currentStep.value < controller.steps.length - 1
-                ? StepperHeader(steps: controller.steps, currentStep: controller.currentStep.value, accentColor: AppColors.appreciateGreen)
-                : const SizedBox()),
-            Expanded(
-              child: PageView(
-                controller: controller.pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  RecipientStep(), MessageStep(), AppreciationVisibilityStep(),
-                  AppreciationReviewStep(), AppreciationSuccessStep(),
-                ],
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        behavior: HitTestBehavior.opaque,
+        child: Scaffold(
+          backgroundColor: AppColors.background,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Obx(() => controller.currentStep.value == controller.steps.length - 1
+                ? const SizedBox.shrink()
+                : KeralaAppBar(title: 'Submit Appreciation', onBack: controller.previousStep)),
+          ),
+          body: Column(
+            children: [
+              Obx(() => controller.currentStep.value < controller.steps.length - 1
+                  ? StepperHeader(steps: controller.steps, currentStep: controller.currentStep.value, accentColor: AppColors.appreciateGreen)
+                  : const SizedBox()),
+              Expanded(
+                child: PageView(
+                  controller: controller.pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: const [
+                    RecipientStep(), MessageStep(), AppreciationVisibilityStep(),
+                    AppreciationReviewStep(), AppreciationSuccessStep(),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

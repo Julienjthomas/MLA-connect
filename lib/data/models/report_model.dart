@@ -81,6 +81,8 @@ class ReportFormData {
   final String location;
   final String? landmark;
   final String? wardId;
+  final String? panchayath;
+  final String? ward;
   final String? contactNumber;
   final List<String> mediaUrls;
 
@@ -91,6 +93,8 @@ class ReportFormData {
     required this.location,
     this.landmark,
     this.wardId,
+    this.panchayath,
+    this.ward,
     this.contactNumber,
     this.mediaUrls = const [],
   });
@@ -105,6 +109,8 @@ class ReportFormData {
         'pin_address': location,
         if (landmark != null && landmark!.isNotEmpty) 'landmark': landmark,
         if (wardId != null) 'ward_id': wardId,
+        if (panchayath != null && panchayath!.isNotEmpty) 'panchayath': panchayath,
+        if (ward != null && ward!.isNotEmpty) 'ward_name': ward,
         if (contactNumber != null && contactNumber!.isNotEmpty) 'contact_phone': contactNumber,
       };
 }

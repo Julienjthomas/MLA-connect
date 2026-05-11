@@ -24,8 +24,6 @@ class MlaDetailView extends GetView<MlaController> {
               ShimmerBox(height: 80, borderRadius: 16),
               SizedBox(height: 16),
               ShimmerBox(height: 120, borderRadius: 16),
-              SizedBox(height: 16),
-              ShimmerBox(height: 160, borderRadius: 14),
             ]),
           ),
         );
@@ -34,7 +32,6 @@ class MlaDetailView extends GetView<MlaController> {
       return Scaffold(
         body: CustomScrollView(
           slivers: [
-            // Collapsing hero
             SliverAppBar(
               expandedHeight: 240,
               pinned: true,
@@ -57,7 +54,7 @@ class MlaDetailView extends GetView<MlaController> {
                       ),
                     ),
                     Positioned(
-                      bottom: 16,
+                      bottom: 20,
                       left: 20,
                       right: 20,
                       child: Row(children: [
@@ -71,26 +68,29 @@ class MlaDetailView extends GetView<MlaController> {
                             child: CachedNetworkImage(
                               imageUrl: mla.photoUrl ?? '',
                               fit: BoxFit.cover,
-                              errorWidget: (_, __, ___) => Container(color: Colors.white24, child: const Icon(Icons.person, color: Colors.white, size: 40)),
+                              errorWidget: (_, __, ___) => Container(
+                                color: Colors.white24,
+                                child: const Icon(Icons.person, color: Colors.white, size: 40),
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(width: 14),
                         Expanded(child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Row(children: [
-                              Text(mla.name, style: AppTextStyles.titleLarge.copyWith(color: Colors.white)),
-                              const SizedBox(width: 4),
-                              const Icon(Icons.verified_rounded, color: Colors.white70, size: 16),
-                            ]),
-                            Text(mla.constituency, style: AppTextStyles.bodySmall.copyWith(color: Colors.white70)),
-                            const SizedBox(height: 4),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
-                              child: Text(mla.term, style: AppTextStyles.caption.copyWith(color: Colors.white)),
+                            Text(
+                              'MLA',
+                              style: AppTextStyles.caption.copyWith(
+                                color: Colors.white60,
+                                fontSize: 11,
+                                letterSpacing: 1.2,
+                              ),
                             ),
+                            const SizedBox(height: 2),
+                            Text(mla.name, style: AppTextStyles.titleLarge.copyWith(color: Colors.white)),
+                            Text(mla.constituency, style: AppTextStyles.bodySmall.copyWith(color: Colors.white70)),
                           ],
                         )),
                       ]),
@@ -98,9 +98,6 @@ class MlaDetailView extends GetView<MlaController> {
                   ],
                 ),
               ),
-              actions: [
-                IconButton(icon: const Icon(Icons.share_outlined, color: Colors.white), onPressed: () {}),
-              ],
             ),
 
             // Stats
@@ -128,35 +125,11 @@ class MlaDetailView extends GetView<MlaController> {
               ),
             ),
 
-            // About
+            // About MLA — expandable
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('About MLA', style: AppTextStyles.headlineSmall),
-                    const SizedBox(height: 8),
-                    Text(mla.bio, style: AppTextStyles.bodyMedium),
-                    const SizedBox(height: 4),
-                    TextButton(onPressed: () {}, child: const Text('View More')),
-                  ],
-                ),
-              ),
-            ),
-
-            // Initiatives
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Constituency Initiatives', style: AppTextStyles.headlineSmall),
-                    const SizedBox(height: 12),
-                    ...mla.initiatives.map((init) => _InitiativeCard(initiative: init)),
-                  ],
-                ),
+                child: _ExpandableAbout(mla: mla),
               ),
             ),
 
@@ -166,25 +139,38 @@ class MlaDetailView extends GetView<MlaController> {
         bottomNavigationBar: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Row(children: [
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: () => _call(mla.contact.phone),
-                  icon: const Icon(Icons.phone, size: 18),
-                  label: const Text('Call Office'),
-                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.appreciateGreen, minimumSize: const Size(0, 48)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (mla.contact.officeAddress != null) ...[
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on_outlined, size: 16, color: AppColors.grey500),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          mla.contact.officeAddress!,
+                          style: AppTextStyles.caption,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                ],
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () => _call(mla.contact.phone),
+                    icon: const Icon(Icons.phone, size: 18),
+                    label: const Text('Call Office'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.appreciateGreen,
+                      minimumSize: const Size(0, 48),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: ElevatedButton.icon(
-                  onPressed: () => _whatsapp(mla.contact.whatsapp ?? mla.contact.phone),
-                  icon: const Icon(Icons.chat, size: 18),
-                  label: const Text('WhatsApp'),
-                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF25D366), minimumSize: const Size(0, 48)),
-                ),
-              ),
-            ]),
+              ],
+            ),
           ),
         ),
       );
@@ -207,56 +193,84 @@ class MlaDetailView extends GetView<MlaController> {
     final uri = Uri(scheme: 'tel', path: phone.replaceAll(' ', ''));
     if (await canLaunchUrl(uri)) await launchUrl(uri);
   }
-
-  void _whatsapp(String phone) async {
-    final number = phone.replaceAll(RegExp(r'[^\d]'), '');
-    final uri = Uri.parse('https://wa.me/$number');
-    if (await canLaunchUrl(uri)) await launchUrl(uri, mode: LaunchMode.externalApplication);
-  }
 }
 
-class _InitiativeCard extends StatelessWidget {
-  final MlaInitiative initiative;
-  const _InitiativeCard({required this.initiative});
+class _ExpandableAbout extends StatefulWidget {
+  final MlaModel mla;
+  const _ExpandableAbout({required this.mla});
+
+  @override
+  State<_ExpandableAbout> createState() => _ExpandableAboutState();
+}
+
+class _ExpandableAboutState extends State<_ExpandableAbout> {
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
+    final mla = widget.mla;
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.grey200)),
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.grey200),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (initiative.imageUrl != null)
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
-              child: CachedNetworkImage(
-                imageUrl: initiative.imageUrl!,
-                height: 120, width: double.infinity, fit: BoxFit.cover,
-                errorWidget: (_, __, ___) => Container(height: 120, color: AppColors.grey200),
+          InkWell(
+            onTap: () => setState(() => _expanded = !_expanded),
+            borderRadius: BorderRadius.circular(16),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Text('About MLA', style: AppTextStyles.headlineSmall),
+                  const Spacer(),
+                  AnimatedRotation(
+                    turns: _expanded ? 0.5 : 0,
+                    duration: const Duration(milliseconds: 200),
+                    child: const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.grey500),
+                  ),
+                ],
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(initiative.title, style: AppTextStyles.titleMedium),
-              const SizedBox(height: 4),
-              Text(initiative.description, style: AppTextStyles.bodySmall),
-              const SizedBox(height: 10),
-              Row(children: [
-                Expanded(child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: LinearProgressIndicator(
-                    value: initiative.progress,
-                    backgroundColor: AppColors.grey200,
-                    valueColor: const AlwaysStoppedAnimation(AppColors.appreciateGreen),
-                    minHeight: 6,
-                  ),
-                )),
-                const SizedBox(width: 10),
-                Text('${(initiative.progress * 100).toInt()}%', style: AppTextStyles.labelSmall.copyWith(color: AppColors.appreciateGreen)),
-              ]),
-            ]),
+          ),
+          AnimatedCrossFade(
+            duration: const Duration(milliseconds: 250),
+            crossFadeState: _expanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+            firstChild: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Text(
+                mla.localBio,
+                style: AppTextStyles.bodyMedium,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            secondChild: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(mla.localBio, style: AppTextStyles.bodyMedium),
+                  if (mla.education != null) ...[
+                    const SizedBox(height: 12),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.school_outlined, size: 16, color: AppColors.grey500),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(mla.education!, style: AppTextStyles.bodySmall),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
         ],
       ),

@@ -30,6 +30,7 @@ import '../features/ideas/bindings/idea_binding.dart';
 import '../features/ideas/views/idea_flow_view.dart';
 import '../features/improvements/bindings/improvement_binding.dart';
 import '../features/improvements/views/improvement_flow_view.dart';
+import '../features/achievements/views/achievements_listing_view.dart';
 import '../features/updates/bindings/updates_binding.dart';
 import '../features/updates/views/update_detail_view.dart';
 import 'app_routes.dart';
@@ -118,6 +119,11 @@ class AppPages {
       name: Routes.updateDetail,
       page: () => const UpdateDetailView(),
       binding: UpdatesBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.achievementsListing,
+      page: () => const AchievementsListingView(),
       transition: Transition.rightToLeft,
     ),
   ];

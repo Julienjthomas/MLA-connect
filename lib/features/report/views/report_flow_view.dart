@@ -5,7 +5,6 @@ import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/stepper_header.dart';
 import '../controllers/report_controller.dart';
 import 'steps/report_details_step.dart';
-import 'steps/report_location_step.dart';
 import 'steps/report_review_step.dart';
 import 'steps/report_success_step.dart';
 
@@ -42,7 +41,6 @@ class ReportFlowView extends GetView<ReportController> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: const [
                   ReportDetailsStep(),
-                  ReportLocationStep(),
                   ReportReviewStep(),
                   ReportSuccessStep(),
                 ],

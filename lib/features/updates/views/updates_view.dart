@@ -106,6 +106,7 @@ class _UpdateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ctrl = Get.find<UpdatesController>();
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.updateDetail, arguments: update.id),
       child: Container(
@@ -142,21 +143,33 @@ class _UpdateCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(update.shortBody, style: AppTextStyles.bodySmall, maxLines: 3, overflow: TextOverflow.ellipsis),
                   const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Text(update.timeAgo, style: AppTextStyles.caption),
-                      const Spacer(),
-                      const Icon(Icons.visibility_outlined, size: 14, color: AppColors.grey500),
-                      const SizedBox(width: 4),
-                      Text('${update.views}', style: AppTextStyles.caption),
-                      const SizedBox(width: 12),
-                      const Icon(Icons.favorite_outline, size: 14, color: AppColors.grey500),
-                      const SizedBox(width: 4),
-                      Text('${update.likes}', style: AppTextStyles.caption),
-                      const SizedBox(width: 12),
-                      const Icon(Icons.share_outlined, size: 14, color: AppColors.grey500),
-                    ],
-                  ),
+                  Obx(() {
+                    final liked = ctrl.likedIds.contains(update.id);
+                    final current = ctrl.updates.firstWhereOrNull((u) => u.id == update.id);
+                    final likes = current?.likes ?? update.likes;
+                    return Row(
+                      children: [
+                        Text(update.timeAgo, style: AppTextStyles.caption),
+                        const Spacer(),
+                        const Icon(Icons.visibility_outlined, size: 14, color: AppColors.grey500),
+                        const SizedBox(width: 4),
+                        Text('${update.views}', style: AppTextStyles.caption),
+                        const SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () => ctrl.toggleLike(update.id),
+                          child: Row(children: [
+                            Icon(
+                              liked ? Icons.favorite : Icons.favorite_outline,
+                              size: 14,
+                              color: liked ? AppColors.statusRejected : AppColors.grey500,
+                            ),
+                            const SizedBox(width: 4),
+                            Text('$likes', style: AppTextStyles.caption),
+                          ]),
+                        ),
+                      ],
+                    );
+                  }),
                 ],
               ),
             ),

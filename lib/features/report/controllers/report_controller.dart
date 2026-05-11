@@ -18,6 +18,8 @@ class ReportController extends GetxController {
   final locationController = TextEditingController();
   final landmarkController = TextEditingController();
   final contactController = TextEditingController();
+  final RxString selectedPanchayath = ''.obs;
+  final RxString selectedWard = ''.obs;
   final RxList<XFile> selectedImages = <XFile>[].obs;
   final RxBool isLoadingLocation = false.obs;
 
@@ -28,7 +30,7 @@ class ReportController extends GetxController {
 
   late PageController pageController;
 
-  final List<String> steps = ['Details', 'Location', 'Review', 'Done'];
+  final List<String> steps = ['Details', 'Review', 'Done'];
 
   @override
   void onInit() {
@@ -58,10 +60,12 @@ class ReportController extends GetxController {
           Get.snackbar('Required', 'Please describe the problem (at least 5 characters)', snackPosition: SnackPosition.BOTTOM);
           return false;
         }
-        return true;
-      case 1:
-        if (locationController.text.trim().isEmpty) {
-          Get.snackbar('Required', 'Please add a location', snackPosition: SnackPosition.BOTTOM);
+        if (selectedPanchayath.value.isEmpty) {
+          Get.snackbar('Required', 'Please select a panchayath', snackPosition: SnackPosition.BOTTOM);
+          return false;
+        }
+        if (selectedWard.value.isEmpty) {
+          Get.snackbar('Required', 'Please select a ward', snackPosition: SnackPosition.BOTTOM);
           return false;
         }
         return true;
@@ -118,31 +122,20 @@ class ReportController extends GetxController {
         description: descriptionController.text.trim(),
         location: locationController.text.trim(),
         landmark: landmarkController.text.trim(),
+        panchayath: selectedPanchayath.value,
+        ward: selectedWard.value,
         contactNumber: contactController.text.trim(),
         mediaUrls: mediaUrls,
       );
 
       final id = await _service.submitReport(data, userId);
       submittedId.value = id;
-      nextStep(); // go to success step
+      nextStep();
     } catch (e) {
       Get.snackbar('Error', 'Failed to submit. Please try again.',
           snackPosition: SnackPosition.BOTTOM);
     } finally {
       isSubmitting.value = false;
-    }
-  }
-
-  Future<void> useCurrentLocation() async {
-    isLoadingLocation.value = true;
-    try {
-      // Simplified — in production use geolocator
-      await Future.delayed(const Duration(seconds: 1));
-      locationController.text = 'Current location (GPS)';
-    } catch (_) {
-      Get.snackbar('Error', 'Could not get location', snackPosition: SnackPosition.BOTTOM);
-    } finally {
-      isLoadingLocation.value = false;
     }
   }
 }

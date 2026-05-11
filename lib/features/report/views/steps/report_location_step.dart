@@ -69,18 +69,8 @@ class ReportLocationStep extends GetView<ReportController> {
           const SizedBox(height: 8),
           TextField(
             controller: controller.locationController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.location_on_outlined, size: 20),
+            decoration: const InputDecoration(
               hintText: 'Describe the location',
-              suffixIcon: Obx(() => controller.isLoadingLocation.value
-                  ? const Padding(
-                      padding: EdgeInsets.all(12),
-                      child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
-                    )
-                  : IconButton(
-                      icon: const Icon(Icons.my_location, color: AppColors.primary),
-                      onPressed: controller.useCurrentLocation,
-                    )),
             ),
           ),
 

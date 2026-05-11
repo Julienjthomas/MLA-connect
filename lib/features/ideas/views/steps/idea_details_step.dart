@@ -39,6 +39,21 @@ class IdeaDetailsStep extends GetView<IdeaController> {
                   );
                 }).toList(),
               )),
+          Obx(() {
+            if (controller.topic.value != 'Other') return const SizedBox.shrink();
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 14),
+                Text('Custom Topic *', style: AppTextStyles.titleSmall),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: controller.customTopicController,
+                  decoration: const InputDecoration(hintText: 'Enter your topic'),
+                ),
+              ],
+            );
+          }),
           const SizedBox(height: 20),
           Text('Idea Title *', style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),

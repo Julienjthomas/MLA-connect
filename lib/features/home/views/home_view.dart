@@ -10,6 +10,7 @@ import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/utils/app_locale.dart';
 import '../../../routes/app_routes.dart';
+import '../../shell/controllers/shell_controller.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/mla_hero_banner.dart';
 
@@ -31,11 +32,11 @@ class HomeView extends GetView<HomeController> {
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
               _buildWhatWouldYouLike(),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              _buildActionGrid(),
+              _buildActionGrid(context),
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
-              _buildMlaActivityHeader(),
+              _buildUpdatesHeader(),
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              _buildMlaActivityFeed(),
+              _buildUpdatesFeed(),
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
               _buildHallOfExcellence(),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
@@ -104,7 +105,7 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
-        _LanguageSwitcher(currentLocale: Get.locale?.languageCode ?? 'en'),
+        const _LanguageSwitcher(),
         const SizedBox(width: 8),
       ],
     );
@@ -115,7 +116,7 @@ class HomeView extends GetView<HomeController> {
       child: Obx(() {
         final mla = controller.mla.value;
         if (mla == null) {
-          return const SizedBox(height: 140, child: Center(child: CircularProgressIndicator()));
+          return const SizedBox(height: 130, child: Center(child: CircularProgressIndicator()));
         }
         return MlaHeroBanner(mla: mla);
       }),
@@ -142,7 +143,7 @@ class HomeView extends GetView<HomeController> {
             SizedBox(height: 2),
             Text(
               AppStrings.tagline,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 12, color: AppColors.textTertiary),
+              style: TextStyle(fontFamily: 'Poppins', fontSize: 14, color: AppColors.textTertiary),
             ),
           ],
         ),
@@ -150,7 +151,15 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  SliverPadding _buildActionGrid() {
+  // Tiles order: Report, Idea, Improve, Appreciate
+  SliverPadding _buildActionGrid(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    // Reserve space for: SafeArea (~44), AppBar (~56), hero (~130+16), section title (~60), bottom nav (~60), paddings
+    // Give action grid ~30% of screen height so all 4 tiles are visible
+    final gridHeight = (screenHeight * 0.30).clamp(200.0, 280.0);
+    final tileSize = (gridHeight - 12) / 2; // 2 rows, 12 spacing
+    final aspectRatio = ((MediaQuery.of(context).size.width - 44) / 2) / tileSize;
+
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverGrid(
@@ -163,11 +172,11 @@ class HomeView extends GetView<HomeController> {
             onTap: () => Get.toNamed(Routes.reportFlow),
           ),
           ActionCard(
-            icon: FeatureType.appreciate.icon,
-            title: 'Appreciate',
-            subtitle: FeatureType.appreciate.subtitle,
-            accentColor: FeatureType.appreciate.color,
-            onTap: () => Get.toNamed(Routes.appreciationFlow),
+            icon: FeatureType.idea.icon,
+            title: 'Share Idea',
+            subtitle: FeatureType.idea.subtitle,
+            accentColor: FeatureType.idea.color,
+            onTap: () => Get.toNamed(Routes.ideasFlow),
           ),
           ActionCard(
             icon: FeatureType.improve.icon,
@@ -177,37 +186,44 @@ class HomeView extends GetView<HomeController> {
             onTap: () => Get.toNamed(Routes.improvementsFlow),
           ),
           ActionCard(
-            icon: FeatureType.idea.icon,
-            title: 'Share Idea',
-            subtitle: FeatureType.idea.subtitle,
-            accentColor: FeatureType.idea.color,
-            onTap: () => Get.toNamed(Routes.ideasFlow),
+            icon: FeatureType.appreciate.icon,
+            title: 'Appreciate',
+            subtitle: FeatureType.appreciate.subtitle,
+            accentColor: FeatureType.appreciate.color,
+            onTap: () => Get.toNamed(Routes.appreciationFlow),
           ),
         ]),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          childAspectRatio: 1,
+          childAspectRatio: aspectRatio,
         ),
       ),
     );
   }
 
-  SliverToBoxAdapter _buildMlaActivityHeader() {
+  SliverToBoxAdapter _buildUpdatesHeader() {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SectionHeader(
           title: AppStrings.mlaActivity,
           actionLabel: AppStrings.viewAll,
-          onAction: () => Get.toNamed(Routes.mlaDetail),
+          onAction: () {
+            // Switch to Updates tab (index 2)
+            try {
+              Get.find<ShellController>().goTo(2);
+            } catch (_) {
+              Get.toNamed(Routes.updateDetail);
+            }
+          },
         ),
       ),
     );
   }
 
-  SliverToBoxAdapter _buildMlaActivityFeed() {
+  SliverToBoxAdapter _buildUpdatesFeed() {
     return SliverToBoxAdapter(
       child: SizedBox(
         height: 180,
@@ -227,7 +243,10 @@ class HomeView extends GetView<HomeController> {
             itemCount: controller.recentActivity.length,
             itemBuilder: (_, i) {
               final item = controller.recentActivity[i];
-              return _activityCard(item.title, item.imageUrl, item.timeAgo);
+              return GestureDetector(
+                onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
+                child: _activityCard(item.title, item.imageUrl, item.timeAgo, item.id),
+              );
             },
           );
         }),
@@ -239,79 +258,84 @@ class HomeView extends GetView<HomeController> {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF2D1B69), Color(0xFF5B2EE2)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+        child: GestureDetector(
+          onTap: () => Get.toNamed(Routes.achievementsListing),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF2D1B69), Color(0xFF5B2EE2)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
             ),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.emoji_events_rounded, color: Color(0xFFFFD700), size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    AppStrings.hallOfExcellence,
-                    style: AppTextStyles.titleSmall.copyWith(color: Colors.white, letterSpacing: 1.2),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text('SSLC Full A+ Achievers 2024', style: AppTextStyles.caption.copyWith(color: Colors.white70)),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 100,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.hallOfExcellence.length,
-                  itemBuilder: (_, i) {
-                    final s = controller.hallOfExcellence[i];
-                    return Container(
-                      width: 120,
-                      margin: const EdgeInsets.only(right: 10),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.white24,
-                            child: Text(
-                              s['grade']!,
-                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 10),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            s['name']!,
-                            style: AppTextStyles.caption.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            s['school']!,
-                            style: const TextStyle(fontSize: 9, color: Colors.white54),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.emoji_events_rounded, color: Color(0xFFFFD700), size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                      AppStrings.hallOfExcellence,
+                      style: AppTextStyles.titleSmall.copyWith(color: Colors.white, letterSpacing: 1.2),
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.chevron_right_rounded, color: Colors.white54, size: 20),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 4),
+                Text('SSLC Full A+ Achievers 2024', style: AppTextStyles.caption.copyWith(color: Colors.white70)),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.hallOfExcellence.length,
+                    itemBuilder: (_, i) {
+                      final s = controller.hallOfExcellence[i];
+                      return Container(
+                        width: 120,
+                        margin: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              radius: 16,
+                              backgroundColor: Colors.white24,
+                              child: Text(
+                                s['grade']!,
+                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 10),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              s['name']!,
+                              style: AppTextStyles.caption.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              s['school']!,
+                              style: const TextStyle(fontSize: 9, color: Colors.white54),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -359,7 +383,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _activityCard(String title, String? imageUrl, String time) {
+  Widget _activityCard(String title, String? imageUrl, String time, String id) {
     return Container(
       width: 150,
       margin: const EdgeInsets.only(right: 12),
@@ -394,12 +418,12 @@ class HomeView extends GetView<HomeController> {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600),
+                  style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600, fontSize: 12),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
-                Text(time, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+                Text(time, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 11)),
               ],
             ),
           ),
@@ -410,38 +434,40 @@ class HomeView extends GetView<HomeController> {
 }
 
 class _LanguageSwitcher extends StatelessWidget {
-  final String currentLocale;
-  const _LanguageSwitcher({required this.currentLocale});
+  const _LanguageSwitcher();
 
   @override
   Widget build(BuildContext context) {
-    final isMl = currentLocale == 'ml';
-    return GestureDetector(
-      onTap: () => _showPicker(context, isMl),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.grey300),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              isMl ? 'മലയാളം' : 'English',
-              style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
+    return Obx(() {
+      final isMl = AppLocale.isMalayalam;
+      return GestureDetector(
+        onTap: () => _showPicker(context, isMl),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.grey300),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                isMl ? 'മലയാളം' : 'English',
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary,
+                ),
               ),
-            ),
-            const SizedBox(width: 4),
-            const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: AppColors.textSecondary),
-          ],
+              const SizedBox(width: 4),
+              const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: AppColors.textSecondary),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   void _showPicker(BuildContext context, bool isMl) {

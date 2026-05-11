@@ -64,7 +64,7 @@ class AppStrings {
 
   // Home
   static const whatWouldYouLike = 'What would you like to\nshare today?';
-  static const mlaActivity = 'MLA Activity';
+  static const mlaActivity = 'Updates';
   static const viewAll = 'View all';
   static const hallOfExcellence = 'HALL OF EXCELLENCE';
   static const publicGrievance = 'Public Grievance Hearing';

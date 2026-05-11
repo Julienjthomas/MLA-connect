@@ -36,7 +36,7 @@ extension FeatureTypeX on FeatureType {
         FeatureType.report => Icons.warning_amber_rounded,
         FeatureType.appreciate => Icons.favorite_rounded,
         FeatureType.idea => Icons.lightbulb_rounded,
-        FeatureType.improve => Icons.rocket_launch_rounded,
+        FeatureType.improve => Icons.build_rounded,
       };
 }
 

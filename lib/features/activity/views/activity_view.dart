@@ -29,9 +29,7 @@ class ActivityView extends GetView<ActivityController> {
               Text(AppStrings.trackContributions, style: AppTextStyles.caption),
             ],
           ),
-          actions: [
-            IconButton(icon: const Icon(Icons.calendar_month_outlined), onPressed: () {}),
-          ],
+          actions: const [],
           bottom: TabBar(
             isScrollable: false,
             indicatorColor: AppColors.primary,

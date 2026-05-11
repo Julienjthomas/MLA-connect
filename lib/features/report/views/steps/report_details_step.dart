@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
+import '../../../../core/constants/geo_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/upload_widget.dart';
+import '../../../../core/widgets/voice_input_widget.dart';
 import '../../controllers/report_controller.dart';
 
 class ReportDetailsStep extends GetView<ReportController> {
@@ -22,97 +24,149 @@ class ReportDetailsStep extends GetView<ReportController> {
           const Text('Please provide details about the issue', style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
 
-          // Category selection
+          // Category chips
           const Text('Category *', style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
-          Obx(
-            () => Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: ReportCategory.values.map((cat) {
-                final isSelected = controller.selectedCategory.value == cat;
-                return GestureDetector(
-                  onTap: () => controller.selectedCategory.value = cat,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: isSelected ? AppColors.reportOrange : AppColors.grey100,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: isSelected ? AppColors.reportOrange : AppColors.grey300),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(cat.icon, size: 14, color: isSelected ? Colors.white : AppColors.grey600),
-                        const SizedBox(width: 6),
-                        Text(
-                          cat.label,
-                          style: AppTextStyles.labelSmall.copyWith(
-                            color: isSelected ? Colors.white : AppColors.textSecondary,
-                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+          Obx(() => Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: ReportCategory.values.map((cat) {
+                  final isSelected = controller.selectedCategory.value == cat;
+                  return GestureDetector(
+                    onTap: () => controller.selectedCategory.value = cat,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: isSelected ? AppColors.reportOrange : AppColors.grey100,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            color: isSelected ? AppColors.reportOrange : AppColors.grey300),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(cat.icon,
+                              size: 14, color: isSelected ? Colors.white : AppColors.grey600),
+                          const SizedBox(width: 6),
+                          Text(
+                            cat.label,
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: isSelected ? Colors.white : AppColors.textSecondary,
+                              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
+                  );
+                }).toList(),
+              )),
 
           const SizedBox(height: 20),
 
-          // Problem description
-          const Text('Problem Description *', style: AppTextStyles.titleSmall),
+          // Title
+          const Text('Problem Title *', style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
             controller: controller.titleController,
             decoration: const InputDecoration(hintText: 'Brief title of the problem'),
           ),
-          const SizedBox(height: 10),
+
+          const SizedBox(height: 14),
+
+          // Description — bigger box, 1500 char limit
+          const Text('Problem Description *', style: AppTextStyles.titleSmall),
+          const SizedBox(height: 8),
           TextField(
             controller: controller.descriptionController,
-            maxLines: 4,
-            maxLength: 500,
+            minLines: 5,
+            maxLines: 10,
+            maxLength: 1500,
             decoration: const InputDecoration(hintText: 'Describe the problem in detail...'),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
 
-          // Voice note placeholder
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: AppColors.grey100,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.grey300),
-            ),
-            child: const Row(
-              children: [
-                Icon(Icons.mic_outlined, color: AppColors.grey500),
-                SizedBox(width: 10),
-                Text('Add Voice Message', style: AppTextStyles.bodySmall),
-                Spacer(),
-                Text('Optional', style: AppTextStyles.caption),
-              ],
+          // Voice input
+          VoiceInputWidget(
+            onRecorded: (path) {
+              // Store path for upload on submit if needed
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          // Panchayath dropdown
+          const Text('Panchayath *', style: AppTextStyles.titleSmall),
+          const SizedBox(height: 8),
+          Obx(() {
+            final panchayath = controller.selectedPanchayath.value;
+            return DropdownButtonFormField<String>(
+              key: ValueKey(panchayath),
+              value: panchayath.isEmpty ? null : panchayath,
+              decoration: const InputDecoration(hintText: 'Select Panchayath'),
+              items: GeoConstants.panchayaths
+                  .map((p) => DropdownMenuItem(value: p, child: Text(p)))
+                  .toList(),
+              onChanged: (v) {
+                controller.selectedPanchayath.value = v ?? '';
+                controller.selectedWard.value = '';
+              },
+            );
+          }),
+
+          const SizedBox(height: 14),
+
+          // Ward dropdown
+          const Text('Ward *', style: AppTextStyles.titleSmall),
+          const SizedBox(height: 8),
+          Obx(() {
+            final panchayath = controller.selectedPanchayath.value;
+            final ward = controller.selectedWard.value;
+            final wards = GeoConstants.wardsFor(panchayath.isEmpty ? null : panchayath);
+            return DropdownButtonFormField<String>(
+              key: ValueKey('ward_$panchayath'),
+              value: ward.isEmpty ? null : ward,
+              decoration: const InputDecoration(hintText: 'Select Ward'),
+              items: wards.map((w) => DropdownMenuItem(value: w, child: Text(w))).toList(),
+              onChanged: wards.isEmpty ? null : (v) => controller.selectedWard.value = v ?? '',
+            );
+          }),
+
+          const SizedBox(height: 14),
+
+          // Location description — no GPS icon
+          const Text('Location Description', style: AppTextStyles.titleSmall),
+          const SizedBox(height: 8),
+          TextField(
+            controller: controller.locationController,
+            decoration: const InputDecoration(
+              hintText: 'Describe the exact location of the problem',
             ),
           ),
 
           const SizedBox(height: 16),
 
-          // Media upload
-          Obx(
-            () => UploadWidget(
-              files: controller.selectedImages.value,
-              onChanged: (files) => controller.selectedImages.value = files,
-            ),
-          ),
+          // Media upload with 10-file cap
+          Obx(() => UploadWidget(
+                files: controller.selectedImages.toList(),
+                maxFiles: 10,
+                onChanged: (files) {
+                  if (files.length > 10) {
+                    Get.snackbar('Maximum reached', 'Maximum 10 files allowed',
+                        snackPosition: SnackPosition.BOTTOM);
+                    controller.selectedImages.value = files.take(10).toList();
+                    return;
+                  }
+                  controller.selectedImages.value = files;
+                },
+              )),
 
           const SizedBox(height: 32),
 
           PrimaryButton(
-            text: 'Next: Location →',
+            text: 'Next: Review →',
             onPressed: controller.nextStep,
             backgroundColor: AppColors.reportOrange,
           ),

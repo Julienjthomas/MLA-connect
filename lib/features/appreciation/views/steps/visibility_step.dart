@@ -56,26 +56,6 @@ class AppreciationVisibilityStep extends GetView<AppreciationController> {
                   );
                 }).toList(),
               )),
-          const SizedBox(height: 16),
-          Obx(() => Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: AppColors.grey200),
-                ),
-                child: Row(children: [
-                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('Anonymous Submission', style: AppTextStyles.titleSmall),
-                    Text('Hide my name and contact details', style: AppTextStyles.caption),
-                  ])),
-                  Switch.adaptive(
-                    value: controller.anonymous.value,
-                    onChanged: (v) => controller.anonymous.value = v,
-                    activeThumbColor: AppColors.appreciateGreen,
-                  ),
-                ]),
-              )),
           const SizedBox(height: 32),
           PrimaryButton(text: 'Next: Review →', onPressed: controller.nextStep, backgroundColor: AppColors.appreciateGreen),
           const SizedBox(height: 20),

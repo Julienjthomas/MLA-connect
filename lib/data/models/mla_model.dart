@@ -8,6 +8,7 @@ class MlaModel {
   final String? bioMl;
   final String term;
   final String constituency;
+  final String? education;
   final MlaStats stats;
   final MlaContact contact;
   final List<MlaInitiative> initiatives;
@@ -20,6 +21,7 @@ class MlaModel {
     this.bioMl,
     required this.term,
     required this.constituency,
+    this.education,
     required this.stats,
     required this.contact,
     this.initiatives = const [],
