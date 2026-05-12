@@ -45,11 +45,28 @@ class ActivityView extends GetView<ActivityController> {
           children: [
             // Summary cards
             Obx(
-              () => _SummaryCards(
-                reports: controller.totalReports,
-                resolved: controller.resolvedReports,
-                appreciations: controller.totalAppreciations,
-                ideas: controller.totalIdeas,
+              () => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _SummaryCards(
+                    reports: controller.totalReports,
+                    resolved: controller.resolvedReports,
+                    appreciations: controller.totalAppreciations,
+                    ideas: controller.totalIdeas,
+                    officeMessages: controller.totalOfficeMessages,
+                  ),
+                  if (controller.officeMessages.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Office messages are listed in the Chat tab.',
+                          style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             // Tab content
@@ -80,44 +97,53 @@ class ActivityView extends GetView<ActivityController> {
 }
 
 class _SummaryCards extends StatelessWidget {
-  final int reports, resolved, appreciations, ideas;
+  final int reports, resolved, appreciations, ideas, officeMessages;
   const _SummaryCards({
     required this.reports,
     required this.resolved,
     required this.appreciations,
     required this.ideas,
+    required this.officeMessages,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _stat('$reports', 'Reports\nSubmitted', AppColors.reportOrange, Icons.report_outlined),
-          _stat('$resolved', 'Resolved\nIssues', AppColors.appreciateGreen, Icons.check_circle_outline),
-          _stat('$ideas', 'Ideas\nShared', AppColors.ideaPurple, Icons.lightbulb_outline),
-          _stat('$appreciations', 'Appreciations\nSent', AppColors.improveBlue, Icons.favorite_outline),
-        ],
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          children: [
+            _stat('$reports', 'Reports', AppColors.reportOrange, Icons.report_outlined),
+            _stat('$resolved', 'Resolved', AppColors.appreciateGreen, Icons.check_circle_outline),
+            _stat('$ideas', 'Ideas', AppColors.ideaPurple, Icons.lightbulb_outline),
+            _stat('$appreciations', 'Thanks', AppColors.improveBlue, Icons.favorite_outline),
+            _stat('$officeMessages', 'Office\nChat', AppColors.primary, Icons.chat_outlined),
+          ],
+        ),
       ),
     );
   }
 
   Widget _stat(String value, String label, Color color, IconData icon) {
-    return Column(
-      children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
-          child: Icon(icon, color: color, size: 22),
-        ),
-        const SizedBox(height: 6),
-        Text(value, style: AppTextStyles.titleLarge.copyWith(color: color)),
-        Text(label, style: AppTextStyles.caption.copyWith(height: 1.2), textAlign: TextAlign.center),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(height: 6),
+          Text(value, style: AppTextStyles.titleMedium.copyWith(color: color)),
+          const SizedBox(height: 2),
+          Text(label, style: AppTextStyles.caption, textAlign: TextAlign.center),
+        ],
+      ),
     );
   }
 }

@@ -8,7 +8,6 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shimmer_loader.dart';
-import '../../../core/utils/app_locale.dart';
 import '../../../routes/app_routes.dart';
 import '../../shell/controllers/shell_controller.dart';
 import '../controllers/home_controller.dart';
@@ -105,7 +104,6 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
-        const _LanguageSwitcher(),
         const SizedBox(width: 8),
       ],
     );
@@ -213,7 +211,7 @@ class HomeView extends GetView<HomeController> {
           onAction: () {
             // Switch to Updates tab (index 2)
             try {
-              Get.find<ShellController>().goTo(2);
+              Get.find<ShellController>().goTo(3);
             } catch (_) {
               Get.toNamed(Routes.updateDetail);
             }
@@ -428,101 +426,6 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _LanguageSwitcher extends StatelessWidget {
-  const _LanguageSwitcher();
-
-  @override
-  Widget build(BuildContext context) {
-    final isMl = AppLocale.isMalayalam;
-    return GestureDetector(
-      onTap: () => _showPicker(context, isMl),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.grey300),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              isMl ? 'മലയാളം' : 'English',
-              style: const TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(width: 4),
-            const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: AppColors.textSecondary),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showPicker(BuildContext context, bool isMl) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      builder: (_) => Padding(
-        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 36,
-                height: 4,
-                decoration: BoxDecoration(color: AppColors.grey300, borderRadius: BorderRadius.circular(2)),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text('Select Language', style: AppTextStyles.titleMedium),
-            const SizedBox(height: 16),
-            _tile(context, 'en', 'English', 'English', isMl),
-            const SizedBox(height: 10),
-            _tile(context, 'ml', 'മലയാളം', 'Malayalam', isMl),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _tile(BuildContext context, String code, String native, String english, bool isMl) {
-    final selected = (code == 'ml') == isMl;
-    return GestureDetector(
-      onTap: () {
-        AppLocale.change(code);
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primary.withValues(alpha: 0.08) : AppColors.surface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: selected ? AppColors.primary : AppColors.grey300, width: selected ? 2 : 1),
-        ),
-        child: Row(
-          children: [
-            Text(
-              native,
-              style: AppTextStyles.titleSmall.copyWith(color: selected ? AppColors.primary : AppColors.textPrimary),
-            ),
-            const SizedBox(width: 6),
-            Text('· $english', style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
-            const Spacer(),
-            if (selected) const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 20),
-          ],
-        ),
       ),
     );
   }

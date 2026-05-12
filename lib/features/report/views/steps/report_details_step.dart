@@ -7,6 +7,7 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/upload_widget.dart';
 import '../../../../core/widgets/voice_input_widget.dart';
+import '../../../../routes/app_routes.dart';
 import '../../controllers/report_controller.dart';
 
 class ReportDetailsStep extends GetView<ReportController> {
@@ -75,24 +76,49 @@ class ReportDetailsStep extends GetView<ReportController> {
 
           const SizedBox(height: 14),
 
-          // Description — bigger box, 1500 char limit
-          const Text('Problem Description *', style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
-          TextField(
-            controller: controller.descriptionController,
-            minLines: 5,
-            maxLines: 10,
-            maxLength: 1500,
-            decoration: const InputDecoration(hintText: 'Describe the problem in detail...'),
+          // Description — long form + expand + voice (mic on right)
+          Row(
+            children: [
+              const Expanded(
+                child: Text('Problem Description *', style: AppTextStyles.titleSmall),
+              ),
+              IconButton(
+                tooltip: 'Expand editor',
+                icon: const Icon(Icons.open_in_full_rounded, size: 22),
+                onPressed: () =>
+                    Get.toNamed(Routes.longFormComposer, arguments: controller.descriptionController),
+              ),
+            ],
           ),
-
           const SizedBox(height: 8),
-
-          // Voice input
-          VoiceInputWidget(
-            onRecorded: (path) {
-              // Store path for upload on submit if needed
-            },
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: controller.descriptionController,
+                  minLines: 8,
+                  maxLines: 16,
+                  maxLength: 1500,
+                  decoration: const InputDecoration(
+                    hintText: 'Describe the problem in detail...',
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              VoiceInputWidget(
+                alignTrailing: true,
+                onTranscript: (t) {
+                  final c = controller.descriptionController;
+                  final cur = c.text.trim();
+                  if (cur.isEmpty) {
+                    c.text = t;
+                  } else {
+                    c.text = '$cur\n$t';
+                  }
+                },
+              ),
+            ],
           ),
 
           const SizedBox(height: 20),

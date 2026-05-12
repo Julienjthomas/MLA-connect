@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/theme/app_text_styles.dart';
 import '../../../data/models/mla_model.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '../../../routes/app_routes.dart';
 
 class MlaHeroBanner extends StatelessWidget {
@@ -27,7 +27,6 @@ class MlaHeroBanner extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            // Background landscape image — reduced opacity
             Positioned.fill(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
@@ -40,15 +39,13 @@ class MlaHeroBanner extends StatelessWidget {
                 ),
               ),
             ),
-            // Content
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  // MLA photo
                   Container(
-                    width: 68,
-                    height: 68,
+                    width: 88,
+                    height: 88,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 2.5),
@@ -59,40 +56,22 @@ class MlaHeroBanner extends StatelessWidget {
                         fit: BoxFit.cover,
                         errorWidget: (_, __, ___) => Container(
                           color: Colors.white24,
-                          child: const Icon(Icons.person, color: Colors.white, size: 34),
+                          child: const Icon(Icons.person, color: Colors.white, size: 40),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 16),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'MLA',
-                          style: AppTextStyles.caption.copyWith(
-                            color: Colors.white60,
-                            fontSize: 11,
-                            letterSpacing: 1.2,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          mla.name,
-                          style: AppTextStyles.titleLarge.copyWith(
-                            color: Colors.white,
-                            fontSize: 17,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          mla.constituency,
-                          style: AppTextStyles.caption.copyWith(color: Colors.white70),
-                        ),
-                      ],
+                    child: Text(
+                      mla.name,
+                      style: AppTextStyles.titleLarge.copyWith(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

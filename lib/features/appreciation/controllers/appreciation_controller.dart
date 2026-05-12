@@ -103,7 +103,11 @@ class AppreciationController extends GetxController {
   Future<void> submit() async {
     isSubmitting.value = true;
     try {
-      final userId = Get.find<AuthController>().userId ?? '';
+      final reporterId = Get.find<AuthController>().submissionReporterId ?? '';
+      if (reporterId.isEmpty) {
+        Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
       List<String> mediaUrls = [];
       if (selectedImages.isNotEmpty) {
         mediaUrls = await _storage.uploadFiles(selectedImages, 'appreciations');
@@ -118,7 +122,7 @@ class AppreciationController extends GetxController {
         anonymous: anonymous.value,
         mediaUrls: mediaUrls,
       );
-      final id = await _service.submit(data, userId);
+      final id = await _service.submit(data, reporterId);
       submittedId.value = id;
       nextStep();
     } catch (e) {

@@ -1,4 +1,5 @@
 import '../../core/constants/app_enums.dart';
+import '../../core/utils/json_ids.dart';
 import '../../core/utils/date_formatter.dart';
 import '../../core/widgets/timeline_widget.dart';
 
@@ -52,16 +53,16 @@ class ReportModel {
             .toList() ??
         [];
     return ReportModel(
-      id: json['id'] as String,
-      userId: json['reporter_id'] as String,
+      id: jsonIdToString(json['id']),
+      userId: jsonIdToString(json['reporter_id']),
       category: ReportCategoryX.fromString(json['category'] as String? ?? 'other'),
       title: json['title'] as String,
       description: json['description'] as String,
       voiceNoteUrl: json['voice_message_url'] as String?,
       location: json['pin_address'] as String? ?? json['landmark'] as String? ?? '',
       landmark: json['landmark'] as String?,
-      wardId: json['ward_id'] as String? ?? '',
-      wardName: json['wards']?['name'] as String? ?? json['ward_id'] as String? ?? '',
+      wardId: jsonIdToNullableString(json['ward_id']) ?? '',
+      wardName: json['wards']?['name'] as String? ?? jsonIdToNullableString(json['ward_id']) ?? '',
       contactNumber: json['contact_phone'] as String?,
       status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -80,7 +81,9 @@ class ReportFormData {
   final String description;
   final String location;
   final String? landmark;
+  /// DB FK — from profile or ward picker when resolved to a row id.
   final String? wardId;
+  final String? localBodyId;
   final String? panchayath;
   final String? ward;
   final String? contactNumber;
@@ -93,6 +96,7 @@ class ReportFormData {
     required this.location,
     this.landmark,
     this.wardId,
+    this.localBodyId,
     this.panchayath,
     this.ward,
     this.contactNumber,
@@ -108,9 +112,8 @@ class ReportFormData {
         'description': description,
         'pin_address': location,
         if (landmark != null && landmark!.isNotEmpty) 'landmark': landmark,
-        if (wardId != null) 'ward_id': wardId,
-        if (panchayath != null && panchayath!.isNotEmpty) 'panchayath': panchayath,
-        if (ward != null && ward!.isNotEmpty) 'ward_name': ward,
+        if (localBodyId != null && localBodyId!.isNotEmpty) 'local_body_id': localBodyId,
+        if (wardId != null && wardId!.isNotEmpty) 'ward_id': wardId,
         if (contactNumber != null && contactNumber!.isNotEmpty) 'contact_phone': contactNumber,
       };
 }

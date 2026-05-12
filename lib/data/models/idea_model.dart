@@ -1,4 +1,5 @@
 import '../../core/constants/app_enums.dart';
+import '../../core/utils/json_ids.dart';
 import '../../core/utils/date_formatter.dart';
 
 class IdeaModel {
@@ -31,8 +32,8 @@ class IdeaModel {
   });
 
   factory IdeaModel.fromJson(Map<String, dynamic> json) => IdeaModel(
-        id: json['id'] as String,
-        userId: json['reporter_id'] as String,
+        id: jsonIdToString(json['id']),
+        userId: jsonIdToString(json['reporter_id']),
         topic: json['topic'] as String? ?? '',
         title: json['title'] as String? ?? '',
         description: json['description'] as String? ?? '',

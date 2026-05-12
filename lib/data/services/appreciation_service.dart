@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../core/utils/json_ids.dart';
 import '../models/appreciation_model.dart';
 import 'submission_utils.dart';
 
@@ -22,7 +23,7 @@ class AppreciationService {
         .insert(data.toJson(userId, referenceId))
         .select()
         .single();
-    final submissionId = res['id'] as String;
+    final submissionId = jsonIdToString(res['id']);
 
     if (data.mediaUrls.isNotEmpty) {
       await _db.from('media_attachments').insert(

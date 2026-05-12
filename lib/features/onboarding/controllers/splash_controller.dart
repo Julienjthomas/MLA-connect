@@ -32,7 +32,12 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
     final auth = Get.find<AuthController>();
     if (auth.isLoggedIn) {
       final hasProfile = await auth.hasCompletedOnboarding();
-      Get.offAllNamed(hasProfile ? Routes.home : Routes.panchayat);
+      if (hasProfile) {
+        Get.offAllNamed(Routes.home);
+      } else {
+        final route = await auth.resolveOnboardingResumeRoute();
+        Get.offAllNamed(route);
+      }
     } else {
       Get.offAllNamed(Routes.welcome);
     }

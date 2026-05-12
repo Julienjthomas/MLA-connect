@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../../data/models/mla_model.dart';
 import '../../../data/services/mla_service.dart';
+import '../../auth/controllers/auth_controller.dart';
 
 class MlaController extends GetxController {
   final _service = MlaService();
@@ -16,7 +17,8 @@ class MlaController extends GetxController {
   Future<void> load() async {
     loading.value = true;
     try {
-      mla.value = await _service.getMlaProfile();
+      final cid = Get.find<AuthController>().user.value?.constituencyId;
+      mla.value = await _service.getMlaProfile(constituencyId: cid);
     } finally {
       loading.value = false;
     }

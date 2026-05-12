@@ -36,23 +36,27 @@ class ReportSuccessStep extends GetView<ReportController> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            Obx(() => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(children: [
-                Text('Your Reference ID', style: AppTextStyles.caption),
-                const SizedBox(height: 4),
-                Text(
-                  controller.submittedId.value.isNotEmpty
-                      ? 'RP${controller.submittedId.value.substring(0, 8).toUpperCase()}'
-                      : 'RP2024001256',
-                  style: AppTextStyles.titleLarge.copyWith(color: AppColors.primary),
+            Obx(() {
+              final id = controller.submittedId.value;
+              final refText = id.isEmpty
+                  ? 'RP2024001256'
+                  : 'RP${(id.length <= 8 ? id : id.substring(0, 8)).toUpperCase()}';
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceVariant,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              ]),
-            )),
+                child: Column(children: [
+                  Text('Your Reference ID', style: AppTextStyles.caption),
+                  const SizedBox(height: 4),
+                  Text(
+                    refText,
+                    style: AppTextStyles.titleLarge.copyWith(color: AppColors.primary),
+                  ),
+                ]),
+              );
+            }),
             const Spacer(),
             PrimaryButton(
               text: 'Track in My Activity',

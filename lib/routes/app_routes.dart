@@ -3,9 +3,9 @@ abstract class Routes {
 
   static const splash = '/splash';
   static const welcome = '/welcome';
-  static const language = '/language';
   static const phone = '/phone';
   static const otp = '/otp';
+  static const constituency = '/constituency';
   static const panchayat = '/panchayat';
   static const ward = '/ward';
   static const profileSetup = '/profile-setup';
@@ -25,4 +25,6 @@ abstract class Routes {
   static const updateDetail = '/updates/detail';
 
   static const achievementsListing = '/achievements';
+
+  static const longFormComposer = '/long-form-composer';
 }

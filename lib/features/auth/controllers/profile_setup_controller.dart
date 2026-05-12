@@ -22,12 +22,15 @@ class ProfileSetupController extends GetxController {
     loading.value = true;
     try {
       final onboarding = Get.find<OnboardingController>();
-      await Get.find<AuthController>().saveProfile(
+      final auth = Get.find<AuthController>();
+      final language = auth.user.value?.language ?? 'en';
+      await auth.saveProfile(
         name: nameController.text.trim(),
         email: emailController.text.trim(),
+        constituencyId: onboarding.selectedConstituency.value?.id ?? auth.user.value?.constituencyId,
         localBodyId: onboarding.selectedLocalBody.value!.id,
         wardId: onboarding.selectedWard.value!.id,
-        language: onboarding.selectedLanguage.value,
+        language: language,
       );
       Get.toNamed(Routes.notificationsSetup);
     } catch (_) {

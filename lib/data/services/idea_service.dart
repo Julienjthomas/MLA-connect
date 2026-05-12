@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../core/utils/json_ids.dart';
 import '../models/idea_model.dart';
 import 'submission_utils.dart';
 
@@ -22,6 +23,6 @@ class IdeaService {
         .insert(data.toJson(userId, referenceId))
         .select()
         .single();
-    return res['id'] as String;
+    return jsonIdToString(res['id']);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../core/utils/json_ids.dart';
 import '../models/report_model.dart';
 import 'submission_utils.dart';
 
@@ -36,7 +37,7 @@ class ReportService {
         .insert(data.toJson(userId, referenceId))
         .select()
         .single();
-    final submissionId = res['id'] as String;
+    final submissionId = jsonIdToString(res['id']);
 
     await _db.from('submission_status_history').insert({
       'submission_id': submissionId,

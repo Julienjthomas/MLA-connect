@@ -67,7 +67,12 @@ class OtpController extends GetxController {
       final success = await auth.verifyOtp(phone, otpController.text);
       if (success) {
         final hasProfile = await auth.hasCompletedOnboarding();
-        Get.offAllNamed(hasProfile ? Routes.home : Routes.panchayat);
+        if (hasProfile) {
+          Get.offAllNamed(Routes.home);
+        } else {
+          final route = await auth.resolveOnboardingResumeRoute();
+          Get.offAllNamed(route);
+        }
       } else {
         Get.snackbar(
           'Invalid OTP',

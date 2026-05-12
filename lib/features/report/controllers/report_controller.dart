@@ -108,7 +108,12 @@ class ReportController extends GetxController {
   Future<void> submit() async {
     isSubmitting.value = true;
     try {
-      final userId = Get.find<AuthController>().userId ?? '';
+      final auth = Get.find<AuthController>();
+      final reporterId = auth.submissionReporterId;
+      if (reporterId == null || reporterId.isEmpty) {
+        Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
 
       // Upload images
       List<String> mediaUrls = [];
@@ -116,19 +121,31 @@ class ReportController extends GetxController {
         mediaUrls = await _storage.uploadFiles(selectedImages, 'reports');
       }
 
+      final profile = auth.user.value;
+      final landmarkText = landmarkController.text.trim();
+      final geoLabel = [
+        if (selectedPanchayath.value.isNotEmpty) selectedPanchayath.value,
+        if (selectedWard.value.isNotEmpty) selectedWard.value,
+      ].join(' · ');
+      final mergedLandmark = landmarkText.isEmpty
+          ? (geoLabel.isEmpty ? null : geoLabel)
+          : (geoLabel.isEmpty ? landmarkText : '$landmarkText ($geoLabel)');
+
       final data = ReportFormData(
         category: selectedCategory.value!,
         title: titleController.text.trim(),
         description: descriptionController.text.trim(),
         location: locationController.text.trim(),
-        landmark: landmarkController.text.trim(),
+        landmark: mergedLandmark,
+        localBodyId: profile?.localBodyId,
+        wardId: profile?.wardId,
         panchayath: selectedPanchayath.value,
         ward: selectedWard.value,
         contactNumber: contactController.text.trim(),
         mediaUrls: mediaUrls,
       );
 
-      final id = await _service.submitReport(data, userId);
+      final id = await _service.submitReport(data, reporterId);
       submittedId.value = id;
       nextStep();
     } catch (e) {

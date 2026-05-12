@@ -128,7 +128,11 @@ class IdeaController extends GetxController {
   Future<void> submit() async {
     isSubmitting.value = true;
     try {
-      final userId = Get.find<AuthController>().userId ?? '';
+      final reporterId = Get.find<AuthController>().submissionReporterId ?? '';
+      if (reporterId.isEmpty) {
+        Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
       final effectiveTopic = topic.value == 'Other'
           ? customTopicController.text.trim()
           : topic.value;
@@ -142,7 +146,7 @@ class IdeaController extends GetxController {
         allowDiscussion: allowDiscussion.value,
         allowContact: allowContact.value,
       );
-      final id = await _service.submit(data, userId);
+      final id = await _service.submit(data, reporterId);
       submittedId.value = id;
       nextStep();
     } catch (_) {

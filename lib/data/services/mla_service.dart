@@ -1,4 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../core/utils/constituency_db_id.dart';
+import '../../core/utils/json_ids.dart';
 import '../models/mla_model.dart';
 
 class MlaStaffModel {
@@ -23,7 +25,7 @@ class MlaStaffModel {
   });
 
   factory MlaStaffModel.fromJson(Map<String, dynamic> json) => MlaStaffModel(
-        id: json['id'] as String,
+        id: jsonIdToString(json['id']),
         fullName: json['full_name'] as String? ?? '',
         designation: json['designation'] as String?,
         photoUrl: json['photo_url'] as String?,
@@ -37,16 +39,27 @@ class MlaStaffModel {
 class MlaService {
   SupabaseClient get _db => Supabase.instance.client;
 
-  Future<MlaModel> getMlaProfile() async {
+  Future<MlaModel> getMlaProfile({String? constituencyId}) async {
     try {
-      final mlaRow = await _db
-          .from('mlas')
-          .select()
-          .eq('is_current', true)
-          .limit(1)
-          .single();
+      Map<String, dynamic>? mlaRow;
+      if (constituencyId != null) {
+        final dbCid = await ConstituencyDbId.resolve(_db, constituencyId) ??
+            (ConstituencyDbId.isNumericId(constituencyId) ? constituencyId : null);
+        if (dbCid != null) {
+          final r = await _db
+              .from('mlas')
+              .select('*, constituencies(name)')
+              .eq('is_current', true)
+              .eq('constituency_id', dbCid)
+              .maybeSingle();
+          if (r != null) mlaRow = Map<String, dynamic>.from(r);
+        }
+      }
+      mlaRow ??= await _fetchAnyCurrentMla();
 
-      final mlaId = mlaRow['id'] as String;
+      if (mlaRow == null) return MlaModel.placeholder;
+
+      final mlaId = jsonIdToString(mlaRow['id']);
 
       final statsRow = await _db
           .from('v_mla_stats')
@@ -63,6 +76,12 @@ class MlaService {
     } catch (_) {
       return MlaModel.placeholder;
     }
+  }
+
+  Future<Map<String, dynamic>?> _fetchAnyCurrentMla() async {
+    final r = await _db.from('mlas').select('*, constituencies(name)').eq('is_current', true).limit(1).maybeSingle();
+    if (r == null) return null;
+    return Map<String, dynamic>.from(r);
   }
 
   Future<List<MlaStaffModel>> getPublicStaff() async {

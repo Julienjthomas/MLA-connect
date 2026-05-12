@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../auth/controllers/auth_controller.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -35,8 +36,12 @@ class ProfileView extends GetView<ProfileController> {
           _SettingsTile(
             icon: Icons.language_outlined,
             title: 'Language',
-            trailing: const Text('English', style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
-            onTap: () {},
+            trailing: Obx(() {
+              final lang = Get.find<AuthController>().user.value?.language ?? 'en';
+              final label = lang == 'ml' ? 'മലയാളം' : 'English';
+              return Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13));
+            }),
+            onTap: () => controller.pickLanguage(context),
           ),
           _SettingsTile(icon: Icons.help_outline_rounded, title: 'Help & FAQ', onTap: () {}),
           _SettingsTile(icon: Icons.phone_outlined, title: 'Contact MLA Office', onTap: () {}),
@@ -130,18 +135,25 @@ class _UserCard extends StatelessWidget {
                       style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
                     ),
                   ],
-                  if (controller.wardName != null || controller.localBodyName != null) ...[
+                  if (controller.constituencyName != null ||
+                      controller.wardName != null ||
+                      controller.localBodyName != null) ...[
                     const SizedBox(height: 4),
                     Row(
                       children: [
                         const Icon(Icons.location_on_outlined, size: 13, color: AppColors.primary),
                         const SizedBox(width: 3),
-                        Text(
-                          [
-                            if (controller.wardName != null) controller.wardName!,
-                            if (controller.localBodyName != null) controller.localBodyName!,
-                          ].join(', '),
-                          style: AppTextStyles.caption.copyWith(color: AppColors.primary),
+                        Expanded(
+                          child: Text(
+                            [
+                              if (controller.constituencyName != null) controller.constituencyName!,
+                              if (controller.localBodyName != null) controller.localBodyName!,
+                              if (controller.wardName != null) controller.wardName!,
+                            ].join(' · '),
+                            style: AppTextStyles.caption.copyWith(color: AppColors.primary),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

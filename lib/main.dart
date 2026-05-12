@@ -23,6 +23,13 @@ void main() async {
 
   Get.put(AuthController(), permanent: true);
 
+  final device = WidgetsBinding.instance.platformDispatcher.locale;
+  if (device.languageCode == 'ml') {
+    Get.updateLocale(const Locale('ml'));
+  } else {
+    Get.updateLocale(const Locale('en'));
+  }
+
   runApp(const SuperBalusseryApp());
 }
 
@@ -37,7 +44,7 @@ class SuperBalusseryApp extends StatelessWidget {
       theme: buildAppTheme(),
       localizationsDelegates: S.localizationsDelegates,
       supportedLocales: S.supportedLocales,
-      locale: const Locale('en'),
+      locale: Get.locale ?? const Locale('en'),
       fallbackLocale: const Locale('en'),
       initialRoute: Routes.splash,
       getPages: AppPages.pages,

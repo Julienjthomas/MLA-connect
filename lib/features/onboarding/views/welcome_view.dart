@@ -70,7 +70,7 @@ class WelcomeView extends StatelessWidget {
               const Spacer(),
               PrimaryButton(
                 text: AppStrings.continueWithPhone,
-                onPressed: () => Get.toNamed(Routes.language),
+                onPressed: () => Get.toNamed(Routes.phone),
               ),
               const SizedBox(height: 12),
               TextButton(

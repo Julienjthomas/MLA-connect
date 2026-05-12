@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../core/utils/json_ids.dart';
+
 class MlaModel {
   final String id;
   final String name;
@@ -29,13 +31,13 @@ class MlaModel {
 
   factory MlaModel.fromJson(Map<String, dynamic> json) {
     return MlaModel(
-      id: json['id'] as String,
+      id: jsonIdToString(json['id']),
       name: json['full_name'] as String? ?? json['name'] as String? ?? '',
       photoUrl: json['photo_url'] as String?,
       bio: json['bio'] as String? ?? '',
       bioMl: json['bio_ml'] as String?,
       term: json['term_label'] as String? ?? json['term'] as String? ?? '',
-      constituency: json['constituency'] as String? ?? '',
+      constituency: json['constituencies']?['name'] as String? ?? json['constituency'] as String? ?? '',
       stats: MlaStats(
         issuesResolved: json['issues_resolved'] as int? ?? 0,
         activeProjects: json['active_projects'] as int? ?? 0,

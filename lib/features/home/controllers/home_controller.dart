@@ -3,6 +3,7 @@ import '../../../data/models/mla_model.dart';
 import '../../../data/models/update_model.dart';
 import '../../../data/services/mla_service.dart';
 import '../../../data/services/updates_service.dart';
+import '../../auth/controllers/auth_controller.dart';
 
 class HomeController extends GetxController {
   final _mlaService = MlaService();
@@ -41,7 +42,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> _loadMla() async {
-    mla.value = await _mlaService.getMlaProfile();
+    final cid = Get.find<AuthController>().user.value?.constituencyId;
+    mla.value = await _mlaService.getMlaProfile(constituencyId: cid);
   }
 
   Future<void> _loadActivity() async {

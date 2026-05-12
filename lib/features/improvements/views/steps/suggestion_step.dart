@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/widgets/voice_input_widget.dart';
+import '../../../../routes/app_routes.dart';
 import '../../controllers/improvement_controller.dart';
 
 class SuggestionStep extends GetView<ImprovementController> {
@@ -28,12 +30,48 @@ class SuggestionStep extends GetView<ImprovementController> {
                 onChanged: (v) => controller.department.value = v ?? '',
               )),
           const SizedBox(height: 14),
-          Text('Your Suggestion *', style: AppTextStyles.titleSmall),
+          Row(
+            children: [
+              const Expanded(
+                child: Text('Your Suggestion *', style: AppTextStyles.titleSmall),
+              ),
+              IconButton(
+                tooltip: 'Expand editor',
+                icon: const Icon(Icons.open_in_full_rounded, size: 22),
+                onPressed: () =>
+                    Get.toNamed(Routes.longFormComposer, arguments: controller.suggestionController),
+              ),
+            ],
+          ),
           const SizedBox(height: 8),
-          TextField(
-            controller: controller.suggestionController,
-            maxLines: 6, maxLength: 600,
-            decoration: const InputDecoration(hintText: 'Describe your improvement suggestion in detail...'),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: controller.suggestionController,
+                  minLines: 8,
+                  maxLines: 16,
+                  maxLength: 1500,
+                  decoration: const InputDecoration(
+                    hintText: 'Describe your improvement suggestion in detail...',
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              VoiceInputWidget(
+                alignTrailing: true,
+                onTranscript: (t) {
+                  final c = controller.suggestionController;
+                  final cur = c.text.trim();
+                  if (cur.isEmpty) {
+                    c.text = t;
+                  } else {
+                    c.text = '$cur\n$t';
+                  }
+                },
+              ),
+            ],
           ),
           const SizedBox(height: 32),
           PrimaryButton(text: 'Next: Location →', onPressed: controller.nextStep, backgroundColor: AppColors.improveBlue),

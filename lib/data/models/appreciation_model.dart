@@ -1,4 +1,5 @@
 import '../../core/constants/app_enums.dart';
+import '../../core/utils/json_ids.dart';
 import '../../core/utils/date_formatter.dart';
 
 class AppreciationModel {
@@ -31,8 +32,8 @@ class AppreciationModel {
   });
 
   factory AppreciationModel.fromJson(Map<String, dynamic> json) => AppreciationModel(
-        id: json['id'] as String,
-        userId: json['reporter_id'] as String,
+        id: jsonIdToString(json['id']),
+        userId: jsonIdToString(json['reporter_id']),
         recipientCategory: json['target_type'] as String? ?? '',
         staffName: json['recipient_staff_name'] as String?,
         department: json['recipient_department'] as String?,

@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../core/utils/json_ids.dart';
 import '../models/improvement_model.dart';
 
 class ImprovementService {
@@ -19,6 +20,6 @@ class ImprovementService {
         .insert(data.toJson(userId))
         .select()
         .single();
-    return res['id'] as String;
+    return jsonIdToString(res['id']);
   }
 }

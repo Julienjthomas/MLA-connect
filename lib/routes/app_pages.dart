@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../core/widgets/long_form_composer_view.dart';
 import '../features/onboarding/bindings/onboarding_binding.dart';
 import '../features/onboarding/bindings/splash_binding.dart';
 import '../features/onboarding/views/splash_view.dart';
 import '../features/onboarding/views/welcome_view.dart';
-import '../features/onboarding/views/language_view.dart';
+import '../features/onboarding/views/constituency_view.dart';
 import '../features/onboarding/views/panchayat_view.dart';
 import '../features/onboarding/views/ward_view.dart';
 import '../features/onboarding/views/onboarding_success_view.dart';
@@ -46,7 +48,6 @@ class AppPages {
       binding: OnboardingBinding(),
       transition: Transition.fadeIn,
     ),
-    GetPage(name: Routes.language, page: () => const LanguageView(), binding: OnboardingBinding(), transition: Transition.rightToLeft),
     GetPage(
       name: Routes.phone,
       page: () => const PhoneView(),
@@ -54,6 +55,12 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
     GetPage(name: Routes.otp, page: () => const OtpView(), binding: OtpBinding(), transition: Transition.rightToLeft),
+    GetPage(
+      name: Routes.constituency,
+      page: () => const ConstituencyView(),
+      binding: OnboardingBinding(),
+      transition: Transition.rightToLeft,
+    ),
     GetPage(name: Routes.panchayat, page: () => const PanchayatView(), binding: OnboardingBinding(), transition: Transition.rightToLeft),
     GetPage(name: Routes.ward, page: () => const WardView(), binding: OnboardingBinding(), transition: Transition.rightToLeft),
     GetPage(
@@ -125,6 +132,14 @@ class AppPages {
       name: Routes.achievementsListing,
       page: () => const AchievementsListingView(),
       transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.longFormComposer,
+      page: () {
+        final c = Get.arguments as TextEditingController;
+        return LongFormComposerView(textController: c);
+      },
+      transition: Transition.downToUp,
     ),
   ];
 }
