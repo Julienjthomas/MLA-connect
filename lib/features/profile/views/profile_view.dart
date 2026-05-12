@@ -15,7 +15,10 @@ class ProfileView extends GetView<ProfileController> {
       appBar: AppBar(
         backgroundColor: AppColors.surface,
         automaticallyImplyLeading: false,
-        title: Text('My Profile', style: AppTextStyles.titleLarge),
+        leadingWidth: 0,
+        centerTitle: false,
+        leading: const SizedBox.shrink(),
+        title: const Text('My Profile', style: AppTextStyles.titleLarge),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(height: 1, color: AppColors.divider),
@@ -25,33 +28,21 @@ class ProfileView extends GetView<ProfileController> {
         children: [
           _UserCard(controller: controller),
           const SizedBox(height: 8),
-          _SectionLabel('Notifications'),
+          const _SectionLabel('Notifications'),
           _NotificationTiles(controller: controller),
           const SizedBox(height: 8),
-          _SectionLabel('General'),
+          const _SectionLabel('General'),
           _SettingsTile(
             icon: Icons.language_outlined,
             title: 'Language',
             trailing: const Text('English', style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
             onTap: () {},
           ),
-          _SettingsTile(
-            icon: Icons.help_outline_rounded,
-            title: 'Help & FAQ',
-            onTap: () {},
-          ),
-          _SettingsTile(
-            icon: Icons.phone_outlined,
-            title: 'Contact MLA Office',
-            onTap: () {},
-          ),
-          _SettingsTile(
-            icon: Icons.privacy_tip_outlined,
-            title: 'Privacy Policy',
-            onTap: () {},
-          ),
+          _SettingsTile(icon: Icons.help_outline_rounded, title: 'Help & FAQ', onTap: () {}),
+          _SettingsTile(icon: Icons.phone_outlined, title: 'Contact MLA Office', onTap: () {}),
+          _SettingsTile(icon: Icons.privacy_tip_outlined, title: 'Privacy Policy', onTap: () {}),
           const SizedBox(height: 8),
-          _SectionLabel('Account'),
+          const _SectionLabel('Account'),
           _SettingsTile(
             icon: Icons.logout_rounded,
             title: 'Logout',
@@ -82,7 +73,7 @@ class ProfileView extends GetView<ProfileController> {
               Get.back();
               controller.logout();
             },
-            child: Text('Logout', style: TextStyle(color: AppColors.statusRejected)),
+            child: const Text('Logout', style: TextStyle(color: AppColors.statusRejected)),
           ),
         ],
       ),
@@ -134,18 +125,26 @@ class _UserCard extends StatelessWidget {
                   Text(controller.userName, style: AppTextStyles.titleMedium),
                   if (controller.userPhone != null) ...[
                     const SizedBox(height: 2),
-                    Text(controller.userPhone!, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
+                    Text(
+                      controller.userPhone!,
+                      style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                    ),
                   ],
                   if (controller.wardName != null || controller.localBodyName != null) ...[
                     const SizedBox(height: 4),
-                    Row(children: [
-                      const Icon(Icons.location_on_outlined, size: 13, color: AppColors.primary),
-                      const SizedBox(width: 3),
-                      Text(
-                        [if (controller.wardName != null) controller.wardName!, if (controller.localBodyName != null) controller.localBodyName!].join(', '),
-                        style: AppTextStyles.caption.copyWith(color: AppColors.primary),
-                      ),
-                    ]),
+                    Row(
+                      children: [
+                        const Icon(Icons.location_on_outlined, size: 13, color: AppColors.primary),
+                        const SizedBox(width: 3),
+                        Text(
+                          [
+                            if (controller.wardName != null) controller.wardName!,
+                            if (controller.localBodyName != null) controller.localBodyName!,
+                          ].join(', '),
+                          style: AppTextStyles.caption.copyWith(color: AppColors.primary),
+                        ),
+                      ],
+                    ),
                   ],
                 ],
               ),
@@ -165,7 +164,10 @@ class _UserCard extends StatelessWidget {
     return Container(
       color: AppColors.surfaceVariant,
       child: Center(
-        child: Text(initials.isEmpty ? 'U' : initials, style: AppTextStyles.titleMedium.copyWith(color: AppColors.primary)),
+        child: Text(
+          initials.isEmpty ? 'U' : initials,
+          style: AppTextStyles.titleMedium.copyWith(color: AppColors.primary),
+        ),
       ),
     );
   }
@@ -179,39 +181,41 @@ class _NotificationTiles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.surface,
-      child: Obx(() => Column(
-            children: [
-              _SwitchTile(
-                icon: Icons.notifications_active_outlined,
-                title: 'Issue Updates',
-                subtitle: 'Updates on your reported issues',
-                value: controller.notifyIssueUpdates.value,
-                onChanged: (v) => controller.notifyIssueUpdates.value = v,
-              ),
-              _SwitchTile(
-                icon: Icons.campaign_outlined,
-                title: 'MLA Announcements',
-                subtitle: 'Important announcements from MLA',
-                value: controller.notifyMlaAnnouncements.value,
-                onChanged: (v) => controller.notifyMlaAnnouncements.value = v,
-              ),
-              _SwitchTile(
-                icon: Icons.warning_amber_rounded,
-                title: 'Emergency Alerts',
-                subtitle: 'Alerts on urgent situations',
-                value: controller.notifyEmergencyAlerts.value,
-                onChanged: (v) => controller.notifyEmergencyAlerts.value = v,
-              ),
-              _SwitchTile(
-                icon: Icons.event_outlined,
-                title: 'Event Reminders',
-                subtitle: 'Upcoming events & programs',
-                value: controller.notifyEventReminders.value,
-                onChanged: (v) => controller.notifyEventReminders.value = v,
-                showDivider: false,
-              ),
-            ],
-          )),
+      child: Obx(
+        () => Column(
+          children: [
+            _SwitchTile(
+              icon: Icons.notifications_active_outlined,
+              title: 'Issue Updates',
+              subtitle: 'Updates on your reported issues',
+              value: controller.notifyIssueUpdates.value,
+              onChanged: (v) => controller.notifyIssueUpdates.value = v,
+            ),
+            _SwitchTile(
+              icon: Icons.campaign_outlined,
+              title: 'MLA Announcements',
+              subtitle: 'Important announcements from MLA',
+              value: controller.notifyMlaAnnouncements.value,
+              onChanged: (v) => controller.notifyMlaAnnouncements.value = v,
+            ),
+            _SwitchTile(
+              icon: Icons.warning_amber_rounded,
+              title: 'Emergency Alerts',
+              subtitle: 'Alerts on urgent situations',
+              value: controller.notifyEmergencyAlerts.value,
+              onChanged: (v) => controller.notifyEmergencyAlerts.value = v,
+            ),
+            _SwitchTile(
+              icon: Icons.event_outlined,
+              title: 'Event Reminders',
+              subtitle: 'Upcoming events & programs',
+              value: controller.notifyEventReminders.value,
+              onChanged: (v) => controller.notifyEventReminders.value = v,
+              showDivider: false,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -241,15 +245,10 @@ class _SwitchTile extends StatelessWidget {
           leading: Icon(icon, color: AppColors.primary, size: 22),
           title: Text(title, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w500)),
           subtitle: Text(subtitle, style: AppTextStyles.caption),
-          trailing: Switch.adaptive(
-            value: value,
-            onChanged: onChanged,
-            activeThumbColor: AppColors.primary,
-          ),
+          trailing: Switch.adaptive(value: value, onChanged: onChanged, activeThumbColor: AppColors.primary),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
         ),
-        if (showDivider)
-          const Divider(height: 1, indent: 56, endIndent: 16),
+        if (showDivider) const Divider(height: 1, indent: 56, endIndent: 16),
       ],
     );
   }
@@ -278,7 +277,10 @@ class _SettingsTile extends StatelessWidget {
       color: AppColors.surface,
       child: ListTile(
         leading: Icon(icon, color: iconColor ?? AppColors.textSecondary, size: 22),
-        title: Text(title, style: AppTextStyles.bodyMedium.copyWith(color: titleColor, fontWeight: FontWeight.w500)),
+        title: Text(
+          title,
+          style: AppTextStyles.bodyMedium.copyWith(color: titleColor, fontWeight: FontWeight.w500),
+        ),
         trailing: trailing ?? const Icon(Icons.chevron_right, color: AppColors.grey400, size: 20),
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
@@ -295,7 +297,14 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Text(label.toUpperCase(), style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontWeight: FontWeight.w600, letterSpacing: 0.8)),
+      child: Text(
+        label.toUpperCase(),
+        style: AppTextStyles.caption.copyWith(
+          color: AppColors.textTertiary,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.8,
+        ),
+      ),
     );
   }
 }

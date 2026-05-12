@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/utils/app_locale.dart';
@@ -38,15 +39,31 @@ class AuthController extends GetxController {
     } catch (_) {}
   }
 
+  String _normalizePhone(String phone) {
+    final digits = phone.replaceAll(RegExp(r'\D'), '');
+    if (digits.startsWith('91') && digits.length == 12) return '+$digits';
+    return '+91$digits';
+  }
+
   Future<void> sendOtp(String phone) async {
-    await Supabase.instance.client.auth.signInWithOtp(phone: '+91$phone');
+    final normalized = _normalizePhone(phone);
+    debugPrint('[Auth] sendOtp → $normalized');
+    await Supabase.instance.client.auth.signInWithOtp(phone: normalized);
   }
 
   Future<bool> verifyOtp(String phone, String otp) async {
+    final normalized = _normalizePhone(phone);
+    debugPrint('[Auth] verifyOtp → $normalized, token=$otp');
     try {
-      final res = await Supabase.instance.client.auth.verifyOTP(phone: '+91$phone', token: otp, type: OtpType.sms);
+      final res = await Supabase.instance.client.auth.verifyOTP(
+        phone: normalized,
+        token: otp,
+        type: OtpType.sms,
+      );
+      debugPrint('[Auth] verifyOtp result → session=${res.session?.accessToken != null}');
       return res.session != null;
-    } catch (_) {
+    } catch (e) {
+      debugPrint('[Auth] verifyOtp error → $e');
       return false;
     }
   }
@@ -70,7 +87,7 @@ class AuthController extends GetxController {
     if (uid == null) return;
     final phone = Supabase.instance.client.auth.currentUser?.phone ?? '';
     final data = {
-      'id': uid,
+      'user_id': uid,
       'full_name': name,
       'phone': phone,
       if (email != null && email.isNotEmpty) 'email': email,

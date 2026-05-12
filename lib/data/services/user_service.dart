@@ -6,20 +6,20 @@ class UserService {
 
   Future<UserModel?> getProfile(String userId) async {
     final res = await _db
-        .from('profiles')
+        .from('citizens')
         .select('*, local_bodies(name), wards(name)')
-        .eq('id', userId)
+        .eq('user_id', userId)
         .maybeSingle();
     if (res == null) return null;
     return UserModel.fromJson(res);
   }
 
   Future<void> createProfile(Map<String, dynamic> data) async {
-    await _db.from('profiles').upsert(data);
+    await _db.from('citizens').upsert(data);
   }
 
   Future<void> updateProfile(String userId, Map<String, dynamic> data) async {
-    await _db.from('profiles').update(data).eq('id', userId);
+    await _db.from('citizens').update(data).eq('user_id', userId);
   }
 
   Future<List<LocalBodyModel>> getLocalBodies() async {

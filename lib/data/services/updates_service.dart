@@ -6,8 +6,7 @@ class UpdatesService {
   SupabaseClient get _db => Supabase.instance.client;
 
   Future<List<UpdateModel>> getUpdates({UpdateCategory? category}) async {
-    var query = _db.from('updates').select().order('published_at', ascending: false);
-    final res = await query;
+    final res = await _db.from('updates').select().order('published_at', ascending: false);
     final all = (res as List).map((j) => UpdateModel.fromJson(j as Map<String, dynamic>)).toList();
     if (category == null || category == UpdateCategory.all) return all;
     return all.where((u) => u.category == category).toList();

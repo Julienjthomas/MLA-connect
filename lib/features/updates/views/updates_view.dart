@@ -22,6 +22,9 @@ class UpdatesView extends GetView<UpdatesController> {
       appBar: AppBar(
         backgroundColor: AppColors.surface,
         automaticallyImplyLeading: false,
+        leadingWidth: 0,
+        centerTitle: false,
+        leading: const SizedBox.shrink(),
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -157,15 +160,17 @@ class _UpdateCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         GestureDetector(
                           onTap: () => ctrl.toggleLike(update.id),
-                          child: Row(children: [
-                            Icon(
-                              liked ? Icons.favorite : Icons.favorite_outline,
-                              size: 14,
-                              color: liked ? AppColors.statusRejected : AppColors.grey500,
-                            ),
-                            const SizedBox(width: 4),
-                            Text('$likes', style: AppTextStyles.caption),
-                          ]),
+                          child: Row(
+                            children: [
+                              Icon(
+                                liked ? Icons.favorite : Icons.favorite_outline,
+                                size: 14,
+                                color: liked ? AppColors.statusRejected : AppColors.grey500,
+                              ),
+                              const SizedBox(width: 4),
+                              Text('$likes', style: AppTextStyles.caption),
+                            ],
+                          ),
                         ),
                       ],
                     );

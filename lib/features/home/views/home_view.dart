@@ -71,7 +71,7 @@ class HomeView extends GetView<HomeController> {
                   text: 'Super ',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: AppColors.primary,
                   ),
@@ -158,7 +158,7 @@ class HomeView extends GetView<HomeController> {
     // Give action grid ~30% of screen height so all 4 tiles are visible
     final gridHeight = (screenHeight * 0.30).clamp(200.0, 280.0);
     final tileSize = (gridHeight - 12) / 2; // 2 rows, 12 spacing
-    final aspectRatio = ((MediaQuery.of(context).size.width - 44) / 2) / tileSize;
+    final aspectRatio = ((MediaQuery.of(context).size.width - 44) / 2.8) / tileSize;
 
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -226,7 +226,7 @@ class HomeView extends GetView<HomeController> {
   SliverToBoxAdapter _buildUpdatesFeed() {
     return SliverToBoxAdapter(
       child: SizedBox(
-        height: 180,
+        height: 200,
         child: Obx(() {
           if (controller.loading.value) {
             return ListView.builder(
@@ -438,36 +438,34 @@ class _LanguageSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final isMl = AppLocale.isMalayalam;
-      return GestureDetector(
-        onTap: () => _showPicker(context, isMl),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.grey300),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                isMl ? 'മലയാളം' : 'English',
-                style: const TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(width: 4),
-              const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: AppColors.textSecondary),
-            ],
-          ),
+    final isMl = AppLocale.isMalayalam;
+    return GestureDetector(
+      onTap: () => _showPicker(context, isMl),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.grey300),
+          borderRadius: BorderRadius.circular(20),
         ),
-      );
-    });
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              isMl ? 'മലയാളം' : 'English',
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(width: 4),
+            const Icon(Icons.keyboard_arrow_down_rounded, size: 16, color: AppColors.textSecondary),
+          ],
+        ),
+      ),
+    );
   }
 
   void _showPicker(BuildContext context, bool isMl) {

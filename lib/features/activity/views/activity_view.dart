@@ -21,8 +21,10 @@ class ActivityView extends GetView<ActivityController> {
         backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: AppColors.surface,
-          automaticallyImplyLeading: false,
-          title: Column(
+          leading: const SizedBox.shrink(),
+          centerTitle: false,
+          leadingWidth: 0,
+          title: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(AppStrings.myActivity, style: AppTextStyles.titleLarge),
@@ -42,12 +44,14 @@ class ActivityView extends GetView<ActivityController> {
         body: Column(
           children: [
             // Summary cards
-            Obx(() => _SummaryCards(
-                  reports: controller.totalReports,
-                  resolved: controller.resolvedReports,
-                  appreciations: controller.totalAppreciations,
-                  ideas: controller.totalIdeas,
-                )),
+            Obx(
+              () => _SummaryCards(
+                reports: controller.totalReports,
+                resolved: controller.resolvedReports,
+                appreciations: controller.totalAppreciations,
+                ideas: controller.totalIdeas,
+              ),
+            ),
             // Tab content
             Expanded(
               child: Obx(() {
@@ -77,7 +81,12 @@ class ActivityView extends GetView<ActivityController> {
 
 class _SummaryCards extends StatelessWidget {
   final int reports, resolved, appreciations, ideas;
-  const _SummaryCards({required this.reports, required this.resolved, required this.appreciations, required this.ideas});
+  const _SummaryCards({
+    required this.reports,
+    required this.resolved,
+    required this.appreciations,
+    required this.ideas,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +109,8 @@ class _SummaryCards extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 44, height: 44,
+          width: 44,
+          height: 44,
           decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
           child: Icon(icon, color: color, size: 22),
         ),
@@ -152,8 +162,12 @@ class _IdeasTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (controller.ideas.isEmpty) {
-      return EmptyState(title: 'No ideas yet', message: 'Share your ideas to improve Balussery!',
-          actionLabel: 'Share an Idea', onAction: () => Get.toNamed(Routes.ideasFlow));
+      return EmptyState(
+        title: 'No ideas yet',
+        message: 'Share your ideas to improve Balussery!',
+        actionLabel: 'Share an Idea',
+        onAction: () => Get.toNamed(Routes.ideasFlow),
+      );
     }
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -163,22 +177,34 @@ class _IdeasTab extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.grey200)),
-          child: Row(children: [
-            Container(
-              width: 44, height: 44,
-              decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.lightbulb_rounded, color: AppColors.ideaPurple, size: 22),
-            ),
-            const SizedBox(width: 12),
-            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(idea.title, style: AppTextStyles.titleSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
-              const SizedBox(height: 4),
-              Text(idea.topic, style: AppTextStyles.caption.copyWith(color: AppColors.ideaPurple)),
-              const SizedBox(height: 4),
-              Text(idea.timeAgo, style: AppTextStyles.caption),
-            ])),
-          ]),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.grey200),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
+                child: const Icon(Icons.lightbulb_rounded, color: AppColors.ideaPurple, size: 22),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(idea.title, style: AppTextStyles.titleSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 4),
+                    Text(idea.topic, style: AppTextStyles.caption.copyWith(color: AppColors.ideaPurple)),
+                    const SizedBox(height: 4),
+                    Text(idea.timeAgo, style: AppTextStyles.caption),
+                  ],
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -192,8 +218,12 @@ class _AppreciationsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (controller.appreciations.isEmpty) {
-      return EmptyState(title: 'No appreciations yet', message: 'Recognize good work by government staff!',
-          actionLabel: 'Send Appreciation', onAction: () => Get.toNamed(Routes.appreciationFlow));
+      return EmptyState(
+        title: 'No appreciations yet',
+        message: 'Recognize good work by government staff!',
+        actionLabel: 'Send Appreciation',
+        onAction: () => Get.toNamed(Routes.appreciationFlow),
+      );
     }
     return ListView.builder(
       padding: const EdgeInsets.all(16),
@@ -203,22 +233,38 @@ class _AppreciationsTab extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.grey200)),
-          child: Row(children: [
-            Container(
-              width: 44, height: 44,
-              decoration: BoxDecoration(color: AppColors.appreciateGreenLight, borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.favorite_rounded, color: AppColors.appreciateGreen, size: 22),
-            ),
-            const SizedBox(width: 12),
-            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(a.recipientCategory, style: AppTextStyles.titleSmall),
-              if (a.staffName != null && a.staffName!.isNotEmpty) Text(a.staffName!, style: AppTextStyles.caption.copyWith(color: AppColors.appreciateGreen)),
-              const SizedBox(height: 4),
-              Text(a.visibility.label, style: AppTextStyles.caption),
-              Text(a.timeAgo, style: AppTextStyles.caption),
-            ])),
-          ]),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppColors.grey200),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: AppColors.appreciateGreenLight,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.favorite_rounded, color: AppColors.appreciateGreen, size: 22),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(a.recipientCategory, style: AppTextStyles.titleSmall),
+                    if (a.staffName != null && a.staffName!.isNotEmpty)
+                      Text(a.staffName!, style: AppTextStyles.caption.copyWith(color: AppColors.appreciateGreen)),
+                    const SizedBox(height: 4),
+                    Text(a.visibility.label, style: AppTextStyles.caption),
+                    Text(a.timeAgo, style: AppTextStyles.caption),
+                  ],
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -228,6 +274,9 @@ class _AppreciationsTab extends StatelessWidget {
 class _SavedTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const EmptyState(title: 'Nothing saved yet', message: 'Bookmark updates and reports to find them here later.');
+    return const EmptyState(
+      title: 'Nothing saved yet',
+      message: 'Bookmark updates and reports to find them here later.',
+    );
   }
 }
