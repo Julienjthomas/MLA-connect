@@ -44,6 +44,19 @@ class OnboardingController extends GetxController {
     }
   }
 
+  void clearLocalConstituencyState() {
+    savedConstituencyName.value = '';
+    selectedConstituency.value = null;
+    selectedLocalBody.value = null;
+    selectedWard.value = null;
+    localBodies.clear();
+    wards.clear();
+    localBodySearch.value = '';
+    wardSearch.value = '';
+    loadingLocalBodies.value = false;
+    loadingWards.value = false;
+  }
+
   Future<void> loadConstituencies() async {
     loadingConstituencies.value = true;
     try {

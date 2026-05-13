@@ -7,6 +7,7 @@ import '../../../core/utils/constituency_db_id.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/services/user_service.dart';
 import '../../../routes/app_routes.dart';
+import '../../onboarding/controllers/onboarding_controller.dart';
 
 class AuthController extends GetxController {
   final _userService = UserService();
@@ -29,12 +30,20 @@ class AuthController extends GetxController {
       if (event.event == AuthChangeEvent.signedIn) {
         _loadUserIfLoggedIn();
       } else if (event.event == AuthChangeEvent.signedOut) {
-        user.value = null;
+        _clearLocalSessionContext();
       }
     });
   }
 
   Future<void> refreshProfile() => _loadUserIfLoggedIn();
+
+  Future<void> _clearLocalSessionContext() async {
+    await ConstituencyPrefs.clear();
+    if (Get.isRegistered<OnboardingController>()) {
+      Get.find<OnboardingController>().clearLocalConstituencyState();
+    }
+    user.value = null;
+  }
 
   Future<void> _loadUserIfLoggedIn() async {
     final uid = userId;
@@ -175,7 +184,7 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     await Supabase.instance.client.auth.signOut(scope: SignOutScope.global);
-    user.value = null;
+    await _clearLocalSessionContext();
     Get.offAllNamed(Routes.welcome);
   }
 }
