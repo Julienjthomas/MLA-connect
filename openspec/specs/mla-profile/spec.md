@@ -1,4 +1,8 @@
-## MODIFIED Requirements
+## Purpose
+
+Define MLA profile presentation and contact actions for the active assembly constituency.
+
+## Requirements
 
 ### Requirement: Collapsing hero with avatar, name, constituency, term
 The detail view SHALL use a `SliverAppBar` with `expandedHeight: 240` showing background image, avatar, MLA name, and constituency. The MLA name SHALL be positioned slightly higher than center for better visual balance. No tick/verified mark and no term badge SHALL be shown.
@@ -50,13 +54,3 @@ The view SHALL display the MLA's office address below the call button if present
 #### Scenario: Address shown
 - **WHEN** `MlaModel.officeAddress` is non-null
 - **THEN** the address text is visible in the contact area
-
-## REMOVED Requirements
-
-### Requirement: Call and WhatsApp CTAs
-**Reason**: WhatsApp removed per UX feedback; replaced by Call-only CTA requirement above.
-**Migration**: Remove WhatsApp button from sticky bottom bar; keep Call button.
-
-### Requirement: Initiatives list with progress
-**Reason**: Constituency Initiatives section removed per UX feedback — not needed on this page.
-**Migration**: Remove `MlaModel.initiatives` rendering from the detail view.

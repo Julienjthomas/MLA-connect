@@ -1,4 +1,8 @@
-## MODIFIED Requirements
+## Purpose
+
+Define the My Activity tab summary and submission history presentation.
+
+## Requirements
 
 ### Requirement: Summary cards row
 Above the tabs the view SHALL show summary cards for Reports, Resolved, Ideas, Appreciations counts derived from the user's submissions. No calendar icon SHALL be present on this screen.

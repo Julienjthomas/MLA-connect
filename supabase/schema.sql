@@ -1481,3 +1481,46 @@ where not exists (select 1 from constituencies c where c.name ilike 'Balussery')
 
 -- Storage: bucket `media` (avatars, etc.), public read if needed for URLs.
 -- Bucket `submission-objects`: paths `problems|ideas|improvements|appreciations/{auth_user_id}/…`.
+-- Legacy paths `submissions/{submission_id}/…` remain governed by submission-scoped policies on the remote project.
+
+-- Citizen pre-submit uploads under kind folders (see migration 20260513153000).
+create policy "submission_objects_insert_own_kind_folder"
+  on storage.objects for insert
+  to authenticated
+  with check (
+    bucket_id = 'submission-objects'
+    and (storage.foldername(name))[1] in ('problems', 'ideas', 'improvements', 'appreciations')
+    and (storage.foldername(name))[2] = auth.uid()::text
+  );
+
+create policy "submission_objects_select_own_kind_folder"
+  on storage.objects for select
+  to authenticated
+  using (
+    bucket_id = 'submission-objects'
+    and (storage.foldername(name))[1] in ('problems', 'ideas', 'improvements', 'appreciations')
+    and (storage.foldername(name))[2] = auth.uid()::text
+  );
+
+create policy "submission_objects_update_own_kind_folder"
+  on storage.objects for update
+  to authenticated
+  using (
+    bucket_id = 'submission-objects'
+    and (storage.foldername(name))[1] in ('problems', 'ideas', 'improvements', 'appreciations')
+    and (storage.foldername(name))[2] = auth.uid()::text
+  )
+  with check (
+    bucket_id = 'submission-objects'
+    and (storage.foldername(name))[1] in ('problems', 'ideas', 'improvements', 'appreciations')
+    and (storage.foldername(name))[2] = auth.uid()::text
+  );
+
+create policy "submission_objects_delete_own_kind_folder"
+  on storage.objects for delete
+  to authenticated
+  using (
+    bucket_id = 'submission-objects'
+    and (storage.foldername(name))[1] in ('problems', 'ideas', 'improvements', 'appreciations')
+    and (storage.foldername(name))[2] = auth.uid()::text
+  );

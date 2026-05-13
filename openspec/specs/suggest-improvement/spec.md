@@ -1,4 +1,8 @@
-## MODIFIED Requirements
+## Purpose
+
+Define the suggest-improvement submission flow and inputs.
+
+## Requirements
 
 ### Requirement: Required improvement inputs
 The Suggestion step SHALL require: suggestion text and department. The Location step SHALL require: location text. No GPS icon SHALL appear in any location field in this flow.

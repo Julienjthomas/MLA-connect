@@ -1,4 +1,8 @@
-## ADDED Requirements
+## Purpose
+
+Define onboarding navigation, persistence, and assembly-constituency selection gates.
+
+## Requirements
 
 ### Requirement: Splash routes by auth + onboarding state
 The splash screen SHALL determine the next route from session presence and onboarding completion.

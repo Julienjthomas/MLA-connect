@@ -2,39 +2,27 @@
 
 Define the home shell bottom navigation structure and home screen layout requirements.
 ## Requirements
-### Requirement: Bottom navigation bar tabs
-The bottom navigation bar SHALL contain exactly 4 destinations: Home (index 0), My Activity (index 1), Updates (index 2), Profile (index 3). Chat SHALL NOT appear as a bottom navigation destination.
+### Requirement: Four-tab bottom navigation shell
+The home shell SHALL present exactly five tabs in this order: Home, Chat, My Activity, Updates, Profile.
 
-#### Scenario: Bottom nav shows 4 tabs
-- **WHEN** user is on any shell screen
-- **THEN** bottom navigation bar SHALL display exactly 4 tabs: Home, My Activity, Updates, Profile
-
-#### Scenario: Chat not in bottom nav
-- **WHEN** user looks at the bottom navigation bar
-- **THEN** no Chat tab SHALL be visible
-
-#### Scenario: Updates tab accessible via View All on home
-- **WHEN** user taps "View All" in the MLA Activity section on the home screen
-- **THEN** shell SHALL switch to the Updates tab (index 2)
-
-#### Scenario: Activity tab loads data on select
-- **WHEN** user taps the My Activity tab (index 1)
-- **THEN** `ActivityController.loadActivity()` SHALL be called
+#### Scenario: Tab labels and order
+- **WHEN** the home shell renders
+- **THEN** the bottom navigation shows Home, Chat, My Activity, Updates, Profile from left to right
 
 ### Requirement: Home banner — clean minimal style
-The MLA hero banner SHALL show the MLA name and constituency label. The MLA label ("MLA") and the MLA name SHALL have visually distinct styles and font sizes. No tick/verified mark, no location symbol, and no stat counts SHALL appear on the banner. Banner color intensity SHALL be reduced (lower opacity or lighter palette).
+The MLA hero banner on the Home tab SHALL display only the MLA’s **photo** and **full name**. It SHALL NOT display constituency labels, the literal “MLA” role label, stat counts, location symbols, verified ticks, or background chrome that competes with the photo beyond a simple backdrop.
 
-#### Scenario: No tick or location symbol
+#### Scenario: Name and photo only
 - **WHEN** the home screen renders
-- **THEN** no verified checkmark and no location pin icon appear in the banner
+- **THEN** the hero shows the MLA portrait and the MLA full name as the primary text
+
+#### Scenario: No constituency label on hero
+- **WHEN** the banner renders
+- **THEN** no assembly constituency or panchayath string appears on the hero
 
 #### Scenario: No stat counts
 - **WHEN** the banner renders
 - **THEN** no numeric stat counters (reports, ideas, etc.) are shown on the banner
-
-#### Scenario: Distinct MLA label style
-- **WHEN** the banner renders
-- **THEN** the "MLA" label has a smaller or lighter style than the MLA name
 
 ### Requirement: Home page font sizes
 General text on the home page SHALL be slightly larger than the current defaults to improve readability.
@@ -44,15 +32,15 @@ General text on the home page SHALL be slightly larger than the current defaults
 - **THEN** body text uses at least 14sp and section headers use at least 16sp
 
 ### Requirement: Language switch sync
-The language toggle in the app bar SHALL read and reflect the current active locale. Switching language SHALL immediately update all UI strings.
+The Home tab SHALL NOT show a language toggle in the app bar. Locale changes SHALL be initiated from Profile → Language and SHALL apply globally when saved.
 
-#### Scenario: Language already set
-- **WHEN** the home page opens and the app locale is Malayalam
-- **THEN** the language toggle shows Malayalam as selected
+#### Scenario: No home language toggle
+- **WHEN** the home page renders
+- **THEN** no language toggle widget appears in the Home app bar
 
-#### Scenario: Alignment on toggle
-- **WHEN** the language selection button renders
-- **THEN** its label and icon are horizontally and vertically aligned with no overflow
+#### Scenario: Profile-driven locale updates
+- **WHEN** the user changes language under Profile settings
+- **THEN** all visible UI strings update without requiring a restart
 
 ### Requirement: Main option tiles fit without scroll
 The four main option tiles on the home page SHALL be sized so all four are visible on screen without vertical scrolling. Appreciate SHALL be in the 4th position (last).

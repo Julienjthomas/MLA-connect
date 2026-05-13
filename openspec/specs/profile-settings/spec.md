@@ -1,4 +1,8 @@
-## ADDED Requirements
+## Purpose
+
+Define profile tab identity, location, and settings entry points.
+
+## Requirements
 
 ### Requirement: User card with avatar, name, phone, location
 The Profile tab SHALL show a card at the top displaying the user's avatar (or initials fallback), name, phone, and ward + panchayat.

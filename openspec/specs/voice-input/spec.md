@@ -1,4 +1,8 @@
-## ADDED Requirements
+## Purpose
+
+Define voice capture and playback for long-form text fields.
+
+## Requirements
 
 ### Requirement: VoiceInputWidget records and plays back audio
 The `VoiceInputWidget` SHALL display a microphone button that records audio when tapped and a playback button once a recording exists.

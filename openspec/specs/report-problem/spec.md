@@ -1,4 +1,8 @@
-## MODIFIED Requirements
+## Purpose
+
+Define the citizen report-problem submission flow and validation rules.
+
+## Requirements
 
 ### Requirement: Four-step report flow
 The report flow SHALL have exactly three user-visible steps in this order: Details, Review, Success. The separate Location step is removed; location fields are captured inline on the Details step.
@@ -82,12 +86,13 @@ If a Gradual Update tab/option exists in the report flow, it SHALL NOT include a
 - **THEN** no location input is rendered in that context
 
 ### Requirement: Submit creates report + media + initial timeline
-On submit, the flow SHALL upload selected images to Supabase Storage `media/reports/`, insert a row into `reports`, insert media rows into `report_media`, and insert one `report_timeline` row with status `submitted`. Submit SHALL succeed when all required fields are filled.
+On submit, the flow SHALL upload selected images to Supabase Storage bucket `submission-objects` under `problems/{auth_user_id}/…`, insert a row into `submissions` with `kind='report'`, insert media rows into `media_attachments` linked to that submission, and insert one `submission_status_history` row with status `submitted`. Submit SHALL succeed when all required fields are filled and Storage authorization succeeds.
 
 #### Scenario: Successful submission
-- **WHEN** the user taps Submit on the Review step with valid data
-- **THEN** all writes succeed, the flow advances to Success, and no error is shown
+- **WHEN** the user taps Submit on the Review step with valid data and attachments
+- **THEN** Storage uploads complete without RLS errors
+- **THEN** database writes succeed, the flow advances to Success, and no error is shown
 
 #### Scenario: Submit failure shows error
-- **WHEN** the Supabase insert fails
+- **WHEN** the Supabase insert or Storage upload fails
 - **THEN** an error snackbar is shown and the user remains on the Review step
