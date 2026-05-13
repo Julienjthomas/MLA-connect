@@ -24,7 +24,7 @@ class ActivityView extends GetView<ActivityController> {
           leading: const SizedBox.shrink(),
           centerTitle: false,
           leadingWidth: 0,
-          title: const Column(
+          title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(AppStrings.myActivity, style: AppTextStyles.titleLarge),

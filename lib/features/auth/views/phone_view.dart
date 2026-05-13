@@ -25,9 +25,9 @@ class PhoneView extends GetView<PhoneController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 32),
-                const Text(AppStrings.enterMobile, style: AppTextStyles.headlineLarge),
+                Text(AppStrings.enterMobile, style: AppTextStyles.headlineLarge),
                 const SizedBox(height: 8),
-                const Text(AppStrings.mobileSubtitle, style: AppTextStyles.bodyMedium),
+                Text(AppStrings.mobileSubtitle, style: AppTextStyles.bodyMedium),
                 const SizedBox(height: 32),
                 TextFormField(
                   controller: controller.phoneController,
@@ -49,10 +49,10 @@ class PhoneView extends GetView<PhoneController> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.shield_outlined, size: 14, color: AppColors.textTertiary),
-                    SizedBox(width: 6),
+                    const Icon(Icons.shield_outlined, size: 14, color: AppColors.textTertiary),
+                    const SizedBox(width: 6),
                     Text(AppStrings.privacyNote, style: AppTextStyles.caption),
                   ],
                 ),

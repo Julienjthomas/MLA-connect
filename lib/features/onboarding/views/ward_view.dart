@@ -14,7 +14,7 @@ class WardView extends GetView<OnboardingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const KeralaAppBar(title: AppStrings.selectWard),
+      appBar: KeralaAppBar(title: AppStrings.selectWard),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -22,7 +22,7 @@ class WardView extends GetView<OnboardingController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 4),
-              const Text(AppStrings.selectWard, style: AppTextStyles.headlineSmall),
+              Text(AppStrings.selectWard, style: AppTextStyles.headlineSmall),
               const SizedBox(height: 4),
               Obx(
                 () => Text(
@@ -34,7 +34,7 @@ class WardView extends GetView<OnboardingController> {
 
               TextField(
                 onChanged: (v) => controller.wardSearch.value = v,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search, size: 20),
                   hintText: AppStrings.searchWard,
                 ),

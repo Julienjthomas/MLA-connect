@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../controllers/splash_controller.dart';
@@ -39,26 +38,25 @@ class SplashView extends GetView<SplashController> {
                     child: const Icon(Icons.rocket_launch_rounded, color: AppColors.primary, size: 52),
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    AppStrings.appName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 32,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
                   Obx(() {
                     final name = controller.constituencyName.value;
-                    final subtitle = name.isNotEmpty ? '$name Constituency' : AppStrings.tagline;
                     return Text(
-                      subtitle,
+                      name.isNotEmpty ? name : 'Ente MLA',
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     );
                   }),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Ente MLA',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
+                  ),
                 ],
               ),
             ),

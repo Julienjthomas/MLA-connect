@@ -43,7 +43,9 @@ class AuthController extends GetxController {
       await _syncConstituencyFromPrefsIfNeeded();
       final profile = await _userService.getProfile(uid);
       user.value = profile;
-      if (profile != null) AppLocale.change(profile.language);
+      if (profile != null && !await AppLocale.hasStoredPreference()) {
+        AppLocale.change(profile.language);
+      }
     } catch (_) {}
   }
 

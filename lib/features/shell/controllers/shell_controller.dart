@@ -6,7 +6,7 @@ class ShellController extends GetxController {
 
   void goTo(int index) {
     currentIndex.value = index;
-    if (index == 2 && Get.isRegistered<ActivityController>()) {
+    if (index == 1 && Get.isRegistered<ActivityController>()) {
       Get.find<ActivityController>().loadActivity();
     }
   }

@@ -14,7 +14,7 @@ class PanchayatView extends GetView<OnboardingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const KeralaAppBar(title: AppStrings.selectPanchayat, showBack: false),
+      appBar: KeralaAppBar(title: AppStrings.selectPanchayat, showBack: false),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -25,7 +25,7 @@ class PanchayatView extends GetView<OnboardingController> {
               const SizedBox(height: 20),
               TextField(
                 onChanged: (v) => controller.localBodySearch.value = v,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   prefixIcon: Icon(Icons.search, size: 20),
                   hintText: AppStrings.searchPanchayat,
                 ),

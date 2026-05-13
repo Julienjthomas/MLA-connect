@@ -22,6 +22,7 @@ class OnboardingController extends GetxController {
   final RxBool loadingWards = false.obs;
   final RxString localBodySearch = ''.obs;
   final RxString wardSearch = ''.obs;
+  final RxString savedConstituencyName = ''.obs;
 
   List<LocalBodyModel> get filteredLocalBodies =>
       localBodies.where((p) => p.name.toLowerCase().contains(localBodySearch.value.toLowerCase())).toList();
@@ -33,6 +34,14 @@ class OnboardingController extends GetxController {
   void onInit() {
     super.onInit();
     loadConstituencies();
+    _loadSavedConstituencyName();
+  }
+
+  Future<void> _loadSavedConstituencyName() async {
+    final name = await ConstituencyPrefs.getName();
+    if (name != null && name.isNotEmpty) {
+      savedConstituencyName.value = name;
+    }
   }
 
   Future<void> loadConstituencies() async {

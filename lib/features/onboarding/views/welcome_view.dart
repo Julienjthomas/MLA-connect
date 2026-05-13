@@ -7,8 +7,9 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/primary_button.dart';
 import '../../../routes/app_routes.dart';
+import '../controllers/onboarding_controller.dart';
 
-class WelcomeView extends StatelessWidget {
+class WelcomeView extends GetView<OnboardingController> {
   const WelcomeView({super.key});
 
   @override
@@ -32,15 +33,18 @@ class WelcomeView extends StatelessWidget {
                     child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 24),
                   ),
                   const SizedBox(width: 10),
-                  Text(
-                    AppStrings.appName,
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                    ),
-                  ),
+                  Obx(() {
+                    final name = controller.savedConstituencyName.value;
+                    return Text(
+                      name.isNotEmpty ? name : 'Ente MLA',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary,
+                      ),
+                    );
+                  }),
                 ],
               ),
               const SizedBox(height: 8),
@@ -63,13 +67,33 @@ class WelcomeView extends StatelessWidget {
               ),
               const SizedBox(height: 28),
               // Feature list
-              _featureItem(Icons.warning_amber_rounded, AppColors.reportOrange, 'Report Problems', 'Roads, water, waste, safety & more'),
+              _featureItem(
+                Icons.warning_amber_rounded,
+                AppColors.reportOrange,
+                'Report Problems',
+                'Roads, water, waste, safety & more',
+              ),
               const SizedBox(height: 14),
-              _featureItem(Icons.favorite_rounded, AppColors.appreciateGreen, 'Appreciate Good Work', 'Recognize staff or projects'),
+              _featureItem(
+                Icons.favorite_rounded,
+                AppColors.appreciateGreen,
+                'Appreciate Good Work',
+                'Recognize staff or projects',
+              ),
               const SizedBox(height: 14),
-              _featureItem(Icons.lightbulb_rounded, AppColors.ideaPurple, 'Suggest Improvements', 'Share ideas for a better future'),
+              _featureItem(
+                Icons.lightbulb_rounded,
+                AppColors.ideaPurple,
+                'Suggest Improvements',
+                'Share ideas for a better future',
+              ),
               const SizedBox(height: 14),
-              _featureItem(Icons.track_changes_rounded, AppColors.improveBlue, 'Track Updates', 'Stay updated with developments'),
+              _featureItem(
+                Icons.track_changes_rounded,
+                AppColors.improveBlue,
+                'Track Updates',
+                'Stay updated with developments',
+              ),
               const Spacer(),
               PrimaryButton(
                 text: AppStrings.getStarted,

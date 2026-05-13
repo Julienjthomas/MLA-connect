@@ -14,7 +14,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const KeralaAppBar(title: AppStrings.basicProfile),
+      appBar: KeralaAppBar(title: AppStrings.basicProfile),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -23,9 +23,9 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(AppStrings.basicProfile, style: AppTextStyles.headlineSmall),
+                Text(AppStrings.basicProfile, style: AppTextStyles.headlineSmall),
                 const SizedBox(height: 4),
-                const Text(AppStrings.basicProfileSubtitle, style: AppTextStyles.bodySmall),
+                Text(AppStrings.basicProfileSubtitle, style: AppTextStyles.bodySmall),
                 const SizedBox(height: 32),
                 Center(
                   child: Stack(
@@ -53,7 +53,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                   controller: controller.nameController,
                   validator: (v) => Validators.minLength(v, 2, 'Name'),
                   textCapitalization: TextCapitalization.words,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.person_outline, size: 20),
                     hintText: AppStrings.fullName,
                   ),
@@ -63,7 +63,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                   controller: controller.emailController,
                   validator: Validators.email,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.email_outlined, size: 20),
                     hintText: AppStrings.emailOptional,
                   ),

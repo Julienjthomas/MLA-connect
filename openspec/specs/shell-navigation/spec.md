@@ -1,13 +1,25 @@
-## MODIFIED Requirements
+## Purpose
 
-### Requirement: Four-tab bottom navigation shell
-The home shell SHALL present exactly four tabs in this order: Home, My Activity, Updates, Profile.
+Define the home shell bottom navigation structure and home screen layout requirements.
+## Requirements
+### Requirement: Bottom navigation bar tabs
+The bottom navigation bar SHALL contain exactly 4 destinations: Home (index 0), My Activity (index 1), Updates (index 2), Profile (index 3). Chat SHALL NOT appear as a bottom navigation destination.
 
-#### Scenario: Tab labels and order
-- **WHEN** the home shell renders
-- **THEN** the bottom navigation shows Home, My Activity, Updates, Profile from left to right
+#### Scenario: Bottom nav shows 4 tabs
+- **WHEN** user is on any shell screen
+- **THEN** bottom navigation bar SHALL display exactly 4 tabs: Home, My Activity, Updates, Profile
 
-## ADDED Requirements
+#### Scenario: Chat not in bottom nav
+- **WHEN** user looks at the bottom navigation bar
+- **THEN** no Chat tab SHALL be visible
+
+#### Scenario: Updates tab accessible via View All on home
+- **WHEN** user taps "View All" in the MLA Activity section on the home screen
+- **THEN** shell SHALL switch to the Updates tab (index 2)
+
+#### Scenario: Activity tab loads data on select
+- **WHEN** user taps the My Activity tab (index 1)
+- **THEN** `ActivityController.loadActivity()` SHALL be called
 
 ### Requirement: Home banner — clean minimal style
 The MLA hero banner SHALL show the MLA name and constituency label. The MLA label ("MLA") and the MLA name SHALL have visually distinct styles and font sizes. No tick/verified mark, no location symbol, and no stat counts SHALL appear on the banner. Banner color intensity SHALL be reduced (lower opacity or lighter palette).
@@ -95,3 +107,4 @@ The home shell header/MLA banner SHALL display the user's selected constituency 
 #### Scenario: Fallback when constituency name unavailable
 - **WHEN** the user's profile has no constituency name resolvable
 - **THEN** the header subtitle is omitted or shows an empty state gracefully (no crash, no "Balussery")
+

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/theme/app_theme.dart';
+import 'core/utils/app_locale.dart';
 import 'data/supabase/supabase_config.dart';
 import 'features/auth/controllers/auth_controller.dart';
 import 'l10n/app_localizations.dart';
@@ -23,11 +24,9 @@ void main() async {
 
   Get.put(AuthController(), permanent: true);
 
-  final device = WidgetsBinding.instance.platformDispatcher.locale;
-  if (device.languageCode == 'ml') {
-    Get.updateLocale(const Locale('ml'));
-  } else {
-    Get.updateLocale(const Locale('en'));
+  final localeCode = await AppLocale.load();
+  if (await AppLocale.hasStoredPreference()) {
+    Get.updateLocale(Locale(localeCode));
   }
 
   runApp(const SuperBalusseryApp());
@@ -38,18 +37,20 @@ class SuperBalusseryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Ente MLA',
-      debugShowCheckedModeBanner: false,
-      theme: buildAppTheme(),
-      localizationsDelegates: S.localizationsDelegates,
-      supportedLocales: S.supportedLocales,
-      locale: Get.locale ?? const Locale('en'),
-      fallbackLocale: const Locale('en'),
-      initialRoute: Routes.splash,
-      getPages: AppPages.pages,
-      defaultTransition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 280),
+    return Obx(
+      () => GetMaterialApp(
+        title: 'Ente MLA',
+        debugShowCheckedModeBanner: false,
+        theme: buildAppTheme(),
+        localizationsDelegates: S.localizationsDelegates,
+        supportedLocales: S.supportedLocales,
+        locale: Locale(AppLocale.languageCode.value),
+        fallbackLocale: const Locale('en'),
+        initialRoute: Routes.splash,
+        getPages: AppPages.pages,
+        defaultTransition: Transition.rightToLeft,
+        transitionDuration: const Duration(milliseconds: 280),
+      ),
     );
   }
 }

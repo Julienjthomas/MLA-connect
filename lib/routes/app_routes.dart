@@ -13,6 +13,7 @@ abstract class Routes {
   static const onboardingSuccess = '/onboarding-success';
 
   static const home = '/home';
+  static const chat = '/chat';
   static const mlaDetail = '/mla-detail';
 
   static const reportFlow = '/report/flow';

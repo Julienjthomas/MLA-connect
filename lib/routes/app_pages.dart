@@ -33,6 +33,8 @@ import '../features/ideas/views/idea_flow_view.dart';
 import '../features/improvements/bindings/improvement_binding.dart';
 import '../features/improvements/views/improvement_flow_view.dart';
 import '../features/achievements/views/achievements_listing_view.dart';
+import '../features/chat/bindings/chat_binding.dart';
+import '../features/chat/views/chat_view.dart';
 import '../features/updates/bindings/updates_binding.dart';
 import '../features/updates/views/update_detail_view.dart';
 import 'app_routes.dart';
@@ -85,6 +87,12 @@ class AppPages {
       page: () => const MainShellView(),
       binding: ShellBinding(),
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: Routes.chat,
+      page: () => const ChatView(),
+      binding: ChatBinding(),
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.mlaDetail,

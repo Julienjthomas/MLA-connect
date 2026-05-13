@@ -13,16 +13,16 @@ class NotificationsSetupView extends GetView<NotificationsSetupController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const KeralaAppBar(title: AppStrings.notificationPrefs),
+      appBar: KeralaAppBar(title: AppStrings.notificationPrefs),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(AppStrings.notificationPrefs, style: AppTextStyles.headlineSmall),
+              Text(AppStrings.notificationPrefs, style: AppTextStyles.headlineSmall),
               const SizedBox(height: 4),
-              const Text(AppStrings.notificationSubtitle, style: AppTextStyles.bodySmall),
+              Text(AppStrings.notificationSubtitle, style: AppTextStyles.bodySmall),
               const SizedBox(height: 28),
               Obx(
                 () => Column(

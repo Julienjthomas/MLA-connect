@@ -25,7 +25,7 @@ class UpdatesView extends GetView<UpdatesController> {
         leadingWidth: 0,
         centerTitle: false,
         leading: const SizedBox.shrink(),
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(AppStrings.updates, style: AppTextStyles.titleLarge),

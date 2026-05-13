@@ -5,6 +5,7 @@ import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/utils/app_locale.dart';
 import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shimmer_loader.dart';
@@ -57,6 +58,9 @@ class HomeView extends GetView<HomeController> {
       scrolledUnderElevation: 1,
       title: Obx(() {
         final constituencyName = Get.find<AuthController>().user.value?.constituencyName;
+        final title = (constituencyName != null && constituencyName.isNotEmpty)
+            ? constituencyName
+            : AppStrings.appName;
         return Row(
           children: [
             Container(
@@ -66,25 +70,30 @@ class HomeView extends GetView<HomeController> {
               child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 16),
             ),
             const SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  AppStrings.appName,
-                  style: const TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.primary,
-                  ),
-                ),
-                if (constituencyName != null && constituencyName.isNotEmpty)
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   Text(
-                    constituencyName,
-                    style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
+                    title,
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primary,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-              ],
+                  Text(
+                    'Ente MLA',
+                    style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
           ],
         );
@@ -104,7 +113,28 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
-        const SizedBox(width: 8),
+        Obx(() {
+          final label = AppLocale.languageCode.value == 'en' ? 'ML' : 'EN';
+          return TextButton(
+            onPressed: () async {
+              final next = AppLocale.languageCode.value == 'en' ? 'ml' : 'en';
+              final auth = Get.find<AuthController>();
+              if (auth.userId != null) {
+                await auth.updateLanguage(next);
+              } else {
+                AppLocale.change(next);
+              }
+            },
+            child: Text(
+              label,
+              style: AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimary),
+            ),
+          );
+        }),
+        IconButton(
+          icon: const Icon(Icons.chat_bubble_outline_rounded),
+          onPressed: () => Get.toNamed(Routes.chat),
+        ),
       ],
     );
   }
@@ -122,15 +152,15 @@ class HomeView extends GetView<HomeController> {
   }
 
   SliverToBoxAdapter _buildWhatWouldYouLike() {
-    return const SliverToBoxAdapter(
+    return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'What would you like to\nshare today?',
-              style: TextStyle(
+              AppStrings.whatWouldYouLike,
+              style: const TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -138,10 +168,10 @@ class HomeView extends GetView<HomeController> {
                 height: 1.3,
               ),
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Text(
               AppStrings.tagline,
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 14, color: AppColors.textTertiary),
+              style: const TextStyle(fontFamily: 'Poppins', fontSize: 14, color: AppColors.textTertiary),
             ),
           ],
         ),
@@ -211,7 +241,7 @@ class HomeView extends GetView<HomeController> {
           onAction: () {
             // Switch to Updates tab (index 2)
             try {
-              Get.find<ShellController>().goTo(3);
+              Get.find<ShellController>().goTo(2);
             } catch (_) {
               Get.toNamed(Routes.updateDetail);
             }
