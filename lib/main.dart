@@ -39,7 +39,7 @@ class SuperBalusseryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Super Balussery',
+      title: 'Ente MLA',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       localizationsDelegates: S.localizationsDelegates,

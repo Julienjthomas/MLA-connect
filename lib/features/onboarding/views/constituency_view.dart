@@ -4,6 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../../../core/utils/constituency_prefs.dart';
 import '../../../data/services/user_service.dart';
 import '../../../features/auth/controllers/auth_controller.dart';
 import '../../../routes/app_routes.dart';
@@ -11,6 +12,13 @@ import '../controllers/onboarding_controller.dart';
 
 class ConstituencyView extends GetView<OnboardingController> {
   const ConstituencyView({super.key});
+
+  bool get _isPreAuth {
+    final args = Get.arguments;
+    if (args is bool) return args;
+    if (args is Map) return args['preAuth'] == true;
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +95,13 @@ class ConstituencyView extends GetView<OnboardingController> {
                   text: 'Next',
                   onPressed: controller.selectedConstituency.value != null
                       ? () async {
-                          final uid = Get.find<AuthController>().userId;
                           final c = controller.selectedConstituency.value!;
+                          if (_isPreAuth) {
+                            await ConstituencyPrefs.save(id: c.id, name: c.name);
+                            Get.toNamed(Routes.phone);
+                            return;
+                          }
+                          final uid = Get.find<AuthController>().userId;
                           if (uid != null) {
                             await UserService().saveConstituencySelection(
                               userId: uid,

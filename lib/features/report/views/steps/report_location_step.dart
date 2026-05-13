@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../../../features/auth/controllers/auth_controller.dart';
 import '../../controllers/report_controller.dart';
 
 class ReportLocationStep extends GetView<ReportController> {
@@ -33,7 +35,10 @@ class ReportLocationStep extends GetView<ReportController> {
             child: Row(children: [
               const Icon(Icons.location_city_outlined, size: 18, color: AppColors.grey500),
               const SizedBox(width: 10),
-              Text('Balussery Panchayat', style: AppTextStyles.bodyMedium),
+              Text(
+                Get.find<AuthController>().user.value?.localBodyName ?? 'Your panchayat',
+                style: AppTextStyles.bodyMedium,
+              ),
             ]),
           ),
 

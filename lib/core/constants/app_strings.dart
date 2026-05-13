@@ -2,15 +2,13 @@ class AppStrings {
   AppStrings._();
 
   // App
-  static const appName = 'Super Balussery';
-  static const tagline = 'Your voice. Our responsibility.';
-  static const constituency = 'Balussery Constituency';
-  static const poweredFor = 'Powered for';
+  static const appName = 'Ente MLA';
+  static const tagline = 'Your MLA. Your Voice.';
 
   // Onboarding
   static const welcome = 'Welcome to';
   static const welcomeSubtitle = 'A platform to connect, contribute and create a better constituency.';
-  static const continueWithPhone = 'Continue with Phone Number';
+  static const getStarted = 'Get Started';
   static const browsePublicUpdates = 'Browse Public Updates';
   static const selectLanguage = 'Select Language';
   static const chooseLanguage = 'Choose your preferred language to continue';
@@ -34,7 +32,7 @@ class AppStrings {
   static const searchPanchayat = 'Search Panchayat';
   static const selectWard = 'Select Ward';
   static const selectWardStep = 'Step 2 of 5';
-  static const chooseWard = 'Choose your ward in Balussery Panchayat';
+  static const chooseWard = 'Choose your ward in your panchayat';
   static const searchWard = 'Search Ward';
 
   // Profile setup
@@ -59,7 +57,7 @@ class AppStrings {
 
   // Onboarding success
   static const allSet = "You're All Set!";
-  static const allSetSubtitle = 'Welcome to Super Balussery';
+  static const allSetSubtitle = 'Welcome to Ente MLA';
   static const goToHome = 'Go to Home';
 
   // Home
@@ -126,7 +124,7 @@ class AppStrings {
   static const notifications = 'Notifications';
   static const helpCenter = 'Help Center';
   static const contactMlaOffice = 'Contact MLA Office';
-  static const aboutApp = 'About Super Balussery';
+  static const aboutApp = 'About Ente MLA';
   static const termsConditions = 'Terms & Conditions';
   static const privacyPolicy = 'Privacy Policy';
   static const logout = 'Logout';

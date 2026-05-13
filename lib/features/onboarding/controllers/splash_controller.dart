@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/utils/constituency_prefs.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../../../routes/app_routes.dart';
 
@@ -7,6 +8,7 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
   late final AnimationController animController;
   late final Animation<double> fadeAnim;
   late final Animation<double> scaleAnim;
+  final RxString constituencyName = ''.obs;
 
   @override
   void onInit() {
@@ -18,7 +20,21 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
       end: 1,
     ).animate(CurvedAnimation(parent: animController, curve: Curves.easeOut));
     animController.forward();
+    _loadConstituencyName();
     _navigate();
+  }
+
+  Future<void> _loadConstituencyName() async {
+    final auth = Get.find<AuthController>();
+    final profileName = auth.user.value?.constituencyName;
+    if (profileName != null && profileName.isNotEmpty) {
+      constituencyName.value = profileName;
+      return;
+    }
+    final savedName = await ConstituencyPrefs.getName();
+    if (savedName != null && savedName.isNotEmpty) {
+      constituencyName.value = savedName;
+    }
   }
 
   @override

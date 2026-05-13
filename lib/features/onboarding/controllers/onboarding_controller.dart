@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/utils/constituency_db_id.dart';
+import '../../../core/utils/constituency_prefs.dart';
 import '../../../data/models/constituency_model.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/services/user_service.dart';
@@ -83,6 +84,30 @@ class OnboardingController extends GetxController {
   void onReady() {
     super.onReady();
     _hydrateFromSavedProfile();
+    _hydrateFromPrefs();
+  }
+
+  Future<void> _hydrateFromPrefs() async {
+    try {
+      final auth = Get.find<AuthController>();
+      if (auth.userId != null || selectedConstituency.value != null) return;
+      final savedId = await ConstituencyPrefs.getId();
+      if (savedId == null) return;
+      if (constituencies.isEmpty) {
+        await loadConstituencies();
+      }
+      final match = constituencies.where((c) => c.id == savedId);
+      if (match.isNotEmpty) {
+        selectedConstituency.value = match.first;
+        return;
+      }
+      final savedName = await ConstituencyPrefs.getName();
+      if (savedName == null) return;
+      final byName = constituencies.where((c) => c.name == savedName);
+      if (byName.isNotEmpty) {
+        selectedConstituency.value = byName.first;
+      }
+    } catch (_) {}
   }
 
   Future<void> _hydrateFromSavedProfile() async {

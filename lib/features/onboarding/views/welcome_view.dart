@@ -32,11 +32,14 @@ class WelcomeView extends StatelessWidget {
                     child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 24),
                   ),
                   const SizedBox(width: 10),
-                  RichText(
-                    text: const TextSpan(children: [
-                      TextSpan(text: 'Super ', style: TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.primary)),
-                      TextSpan(text: 'Balussery', style: TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w400, color: AppColors.textPrimary)),
-                    ]),
+                  Text(
+                    AppStrings.appName,
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ],
               ),
@@ -69,16 +72,8 @@ class WelcomeView extends StatelessWidget {
               _featureItem(Icons.track_changes_rounded, AppColors.improveBlue, 'Track Updates', 'Stay updated with developments'),
               const Spacer(),
               PrimaryButton(
-                text: AppStrings.continueWithPhone,
-                onPressed: () => Get.toNamed(Routes.phone),
-              ),
-              const SizedBox(height: 12),
-              TextButton(
-                onPressed: () => Get.toNamed(Routes.home),
-                child: Text(
-                  AppStrings.browsePublicUpdates,
-                  style: AppTextStyles.labelMedium.copyWith(color: AppColors.primary),
-                ),
+                text: AppStrings.getStarted,
+                onPressed: () => Get.toNamed(Routes.constituency, arguments: {'preAuth': true}),
               ),
               const SizedBox(height: 8),
             ],

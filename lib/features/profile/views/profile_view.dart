@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../auth/controllers/auth_controller.dart';
@@ -57,7 +58,7 @@ class ProfileView extends GetView<ProfileController> {
           ),
           const SizedBox(height: 40),
           Center(
-            child: Text('Super Balussery v1.0.0', style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+            child: Text('${AppStrings.appName} v1.0.0', style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
           ),
           const SizedBox(height: 24),
         ],

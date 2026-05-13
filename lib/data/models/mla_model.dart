@@ -63,9 +63,9 @@ class MlaModel {
         name: 'MLA V T Sooraj',
         photoUrl: 'https://i.pravatar.cc/300?img=68',
         bio:
-            'Working for the overall development of Balussery. Focused on infrastructure, education, health and environment sustainability.',
+            'Working for the overall development of the constituency. Focused on infrastructure, education, health and environment sustainability.',
         term: '3rd Term MLA',
-        constituency: 'Balussery Constituency',
+        constituency: 'Your Constituency',
         stats: const MlaStats(
           issuesResolved: 1248,
           activeProjects: 86,
@@ -76,7 +76,7 @@ class MlaModel {
           phone: '+91 9847 123 456',
           whatsapp: '+91 9847 123 456',
           email: 'mla@balussery.kerala.gov.in',
-          officeAddress: 'MLA Office, Balussery, Kozhikode, Kerala – 673612',
+          officeAddress: 'MLA Office, Kozhikode, Kerala',
         ),
         initiatives: [
           MlaInitiative(

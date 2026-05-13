@@ -10,6 +10,7 @@ import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../routes/app_routes.dart';
 import '../../shell/controllers/shell_controller.dart';
+import '../../auth/controllers/auth_controller.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/mla_hero_banner.dart';
 
@@ -54,41 +55,40 @@ class HomeView extends GetView<HomeController> {
       backgroundColor: AppColors.surface,
       elevation: 0,
       scrolledUnderElevation: 1,
-      title: Row(
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(8)),
-            child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 16),
-          ),
-          const SizedBox(width: 8),
-          RichText(
-            text: const TextSpan(
+      title: Obx(() {
+        final constituencyName = Get.find<AuthController>().user.value?.constituencyName;
+        return Row(
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(8)),
+              child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 16),
+            ),
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                TextSpan(
-                  text: 'Super ',
-                  style: TextStyle(
+                Text(
+                  AppStrings.appName,
+                  style: const TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                     color: AppColors.primary,
                   ),
                 ),
-                TextSpan(
-                  text: 'Balussery',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textPrimary,
+                if (constituencyName != null && constituencyName.isNotEmpty)
+                  Text(
+                    constituencyName,
+                    style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
                   ),
-                ),
               ],
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
       actions: [
         Stack(
           children: [

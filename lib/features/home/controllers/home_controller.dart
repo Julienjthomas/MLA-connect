@@ -17,13 +17,13 @@ class HomeController extends GetxController {
   final hallOfExcellence = [
     {'name': 'Nandana P', 'school': 'GVHSS Kodanchery', 'grade': 'A+', 'achievement': 'SSLC Full A+'},
     {'name': 'Muhammed Shan', 'school': 'HSS Chelari', 'grade': 'A+', 'achievement': 'SSLC Full A+'},
-    {'name': 'Arya Krishnan', 'school': 'GHSS Balussery', 'grade': 'A+', 'achievement': 'SSLC Full A+'},
+    {'name': 'Arya Krishnan', 'school': 'GHSS Kodanchery', 'grade': 'A+', 'achievement': 'SSLC Full A+'},
   ];
 
   final grievanceEvent = {
     'title': 'Public Grievance Hearing',
     'date': 'May 25, 2024 • 10:00 AM',
-    'venue': 'Town Hall, Balussery',
+    'venue': 'Town Hall',
   };
 
   @override

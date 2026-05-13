@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/utils/app_locale.dart';
+import '../../../core/utils/constituency_prefs.dart';
 import '../../../core/utils/constituency_db_id.dart';
 import '../../../data/models/user_model.dart';
 import '../../../data/services/user_service.dart';
@@ -39,10 +40,21 @@ class AuthController extends GetxController {
     final uid = userId;
     if (uid == null) return;
     try {
+      await _syncConstituencyFromPrefsIfNeeded();
       final profile = await _userService.getProfile(uid);
       user.value = profile;
       if (profile != null) AppLocale.change(profile.language);
     } catch (_) {}
+  }
+
+  Future<void> _syncConstituencyFromPrefsIfNeeded() async {
+    final uid = userId;
+    if (uid == null) return;
+    final profile = await _userService.getProfile(uid);
+    if (profile?.constituencyId != null) return;
+    final prefsId = await ConstituencyPrefs.getId();
+    if (prefsId == null) return;
+    await _userService.saveConstituencySelection(userId: uid, constituencyId: prefsId);
   }
 
   String _normalizePhone(String phone) {
@@ -67,6 +79,10 @@ class AuthController extends GetxController {
         type: OtpType.sms,
       );
       debugPrint('[Auth] verifyOtp result → session=${res.session?.accessToken != null}');
+      if (res.session != null) {
+        await _syncConstituencyFromPrefsIfNeeded();
+        await _loadUserIfLoggedIn();
+      }
       return res.session != null;
     } catch (e) {
       debugPrint('[Auth] verifyOtp error → $e');

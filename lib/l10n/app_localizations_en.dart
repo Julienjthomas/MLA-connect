@@ -9,13 +9,13 @@ class SEn extends S {
   SEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Super Balussery';
+  String get appName => 'Ente MLA';
 
   @override
-  String get tagline => 'Your voice. Our responsibility.';
+  String get tagline => 'Your MLA. Your Voice.';
 
   @override
-  String get constituency => 'Balussery Constituency';
+  String get constituency => 'Constituency';
 
   @override
   String get poweredFor => 'Powered for';
@@ -83,7 +83,7 @@ class SEn extends S {
   String get selectWard => 'Select Ward';
 
   @override
-  String get chooseWard => 'Choose your ward in Balussery Panchayat';
+  String get chooseWard => 'Choose your ward in your panchayat';
 
   @override
   String get searchWard => 'Search Ward';
@@ -134,7 +134,7 @@ class SEn extends S {
   String get allSet => 'You\'re All Set!';
 
   @override
-  String get allSetSubtitle => 'Welcome to Super Balussery';
+  String get allSetSubtitle => 'Welcome to Ente MLA';
 
   @override
   String get goToHome => 'Go to Home';
@@ -278,7 +278,7 @@ class SEn extends S {
   String get contactMlaOffice => 'Contact MLA Office';
 
   @override
-  String get aboutApp => 'About Super Balussery';
+  String get aboutApp => 'About Ente MLA';
 
   @override
   String get termsConditions => 'Terms & Conditions';

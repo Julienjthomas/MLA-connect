@@ -190,7 +190,7 @@ class _IdeasTab extends StatelessWidget {
     if (controller.ideas.isEmpty) {
       return EmptyState(
         title: 'No ideas yet',
-        message: 'Share your ideas to improve Balussery!',
+        message: 'Share your ideas to improve your constituency!',
         actionLabel: 'Share an Idea',
         onAction: () => Get.toNamed(Routes.ideasFlow),
       );

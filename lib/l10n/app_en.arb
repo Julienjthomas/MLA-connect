@@ -1,9 +1,9 @@
 {
   "@@locale": "en",
 
-  "appName": "Super Balussery",
-  "tagline": "Your voice. Our responsibility.",
-  "constituency": "Balussery Constituency",
+  "appName": "Ente MLA",
+  "tagline": "Your MLA. Your Voice.",
+  "constituency": "Constituency",
   "poweredFor": "Powered for",
 
   "welcome": "Welcome to",
@@ -28,7 +28,7 @@
   "panchayatHelp": "This helps us route issues and updates correctly.",
   "searchPanchayat": "Search Panchayat",
   "selectWard": "Select Ward",
-  "chooseWard": "Choose your ward in Balussery Panchayat",
+  "chooseWard": "Choose your ward in your panchayat",
   "searchWard": "Search Ward",
 
   "basicProfile": "Basic Profile",
@@ -48,7 +48,7 @@
   "eventRemindersDesc": "Upcoming events & programs",
 
   "allSet": "You're All Set!",
-  "allSetSubtitle": "Welcome to Super Balussery",
+  "allSetSubtitle": "Welcome to Ente MLA",
   "goToHome": "Go to Home",
 
   "whatWouldYouLike": "What would you like to\nshare today?",
@@ -103,7 +103,7 @@
   "notifications": "Notifications",
   "helpCenter": "Help Center",
   "contactMlaOffice": "Contact MLA Office",
-  "aboutApp": "About Super Balussery",
+  "aboutApp": "About Ente MLA",
   "termsConditions": "Terms & Conditions",
   "privacyPolicy": "Privacy Policy",
   "logout": "Logout",

@@ -26,7 +26,7 @@ class IdeaSuccessStep extends StatelessWidget {
                 style: TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
                 textAlign: TextAlign.center),
             const SizedBox(height: 12),
-            Text('Thank you for contributing to a better Balussery. Your idea will be reviewed by our team and you will be notified.',
+            Text('Thank you for contributing to a better constituency. Your idea will be reviewed by our team and you will be notified.',
                 style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const SizedBox(height: 24),
             _whatNext('Your idea will be visible to the community.', Icons.people_outline),

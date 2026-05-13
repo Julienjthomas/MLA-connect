@@ -58,7 +58,7 @@ class IdeaDetailsStep extends GetView<IdeaController> {
           const SizedBox(height: 20),
           Text('Idea Title *', style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
-          TextField(controller: controller.titleController, decoration: const InputDecoration(hintText: 'e.g. Smart Drainage System for Balussery')),
+          TextField(controller: controller.titleController, decoration: const InputDecoration(hintText: 'e.g. Smart drainage system for your area')),
           const SizedBox(height: 14),
           Text('Describe your idea in detail', style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),

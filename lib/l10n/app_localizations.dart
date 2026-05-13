@@ -100,19 +100,19 @@ abstract class S {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'Super Balussery'**
+  /// **'Ente MLA'**
   String get appName;
 
   /// No description provided for @tagline.
   ///
   /// In en, this message translates to:
-  /// **'Your voice. Our responsibility.'**
+  /// **'Your MLA. Your Voice.'**
   String get tagline;
 
   /// No description provided for @constituency.
   ///
   /// In en, this message translates to:
-  /// **'Balussery Constituency'**
+  /// **'Constituency'**
   String get constituency;
 
   /// No description provided for @poweredFor.
@@ -244,7 +244,7 @@ abstract class S {
   /// No description provided for @chooseWard.
   ///
   /// In en, this message translates to:
-  /// **'Choose your ward in Balussery Panchayat'**
+  /// **'Choose your ward in your panchayat'**
   String get chooseWard;
 
   /// No description provided for @searchWard.
@@ -346,7 +346,7 @@ abstract class S {
   /// No description provided for @allSetSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Super Balussery'**
+  /// **'Welcome to Ente MLA'**
   String get allSetSubtitle;
 
   /// No description provided for @goToHome.
@@ -628,7 +628,7 @@ abstract class S {
   /// No description provided for @aboutApp.
   ///
   /// In en, this message translates to:
-  /// **'About Super Balussery'**
+  /// **'About Ente MLA'**
   String get aboutApp;
 
   /// No description provided for @termsConditions.

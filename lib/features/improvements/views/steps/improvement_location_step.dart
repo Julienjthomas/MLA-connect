@@ -24,7 +24,7 @@ class ImprovementLocationStep extends GetView<ImprovementController> {
           TextField(
             controller: controller.locationController,
             decoration: const InputDecoration(
-              hintText: 'e.g. Near Balussery Market',
+              hintText: 'e.g. Near the main market',
             ),
           ),
           const SizedBox(height: 14),
