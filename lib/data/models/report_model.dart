@@ -79,6 +79,7 @@ class ReportModel {
 
 class ReportFormData {
   final ReportCategory category;
+  final String? customCategory;
   final String title;
   final String description;
   final String location;
@@ -93,6 +94,7 @@ class ReportFormData {
 
   const ReportFormData({
     required this.category,
+    this.customCategory,
     required this.title,
     required this.description,
     required this.location,
@@ -109,7 +111,11 @@ class ReportFormData {
         'reporter_id': userId,
         'kind': 'report',
         'reference_id': referenceId,
-        'category': category.dbValue,
+        'category': category == ReportCategory.other &&
+                customCategory != null &&
+                customCategory!.trim().isNotEmpty
+            ? customCategory!.trim()
+            : category.dbValue,
         'title': title,
         'description': description,
         'pin_address': location,

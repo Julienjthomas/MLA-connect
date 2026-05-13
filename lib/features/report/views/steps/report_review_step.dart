@@ -23,7 +23,14 @@ class ReportReviewStep extends GetView<ReportController> {
           const SizedBox(height: 20),
 
           _section('Problem Details', [
-            _row('Category', controller.selectedCategory.value?.label ?? '–'),
+            _row(
+              'Category',
+              controller.selectedCategory.value == ReportCategory.other
+                  ? (controller.customCategoryController.text.trim().isEmpty
+                      ? controller.selectedCategory.value?.label ?? '–'
+                      : controller.customCategoryController.text.trim())
+                  : controller.selectedCategory.value?.label ?? '–',
+            ),
             _row('Title', controller.titleController.text),
             _row('Description', controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
           ]),

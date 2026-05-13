@@ -64,6 +64,26 @@ class ReportDetailsStep extends GetView<ReportController> {
                 }).toList(),
               )),
 
+          Obx(() {
+            if (controller.selectedCategory.value != ReportCategory.other) {
+              return const SizedBox.shrink();
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 14),
+                const Text('Custom Category *', style: AppTextStyles.titleSmall),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: controller.customCategoryController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter the problem category',
+                  ),
+                ),
+              ],
+            );
+          }),
+
           const SizedBox(height: 20),
 
           // Title

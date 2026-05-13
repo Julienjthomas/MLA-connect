@@ -16,6 +16,7 @@ class ReportController extends GetxController {
 
   // Form state
   final Rx<ReportCategory?> selectedCategory = Rx(null);
+  final customCategoryController = TextEditingController();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final locationController = TextEditingController();
@@ -43,6 +44,7 @@ class ReportController extends GetxController {
 
   @override
   void onClose() {
+    customCategoryController.dispose();
     titleController.dispose();
     descriptionController.dispose();
     locationController.dispose();
@@ -57,6 +59,11 @@ class ReportController extends GetxController {
       case 0:
         if (selectedCategory.value == null) {
           Get.snackbar('Required', 'Please select a category', snackPosition: SnackPosition.BOTTOM);
+          return false;
+        }
+        if (selectedCategory.value == ReportCategory.other &&
+            customCategoryController.text.trim().isEmpty) {
+          Get.snackbar('Required', 'Please enter a category', snackPosition: SnackPosition.BOTTOM);
           return false;
         }
         if (titleController.text.trim().length < 5) {
@@ -87,6 +94,7 @@ class ReportController extends GetxController {
 
   bool get _hasUnsavedData =>
       selectedCategory.value != null ||
+      customCategoryController.text.isNotEmpty ||
       titleController.text.isNotEmpty ||
       descriptionController.text.isNotEmpty;
 
@@ -144,8 +152,12 @@ class ReportController extends GetxController {
           ? (geoLabel.isEmpty ? null : geoLabel)
           : (geoLabel.isEmpty ? landmarkText : '$landmarkText ($geoLabel)');
 
+      final category = selectedCategory.value!;
       final data = ReportFormData(
-        category: selectedCategory.value!,
+        category: category,
+        customCategory: category == ReportCategory.other
+            ? customCategoryController.text.trim()
+            : null,
         title: titleController.text.trim(),
         description: descriptionController.text.trim(),
         location: locationController.text.trim(),
