@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -5,6 +7,7 @@ import '../../../core/constants/app_enums.dart';
 import '../../../data/models/appreciation_model.dart';
 import '../../../data/services/appreciation_service.dart';
 import '../../../data/services/storage_service.dart';
+import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
 
 class AppreciationController extends GetxController {
@@ -103,14 +106,24 @@ class AppreciationController extends GetxController {
   Future<void> submit() async {
     isSubmitting.value = true;
     try {
-      final reporterId = Get.find<AuthController>().submissionReporterId ?? '';
+      final auth = Get.find<AuthController>();
+      final reporterId = auth.submissionReporterId ?? '';
       if (reporterId.isEmpty) {
+        Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
+      final uid = auth.userId;
+      if (uid == null || uid.isEmpty) {
         Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
         return;
       }
       List<String> mediaUrls = [];
       if (selectedImages.isNotEmpty) {
-        mediaUrls = await _storage.uploadFiles(selectedImages, 'appreciations');
+        mediaUrls = await _storage.uploadSubmissionFiles(
+          selectedImages.toList(),
+          folder: SubmissionObjectsFolder.appreciations,
+          userId: uid,
+        );
       }
       final data = AppreciationFormData(
         recipientCategory: recipientCategory.value,
@@ -124,6 +137,9 @@ class AppreciationController extends GetxController {
       );
       final id = await _service.submit(data, reporterId);
       submittedId.value = id;
+      if (Get.isRegistered<ActivityController>()) {
+        unawaited(Get.find<ActivityController>().loadActivity());
+      }
       nextStep();
     } catch (e) {
       Get.snackbar('Error', 'Failed to submit. Please try again.', snackPosition: SnackPosition.BOTTOM);

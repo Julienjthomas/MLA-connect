@@ -185,9 +185,20 @@ class UserService {
   }
 
   Future<void> saveNotificationPrefs(String userId, Map<String, bool> prefs) async {
-    await _db.from('notification_preferences').upsert({
-      'user_id': userId,
-      ...prefs,
-    });
+    final profile = await getProfile(userId);
+    final cid = profile?.citizenRowId;
+    if (cid == null || cid.isEmpty) {
+      if (kDebugMode) {
+        debugPrint('[UserService] saveNotificationPrefs: no citizens row for auth user');
+      }
+      return;
+    }
+    await _db.from('notification_preferences').upsert(
+      {
+        'user_id': cid,
+        ...prefs,
+      },
+      onConflict: 'user_id',
+    );
   }
 }

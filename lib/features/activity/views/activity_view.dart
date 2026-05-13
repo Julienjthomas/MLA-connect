@@ -210,11 +210,25 @@ class _IdeasTab extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
-                child: const Icon(Icons.lightbulb_rounded, color: AppColors.ideaPurple, size: 22),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: AppColors.ideaPurpleLight,
+                    image: idea.mediaUrls.isNotEmpty
+                        ? DecorationImage(
+                            image: NetworkImage(idea.mediaUrls.first),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
+                  ),
+                  alignment: Alignment.center,
+                  child: idea.mediaUrls.isEmpty
+                      ? const Icon(Icons.lightbulb_rounded, color: AppColors.ideaPurple, size: 22)
+                      : null,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(

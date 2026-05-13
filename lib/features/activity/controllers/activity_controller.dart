@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../../../data/models/appreciation_model.dart';
 import '../../../data/models/idea_model.dart';
@@ -15,6 +16,8 @@ class ActivityController extends GetxController {
   final _ideaService = IdeaService();
   final _officeMessages = OfficeMessagesService();
 
+  Worker? _profileWorker;
+
   final RxList<ReportModel> reports = <ReportModel>[].obs;
   final RxList<AppreciationModel> appreciations = <AppreciationModel>[].obs;
   final RxList<IdeaModel> ideas = <IdeaModel>[].obs;
@@ -30,29 +33,50 @@ class ActivityController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    final auth = Get.find<AuthController>();
+    _profileWorker = ever(auth.user, (_) => loadActivity());
     loadActivity();
+  }
+
+  @override
+  void onClose() {
+    _profileWorker?.dispose();
+    super.onClose();
   }
 
   Future<void> loadActivity() async {
     final auth = Get.find<AuthController>();
     final userId = auth.userId;
     if (userId == null) return;
-    final reporterId = auth.submissionReporterId;
-    if (reporterId == null) return;
     loading.value = true;
     try {
-      final cid = auth.user.value?.constituencyId;
+      final profile = auth.user.value;
+      final cid = profile?.constituencyId;
+      final reporterId = auth.submissionReporterId ?? '';
       final results = await Future.wait([
-        _reportService.getMyReports(reporterId),
-        _appreciationService.getMyAppreciations(reporterId),
-        _ideaService.getMyIdeas(reporterId),
+        if (reporterId.isNotEmpty)
+          _reportService.getMyReports(reporterId: reporterId)
+        else
+          Future.value(const <ReportModel>[]),
+        if (reporterId.isNotEmpty)
+          _appreciationService.getMyAppreciations(reporterId: reporterId)
+        else
+          Future.value(const <AppreciationModel>[]),
+        if (reporterId.isNotEmpty)
+          _ideaService.getMyIdeas(reporterId: reporterId)
+        else
+          Future.value(const <IdeaModel>[]),
         _officeMessages.listForUser(userId: userId, constituencyId: cid, limit: 20),
       ]);
       reports.value = results[0] as List<ReportModel>;
       appreciations.value = results[1] as List<AppreciationModel>;
       ideas.value = results[2] as List<IdeaModel>;
       officeMessages.value = results[3] as List<OfficeMessageModel>;
-    } catch (_) {} finally {
+    } catch (e, st) {
+      if (kDebugMode) {
+        debugPrint('[ActivityController] loadActivity failed: $e\n$st');
+      }
+    } finally {
       loading.value = false;
     }
   }

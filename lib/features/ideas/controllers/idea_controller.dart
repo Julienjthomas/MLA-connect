@@ -1,12 +1,18 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../data/models/idea_model.dart';
 import '../../../data/services/idea_service.dart';
+import '../../../data/services/storage_service.dart';
+import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
 
 class IdeaController extends GetxController {
   final _service = IdeaService();
+  final _storage = StorageService();
 
   // Form state
   final RxString topic = ''.obs;
@@ -19,6 +25,7 @@ class IdeaController extends GetxController {
   final Rx<SubmissionVisibility> visibility = SubmissionVisibility.public.obs;
   final RxBool allowDiscussion = true.obs;
   final RxBool allowContact = true.obs;
+  final RxList<XFile> selectedImages = <XFile>[].obs;
 
   // Flow state
   final RxInt currentStep = 0.obs;
@@ -105,7 +112,8 @@ class IdeaController extends GetxController {
   bool get _hasUnsavedData =>
       topic.value.isNotEmpty ||
       titleController.text.isNotEmpty ||
-      descriptionController.text.isNotEmpty;
+      descriptionController.text.isNotEmpty ||
+      selectedImages.isNotEmpty;
 
   void previousStep() {
     if (currentStep.value > 0) {
@@ -128,10 +136,24 @@ class IdeaController extends GetxController {
   Future<void> submit() async {
     isSubmitting.value = true;
     try {
-      final reporterId = Get.find<AuthController>().submissionReporterId ?? '';
+      final auth = Get.find<AuthController>();
+      final reporterId = auth.submissionReporterId ?? '';
       if (reporterId.isEmpty) {
         Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
         return;
+      }
+      final uid = auth.userId;
+      if (uid == null || uid.isEmpty) {
+        Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
+      List<String> mediaUrls = [];
+      if (selectedImages.isNotEmpty) {
+        mediaUrls = await _storage.uploadSubmissionFiles(
+          selectedImages.toList(),
+          folder: SubmissionObjectsFolder.ideas,
+          userId: uid,
+        );
       }
       final effectiveTopic = topic.value == 'Other'
           ? customTopicController.text.trim()
@@ -145,9 +167,13 @@ class IdeaController extends GetxController {
         visibility: visibility.value,
         allowDiscussion: allowDiscussion.value,
         allowContact: allowContact.value,
+        mediaUrls: mediaUrls,
       );
       final id = await _service.submit(data, reporterId);
       submittedId.value = id;
+      if (Get.isRegistered<ActivityController>()) {
+        unawaited(Get.find<ActivityController>().loadActivity());
+      }
       nextStep();
     } catch (_) {
       Get.snackbar('Error', 'Failed to submit. Please try again.', snackPosition: SnackPosition.BOTTOM);

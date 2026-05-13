@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../core/constants/app_enums.dart';
 import '../../core/utils/date_formatter.dart';
+import '../../core/utils/json_ids.dart';
 
 class UpdateModel {
   final String id;
@@ -28,7 +29,7 @@ class UpdateModel {
   });
 
   factory UpdateModel.fromJson(Map<String, dynamic> json) => UpdateModel(
-        id: json['id'] as String,
+        id: jsonIdToString(json['id']),
         title: json['title'] as String,
         body: json['body'] as String? ?? '',
         titleMl: json['title_ml'] as String?,

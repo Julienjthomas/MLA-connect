@@ -1,22 +1,30 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../core/utils/json_ids.dart';
 import '../models/report_model.dart';
+import 'submission_media_merger.dart';
 import 'submission_utils.dart';
 
 class ReportService {
   SupabaseClient get _db => Supabase.instance.client;
 
   static const _submissionSelect =
-      '*, wards(name), media_attachments(*), submission_status_history(*)';
+      '*, wards(name), submission_status_history(*)';
 
-  Future<List<ReportModel>> getMyReports(String userId) async {
+  /// [reporterId] is the value stored on `submissions.reporter_id`.
+  /// In the current schema that's `citizens.id` (bigint); use [AuthController.submissionReporterId].
+  Future<List<ReportModel>> getMyReports({required String reporterId}) async {
+    final rid = reporterId.trim();
+    if (rid.isEmpty) return const [];
     final res = await _db
         .from('submissions')
         .select(_submissionSelect)
         .eq('kind', 'report')
-        .eq('reporter_id', userId)
+        .eq('reporter_id', rid)
         .order('created_at', ascending: false);
-    return (res as List).map((j) => ReportModel.fromJson(j as Map<String, dynamic>)).toList();
+    final rows =
+        (res as List).map((j) => Map<String, dynamic>.from(j as Map<String, dynamic>)).toList();
+    await SubmissionMediaMerger.attachForSubmissions(_db, rows);
+    return rows.map(ReportModel.fromJson).toList();
   }
 
   Future<ReportModel?> getReport(String id) async {
@@ -27,7 +35,9 @@ class ReportService {
         .eq('kind', 'report')
         .maybeSingle();
     if (res == null) return null;
-    return ReportModel.fromJson(res);
+    final map = Map<String, dynamic>.from(res);
+    await SubmissionMediaMerger.attachForSubmissions(_db, [map]);
+    return ReportModel.fromJson(map);
   }
 
   Future<String> submitReport(ReportFormData data, String userId) async {
@@ -54,6 +64,8 @@ class ReportService {
                   'kind': 'image',
                   'storage_path': url,
                   'url': url,
+                  'uploaded_by': userId,
+                  'uploaded_by_type': 'citizen',
                 })
             .toList(),
       );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
@@ -35,6 +37,36 @@ class IdeaReviewStep extends GetView<IdeaController> {
             _row('Community Discussion', controller.allowDiscussion.value ? 'Enabled' : 'Disabled'),
             _row('MLA Contact', controller.allowContact.value ? 'Yes' : 'No'),
           ]),
+          Obx(() {
+            if (controller.selectedImages.isEmpty) return const SizedBox();
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                Text('Media (${controller.selectedImages.length})', style: AppTextStyles.titleSmall),
+                const SizedBox(height: 8),
+                SizedBox(
+                  height: 70,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.selectedImages.length,
+                    itemBuilder: (_, i) => Container(
+                      width: 70,
+                      height: 70,
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          image: FileImage(File(controller.selectedImages[i].path)),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
           const SizedBox(height: 32),
           Obx(() => PrimaryButton(
                 text: 'Submit Idea 🚀',

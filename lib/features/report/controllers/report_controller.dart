@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -5,6 +7,7 @@ import '../../../core/constants/app_enums.dart';
 import '../../../data/models/report_model.dart';
 import '../../../data/services/report_service.dart';
 import '../../../data/services/storage_service.dart';
+import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
 
 class ReportController extends GetxController {
@@ -115,10 +118,20 @@ class ReportController extends GetxController {
         return;
       }
 
-      // Upload images
+      final uid = auth.userId;
+      if (uid == null || uid.isEmpty) {
+        Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
+
+      // Upload images → submission-objects/problems/{userId}/…
       List<String> mediaUrls = [];
       if (selectedImages.isNotEmpty) {
-        mediaUrls = await _storage.uploadFiles(selectedImages, 'reports');
+        mediaUrls = await _storage.uploadSubmissionFiles(
+          selectedImages.toList(),
+          folder: SubmissionObjectsFolder.problems,
+          userId: uid,
+        );
       }
 
       final profile = auth.user.value;
@@ -147,6 +160,9 @@ class ReportController extends GetxController {
 
       final id = await _service.submitReport(data, reporterId);
       submittedId.value = id;
+      if (Get.isRegistered<ActivityController>()) {
+        unawaited(Get.find<ActivityController>().loadActivity());
+      }
       nextStep();
     } catch (e) {
       Get.snackbar('Error', 'Failed to submit. Please try again.',

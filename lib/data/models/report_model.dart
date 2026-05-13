@@ -72,7 +72,12 @@ class ReportModel {
   }
 
   String get timeAgo => DateFormatter.timeAgo(createdAt);
-  String get shortId => 'RP${id.replaceAll('-', '').substring(0, 10).toUpperCase()}';
+  String get shortId {
+    final compact = id.replaceAll('-', '');
+    final prefix =
+        compact.length <= 10 ? compact : compact.substring(0, 10);
+    return 'RP${prefix.toUpperCase()}';
+  }
 }
 
 class ReportFormData {

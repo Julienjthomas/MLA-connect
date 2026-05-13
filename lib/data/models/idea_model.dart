@@ -15,6 +15,7 @@ class IdeaModel {
   final bool allowContact;
   final SubmissionStatus status;
   final DateTime createdAt;
+  final List<String> mediaUrls;
 
   const IdeaModel({
     required this.id,
@@ -29,6 +30,7 @@ class IdeaModel {
     required this.allowContact,
     required this.status,
     required this.createdAt,
+    this.mediaUrls = const [],
   });
 
   factory IdeaModel.fromJson(Map<String, dynamic> json) => IdeaModel(
@@ -47,6 +49,11 @@ class IdeaModel {
         allowContact: json['allow_mla_office_contact'] as bool? ?? true,
         status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
         createdAt: DateTime.parse(json['created_at'] as String),
+        mediaUrls: (json['media_attachments'] as List?)
+                ?.map((m) => m['url'] as String? ?? '')
+                .where((u) => u.isNotEmpty)
+                .toList() ??
+            [],
       );
 
   String get timeAgo => DateFormatter.timeAgo(createdAt);
@@ -61,6 +68,7 @@ class IdeaFormData {
   final SubmissionVisibility visibility;
   final bool allowDiscussion;
   final bool allowContact;
+  final List<String> mediaUrls;
 
   const IdeaFormData({
     required this.topic,
@@ -71,6 +79,7 @@ class IdeaFormData {
     required this.visibility,
     required this.allowDiscussion,
     required this.allowContact,
+    this.mediaUrls = const [],
   });
 
   Map<String, dynamic> toJson(String userId, String referenceId) => {
