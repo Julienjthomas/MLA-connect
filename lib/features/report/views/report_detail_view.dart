@@ -5,6 +5,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/widgets/status_chip.dart';
+import '../../../core/widgets/submission_media_image.dart';
 import '../../../core/widgets/timeline_widget.dart';
 import '../controllers/report_detail_controller.dart';
 
@@ -60,14 +61,18 @@ class ReportDetailView extends GetView<ReportDetailController> {
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: report.mediaUrls.length,
-                    itemBuilder: (_, i) => Container(
-                      width: 100,
-                      height: 100,
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: BoxDecoration(
+                    itemBuilder: (_, i) => Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: SubmissionMediaImage(
+                        reference: report.mediaUrls[i],
+                        width: 100,
+                        height: 100,
                         borderRadius: BorderRadius.circular(10),
-                        color: AppColors.grey200,
-                        image: DecorationImage(image: NetworkImage(report.mediaUrls[i]), fit: BoxFit.cover),
+                        placeholder: Container(
+                          width: 100,
+                          height: 100,
+                          color: AppColors.grey200,
+                        ),
                       ),
                     ),
                   ),

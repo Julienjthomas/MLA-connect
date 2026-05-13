@@ -2,6 +2,7 @@ import '../../core/constants/app_enums.dart';
 import '../../core/utils/json_ids.dart';
 import '../../core/utils/date_formatter.dart';
 import '../../core/widgets/timeline_widget.dart';
+import '../utils/submission_media_refs.dart';
 
 class ReportModel {
   final String id;
@@ -39,11 +40,7 @@ class ReportModel {
   });
 
   factory ReportModel.fromJson(Map<String, dynamic> json) {
-    final media = (json['media_attachments'] as List?)
-            ?.map((m) => m['url'] as String? ?? '')
-            .where((u) => u.isNotEmpty)
-            .toList() ??
-        [];
+    final media = submissionMediaRefsFromJson(json);
     final timeline = (json['submission_status_history'] as List?)
             ?.map((t) => TimelineEvent(
                   date: DateFormatter.shortDate(DateTime.parse(t['created_at'] as String)),

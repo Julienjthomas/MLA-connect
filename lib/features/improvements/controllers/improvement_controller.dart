@@ -1,7 +1,10 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/models/improvement_model.dart';
 import '../../../data/services/improvement_service.dart';
+import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
 
 class ImprovementController extends GetxController {
@@ -80,15 +83,24 @@ class ImprovementController extends GetxController {
   Future<void> submit() async {
     isSubmitting.value = true;
     try {
-      final userId = Get.find<AuthController>().userId ?? '';
+      final auth = Get.find<AuthController>();
+      final reporterId = auth.submissionReporterId;
+      if (reporterId == null || reporterId.isEmpty) {
+        Get.snackbar('Error', 'Profile not ready. Please sign in again.', snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
+
       final data = ImprovementFormData(
         suggestion: suggestionController.text.trim(),
         department: department.value,
         location: locationController.text.trim(),
         landmark: landmarkController.text.trim(),
       );
-      final id = await _service.submit(data, userId);
+      final id = await _service.submit(data, reporterId);
       submittedId.value = id;
+      if (Get.isRegistered<ActivityController>()) {
+        unawaited(Get.find<ActivityController>().loadActivity());
+      }
       nextStep();
     } catch (_) {
       Get.snackbar('Error', 'Failed to submit. Please try again.', snackPosition: SnackPosition.BOTTOM);

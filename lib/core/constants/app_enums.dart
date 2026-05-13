@@ -175,13 +175,30 @@ extension UpdateCategoryX on UpdateCategory {
       };
 }
 
-enum ActivityTab { reports, ideas, appreciations, saved }
+enum ActivityTab { reports, ideas, improvements, appreciations, saved }
 
 extension ActivityTabX on ActivityTab {
   String get label => switch (this) {
         ActivityTab.reports => 'Reports',
         ActivityTab.ideas => 'Ideas',
+        ActivityTab.improvements => 'Improvements',
         ActivityTab.appreciations => 'Appreciations',
         ActivityTab.saved => 'Saved',
+      };
+
+  FeatureType? get addFeature => switch (this) {
+        ActivityTab.reports => FeatureType.report,
+        ActivityTab.ideas => FeatureType.idea,
+        ActivityTab.improvements => FeatureType.improve,
+        ActivityTab.appreciations => FeatureType.appreciate,
+        ActivityTab.saved => null,
+      };
+
+  String? get addActionLabel => switch (this) {
+        ActivityTab.reports => 'Report a Problem',
+        ActivityTab.ideas => 'Share an Idea',
+        ActivityTab.improvements => 'Suggest Improvement',
+        ActivityTab.appreciations => 'Send Appreciation',
+        ActivityTab.saved => null,
       };
 }

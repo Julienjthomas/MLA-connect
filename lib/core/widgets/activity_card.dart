@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../constants/app_enums.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import 'status_chip.dart';
+import 'submission_media_image.dart';
 
 class ActivityCard extends StatelessWidget {
   final String title;
@@ -44,12 +44,13 @@ class ActivityCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: imageUrl != null
-                  ? CachedNetworkImage(
-                      imageUrl: imageUrl!,
+                  ? SubmissionMediaImage(
+                      reference: imageUrl!,
                       width: 64,
                       height: 64,
-                      fit: BoxFit.cover,
-                      errorWidget: (_, __, ___) => _placeholder(),
+                      borderRadius: BorderRadius.circular(10),
+                      placeholder: _placeholder(),
+                      errorWidget: _placeholder(),
                     )
                   : _placeholder(),
             ),

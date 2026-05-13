@@ -1,6 +1,7 @@
 import '../../core/constants/app_enums.dart';
 import '../../core/utils/json_ids.dart';
 import '../../core/utils/date_formatter.dart';
+import '../utils/submission_media_refs.dart';
 
 class AppreciationModel {
   final String id;
@@ -46,11 +47,7 @@ class AppreciationModel {
         anonymous: json['is_anonymous'] as bool? ?? false,
         status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
         createdAt: DateTime.parse(json['created_at'] as String),
-        mediaUrls: (json['media_attachments'] as List?)
-                ?.map((m) => m['url'] as String? ?? '')
-                .where((u) => u.isNotEmpty)
-                .toList() ??
-            [],
+        mediaUrls: submissionMediaRefsFromJson(json),
       );
 
   String get timeAgo => DateFormatter.timeAgo(createdAt);

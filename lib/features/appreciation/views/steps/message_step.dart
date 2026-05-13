@@ -29,10 +29,9 @@ class MessageStep extends GetView<AppreciationController> {
           const SizedBox(height: 16),
           Obx(
             () => UploadWidget(
-              files: controller.selectedImages,
+              files: controller.selectedImages.toList(),
               onChanged: (files) {
-                controller.selectedImages.clear();
-                controller.selectedImages.addAll(files);
+                controller.selectedImages.value = files;
               },
               label: 'Add Photo / Video (Optional)',
             ),

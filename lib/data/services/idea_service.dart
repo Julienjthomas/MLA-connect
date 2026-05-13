@@ -14,7 +14,7 @@ class IdeaService {
     if (rid.isEmpty) return const [];
     final res = await _db
         .from('submissions')
-        .select()
+        .select('*')
         .eq('kind', 'idea')
         .eq('reporter_id', rid)
         .order('created_at', ascending: false);

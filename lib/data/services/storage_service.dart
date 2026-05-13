@@ -41,7 +41,7 @@ class StorageService {
             bytes,
             fileOptions: FileOptions(contentType: contentType),
           );
-      urls.add(_storage.from(_submissionObjectsBucket).getPublicUrl(path));
+      urls.add(path);
     }
     return urls;
   }
