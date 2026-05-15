@@ -20,12 +20,10 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
       end: 1,
     ).animate(CurvedAnimation(parent: animController, curve: Curves.easeOut));
     animController.forward();
-    _loadConstituencyName();
     _navigate();
   }
 
-  Future<void> _loadConstituencyName() async {
-    final auth = Get.find<AuthController>();
+  Future<void> _loadConstituencyName(AuthController auth) async {
     final profileName = auth.user.value?.constituencyName;
     if (profileName != null && profileName.isNotEmpty) {
       constituencyName.value = profileName;
@@ -46,16 +44,37 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
   Future<void> _navigate() async {
     await Future.delayed(const Duration(milliseconds: 2000));
     final auth = Get.find<AuthController>();
-    if (auth.isLoggedIn) {
-      final hasProfile = await auth.hasCompletedOnboarding();
-      if (hasProfile) {
-        Get.offAllNamed(Routes.home);
-      } else {
-        final route = await auth.resolveOnboardingResumeRoute();
-        Get.offAllNamed(route);
-      }
-    } else {
+
+    // Bootstrap: fetch full citizen profile before making any routing decision.
+    await auth.bootstrapSession();
+
+    await _loadConstituencyName(auth);
+
+    if (!auth.isLoggedIn) {
       Get.offAllNamed(Routes.welcome);
+      return;
+    }
+
+    final hasProfile = await auth.hasCompletedOnboarding();
+
+    // Consume any stale pending return route for fully-onboarded users.
+    final pendingRoute = await ConstituencyPrefs.getPendingReturnRoute();
+    if (pendingRoute != null) {
+      await ConstituencyPrefs.clearPendingReturnRoute();
+    }
+
+    if (hasProfile) {
+      Get.offAllNamed(Routes.home);
+    } else {
+      // resolveOnboardingResumeRoute also consumes pendingReturnRoute if set,
+      // but we already cleared it above for fully-onboarded users. For partial
+      // users the pending route is intentionally consumed inside resolveOnboardingResumeRoute.
+      // Re-save it so resolveOnboardingResumeRoute can pick it up.
+      if (pendingRoute != null) {
+        await ConstituencyPrefs.savePendingReturnRoute(pendingRoute);
+      }
+      final route = await auth.resolveOnboardingResumeRoute();
+      Get.offAllNamed(route);
     }
   }
 }

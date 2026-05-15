@@ -74,6 +74,8 @@ class OnboardingController extends GetxController {
     selectedWard.value = null;
     localBodies.clear();
     wards.clear();
+    // Persist eagerly so resume route is accurate even before profile is saved.
+    await ConstituencyPrefs.save(id: c.id, name: c.name);
     loadingLocalBodies.value = true;
     try {
       localBodies.value = await _userService.getLocalBodies(constituencyId: c.id);
@@ -88,6 +90,8 @@ class OnboardingController extends GetxController {
     selectedLocalBody.value = lb;
     selectedWard.value = null;
     wards.clear();
+    // Persist eagerly so resume route reflects this step.
+    await ConstituencyPrefs.saveLocalBody(id: lb.id, name: lb.name);
     loadingWards.value = true;
     try {
       wards.value = await _userService.getWards(
@@ -102,6 +106,12 @@ class OnboardingController extends GetxController {
     }
   }
 
+  Future<void> selectWard(WardModel w) async {
+    selectedWard.value = w;
+    // Persist eagerly so resume route reflects this step.
+    await ConstituencyPrefs.saveWard(id: w.id, name: w.displayName);
+  }
+
   @override
   void onReady() {
     super.onReady();
@@ -110,6 +120,8 @@ class OnboardingController extends GetxController {
 
   Future<void> _hydrate() async {
     final auth = Get.find<AuthController>();
+    // Always re-hydrate from profile when logged in — stale in-memory state may
+    // be wrong after logout/login cycles. If that fails, fall back to prefs.
     if (auth.userId != null) {
       await _hydrateFromSavedProfile();
     } else {
@@ -144,10 +156,11 @@ class OnboardingController extends GetxController {
       final auth = Get.find<AuthController>();
       final uid = auth.userId;
       if (uid == null) return;
-      final p = await _userService.getProfile(uid);
+      // Use already-loaded profile from bootstrapSession if available.
+      final p = auth.user.value ?? await _userService.getProfile(uid);
       final cid = p?.constituencyId;
       if (cid == null) return;
-      // Always re-hydrate from profile — stale in-memory state may have wrong constituency.
+      // Always re-hydrate — stale in-memory state may have wrong constituency.
       selectedConstituency.value = null;
       localBodies.clear();
       wards.clear();
@@ -159,7 +172,7 @@ class OnboardingController extends GetxController {
         await selectConstituency(match.first);
       } else {
         final idToFetch = dbId ?? cid;
-        if (idToFetch != null && idToFetch.isNotEmpty) {
+        if (idToFetch.isNotEmpty) {
           await _hydrateConstituencyFromDbId(idToFetch);
         }
       }

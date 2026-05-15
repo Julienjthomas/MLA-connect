@@ -29,4 +29,6 @@ abstract class Routes {
   static const addAchievement = '/achievements/add';
 
   static const longFormComposer = '/long-form-composer';
+
+  static const profileEdit = '/profile/edit';
 }

@@ -39,6 +39,8 @@ import '../features/chat/bindings/chat_binding.dart';
 import '../features/chat/views/chat_view.dart';
 import '../features/updates/bindings/updates_binding.dart';
 import '../features/updates/views/update_detail_view.dart';
+import '../features/profile/bindings/profile_edit_binding.dart';
+import '../features/profile/views/profile_edit_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -148,6 +150,12 @@ class AppPages {
       name: Routes.addAchievement,
       page: () => const AddAchievementView(),
       binding: AchievementsBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.profileEdit,
+      page: () => const ProfileEditView(),
+      binding: ProfileEditBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

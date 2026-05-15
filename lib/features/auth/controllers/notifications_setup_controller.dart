@@ -23,13 +23,16 @@ class NotificationsSetupController extends GetxController {
           'event_reminders': eventReminders.value,
         });
       }
-      Get.delete<OnboardingController>(force: true);
-      Get.offAllNamed(Routes.onboardingSuccess);
+      _navigateToSuccess();
     } catch (_) {
-      Get.delete<OnboardingController>(force: true);
-      Get.offAllNamed(Routes.onboardingSuccess);
+      _navigateToSuccess();
     } finally {
       loading.value = false;
     }
+  }
+
+  void _navigateToSuccess() {
+    Get.delete<OnboardingController>(force: true);
+    Get.offAllNamed(Routes.onboardingSuccess);
   }
 }

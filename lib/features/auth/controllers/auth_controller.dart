@@ -27,7 +27,6 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _loadUserIfLoggedIn();
     Supabase.instance.client.auth.onAuthStateChange.listen((event) {
       if (event.event == AuthChangeEvent.signedIn) {
         _loadUserIfLoggedIn();
@@ -38,6 +37,24 @@ class AuthController extends GetxController {
   }
 
   Future<void> refreshProfile() => _loadUserIfLoggedIn();
+
+  /// Fetches the full citizen profile and populates [user] before any routing
+  /// decision is made. Called at splash time so all screens can trust [user]
+  /// is already populated. Safe to call when not logged in (no-op).
+  Future<void> bootstrapSession() async {
+    if (!isLoggedIn) return;
+    try {
+      final uid = userId;
+      if (uid == null) return;
+      final profile = await _userService.getProfile(uid);
+      user.value = profile;
+      if (profile != null && !await AppLocale.hasStoredPreference()) {
+        AppLocale.change(profile.language);
+      }
+      final slug = ConstituencySeed.slugForConstituencyName(profile?.constituencyName);
+      await AppIconService.setForConstituency(slug);
+    } catch (_) {}
+  }
 
   Future<void> _clearLocalSessionContext() async {
     await ConstituencyPrefs.clear();
@@ -97,31 +114,52 @@ class AuthController extends GetxController {
   Future<bool> hasCompletedOnboarding() async {
     final uid = userId;
     if (uid == null) return false;
-    final profile = await _userService.getProfile(uid);
+    final profile = user.value ?? await _userService.getProfile(uid);
     if (profile == null) return false;
     final nameOk = profile.name.isNotEmpty && profile.name != 'Citizen';
-    if (nameOk &&
-        profile.constituencyId != null &&
-        profile.onboardedAt != null) {
-      return true;
-    }
-    return nameOk && profile.wardId != null && profile.constituencyId != null;
+    if (!nameOk) return false;
+    if (profile.constituencyId != null && profile.onboardedAt != null) return true;
+    // Ward may be a fallback non-numeric ID not stored in DB — check prefs too.
+    final wardId = profile.wardId ?? await ConstituencyPrefs.getWardId();
+    final constituencyId = profile.constituencyId ?? await ConstituencyPrefs.getId();
+    return wardId != null && constituencyId != null;
   }
 
   /// First incomplete onboarding screen for returning sessions.
+  /// Reads SharedPreferences first (written eagerly per step) then falls back
+  /// to the loaded user model. Also consumes [ConstituencyPrefs.pendingReturnRoute]
+  /// when the user was mid-onboarding and logged out from a specific screen.
   Future<String> resolveOnboardingResumeRoute() async {
     final uid = userId;
     if (uid == null) return Routes.welcome;
-    final profile = await _userService.getProfile(uid);
-    if (profile == null) return Routes.constituency;
-    if (profile.constituencyId == null) return Routes.constituency;
-    final nameOk = profile.name.isNotEmpty && profile.name != 'Citizen';
-    if (profile.onboardedAt != null && nameOk) {
-      return Routes.notificationsSetup;
+
+    // Check pending return route first (set when user logs out from an onboarding screen).
+    final pendingRoute = await ConstituencyPrefs.getPendingReturnRoute();
+    if (pendingRoute != null && pendingRoute.isNotEmpty) {
+      await ConstituencyPrefs.clearPendingReturnRoute();
+      return pendingRoute;
     }
-    if (profile.localBodyId == null) return Routes.panchayat;
-    if (profile.wardId == null) return Routes.ward;
-    if (profile.name.isEmpty || profile.name == 'Citizen') return Routes.profileSetup;
+
+    // Determine resume point from prefs (written eagerly) then user model.
+    final wardId = await ConstituencyPrefs.getWardId();
+    final localBodyId = await ConstituencyPrefs.getLocalBodyId();
+    final constituencyId = await ConstituencyPrefs.getId();
+
+    final profile = user.value ?? await _userService.getProfile(uid);
+
+    // Effective values: prefs take precedence over profile (prefs are written per-step).
+    final effectiveConstituencyId = constituencyId ?? profile?.constituencyId;
+    final effectiveLocalBodyId = localBodyId ?? profile?.localBodyId;
+    final effectiveWardId = wardId ?? profile?.wardId;
+    final effectiveName = profile?.name;
+
+    if (effectiveConstituencyId == null) return Routes.constituency;
+    if (effectiveLocalBodyId == null) return Routes.panchayat;
+    if (effectiveWardId == null) return Routes.ward;
+    final nameOk = effectiveName != null && effectiveName.isNotEmpty && effectiveName != 'Citizen';
+    if (!nameOk) return Routes.profileSetup;
+    // All steps complete — onboarded_at marks notifications were seen.
+    if (profile?.onboardedAt != null) return Routes.home;
     return Routes.notificationsSetup;
   }
 
@@ -167,6 +205,13 @@ class AuthController extends GetxController {
     await _loadUserIfLoggedIn();
   }
 
+  Future<void> updateBasicProfile(Map<String, dynamic> data) async {
+    final uid = userId;
+    if (uid == null) return;
+    await _userService.updateProfile(uid, data);
+    await _loadUserIfLoggedIn();
+  }
+
   Future<void> updateLanguage(String languageCode) async {
     final uid = userId;
     if (uid == null) return;
@@ -175,7 +220,12 @@ class AuthController extends GetxController {
     await _loadUserIfLoggedIn();
   }
 
-  Future<void> logout() async {
+  /// Signs out the current user. Pass [returnRoute] when logging out from an
+  /// onboarding screen so that after re-login the user resumes there.
+  Future<void> logout({String? returnRoute}) async {
+    if (returnRoute != null) {
+      await ConstituencyPrefs.savePendingReturnRoute(returnRoute);
+    }
     await Supabase.instance.client.auth.signOut(scope: SignOutScope.global);
     await _clearLocalSessionContext();
     Get.offAllNamed(Routes.welcome);

@@ -40,11 +40,18 @@ class ProfileView extends GetView<ProfileController> {
           _SettingsTile(
             icon: Icons.language_outlined,
             title: 'Language',
-            trailing: Obx(() {
-              final lang = Get.find<AuthController>().user.value?.language ?? 'en';
-              final label = lang == 'ml' ? 'മലയാളം' : 'English';
-              return Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13));
-            }),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(() {
+                  final lang = Get.find<AuthController>().user.value?.language ?? 'en';
+                  final label = lang == 'ml' ? 'മലയാളം' : 'English';
+                  return Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13));
+                }),
+                const Icon(Icons.chevron_right, color: AppColors.grey400, size: 20),
+              ],
+            ),
             onTap: () => controller.pickLanguage(context),
           ),
           _SettingsTile(icon: Icons.help_outline_rounded, title: 'Help & FAQ', onTap: () {}),
@@ -230,7 +237,7 @@ class _UserCard extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.edit_outlined, size: 20, color: AppColors.textSecondary),
-              onPressed: () {},
+              onPressed: () => Get.toNamed(Routes.profileEdit),
             ),
           ],
         );

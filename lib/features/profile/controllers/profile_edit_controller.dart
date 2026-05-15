@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../data/services/storage_service.dart';
-import '../../../features/onboarding/controllers/onboarding_controller.dart';
-import '../../../routes/app_routes.dart';
-import 'auth_controller.dart';
+import '../../auth/controllers/auth_controller.dart';
 
-class ProfileSetupController extends GetxController {
+class ProfileEditController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -20,13 +18,22 @@ class ProfileSetupController extends GetxController {
   final _storageService = StorageService();
 
   @override
+  void onInit() {
+    super.onInit();
+    final user = Get.find<AuthController>().user.value;
+    nameController.text = user?.name ?? '';
+    emailController.text = user?.email ?? '';
+    avatarUrl.value = user?.avatarUrl ?? '';
+  }
+
+  @override
   void onClose() {
     nameController.dispose();
     emailController.dispose();
     super.onClose();
   }
 
-  Future<void> pickAndUploadImage() async {
+  Future<void> pickAndUploadAvatar() async {
     final uid = Get.find<AuthController>().userId;
     if (uid == null) return;
     final picked = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 80);
@@ -44,36 +51,20 @@ class ProfileSetupController extends GetxController {
     }
   }
 
-  Future<void> next() async {
+  Future<void> save() async {
     if (!formKey.currentState!.validate()) return;
     loading.value = true;
     try {
-      final onboarding = Get.find<OnboardingController>();
       final auth = Get.find<AuthController>();
-      final language = auth.user.value?.language ?? 'en';
-      final selectedLocalBody = onboarding.selectedLocalBody.value!;
-      final selectedWard = onboarding.selectedWard.value!;
-      await auth.saveProfile(
-        name: nameController.text.trim(),
-        email: emailController.text.trim(),
-        avatarUrl: avatarUrl.value.isNotEmpty ? avatarUrl.value : null,
-        constituencyId: onboarding.selectedConstituency.value?.id ?? auth.user.value?.constituencyId,
-        localBodyId: selectedLocalBody.id,
-        wardId: selectedWard.id,
-        language: language,
-      );
-      // Patch user in memory with local body/ward names if the DB re-fetch
-      // couldn't populate them (happens when fallback non-numeric IDs were used).
-      if (auth.user.value != null &&
-          (auth.user.value!.localBodyName == null || auth.user.value!.wardName == null)) {
-        auth.user.value = auth.user.value!.copyWith(
-          localBodyId: auth.user.value!.localBodyId ?? selectedLocalBody.id,
-          localBodyName: auth.user.value!.localBodyName ?? selectedLocalBody.name,
-          wardId: auth.user.value!.wardId ?? selectedWard.id,
-          wardName: auth.user.value!.wardName ?? selectedWard.displayName,
-        );
-      }
-      Get.toNamed(Routes.notificationsSetup);
+      final uid = auth.userId;
+      if (uid == null) return;
+      final updates = <String, dynamic>{
+        'full_name': nameController.text.trim(),
+        if (emailController.text.trim().isNotEmpty) 'email': emailController.text.trim(),
+        if (avatarUrl.value.isNotEmpty) 'avatar_url': avatarUrl.value,
+      };
+      await auth.updateBasicProfile(updates);
+      Get.back();
     } catch (_) {
       Get.snackbar('Error', 'Failed to save profile. Please try again.', snackPosition: SnackPosition.BOTTOM);
     } finally {

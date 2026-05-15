@@ -53,7 +53,7 @@ class WardView extends GetView<OnboardingController> {
                       return Obx(() {
                         final isSelected = controller.selectedWard.value?.id == w.id;
                         return GestureDetector(
-                          onTap: () => controller.selectedWard.value = w,
+                          onTap: () => controller.selectWard(w),
                           child: Container(
                             margin: const EdgeInsets.only(bottom: 8),
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
