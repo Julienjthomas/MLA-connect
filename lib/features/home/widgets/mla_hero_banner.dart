@@ -23,7 +23,7 @@ class MlaHeroBanner extends StatelessWidget {
           child: Stack(
             children: [
               // Dot grid — top right
-              Positioned(top: 0, right: 20, child: _DotGrid()),
+              Positioned(top: 0, right: 15, child: _DotGrid()),
               // Purple blob — bottom right
               Positioned(
                 bottom: -90,
@@ -179,7 +179,7 @@ class _DotGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 50,
-      height: 30,
+      height: 40,
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

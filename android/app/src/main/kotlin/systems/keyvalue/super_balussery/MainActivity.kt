@@ -1,12 +1,33 @@
 package systems.keyvalue.super_balussery
 
 import android.content.ComponentName
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
+
+    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+        // After a constituency icon switch, DefaultAlias is disabled; `flutter run` still
+        // targets it and fails until reinstall. Reset in debug when aliases are present.
+        if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
+            ensureDefaultLauncherEnabled()
+        }
+        super.onCreate(savedInstanceState)
+    }
+
+    private fun ensureDefaultLauncherEnabled() {
+        if (!aliasesAvailable()) return
+        val default = ComponentName(packageName, "$packageName.DefaultAlias")
+        if (packageManager.getComponentEnabledSetting(default) ==
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+        ) {
+            setActiveAlias(null)
+        }
+    }
     private val channel = "systems.keyvalue.super_balussery/app_icon"
 
     private val allAliases = listOf(
@@ -32,7 +53,21 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    private fun aliasesAvailable(): Boolean {
+        return try {
+            packageManager.getActivityInfo(
+                ComponentName(packageName, "$packageName.DefaultAlias"),
+                PackageManager.MATCH_DISABLED_COMPONENTS,
+            )
+            true
+        } catch (_: NameNotFoundException) {
+            false
+        }
+    }
+
     private fun setActiveAlias(targetAlias: String?) {
+        if (!aliasesAvailable()) return
+
         val pm = packageManager
         // null means "reset to default" — enable DefaultAlias, disable constituency aliases.
         val targetFull = "$packageName.${targetAlias ?: "DefaultAlias"}"

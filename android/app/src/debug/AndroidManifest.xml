@@ -1,7 +1,26 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- The INTERNET permission is required for development. Specifically,
-         the Flutter tool needs it to communicate with the running application
-         to allow setting breakpoints, to provide hot reload, etc.
-    -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- INTERNET is required for Flutter tooling (breakpoints, hot reload). -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--
+    Constituency icons use activity-alias launchers. After a slug switch,
+    DefaultAlias may be disabled and `flutter run` fails with "Activity class ...
+    DefaultAlias does not exist". Debug builds launch MainActivity directly and omit
+    activity-alias launcher entries (release keeps main manifest aliases).
+    -->
+    <application>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity-alias android:name=".DefaultAlias" tools:node="remove"/>
+        <activity-alias android:name=".BalusseryAlias" tools:node="remove"/>
+        <activity-alias android:name=".KoduvalliAlias" tools:node="remove"/>
+        <activity-alias android:name=".PerambraAlias" tools:node="remove"/>
+    </application>
 </manifest>

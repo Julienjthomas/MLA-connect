@@ -34,8 +34,10 @@ abstract class AppIconService {
       return;
     }
     if (Platform.isAndroid) {
-      _pendingAndroidSlug = slug;
-      _hasPendingAndroid = true;
+      if (_androidAliasesSupported) {
+        _pendingAndroidSlug = slug;
+        _hasPendingAndroid = true;
+      }
       return;
     }
     try {
@@ -47,8 +49,10 @@ abstract class AppIconService {
 
   static Future<void> clearToDefault() async {
     if (Platform.isAndroid) {
-      _pendingAndroidSlug = null;
-      _hasPendingAndroid = true;
+      if (_androidAliasesSupported) {
+        _pendingAndroidSlug = null;
+        _hasPendingAndroid = true;
+      }
       return;
     }
     try {
@@ -60,9 +64,15 @@ abstract class AppIconService {
     }
   }
 
+  /// Debug/profile manifests omit activity-alias launchers; icon switch is release-only.
+  static bool get _androidAliasesSupported =>
+      !kDebugMode && !kProfileMode;
+
   /// Apply pending Android alias switch. Call from AppLifecycleListener.onPause.
   static Future<void> applyPendingAndroid() async {
-    if (!Platform.isAndroid || !_hasPendingAndroid) return;
+    if (!Platform.isAndroid || !_hasPendingAndroid || !_androidAliasesSupported) {
+      return;
+    }
     _hasPendingAndroid = false;
     final slug = _pendingAndroidSlug;
     try {
