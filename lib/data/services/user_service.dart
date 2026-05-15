@@ -95,9 +95,7 @@ class UserService {
         final row = await _db.from('constituencies').select('name').eq('id', ref).maybeSingle();
         final slug = ConstituencySeed.slugForConstituencyName(row?['name'] as String?);
         if (slug != null) return slug;
-        final rowSlug = await _db.from('constituencies').select('slug').eq('id', ref).maybeSingle();
-        final s = rowSlug?['slug'] as String?;
-        if (s != null && s.isNotEmpty) return s;
+        // no slug column in DB — skip
       } catch (_) {}
     }
     return null;

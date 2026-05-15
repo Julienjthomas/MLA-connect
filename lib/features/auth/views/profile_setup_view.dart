@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
@@ -28,24 +29,42 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                 Text(AppStrings.basicProfileSubtitle, style: AppTextStyles.bodySmall),
                 const SizedBox(height: 32),
                 Center(
-                  child: Stack(
-                    children: [
-                      const CircleAvatar(
-                        radius: 44,
-                        backgroundColor: AppColors.grey200,
-                        child: Icon(Icons.person, size: 44, color: AppColors.grey500),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
-                          child: const Icon(Icons.camera_alt, color: Colors.white, size: 16),
-                        ),
-                      ),
-                    ],
+                  child: GestureDetector(
+                    onTap: controller.pickAndUploadImage,
+                    child: Obx(() {
+                      final path = controller.pickedImagePath.value;
+                      final uploading = controller.uploadingAvatar.value;
+                      return Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 44,
+                            backgroundColor: AppColors.grey200,
+                            backgroundImage: path.isNotEmpty ? FileImage(File(path)) : null,
+                            child: path.isEmpty
+                                ? const Icon(Icons.person, size: 44, color: AppColors.grey500)
+                                : null,
+                          ),
+                          if (uploading)
+                            const Positioned.fill(
+                              child: CircleAvatar(
+                                radius: 44,
+                                backgroundColor: Colors.black38,
+                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                              ),
+                            ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
+                              child: const Icon(Icons.camera_alt, color: Colors.white, size: 16),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
                   ),
                 ),
                 const SizedBox(height: 28),

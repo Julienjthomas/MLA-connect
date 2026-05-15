@@ -120,14 +120,14 @@ class OnboardingController extends GetxController {
       }
       final match = constituencies.where((c) => c.id == savedId);
       if (match.isNotEmpty) {
-        selectedConstituency.value = match.first;
+        await selectConstituency(match.first);
         return;
       }
       final savedName = await ConstituencyPrefs.getName();
       if (savedName == null) return;
       final byName = constituencies.where((c) => c.name == savedName);
       if (byName.isNotEmpty) {
-        selectedConstituency.value = byName.first;
+        await selectConstituency(byName.first);
       }
     } catch (_) {}
   }
@@ -147,8 +147,6 @@ class OnboardingController extends GetxController {
       if (match.isNotEmpty) {
         await selectConstituency(match.first);
       } else {
-        // Saved profile id (numeric, uuid, etc.) does not match [constituencies] list items
-        // (e.g. list is seed slugs while profile row uses real PK) — load the row and fetch LBs.
         final idToFetch = dbId ?? cid;
         if (idToFetch != null && idToFetch.isNotEmpty) {
           await _hydrateConstituencyFromDbId(idToFetch);
@@ -161,7 +159,7 @@ class OnboardingController extends GetxController {
     try {
       final row = await Supabase.instance.client
           .from('constituencies')
-          .select('id, name, slug')
+          .select('id, name')
           .eq('id', constituencyPk)
           .maybeSingle();
       if (row == null) return;

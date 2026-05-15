@@ -36,10 +36,6 @@ abstract class ConstituencyDbId {
         if (row != null) return jsonIdToString(row['id']);
       } catch (_) {}
     }
-    try {
-      final row = await db.from('constituencies').select('id').eq('slug', slug).maybeSingle();
-      if (row != null) return jsonIdToString(row['id']);
-    } catch (_) {}
-    return null;
+    return null; // no slug column in DB
   }
 }

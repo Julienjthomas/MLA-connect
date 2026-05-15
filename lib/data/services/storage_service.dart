@@ -86,10 +86,14 @@ class StorageService {
   }
 
   Future<String> uploadAvatar(File file, String userId) async {
-    final ext = file.path.split('.').last;
+    final ext = file.path.split('.').last.toLowerCase();
     final path = 'avatars/$userId.$ext';
     final bytes = await file.readAsBytes();
-    await _storage.from(_mediaBucket).uploadBinary(path, bytes, fileOptions: FileOptions(contentType: 'image/$ext', upsert: true));
+    await _storage.from(_mediaBucket).uploadBinary(
+      path,
+      bytes,
+      fileOptions: FileOptions(contentType: _imageContentType(ext), upsert: true),
+    );
     return _storage.from(_mediaBucket).getPublicUrl(path);
   }
 }

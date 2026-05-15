@@ -106,12 +106,22 @@ class _ActivityShellState extends State<_ActivityShell> {
       ),
       floatingActionButton: addFeature == null || addLabel == null
           ? null
-          : FloatingActionButton.extended(
-              onPressed: () => _openAddFlow(tab),
-              backgroundColor: addFeature.color,
-              icon: Icon(addFeature.icon, color: Colors.white),
-              label: Text(addLabel, style: const TextStyle(color: Colors.white)),
-            ),
+          : Obx(() {
+              final isEmpty = switch (tab) {
+                ActivityTab.reports => widget.controller.reports.isEmpty,
+                ActivityTab.ideas => widget.controller.ideas.isEmpty,
+                ActivityTab.improvements => widget.controller.improvements.isEmpty,
+                ActivityTab.appreciations => widget.controller.appreciations.isEmpty,
+                ActivityTab.saved => true,
+              };
+              if (isEmpty) return const SizedBox.shrink();
+              return FloatingActionButton.extended(
+                onPressed: () => _openAddFlow(tab),
+                backgroundColor: addFeature.color,
+                icon: Icon(addFeature.icon, color: Colors.white),
+                label: Text(addLabel, style: const TextStyle(color: Colors.white)),
+              );
+            }),
       body: Column(
         children: [
           Obx(() {

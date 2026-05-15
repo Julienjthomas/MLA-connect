@@ -52,7 +52,6 @@ class AuthController extends GetxController {
     final uid = userId;
     if (uid == null) return;
     try {
-      await _syncConstituencyFromPrefsIfNeeded();
       final profile = await _userService.getProfile(uid);
       user.value = profile;
       if (profile != null && !await AppLocale.hasStoredPreference()) {
@@ -61,16 +60,6 @@ class AuthController extends GetxController {
       final slug = ConstituencySeed.slugForConstituencyName(profile?.constituencyName);
       await AppIconService.setForConstituency(slug);
     } catch (_) {}
-  }
-
-  Future<void> _syncConstituencyFromPrefsIfNeeded() async {
-    final uid = userId;
-    if (uid == null) return;
-    final profile = await _userService.getProfile(uid);
-    if (profile?.constituencyId != null) return;
-    final prefsId = await ConstituencyPrefs.getId();
-    if (prefsId == null) return;
-    await _userService.saveConstituencySelection(userId: uid, constituencyId: prefsId);
   }
 
   String _normalizePhone(String phone) {
@@ -96,7 +85,6 @@ class AuthController extends GetxController {
       );
       debugPrint('[Auth] verifyOtp result → session=${res.session?.accessToken != null}');
       if (res.session != null) {
-        await _syncConstituencyFromPrefsIfNeeded();
         await _loadUserIfLoggedIn();
       }
       return res.session != null;

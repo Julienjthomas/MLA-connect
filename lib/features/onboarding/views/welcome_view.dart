@@ -97,7 +97,7 @@ class WelcomeView extends GetView<OnboardingController> {
               const Spacer(),
               PrimaryButton(
                 text: AppStrings.getStarted,
-                onPressed: () => Get.toNamed(Routes.constituency, arguments: {'preAuth': true}),
+                onPressed: () => Get.toNamed(Routes.phone),
               ),
               const SizedBox(height: 8),
             ],
