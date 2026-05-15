@@ -6,7 +6,6 @@ import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/widgets/status_chip.dart';
 import '../../../core/widgets/submission_media_image.dart';
-import '../../../core/widgets/timeline_widget.dart';
 import '../controllers/report_detail_controller.dart';
 
 class ReportDetailView extends GetView<ReportDetailController> {
@@ -35,6 +34,9 @@ class ReportDetailView extends GetView<ReportDetailController> {
         }
         final report = controller.report.value;
         if (report == null) return const Center(child: Text('Report not found'));
+        final description = report.description.trim();
+        final title = report.title.trim();
+        final showDescription = description.isNotEmpty && description != title;
         return SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -42,7 +44,7 @@ class ReportDetailView extends GetView<ReportDetailController> {
             children: [
               Row(
                 children: [
-                  Expanded(child: Text(report.title, style: AppTextStyles.headlineSmall)),
+                  Expanded(child: Text(title, style: AppTextStyles.headlineSmall)),
                   StatusChip(status: report.status),
                 ],
               ),
@@ -50,8 +52,10 @@ class ReportDetailView extends GetView<ReportDetailController> {
               Text('ID: ${report.shortId}  •  ${report.wardName}', style: AppTextStyles.caption),
               const SizedBox(height: 4),
               Text(report.timeAgo, style: AppTextStyles.caption),
-              const SizedBox(height: 16),
-              Text(report.description, style: AppTextStyles.bodyMedium),
+              if (showDescription) ...[
+                const SizedBox(height: 16),
+                Text(description, style: AppTextStyles.bodyMedium),
+              ],
               if (report.mediaUrls.isNotEmpty) ...[
                 const SizedBox(height: 16),
                 const Text('Photos', style: AppTextStyles.titleSmall),
@@ -78,10 +82,6 @@ class ReportDetailView extends GetView<ReportDetailController> {
                   ),
                 ),
               ],
-              const SizedBox(height: 24),
-              const Text('Status Timeline', style: AppTextStyles.titleSmall),
-              const SizedBox(height: 12),
-              TimelineWidget(events: report.timeline, accentColor: AppColors.reportOrange),
             ],
           ),
         );

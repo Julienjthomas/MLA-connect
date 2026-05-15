@@ -5,10 +5,12 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/activity_card.dart';
+import '../../../core/widgets/activity_empty_state.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/widgets/submission_media_image.dart';
 import '../../../routes/app_routes.dart';
+import '../../auth/controllers/auth_controller.dart';
 import '../controllers/activity_controller.dart';
 
 class ActivityView extends GetView<ActivityController> {
@@ -17,7 +19,7 @@ class ActivityView extends GetView<ActivityController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: _ActivityShell(controller: controller),
     );
   }
@@ -60,6 +62,13 @@ class _ActivityShellState extends State<_ActivityShell> {
     }
   }
 
+  static const _tabs = [
+    ActivityTab.reports,
+    ActivityTab.ideas,
+    ActivityTab.improvements,
+    ActivityTab.appreciations,
+  ];
+
   void _openAddFlow(ActivityTab tab) {
     final route = switch (tab) {
       ActivityTab.reports => Routes.reportFlow,
@@ -75,7 +84,7 @@ class _ActivityShellState extends State<_ActivityShell> {
 
   @override
   Widget build(BuildContext context) {
-    final tab = ActivityTab.values[_tabController?.index ?? 0];
+    final tab = _tabs[_tabController?.index ?? 0];
     final addFeature = tab.addFeature;
     final addLabel = tab.addActionLabel;
 
@@ -94,15 +103,6 @@ class _ActivityShellState extends State<_ActivityShell> {
           ],
         ),
         actions: const [],
-        bottom: TabBar(
-          isScrollable: true,
-          tabAlignment: TabAlignment.start,
-          indicatorColor: AppColors.primary,
-          labelColor: AppColors.primary,
-          unselectedLabelColor: AppColors.grey500,
-          labelStyle: AppTextStyles.labelMedium,
-          tabs: ActivityTab.values.map((t) => Tab(text: t.label)).toList(),
-        ),
       ),
       floatingActionButton: addFeature == null || addLabel == null
           ? null
@@ -114,30 +114,26 @@ class _ActivityShellState extends State<_ActivityShell> {
             ),
       body: Column(
         children: [
-          Obx(
-            () => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _SummaryCards(
-                  reports: widget.controller.totalReports,
-                  resolved: widget.controller.resolvedReports,
-                  appreciations: widget.controller.totalAppreciations,
-                  ideas: widget.controller.totalIdeas,
-                  improvements: widget.controller.totalImprovements,
-                  officeMessages: widget.controller.totalOfficeMessages,
-                ),
-                if (widget.controller.officeMessages.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Office messages are listed in the Chat tab.',
-                        style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
-                      ),
-                    ),
-                  ),
-              ],
+          Obx(() {
+            final auth = Get.find<AuthController>();
+            final name = auth.user.value?.name ?? '';
+            final firstName = name.split(' ').first;
+            final total = widget.controller.totalReports +
+                widget.controller.totalIdeas +
+                widget.controller.totalImprovements +
+                widget.controller.totalAppreciations;
+            return _ContributionBanner(firstName: firstName, total: total);
+          }),
+          Container(
+            color: AppColors.surface,
+            child: TabBar(
+              isScrollable: true,
+              tabAlignment: TabAlignment.start,
+              indicatorColor: AppColors.primary,
+              labelColor: AppColors.primary,
+              unselectedLabelColor: AppColors.grey500,
+              labelStyle: AppTextStyles.labelMedium,
+              tabs: _tabs.map((t) => Tab(text: t.label)).toList(),
             ),
           ),
           Expanded(
@@ -155,7 +151,6 @@ class _ActivityShellState extends State<_ActivityShell> {
                   _IdeasTab(controller: widget.controller, listPadding: _listPadding),
                   _ImprovementsTab(controller: widget.controller, listPadding: _listPadding),
                   _AppreciationsTab(controller: widget.controller, listPadding: _listPadding),
-                  _SavedTab(),
                 ],
               );
             }),
@@ -166,56 +161,134 @@ class _ActivityShellState extends State<_ActivityShell> {
   }
 }
 
-class _SummaryCards extends StatelessWidget {
-  final int reports, resolved, appreciations, ideas, improvements, officeMessages;
-  const _SummaryCards({
-    required this.reports,
-    required this.resolved,
-    required this.appreciations,
-    required this.ideas,
-    required this.improvements,
-    required this.officeMessages,
-  });
+class _ContributionBanner extends StatelessWidget {
+  final String firstName;
+  final int total;
+
+  const _ContributionBanner({required this.firstName, required this.total});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: [
-            _stat('$reports', 'Reports', AppColors.reportOrange, Icons.report_outlined),
-            _stat('$resolved', 'Resolved', AppColors.appreciateGreen, Icons.check_circle_outline),
-            _stat('$ideas', 'Ideas', AppColors.ideaPurple, Icons.lightbulb_outline),
-            _stat('$improvements', 'Improve-\nments', AppColors.improveBlue, Icons.tips_and_updates_outlined),
-            _stat('$appreciations', 'Thanks', AppColors.appreciateGreen, Icons.favorite_outline),
-            _stat('$officeMessages', 'Office\nChat', AppColors.primary, Icons.chat_outlined),
-          ],
-        ),
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: const EdgeInsets.fromLTRB(20, 20, 16, 20),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text('👋 ', style: TextStyle(fontSize: 16)),
+                    Text(
+                      'Great going${firstName.isNotEmpty ? ', $firstName' : ''}!',
+                      style: AppTextStyles.labelMedium.copyWith(color: AppColors.primary),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '$total ',
+                        style: AppTextStyles.headlineLarge.copyWith(color: AppColors.primary, height: 1),
+                      ),
+                      TextSpan(
+                        text: 'contributions so far',
+                        style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'You\'re helping build a better community.',
+                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Container(
+            width: 64,
+            height: 64,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.12),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.emoji_events_rounded, color: AppColors.primary, size: 34),
+          ),
+        ],
       ),
     );
   }
+}
 
-  Widget _stat(String value, String label, Color color, IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
-            child: Icon(icon, color: color, size: 20),
+class _FilterChips extends StatefulWidget {
+  final Widget Function(SubmissionStatus? filter) builder;
+
+  const _FilterChips({required this.builder});
+
+  @override
+  State<_FilterChips> createState() => _FilterChipsState();
+}
+
+class _FilterChipsState extends State<_FilterChips> {
+  SubmissionStatus? _filter;
+
+  static const _options = <(String, SubmissionStatus?)>[
+    ('All', null),
+    ('Active', SubmissionStatus.inProgress),
+    ('Resolved', SubmissionStatus.resolved),
+    ('Closed', SubmissionStatus.rejected),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 44,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            children: _options.map((opt) {
+              final (label, value) = opt;
+              final selected = _filter == value;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: ChoiceChip(
+                  label: Text(label),
+                  selected: selected,
+                  onSelected: (_) => setState(() => _filter = value),
+                  selectedColor: AppColors.primary.withValues(alpha: 0.12),
+                  labelStyle: AppTextStyles.labelMedium.copyWith(
+                    color: selected ? AppColors.primary : AppColors.grey500,
+                    fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      color: selected ? AppColors.primary : AppColors.grey200,
+                    ),
+                  ),
+                  backgroundColor: AppColors.surface,
+                  showCheckmark: false,
+                ),
+              );
+            }).toList(),
           ),
-          const SizedBox(height: 6),
-          Text(value, style: AppTextStyles.titleMedium.copyWith(color: color)),
-          const SizedBox(height: 2),
-          Text(label, style: AppTextStyles.caption, textAlign: TextAlign.center),
-        ],
-      ),
+        ),
+        widget.builder(_filter),
+      ],
     );
   }
 }
@@ -230,26 +303,38 @@ class _ReportsTab extends StatelessWidget {
     return Obx(() {
       final reports = controller.reports;
       if (reports.isEmpty) {
-        return EmptyState(
-          title: 'No reports yet',
-          message: 'You haven\'t submitted any reports. Tap "Report Problem" on the home screen to get started.',
-          actionLabel: 'Report a Problem',
-          onAction: () => Get.toNamed(Routes.reportFlow),
-        );
+        return const ActivityEmptyState();
       }
-      return ListView.builder(
-        padding: listPadding,
-        itemCount: reports.length,
-        itemBuilder: (_, i) {
-          final r = reports[i];
-          return ActivityCard(
-            title: r.title,
-            id: r.shortId,
-            ward: r.wardName,
-            status: r.status,
-            timeAgo: r.timeAgo,
-            imageUrl: r.mediaUrls.isNotEmpty ? r.mediaUrls.first : null,
-            onTap: () => Get.toNamed(Routes.reportDetail, arguments: r.id),
+      return _FilterChips(
+        builder: (filter) {
+          final filtered = filter == null
+              ? reports
+              : reports.where((r) => r.status == filter).toList();
+          if (filtered.isEmpty) {
+            return const Expanded(
+              child: EmptyState(
+                title: 'No matches',
+                message: 'No reports with this status.',
+              ),
+            );
+          }
+          return Expanded(
+            child: ListView.builder(
+              padding: listPadding,
+              itemCount: filtered.length,
+              itemBuilder: (_, i) {
+                final r = filtered[i];
+                return ActivityCard(
+                  title: r.title,
+                  id: r.shortId,
+                  ward: r.wardName,
+                  status: r.status,
+                  timeAgo: r.timeAgo,
+                  imageUrl: r.mediaUrls.isNotEmpty ? r.mediaUrls.first : null,
+                  onTap: () => Get.toNamed(Routes.reportDetail, arguments: r.id),
+                );
+              },
+            ),
           );
         },
       );
@@ -267,12 +352,7 @@ class _IdeasTab extends StatelessWidget {
     return Obx(() {
       final ideas = controller.ideas;
       if (ideas.isEmpty) {
-        return EmptyState(
-          title: 'No ideas yet',
-          message: 'Share your ideas to improve your constituency!',
-          actionLabel: 'Share an Idea',
-          onAction: () => Get.toNamed(Routes.ideasFlow),
-        );
+        return const ActivityEmptyState();
       }
       return ListView.builder(
         padding: listPadding,
@@ -344,12 +424,7 @@ class _ImprovementsTab extends StatelessWidget {
     return Obx(() {
       final improvements = controller.improvements;
       if (improvements.isEmpty) {
-        return EmptyState(
-          title: 'No improvements yet',
-          message: 'Suggest practical improvements for your constituency.',
-          actionLabel: 'Suggest Improvement',
-          onAction: () => Get.toNamed(Routes.improvementsFlow),
-        );
+        return const ActivityEmptyState();
       }
       return ListView.builder(
         padding: listPadding,
@@ -428,12 +503,7 @@ class _AppreciationsTab extends StatelessWidget {
     return Obx(() {
       final appreciations = controller.appreciations;
       if (appreciations.isEmpty) {
-        return EmptyState(
-          title: 'No appreciations yet',
-          message: 'Recognize good work by government staff!',
-          actionLabel: 'Send Appreciation',
-          onAction: () => Get.toNamed(Routes.appreciationFlow),
-        );
+        return const ActivityEmptyState();
       }
       return ListView.builder(
         padding: listPadding,
@@ -479,15 +549,5 @@ class _AppreciationsTab extends StatelessWidget {
         },
       );
     });
-  }
-}
-
-class _SavedTab extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const EmptyState(
-      title: 'Nothing saved yet',
-      message: 'Bookmark updates and reports to find them here later.',
-    );
   }
 }

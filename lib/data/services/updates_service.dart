@@ -42,4 +42,20 @@ class UpdatesService {
         .eq('target_type', 'post')
         .eq('target_id', id);
   }
+
+  Future<Set<String>> getLikedPostIds(Iterable<String> postIds) async {
+    final cid = _citizenRowId;
+    if (cid == null || cid.isEmpty || postIds.isEmpty) return {};
+    final ids = postIds.toList();
+    final res = await _db
+        .from('likes')
+        .select('target_id')
+        .eq('user_id', cid)
+        .eq('target_type', 'post')
+        .inFilter('target_id', ids);
+    return (res as List)
+        .map((row) => row['target_id']?.toString() ?? '')
+        .where((id) => id.isNotEmpty)
+        .toSet();
+  }
 }

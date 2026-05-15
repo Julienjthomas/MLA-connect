@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../routes/app_routes.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../controllers/profile_controller.dart';
 
@@ -29,6 +30,8 @@ class ProfileView extends GetView<ProfileController> {
       body: ListView(
         children: [
           _UserCard(controller: controller),
+          const SizedBox(height: 8),
+          _ChatWithMlaCard(),
           const SizedBox(height: 8),
           const _SectionLabel('Notifications'),
           _NotificationTiles(controller: controller),
@@ -58,7 +61,10 @@ class ProfileView extends GetView<ProfileController> {
           ),
           const SizedBox(height: 40),
           Center(
-            child: Text('${AppStrings.appName} v1.0.0', style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+            child: Text(
+              '${AppStrings.appName} v1.0.0',
+              style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
+            ),
           ),
           const SizedBox(height: 24),
         ],
@@ -82,6 +88,66 @@ class ProfileView extends GetView<ProfileController> {
             child: const Text('Logout', style: TextStyle(color: AppColors.statusRejected)),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ChatWithMlaCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => Get.toNamed(Routes.chat),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.04),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
+                  child: const Icon(Icons.account_balance_rounded, color: AppColors.primary, size: 22),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(AppStrings.chatWithYourMla, style: AppTextStyles.titleSmall)],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                OutlinedButton.icon(
+                  onPressed: () => Get.toNamed(Routes.chat),
+                  icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16),
+                  label: const Text('Start Chat'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                    side: const BorderSide(color: AppColors.primary),
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    textStyle: AppTextStyles.labelMedium,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

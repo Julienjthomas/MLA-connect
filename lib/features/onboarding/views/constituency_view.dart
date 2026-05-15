@@ -4,6 +4,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/primary_button.dart';
+import '../../../core/constants/constituency_seed.dart';
+import '../../../core/services/app_icon_service.dart';
 import '../../../core/utils/constituency_prefs.dart';
 import '../../../data/services/user_service.dart';
 import '../../../features/auth/controllers/auth_controller.dart';
@@ -96,8 +98,10 @@ class ConstituencyView extends GetView<OnboardingController> {
                   onPressed: controller.selectedConstituency.value != null
                       ? () async {
                           final c = controller.selectedConstituency.value!;
+                          final slug = c.slug ?? ConstituencySeed.slugForConstituencyName(c.name);
                           if (_isPreAuth) {
                             await ConstituencyPrefs.save(id: c.id, name: c.name);
+                            await AppIconService.setForConstituency(slug);
                             Get.toNamed(Routes.phone);
                             return;
                           }
@@ -109,6 +113,7 @@ class ConstituencyView extends GetView<OnboardingController> {
                             );
                             await Get.find<AuthController>().refreshProfile();
                           }
+                          await AppIconService.setForConstituency(slug);
                           Get.toNamed(Routes.panchayat);
                         }
                       : null,

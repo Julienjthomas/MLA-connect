@@ -46,6 +46,26 @@ class StorageService {
     return urls;
   }
 
+  Future<String> uploadVoiceFile(
+    String filePath, {
+    required SubmissionObjectsFolder folder,
+    required String userId,
+  }) async {
+    final uid = userId.trim();
+    if (uid.isEmpty) {
+      throw StateError('uploadVoiceFile: userId is required');
+    }
+    final file = File(filePath);
+    final bytes = await file.readAsBytes();
+    final path = '${folder.name}/$uid/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
+    await _storage.from(_submissionObjectsBucket).uploadBinary(
+          path,
+          bytes,
+          fileOptions: const FileOptions(contentType: 'audio/mp4'),
+        );
+    return path;
+  }
+
   static String _imageContentType(String ext) {
     switch (ext) {
       case 'jpg':

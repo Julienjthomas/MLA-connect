@@ -32,8 +32,12 @@ class UpdatesController extends GetxController {
       } else {
         updates.value = list;
       }
+      likedIds
+        ..clear()
+        ..addAll(await _service.getLikedPostIds(updates.map((u) => u.id)));
     } catch (_) {
       updates.value = _mockUpdates;
+      likedIds.clear();
     } finally {
       loading.value = false;
     }
@@ -41,30 +45,50 @@ class UpdatesController extends GetxController {
 
   void selectCategory(UpdateCategory cat) => selectedCategory.value = cat;
 
-  void toggleLike(String id) {
+  Future<void> toggleLike(String id) async {
     final idx = updates.indexWhere((u) => u.id == id);
     if (idx == -1) return;
     final u = updates[idx];
-    if (likedIds.contains(id)) {
+    final wasLiked = likedIds.contains(id);
+    final previousLikes = u.likes;
+
+    if (wasLiked) {
       likedIds.remove(id);
-      updates[idx] = UpdateModel(
-        id: u.id, title: u.title, body: u.body,
-        titleMl: u.titleMl, bodyMl: u.bodyMl,
-        category: u.category, imageUrl: u.imageUrl,
-        likes: (u.likes - 1).clamp(0, 999999), views: u.views,
-        createdAt: u.createdAt,
-      );
+      updates[idx] = _copyUpdate(u, likes: (u.likes - 1).clamp(0, 999999));
     } else {
       likedIds.add(id);
-      updates[idx] = UpdateModel(
-        id: u.id, title: u.title, body: u.body,
-        titleMl: u.titleMl, bodyMl: u.bodyMl,
-        category: u.category, imageUrl: u.imageUrl,
-        likes: u.likes + 1, views: u.views,
-        createdAt: u.createdAt,
-      );
+      updates[idx] = _copyUpdate(u, likes: u.likes + 1);
+    }
+
+    try {
+      if (wasLiked) {
+        await _service.unlikeUpdate(id);
+      } else {
+        await _service.likeUpdate(id);
+      }
+    } catch (_) {
+      if (wasLiked) {
+        likedIds.add(id);
+      } else {
+        likedIds.remove(id);
+      }
+      updates[idx] = _copyUpdate(u, likes: previousLikes);
+      Get.snackbar('Error', 'Could not update like. Please try again.', snackPosition: SnackPosition.BOTTOM);
     }
   }
+
+  UpdateModel _copyUpdate(UpdateModel u, {required int likes}) => UpdateModel(
+        id: u.id,
+        title: u.title,
+        body: u.body,
+        titleMl: u.titleMl,
+        bodyMl: u.bodyMl,
+        category: u.category,
+        imageUrl: u.imageUrl,
+        likes: likes,
+        views: u.views,
+        createdAt: u.createdAt,
+      );
 
   static final _mockUpdates = [
     UpdateModel(

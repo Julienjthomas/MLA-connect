@@ -145,6 +145,12 @@ extension SubmissionVisibilityX on SubmissionVisibility {
       };
 
   String get dbValue => name;
+
+  String get submissionDbValue => switch (this) {
+        SubmissionVisibility.public => 'public',
+        SubmissionVisibility.mlaOnly => 'mla_office_only',
+        SubmissionVisibility.anonymous => 'anonymous',
+      };
 }
 
 enum UpdateCategory { all, development, events, resolved, announcements }

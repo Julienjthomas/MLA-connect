@@ -118,6 +118,8 @@ class AppStrings {
   // Activity
   static String get myActivity => _s.myActivity;
   static String get trackContributions => _s.trackContributions;
+  static String get savedEmptyTitle => _s.savedEmptyTitle;
+  static String get savedEmptyMsg => _s.savedEmptyMsg;
 
   // Updates
   static String get updates => _s.updates;
@@ -131,6 +133,7 @@ class AppStrings {
   static String get notifications => _s.notifications;
   static String get helpCenter => _s.helpCenter;
   static String get contactMlaOffice => _s.contactMlaOffice;
+  static String get chatWithYourMla => _s.chatWithYourMla;
   static String get aboutApp => _s.aboutApp;
   static String get termsConditions => _s.termsConditions;
   static String get privacyPolicy => _s.privacyPolicy;

@@ -4,6 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/upload_widget.dart';
+import '../../../../core/widgets/voice_input_widget.dart';
 import '../../controllers/idea_controller.dart';
 
 class IdeaDetailsStep extends GetView<IdeaController> {
@@ -62,7 +63,31 @@ class IdeaDetailsStep extends GetView<IdeaController> {
           const SizedBox(height: 14),
           Text('Describe your idea in detail', style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
-          TextField(controller: controller.descriptionController, maxLines: 5, maxLength: 1000, decoration: const InputDecoration(hintText: 'My idea is to build a smart drainage system...')),
+          Stack(
+            children: [
+              TextField(
+                controller: controller.descriptionController,
+                maxLines: 5,
+                maxLength: 1000,
+                decoration: const InputDecoration(
+                  hintText: 'My idea is to build a smart drainage system...',
+                  contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 56),
+                ),
+              ),
+              VoiceInputWidget(
+                overlayInField: true,
+                onTranscript: (t) {
+                  final c = controller.descriptionController;
+                  final cur = c.text.trim();
+                  if (cur.isEmpty) {
+                    c.text = t;
+                  } else {
+                    c.text = '$cur\n$t';
+                  }
+                },
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
           Obx(() => UploadWidget(
                 files: controller.selectedImages.toList(),

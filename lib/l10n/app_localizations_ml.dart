@@ -285,6 +285,13 @@ class SMl extends S {
   String get contactMlaOffice => 'MLA ഓഫീസുമായി ബന്ധപ്പെടുക';
 
   @override
+  String get chatWithYourMla => 'നിങ്ങളുടെ MLA-യുമായി ചാറ്റ് ചെയ്യുക';
+
+  @override
+  String get chatWithYourMlaSubtitle =>
+      'MLA ഓഫീസിലേക്ക് നേരിട്ട് സന്ദേശം അയയ്ക്കുക';
+
+  @override
   String get aboutApp => 'സൂപ്പർ ബാലുശ്ശേരിയെ കുറിച്ച്';
 
   @override
@@ -399,6 +406,13 @@ class SMl extends S {
 
   @override
   String get noUpdatesMsg => 'ഈ വിഭാഗത്തിൽ ഇതുവരെ അപ്ഡേറ്റുകൾ ഇല്ല.';
+
+  @override
+  String get savedEmptyTitle => 'ഇതുവരെ സേവ് ചെയ്തത് ഒന്നുമില്ല';
+
+  @override
+  String get savedEmptyMsg =>
+      'പിന്നീട് എളുപ്പത്തിൽ കണ്ടെത്താൻ അപ്ഡേറ്റുകളും പൊതുവായി പങ്കിട്ട ആശയങ്ങളും ഇവിടെ സേവ് ചെയ്യുക.';
 
   @override
   String get reportNotFound => 'റിപ്പോർട്ട് കണ്ടെത്തിയില്ല';

@@ -9,7 +9,7 @@ class SEn extends S {
   SEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Ente MLA';
+  String get appName => 'MLA Connect';
 
   @override
   String get tagline => 'Your MLA. Your Voice.';
@@ -134,7 +134,7 @@ class SEn extends S {
   String get allSet => 'You\'re All Set!';
 
   @override
-  String get allSetSubtitle => 'Welcome to Ente MLA';
+  String get allSetSubtitle => 'Welcome to MLA Connect';
 
   @override
   String get goToHome => 'Go to Home';
@@ -278,7 +278,13 @@ class SEn extends S {
   String get contactMlaOffice => 'Contact MLA Office';
 
   @override
-  String get aboutApp => 'About Ente MLA';
+  String get chatWithYourMla => 'Chat with MLA';
+
+  @override
+  String get chatWithYourMlaSubtitle => 'Message your MLA office directly';
+
+  @override
+  String get aboutApp => 'About MLA Connect';
 
   @override
   String get termsConditions => 'Terms & Conditions';
@@ -392,6 +398,13 @@ class SEn extends S {
 
   @override
   String get noUpdatesMsg => 'No updates for this category yet.';
+
+  @override
+  String get savedEmptyTitle => 'Nothing saved yet';
+
+  @override
+  String get savedEmptyMsg =>
+      'Save Updates posts and publicly shared ideas here to find them later.';
 
   @override
   String get reportNotFound => 'Report not found';

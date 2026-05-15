@@ -5,7 +5,6 @@ import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../../../core/utils/app_locale.dart';
 import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shimmer_loader.dart';
@@ -58,9 +57,8 @@ class HomeView extends GetView<HomeController> {
       scrolledUnderElevation: 1,
       title: Obx(() {
         final constituencyName = Get.find<AuthController>().user.value?.constituencyName;
-        final title = (constituencyName != null && constituencyName.isNotEmpty)
-            ? constituencyName
-            : AppStrings.appName;
+        final hasConstituency = constituencyName != null && constituencyName.isNotEmpty;
+        final title = hasConstituency ? constituencyName : AppStrings.appName;
         return Row(
           children: [
             Container(
@@ -86,12 +84,16 @@ class HomeView extends GetView<HomeController> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    'Ente MLA',
-                    style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  if (hasConstituency)
+                    const Text(
+                      'MLA Connect',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textTertiary,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -112,28 +114,6 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
           ],
-        ),
-        Obx(() {
-          final label = AppLocale.languageCode.value == 'en' ? 'ML' : 'EN';
-          return TextButton(
-            onPressed: () async {
-              final next = AppLocale.languageCode.value == 'en' ? 'ml' : 'en';
-              final auth = Get.find<AuthController>();
-              if (auth.userId != null) {
-                await auth.updateLanguage(next);
-              } else {
-                AppLocale.change(next);
-              }
-            },
-            child: Text(
-              label,
-              style: AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimary),
-            ),
-          );
-        }),
-        IconButton(
-          icon: const Icon(Icons.chat_bubble_outline_rounded),
-          onPressed: () => Get.toNamed(Routes.chat),
         ),
       ],
     );
@@ -168,11 +148,6 @@ class HomeView extends GetView<HomeController> {
                 height: 1.3,
               ),
             ),
-            const SizedBox(height: 2),
-            Text(
-              AppStrings.tagline,
-              style: const TextStyle(fontFamily: 'Poppins', fontSize: 14, color: AppColors.textTertiary),
-            ),
           ],
         ),
       ),
@@ -182,11 +157,13 @@ class HomeView extends GetView<HomeController> {
   // Tiles order: Report, Idea, Improve, Appreciate
   SliverPadding _buildActionGrid(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    // Reserve space for: SafeArea (~44), AppBar (~56), hero (~130+16), section title (~60), bottom nav (~60), paddings
-    // Give action grid ~30% of screen height so all 4 tiles are visible
-    final gridHeight = (screenHeight * 0.30).clamp(200.0, 280.0);
-    final tileSize = (gridHeight - 12) / 2; // 2 rows, 12 spacing
-    final aspectRatio = ((MediaQuery.of(context).size.width - 44) / 2.8) / tileSize;
+    final screenWidth = MediaQuery.of(context).size.width;
+    // Budget: subtract fixed-height elements so MLA Activity section always fits in viewport.
+    // Reserved: SafeArea~44, AppBar~56, hero+gap~116, section title~52, grid padding~16,
+    //           MLA header~56, bottom nav~60 = ~400px total.
+    final gridHeight = (screenHeight - 400).clamp(160.0, 240.0);
+    final tileSize = (gridHeight - 12) / 2; // 2 rows, 12px spacing
+    final aspectRatio = ((screenWidth - 44) / 2) / tileSize;
 
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -198,6 +175,7 @@ class HomeView extends GetView<HomeController> {
             subtitle: FeatureType.report.subtitle,
             accentColor: FeatureType.report.color,
             onTap: () => Get.toNamed(Routes.reportFlow),
+            tileSize: tileSize,
           ),
           ActionCard(
             icon: FeatureType.idea.icon,
@@ -205,6 +183,7 @@ class HomeView extends GetView<HomeController> {
             subtitle: FeatureType.idea.subtitle,
             accentColor: FeatureType.idea.color,
             onTap: () => Get.toNamed(Routes.ideasFlow),
+            tileSize: tileSize,
           ),
           ActionCard(
             icon: FeatureType.improve.icon,
@@ -212,6 +191,7 @@ class HomeView extends GetView<HomeController> {
             subtitle: FeatureType.improve.subtitle,
             accentColor: FeatureType.improve.color,
             onTap: () => Get.toNamed(Routes.improvementsFlow),
+            tileSize: tileSize,
           ),
           ActionCard(
             icon: FeatureType.appreciate.icon,
@@ -219,6 +199,7 @@ class HomeView extends GetView<HomeController> {
             subtitle: FeatureType.appreciate.subtitle,
             accentColor: FeatureType.appreciate.color,
             onTap: () => Get.toNamed(Routes.appreciationFlow),
+            tileSize: tileSize,
           ),
         ]),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -236,7 +217,7 @@ class HomeView extends GetView<HomeController> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SectionHeader(
-          title: AppStrings.mlaActivity,
+          title: AppStrings.updates,
           actionLabel: AppStrings.viewAll,
           onAction: () {
             // Switch to Updates tab (index 2)
@@ -253,31 +234,36 @@ class HomeView extends GetView<HomeController> {
 
   SliverToBoxAdapter _buildUpdatesFeed() {
     return SliverToBoxAdapter(
-      child: SizedBox(
-        height: 200,
-        child: Obx(() {
-          if (controller.loading.value) {
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: 3,
-              itemBuilder: (_, __) =>
-                  Container(width: 200, margin: const EdgeInsets.only(right: 12), child: const ShimmerCard()),
-            );
-          }
-          return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: controller.recentActivity.length,
-            itemBuilder: (_, i) {
-              final item = controller.recentActivity[i];
-              return GestureDetector(
-                onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
-                child: _activityCard(item.title, item.imageUrl, item.timeAgo, item.id),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final tileWidth = ((constraints.maxWidth - 32) / 2.5).clamp(132.0, 220.0);
+          return SizedBox(
+            height: 200,
+            child: Obx(() {
+              if (controller.loading.value) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: 3,
+                  itemBuilder: (_, __) =>
+                      Container(width: tileWidth, margin: const EdgeInsets.only(right: 12), child: const ShimmerCard()),
+                );
+              }
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: controller.recentActivity.length,
+                itemBuilder: (_, i) {
+                  final item = controller.recentActivity[i];
+                  return GestureDetector(
+                    onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
+                    child: _activityCard(item.title, item.imageUrl, item.timeAgo, tileWidth),
+                  );
+                },
               );
-            },
+            }),
           );
-        }),
+        },
       ),
     );
   }
@@ -411,9 +397,9 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _activityCard(String title, String? imageUrl, String time, String id) {
+  Widget _activityCard(String title, String? imageUrl, String time, double width) {
     return Container(
-      width: 150,
+      width: width,
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         color: AppColors.surface,

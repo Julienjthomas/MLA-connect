@@ -32,7 +32,9 @@ import '../features/ideas/bindings/idea_binding.dart';
 import '../features/ideas/views/idea_flow_view.dart';
 import '../features/improvements/bindings/improvement_binding.dart';
 import '../features/improvements/views/improvement_flow_view.dart';
+import '../features/achievements/bindings/achievements_binding.dart';
 import '../features/achievements/views/achievements_listing_view.dart';
+import '../features/achievements/views/add_achievement_view.dart';
 import '../features/chat/bindings/chat_binding.dart';
 import '../features/chat/views/chat_view.dart';
 import '../features/updates/bindings/updates_binding.dart';
@@ -139,6 +141,13 @@ class AppPages {
     GetPage(
       name: Routes.achievementsListing,
       page: () => const AchievementsListingView(),
+      binding: AchievementsBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.addAchievement,
+      page: () => const AddAchievementView(),
+      binding: AchievementsBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

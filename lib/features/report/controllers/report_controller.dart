@@ -26,6 +26,8 @@ class ReportController extends GetxController {
   final RxString selectedWard = ''.obs;
   final RxList<XFile> selectedImages = <XFile>[].obs;
   final RxBool isLoadingLocation = false.obs;
+  final Rx<SubmissionVisibility> visibility = SubmissionVisibility.public.obs;
+  final RxnString voiceRecordingPath = RxnString();
 
   // Flow state
   final RxInt currentStep = 0.obs;
@@ -34,7 +36,7 @@ class ReportController extends GetxController {
 
   late PageController pageController;
 
-  final List<String> steps = ['Details', 'Review', 'Done'];
+  final List<String> steps = ['Details', 'Visibility', 'Review', 'Done'];
 
   @override
   void onInit() {
@@ -142,6 +144,16 @@ class ReportController extends GetxController {
         );
       }
 
+      String? voiceMessageUrl;
+      final voicePath = voiceRecordingPath.value;
+      if (voicePath != null && voicePath.isNotEmpty) {
+        voiceMessageUrl = await _storage.uploadVoiceFile(
+          voicePath,
+          folder: SubmissionObjectsFolder.problems,
+          userId: uid,
+        );
+      }
+
       final profile = auth.user.value;
       final landmarkText = landmarkController.text.trim();
       final geoLabel = [
@@ -168,6 +180,8 @@ class ReportController extends GetxController {
         ward: selectedWard.value,
         contactNumber: contactController.text.trim(),
         mediaUrls: mediaUrls,
+        voiceMessageUrl: voiceMessageUrl,
+        visibility: visibility.value,
       );
 
       final id = await _service.submitReport(data, reporterId);

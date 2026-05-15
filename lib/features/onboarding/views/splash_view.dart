@@ -41,7 +41,7 @@ class SplashView extends GetView<SplashController> {
                   Obx(() {
                     final name = controller.constituencyName.value;
                     return Text(
-                      name.isNotEmpty ? name : 'Ente MLA',
+                      name.isNotEmpty ? name : 'MLA Connect',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontFamily: 'Poppins',
@@ -51,12 +51,14 @@ class SplashView extends GetView<SplashController> {
                       ),
                     );
                   }),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Ente MLA',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
-                  ),
+                  if (controller.constituencyName.value.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      'MLA Connect',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
+                    ),
+                  ],
                 ],
               ),
             ),

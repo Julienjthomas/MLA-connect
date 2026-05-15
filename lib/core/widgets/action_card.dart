@@ -8,6 +8,7 @@ class ActionCard extends StatelessWidget {
   final String subtitle;
   final Color accentColor;
   final VoidCallback onTap;
+  final double? tileSize;
 
   const ActionCard({
     super.key,
@@ -16,14 +17,18 @@ class ActionCard extends StatelessWidget {
     required this.subtitle,
     required this.accentColor,
     required this.onTap,
+    this.tileSize,
   });
 
   @override
   Widget build(BuildContext context) {
+    final double iconSize = (tileSize != null && tileSize! <= 90) ? 18.0 : 22.0;
+    final double iconPadding = (tileSize != null && tileSize! <= 90) ? 7.0 : 9.0;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
@@ -33,20 +38,21 @@ class ActionCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(iconPadding),
               decoration: BoxDecoration(
                 color: accentColor.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon, color: accentColor, size: 24),
+              child: Icon(icon, color: accentColor, size: iconSize),
             ),
-            const SizedBox(height: 10),
-            Text(title, style: AppTextStyles.titleMedium.copyWith(color: accentColor)),
-            const SizedBox(height: 4),
-            Text(subtitle, style: AppTextStyles.caption, maxLines: 2, overflow: TextOverflow.ellipsis),
+            const SizedBox(height: 6),
+            Text(title, style: AppTextStyles.titleMedium.copyWith(color: accentColor), maxLines: 1, overflow: TextOverflow.ellipsis),
+            const SizedBox(height: 2),
+            Expanded(
+              child: Text(subtitle, style: AppTextStyles.caption, maxLines: 2, overflow: TextOverflow.ellipsis),
+            ),
           ],
         ),
       ),

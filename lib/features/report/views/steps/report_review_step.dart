@@ -33,6 +33,7 @@ class ReportReviewStep extends GetView<ReportController> {
             ),
             _row('Title', controller.titleController.text),
             _row('Description', controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
+            _row('Visibility', controller.visibility.value.label),
           ]),
 
           const SizedBox(height: 16),

@@ -45,19 +45,23 @@ The user SHALL NOT reach the home shell without selecting both a panchayat and a
 - **THEN** the Continue button is disabled
 
 ### Requirement: Pre-auth constituency selection
-The constituency picker SHALL be shown to unauthenticated users as the first onboarding step. Selecting and confirming a constituency SHALL save the selection locally and navigate to the phone auth screen.
+The constituency picker SHALL be shown to unauthenticated users as the first onboarding step. The selection SHALL be held in memory only (not written to SharedPreferences) and SHALL NOT survive an app kill before login.
 
 #### Scenario: First-time user sees constituency picker
 - **WHEN** an unauthenticated user reaches the onboarding flow
 - **THEN** the constituency picker is shown before the phone number entry screen
 
-#### Scenario: Confirmation saves locally and proceeds to phone
+#### Scenario: Confirmation held in memory and proceeds to phone
 - **WHEN** user selects a constituency and taps "Next"
-- **THEN** selection is saved to SharedPreferences and the user navigates to the phone screen
+- **THEN** selection is held in memory on OnboardingController and the user navigates to the phone screen
 
-#### Scenario: Post-auth constituency sync
-- **WHEN** the user completes OTP verification
-- **THEN** the locally saved constituency id is written to the user profile row in Supabase
+#### Scenario: Kill before login clears selection
+- **WHEN** the user selects a constituency, kills the app before OTP verification, and cold-launches
+- **THEN** no constituency is pre-selected and the splash shows "MLA Connect" as the primary title
+
+#### Scenario: Post-auth constituency written to profile
+- **WHEN** the user successfully verifies OTP and the profile is saved
+- **THEN** the in-memory constituency is written to the user profile row in Supabase
 
 ### Requirement: Constituency picker skipped for returning users
 If the user has already completed constituency selection (profile has a constituencyId), the constituency picker SHALL NOT be shown on re-launch or onboarding resume.

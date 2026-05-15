@@ -36,7 +36,7 @@ class WelcomeView extends GetView<OnboardingController> {
                   Obx(() {
                     final name = controller.savedConstituencyName.value;
                     return Text(
-                      name.isNotEmpty ? name : 'Ente MLA',
+                      name.isNotEmpty ? name : 'MLA Connect',
                       style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 22,

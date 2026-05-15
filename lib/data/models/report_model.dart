@@ -91,6 +91,8 @@ class ReportFormData {
   final String? ward;
   final String? contactNumber;
   final List<String> mediaUrls;
+  final String? voiceMessageUrl;
+  final SubmissionVisibility visibility;
 
   const ReportFormData({
     required this.category,
@@ -105,6 +107,8 @@ class ReportFormData {
     this.ward,
     this.contactNumber,
     this.mediaUrls = const [],
+    this.voiceMessageUrl,
+    this.visibility = SubmissionVisibility.public,
   });
 
   Map<String, dynamic> toJson(String userId, String referenceId) => {
@@ -123,5 +127,8 @@ class ReportFormData {
         if (localBodyId != null && localBodyId!.isNotEmpty) 'local_body_id': localBodyId,
         if (wardId != null && wardId!.isNotEmpty) 'ward_id': wardId,
         if (contactNumber != null && contactNumber!.isNotEmpty) 'contact_phone': contactNumber,
+        if (voiceMessageUrl != null && voiceMessageUrl!.isNotEmpty) 'voice_message_url': voiceMessageUrl,
+        'visibility': visibility.submissionDbValue,
+        'is_anonymous': visibility == SubmissionVisibility.anonymous,
       };
 }

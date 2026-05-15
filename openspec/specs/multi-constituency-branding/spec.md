@@ -1,40 +1,29 @@
 ## ADDED Requirements
 
-### Requirement: App name is "Ente MLA" globally
-The app display name SHALL be "Ente MLA" on all surfaces — splash screen, app bar titles, about section, onboarding success, and native OS app label.
+### Requirement: App name is "MLA Connect" globally
+The app display name SHALL be "MLA Connect" on all surfaces — splash screen, app bar titles, about section, onboarding success, and native OS app label.
 
-#### Scenario: Splash renders correct name
-- **WHEN** the splash screen renders
-- **THEN** the primary heading displays "Ente MLA" (not "Super Balussery" or any constituency name)
+#### Scenario: Cold launch without session shows generic name
+- **WHEN** the app is cold-launched with no active Supabase session
+- **THEN** the splash screen SHALL display "MLA Connect" as the primary title regardless of any previously selected constituency in the pre-auth picker
+
+#### Scenario: Cold launch with active session shows constituency
+- **WHEN** the app is cold-launched and an active session exists with a constituency on the user profile
+- **THEN** the splash screen MAY display the constituency name
 
 #### Scenario: Native app label
 - **WHEN** the app is installed on Android or iOS
-- **THEN** the OS home screen shows "Ente MLA" as the app name
-
-### Requirement: Constituency name persisted locally before auth
-The selected constituency name and id SHALL be stored in SharedPreferences when the user selects a constituency on the pre-auth picker. Those keys SHALL be cleared when the Supabase session ends (explicit logout or `signedOut`) so logged-out surfaces do not reuse a prior user's selection.
-
-#### Scenario: Prefs written on selection
-- **WHEN** user taps a constituency in the pre-auth picker and proceeds
-- **THEN** `constituency_id` and `constituency_name` keys are written to SharedPreferences
-
-#### Scenario: Prefs available on next cold launch
-- **WHEN** the app relaunches before the user completes auth and the user has not ended the session since saving the selection
-- **THEN** the previously selected constituency is pre-selected in the picker
-
-#### Scenario: Prefs cleared on session end
-- **WHEN** the user logs out or the auth client emits `signedOut`
-- **THEN** `constituency_id` and `constituency_name` are removed from SharedPreferences
+- **THEN** the OS home screen shows "MLA Connect" as the app name regardless of active constituency (constituency identity is expressed via the launcher icon, not the app name)
 
 ### Requirement: Splash shows constituency subtitle dynamically
-The splash screen SHALL display the selected constituency name as a subtitle line below "Ente MLA" only when a constituency is stored for the current anonymous onboarding attempt or resolved from the logged-in profile. After session end, it SHALL show the generic tagline until the user selects a constituency again.
+The splash screen SHALL display the selected constituency name as a subtitle line only when a constituency is resolved from the logged-in profile. Without an active session, it SHALL show the generic tagline.
 
-#### Scenario: Constituency selected
-- **WHEN** a constituency is stored in SharedPreferences for the current pre-auth attempt or the logged-in profile exposes a constituency name
+#### Scenario: Constituency resolved from profile
+- **WHEN** an active session exists and the logged-in profile exposes a constituency name
 - **THEN** splash shows "{constituency name} Constituency" as the subtitle
 
-#### Scenario: No constituency selected
-- **WHEN** no constituency is in SharedPreferences, no user profile constituency is available, or the session has ended and local constituency prefs were cleared
+#### Scenario: No session or no constituency
+- **WHEN** no active session exists, or the profile has no constituency
 - **THEN** splash shows "Your MLA. Your Voice." as the subtitle
 
 ### Requirement: Hardcoded "Balussery" strings removed

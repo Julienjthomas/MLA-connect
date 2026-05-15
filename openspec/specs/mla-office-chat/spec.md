@@ -15,11 +15,11 @@ The app SHALL provide a Chat experience where a signed-in user can compose a tex
 - **THEN** the app blocks sending and prompts the user to sign in
 
 ### Requirement: Message categories
-The compose flow SHALL require the user to pick a category: personal message, request, or invitation (plus an optional general/other type if needed for edge cases).
+The compose flow SHALL default to category `'personal'` with no required user selection in the UI. The category picker is removed from the visible input area.
 
-#### Scenario: Category required before send
-- **WHEN** the user taps Send without a category
-- **THEN** validation prevents submission and shows an inline error
+#### Scenario: Default category used on send
+- **WHEN** the user sends a message without selecting a category
+- **THEN** the message is submitted with category `'personal'`
 
 ### Requirement: Persist messages with constituency scope
 Sending a message SHALL insert a row tied to `auth.uid()`, the message body, the selected category, and the user’s active `assembly_constituency_id`.

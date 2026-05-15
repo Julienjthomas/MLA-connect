@@ -100,7 +100,7 @@ abstract class S {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'Ente MLA'**
+  /// **'MLA Connect'**
   String get appName;
 
   /// No description provided for @tagline.
@@ -346,7 +346,7 @@ abstract class S {
   /// No description provided for @allSetSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Ente MLA'**
+  /// **'Welcome to MLA Connect'**
   String get allSetSubtitle;
 
   /// No description provided for @goToHome.
@@ -625,10 +625,22 @@ abstract class S {
   /// **'Contact MLA Office'**
   String get contactMlaOffice;
 
+  /// No description provided for @chatWithYourMla.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat with MLA'**
+  String get chatWithYourMla;
+
+  /// No description provided for @chatWithYourMlaSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Message your MLA office directly'**
+  String get chatWithYourMlaSubtitle;
+
   /// No description provided for @aboutApp.
   ///
   /// In en, this message translates to:
-  /// **'About Ente MLA'**
+  /// **'About MLA Connect'**
   String get aboutApp;
 
   /// No description provided for @termsConditions.
@@ -852,6 +864,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'No updates for this category yet.'**
   String get noUpdatesMsg;
+
+  /// No description provided for @savedEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing saved yet'**
+  String get savedEmptyTitle;
+
+  /// No description provided for @savedEmptyMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Updates posts and publicly shared ideas here to find them later.'**
+  String get savedEmptyMsg;
 
   /// No description provided for @reportNotFound.
   ///

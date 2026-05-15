@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
 
-  "appName": "Ente MLA",
+  "appName": "MLA Connect",
   "tagline": "Your MLA. Your Voice.",
   "constituency": "Constituency",
   "poweredFor": "Powered for",
@@ -48,7 +48,7 @@
   "eventRemindersDesc": "Upcoming events & programs",
 
   "allSet": "You're All Set!",
-  "allSetSubtitle": "Welcome to Ente MLA",
+  "allSetSubtitle": "Welcome to MLA Connect",
   "goToHome": "Go to Home",
 
   "whatWouldYouLike": "What would you like to\nshare today?",
@@ -103,7 +103,9 @@
   "notifications": "Notifications",
   "helpCenter": "Help Center",
   "contactMlaOffice": "Contact MLA Office",
-  "aboutApp": "About Ente MLA",
+  "chatWithYourMla": "Chat with MLA",
+  "chatWithYourMlaSubtitle": "Message your MLA office directly",
+  "aboutApp": "About MLA Connect",
   "termsConditions": "Terms & Conditions",
   "privacyPolicy": "Privacy Policy",
   "logout": "Logout",
@@ -146,6 +148,8 @@
   "noAppreciationsMsg": "Appreciations you've sent will appear here.",
   "noUpdates": "No Updates",
   "noUpdatesMsg": "No updates for this category yet.",
+  "savedEmptyTitle": "Nothing saved yet",
+  "savedEmptyMsg": "Save Updates posts and publicly shared ideas here to find them later.",
 
   "reportNotFound": "Report not found",
   "photos": "Photos",

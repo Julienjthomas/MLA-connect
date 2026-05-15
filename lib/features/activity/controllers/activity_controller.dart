@@ -59,9 +59,6 @@ class ActivityController extends GetxController {
 
     loading.value = true;
     try {
-      final profile = auth.user.value;
-      final cid = profile?.constituencyId;
-
       reports.value = await _loadList(
         _reportService.getMyReports(reporterId: reporterId),
         label: 'reports',
@@ -78,10 +75,14 @@ class ActivityController extends GetxController {
         _appreciationService.getMyAppreciations(reporterId: reporterId),
         label: 'appreciations',
       );
-      officeMessages.value = await _loadList(
-        _officeMessages.listForUser(userId: userId, constituencyId: cid, limit: 20),
-        label: 'office messages',
-      );
+      final citizenId = int.tryParse(reporterId);
+      final constituencyId = int.tryParse(auth.user.value?.constituencyId ?? '');
+      if (citizenId != null && constituencyId != null) {
+        officeMessages.value = await _loadList(
+          _officeMessages.listForThread(citizenId: citizenId, constituencyId: constituencyId, limit: 20),
+          label: 'office messages',
+        );
+      }
     } finally {
       loading.value = false;
     }

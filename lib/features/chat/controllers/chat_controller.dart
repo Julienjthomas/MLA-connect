@@ -9,17 +9,10 @@ class ChatController extends GetxController {
   final _auth = Get.find<AuthController>();
 
   final bodyController = TextEditingController();
-  final RxString category = 'personal'.obs;
+  final scrollController = ScrollController();
   final RxList<OfficeMessageModel> items = <OfficeMessageModel>[].obs;
   final RxBool loading = false.obs;
   final RxBool sending = false.obs;
-
-  static const categories = <String, String>{
-    'personal': 'Personal message',
-    'request': 'Request',
-    'invitation': 'Invitation',
-    'other': 'Other',
-  };
 
   @override
   void onInit() {
@@ -30,16 +23,40 @@ class ChatController extends GetxController {
   @override
   void onClose() {
     bodyController.dispose();
+    scrollController.dispose();
     super.onClose();
   }
 
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  ({int citizenId, int constituencyId})? get _ids {
+    final user = _auth.user.value;
+    final cid = int.tryParse(user?.citizenRowId ?? '');
+    final consId = int.tryParse(user?.constituencyId ?? '');
+    if (cid == null || consId == null) return null;
+    return (citizenId: cid, constituencyId: consId);
+  }
+
   Future<void> load() async {
-    final uid = _auth.userId;
-    if (uid == null) return;
+    final ids = _ids;
+    if (ids == null) return;
     loading.value = true;
     try {
-      final cid = _auth.user.value?.constituencyId;
-      items.value = await _messages.listForUser(userId: uid, constituencyId: cid);
+      items.value = await _messages.listForThread(
+        citizenId: ids.citizenId,
+        constituencyId: ids.constituencyId,
+      );
+      _scrollToBottom();
     } catch (_) {
       items.clear();
     } finally {
@@ -48,10 +65,9 @@ class ChatController extends GetxController {
   }
 
   Future<void> send() async {
-    final uid = _auth.userId;
-    final cid = _auth.user.value?.constituencyId;
-    if (uid == null || cid == null) {
-      Get.snackbar('Profile', 'Please complete constituency selection in onboarding/profile.',
+    final ids = _ids;
+    if (ids == null) {
+      Get.snackbar('Profile', 'Please complete your profile before sending a message.',
           snackPosition: SnackPosition.BOTTOM);
       return;
     }
@@ -63,9 +79,8 @@ class ChatController extends GetxController {
     sending.value = true;
     try {
       await _messages.send(
-        userId: uid,
-        constituencyId: cid,
-        category: category.value,
+        citizenId: ids.citizenId,
+        constituencyId: ids.constituencyId,
         body: body,
       );
       bodyController.clear();

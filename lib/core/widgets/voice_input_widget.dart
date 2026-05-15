@@ -16,12 +16,14 @@ class VoiceInputWidget extends StatefulWidget {
   final void Function(String filePath)? onRecorded;
   final void Function(String transcript)? onTranscript;
   final bool alignTrailing;
+  final bool overlayInField;
 
   const VoiceInputWidget({
     super.key,
     this.onRecorded,
     this.onTranscript,
     this.alignTrailing = false,
+    this.overlayInField = false,
   });
 
   @override
@@ -143,8 +145,80 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
   String _formatSeconds(int s) =>
       '${(s ~/ 60).toString().padLeft(2, '0')}:${(s % 60).toString().padLeft(2, '0')}';
 
+  Widget _buildMicButton({
+    required VoidCallback onTap,
+    required bool active,
+    required IconData icon,
+    Color? activeColor,
+  }) {
+    return Material(
+      color: active ? (activeColor ?? AppColors.reportOrange) : AppColors.primary,
+      shape: const CircleBorder(),
+      elevation: 2,
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onTap,
+        child: SizedBox(
+          width: 40,
+          height: 40,
+          child: Icon(icon, color: Colors.white, size: 20),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.overlayInField) {
+      return Align(
+        alignment: Alignment.bottomRight,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 8, bottom: 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (_isListening)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Text(
+                    'Listening…',
+                    style: AppTextStyles.caption.copyWith(color: AppColors.reportOrange),
+                  ),
+                ),
+              if (_recordedPath != null && widget.onRecorded != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Text(
+                    'Voice saved',
+                    style: AppTextStyles.caption.copyWith(color: AppColors.appreciateGreen),
+                  ),
+                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (widget.onRecorded != null) ...[
+                    _buildMicButton(
+                      onTap: _isRecording ? _stopRecording : _startRecording,
+                      active: _isRecording,
+                      icon: _isRecording ? Icons.stop_rounded : Icons.graphic_eq_rounded,
+                    ),
+                    if (widget.onTranscript != null) const SizedBox(width: 8),
+                  ],
+                  if (widget.onTranscript != null)
+                    _buildMicButton(
+                      onTap: _toggleDictation,
+                      active: _isListening,
+                      icon: _isListening ? Icons.stop_rounded : Icons.mic_rounded,
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     if (widget.alignTrailing && widget.onTranscript != null) {
       return Column(
         mainAxisSize: MainAxisSize.min,

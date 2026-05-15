@@ -111,23 +111,20 @@ class ReportDetailsStep extends GetView<ReportController> {
             ],
           ),
           const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Stack(
             children: [
-              Expanded(
-                child: TextField(
-                  controller: controller.descriptionController,
-                  minLines: 8,
-                  maxLines: 16,
-                  maxLength: 1500,
-                  decoration: const InputDecoration(
-                    hintText: 'Describe the problem in detail...',
-                  ),
+              TextField(
+                controller: controller.descriptionController,
+                minLines: 8,
+                maxLines: 16,
+                maxLength: 1500,
+                decoration: const InputDecoration(
+                  hintText: 'Describe the problem in detail...',
+                  contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 56),
                 ),
               ),
-              const SizedBox(width: 8),
               VoiceInputWidget(
-                alignTrailing: true,
+                overlayInField: true,
                 onTranscript: (t) {
                   final c = controller.descriptionController;
                   final cur = c.text.trim();
@@ -137,6 +134,7 @@ class ReportDetailsStep extends GetView<ReportController> {
                     c.text = '$cur\n$t';
                   }
                 },
+                onRecorded: (path) => controller.voiceRecordingPath.value = path,
               ),
             ],
           ),

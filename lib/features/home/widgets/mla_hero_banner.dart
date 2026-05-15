@@ -1,83 +1,195 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../data/models/mla_model.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../data/models/mla_model.dart';
 import '../../../routes/app_routes.dart';
 
 class MlaHeroBanner extends StatelessWidget {
-  final MlaModel mla;
-
   const MlaHeroBanner({super.key, required this.mla});
+  final MlaModel mla;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.mlaDetail),
       child: Container(
-        height: 130,
+        height: 160,
         margin: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(color: const Color(0xFFF0EEFF), borderRadius: BorderRadius.circular(20)),
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          gradient: const LinearGradient(
-            colors: [Color(0xFF3A5BA0), Color(0xFF5B82D4)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Opacity(
-                  opacity: 0.08,
-                  child: CachedNetworkImage(
-                    imageUrl: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80',
-                    fit: BoxFit.cover,
+          child: Stack(
+            children: [
+              // Dot grid — top right
+              Positioned(top: 0, right: 20, child: _DotGrid()),
+              // Purple blob — bottom right
+              Positioned(
+                bottom: -90,
+                right: -90,
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFF7C54E8), AppColors.primary],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    shape: BoxShape.circle,
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Container(
-                    width: 88,
-                    height: 88,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2.5),
+              // Content row
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 16, 16, 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Photo with blue arc
+                    _PhotoWithArc(photoUrl: mla.photoUrl),
+                    const SizedBox(width: 16),
+                    // Text
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            mla.name,
+                            style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.textPrimary,
+                              height: 1.2,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 6),
+                          Container(
+                            width: 36,
+                            height: 3,
+                            decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(2)),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Your Voice. Our Commitment.',
+                            style: AppTextStyles.bodySmall.copyWith(
+                              color: AppColors.textSecondary,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: mla.photoUrl ?? '',
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PhotoWithArc extends StatelessWidget {
+  const _PhotoWithArc({required this.photoUrl});
+  final String? photoUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 110,
+      height: 128,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Blue arc behind photo
+          CustomPaint(size: const Size(110, 128), painter: _ArcPainter()),
+          // Photo circle
+          Positioned(
+            top: 8,
+            child: Container(
+              width: 96,
+              height: 96,
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: ClipOval(
+                child: photoUrl != null && photoUrl!.isNotEmpty
+                    ? CachedNetworkImage(
+                        imageUrl: photoUrl!,
                         fit: BoxFit.cover,
-                        errorWidget: (_, __, ___) => Container(
-                          color: Colors.white24,
-                          child: const Icon(Icons.person, color: Colors.white, size: 40),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Text(
-                      mla.name,
-                      style: AppTextStyles.titleLarge.copyWith(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
+                        errorWidget: (_, __, ___) => _placeholder(),
+                      )
+                    : _placeholder(),
               ),
             ),
-          ],
+          ),
+          // Small purple dot bottom-left
+          Positioned(
+            bottom: 4,
+            left: 12,
+            child: Container(
+              width: 12,
+              height: 12,
+              decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _placeholder() => Container(
+    color: const Color(0xFFD8D0F5),
+    child: const Icon(Icons.person, color: AppColors.primary, size: 40),
+  );
+}
+
+class _ArcPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = AppColors.primary
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.5
+      ..strokeCap = StrokeCap.round;
+
+    final center = Offset(size.width / 2, size.height / 2 - 8);
+    const radius = 52.0;
+    // Draw arc from ~210° to ~330° (bottom-left to top-left sweep)
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      3.4, // start ~195°
+      1.8, // sweep ~103°
+      false,
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_ArcPainter old) => false;
+}
+
+class _DotGrid extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 50,
+      height: 30,
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          mainAxisSpacing: 6,
+          crossAxisSpacing: 6,
+        ),
+        itemCount: 16,
+        itemBuilder: (_, __) => Container(
+          decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.18), shape: BoxShape.circle),
         ),
       ),
     );
