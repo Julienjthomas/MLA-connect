@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../core/utils/constituency_db_id.dart';
 import '../../core/utils/json_ids.dart';
@@ -39,7 +40,7 @@ class MlaStaffModel {
 class MlaService {
   SupabaseClient get _db => Supabase.instance.client;
 
-  Future<MlaModel> getMlaProfile({String? constituencyId}) async {
+  Future<MlaModel?> getMlaProfile({String? constituencyId}) async {
     try {
       Map<String, dynamic>? mlaRow;
       if (constituencyId != null) {
@@ -57,15 +58,16 @@ class MlaService {
       }
       mlaRow ??= await _fetchAnyCurrentMla();
 
-      if (mlaRow == null) return MlaModel.placeholder;
+      if (mlaRow == null) return null;
 
       final mlaId = jsonIdToString(mlaRow['id']);
 
-      final statsRow = await _db
-          .from('v_mla_stats')
-          .select()
-          .eq('mla_id', mlaId)
-          .maybeSingle();
+      Map<String, dynamic>? statsRow;
+      try {
+        statsRow = await _db.from('v_mla_stats').select().eq('mla_id', mlaId).maybeSingle();
+      } catch (e) {
+        debugPrint('[MlaService] v_mla_stats fetch error: $e');
+      }
 
       final merged = {
         ...mlaRow,
@@ -73,8 +75,9 @@ class MlaService {
       };
 
       return MlaModel.fromJson(merged);
-    } catch (_) {
-      return MlaModel.placeholder;
+    } catch (e, st) {
+      debugPrint('[MlaService] getMlaProfile error: $e\n$st');
+      return null;
     }
   }
 

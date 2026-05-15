@@ -28,7 +28,12 @@ class MlaDetailView extends GetView<MlaController> {
           ),
         );
       }
-      final mla = controller.mla.value ?? MlaModel.placeholder;
+      final mla = controller.mla.value;
+      if (mla == null) {
+        return const Scaffold(
+          body: Center(child: Text('MLA data unavailable')),
+        );
+      }
       return Scaffold(
         body: CustomScrollView(
           slivers: [

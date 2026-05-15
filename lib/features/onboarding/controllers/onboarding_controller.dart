@@ -105,14 +105,21 @@ class OnboardingController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    _hydrateFromSavedProfile();
-    _hydrateFromPrefs();
+    _hydrate();
+  }
+
+  Future<void> _hydrate() async {
+    final auth = Get.find<AuthController>();
+    if (auth.userId != null) {
+      await _hydrateFromSavedProfile();
+    } else {
+      await _hydrateFromPrefs();
+    }
   }
 
   Future<void> _hydrateFromPrefs() async {
     try {
-      final auth = Get.find<AuthController>();
-      if (auth.userId != null || selectedConstituency.value != null) return;
+      if (selectedConstituency.value != null) return;
       final savedId = await ConstituencyPrefs.getId();
       if (savedId == null) return;
       if (constituencies.isEmpty) {
@@ -139,7 +146,11 @@ class OnboardingController extends GetxController {
       if (uid == null) return;
       final p = await _userService.getProfile(uid);
       final cid = p?.constituencyId;
-      if (cid == null || selectedConstituency.value != null) return;
+      if (cid == null) return;
+      // Always re-hydrate from profile — stale in-memory state may have wrong constituency.
+      selectedConstituency.value = null;
+      localBodies.clear();
+      wards.clear();
       await loadConstituencies();
       final dbId = await ConstituencyDbId.resolve(Supabase.instance.client, cid) ??
           (ConstituencyDbId.isNumericId(cid) ? cid : null);

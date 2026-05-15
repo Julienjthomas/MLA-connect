@@ -12,7 +12,7 @@ class SMl extends S {
   String get appName => 'സൂപ്പർ ബാലുശ്ശേരി';
 
   @override
-  String get tagline => 'നിങ്ങളുടെ ശബ്ദം. ഞങ്ങളുടെ ഉത്തരവാദിത്തം.';
+  String get tagline => 'നിങ്ങളുടെ ശബ്ദം. ഞങ്ങളുടെ മുൻഗണന.';
 
   @override
   String get constituency => 'ബാലുശ്ശേരി മണ്ഡലം';
@@ -144,8 +144,86 @@ class SMl extends S {
   String get goToHome => 'ഹോമിലേക്ക് പോകുക';
 
   @override
-  String get whatWouldYouLike =>
-      'ഇന്ന് നിങ്ങൾ\nഎന്ത് പങ്കുവെക്കാൻ ആഗ്രഹിക്കുന്നു?';
+  String get whatWouldYouLike => 'നിങ്ങൾ എന്ത് ചെയ്യാൻ ആഗ്രഹിക്കുന്നു?';
+
+  @override
+  String get quickActions => 'ത്വരിത പ്രവർത്തനങ്ങൾ';
+
+  @override
+  String get quickActionIssue => 'പ്രശ്നം റിപ്പോർട്ട്';
+
+  @override
+  String get quickActionIssueSubtitle => 'റോഡ്, വെള്ളം, സുരക്ഷ & കൂടുതൽ';
+
+  @override
+  String get quickActionIdea => 'ആശയം പങ്കിടുക';
+
+  @override
+  String get quickActionIdeaSubtitle => 'മികച്ച ഭാവിക്കുള്ള ആശയങ്ങൾ';
+
+  @override
+  String get quickActionSuggest => 'സഹായം അഭ്യർത്ഥിക്കുക';
+
+  @override
+  String get quickActionSuggestSubtitle =>
+      'സഹായം തേടുക അല്ലെങ്കിൽ പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക';
+
+  @override
+  String get quickActionAppreciate => 'പ്രവൃത്തി അഭിനന്ദിക്കുക';
+
+  @override
+  String get quickActionAppreciateSubtitle =>
+      'ആളുകളെ അല്ലെങ്കിൽ പദ്ധതികളെ നന്ദി പറയുക';
+
+  @override
+  String get yourMlaLabel => 'നിങ്ങളുടെ MLA';
+
+  @override
+  String get contactOffice => 'ഓഫീസ് ബന്ധപ്പെടുക';
+
+  @override
+  String get messageMla => 'MLA-ക്ക് സന്ദേശം';
+
+  @override
+  String get meetMla => 'MLA-യെ കാണുക';
+
+  @override
+  String get communityBannerHeadline => 'നാം ഒരുമിച്ച് നാളെ കെട്ടിപ്പടുക്കാം.';
+
+  @override
+  String get communityBannerSubtext =>
+      'പ്രശ്നങ്ങൾ, ആശയങ്ങൾ പങ്കിടുക, നല്ല പ്രവൃത്തി അഭിനന്ദിക്കുക.';
+
+  @override
+  String get activeIssues => 'സജീവ പ്രശ്നങ്ങൾ';
+
+  @override
+  String get inProgress => 'നടന്നുകൊണ്ടിരിക്കുന്നു';
+
+  @override
+  String get issuesResolvedLabel => 'പരിഹരിച്ചു';
+
+  @override
+  String get communityImpactHeader => 'കമ്മ്യൂണിറ്റി ഇംപാക്ട്';
+
+  @override
+  String get communityImpactTagline =>
+      'നാം ഒരുമിച്ച് യഥാർത്ഥ മാറ്റം സൃഷ്ടിക്കുന്നു';
+
+  @override
+  String get issuesResolvedStat => 'പ്രശ്നങ്ങൾ പരിഹരിച്ചു';
+
+  @override
+  String get ideasImplementedStat => 'ആശയങ്ങൾ നടപ്പിലാക്കി';
+
+  @override
+  String get appreciationsSharedStat => 'അഭിനന്ദനങ്ങൾ പങ്കിട്ടു';
+
+  @override
+  String get raiseNewIssue => 'പുതിയ പ്രശ്നം ഉന്നയിക്കുക';
+
+  @override
+  String get statusNew => 'പുതിയത്';
 
   @override
   String get mlaActivity => 'MLA പ്രവർത്തനങ്ങൾ';

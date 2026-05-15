@@ -69,11 +69,41 @@ class AppStrings {
 
   // Home
   static String get whatWouldYouLike => _s.whatWouldYouLike;
+  static String get quickActions => _s.quickActions;
+  static String get quickActionIssue => _s.quickActionIssue;
+  static String get quickActionIssueSubtitle => _s.quickActionIssueSubtitle;
+  static String get quickActionIdea => _s.quickActionIdea;
+  static String get quickActionIdeaSubtitle => _s.quickActionIdeaSubtitle;
+  static String get quickActionSuggest => _s.quickActionSuggest;
+  static String get quickActionSuggestSubtitle => _s.quickActionSuggestSubtitle;
+  static String get quickActionAppreciate => _s.quickActionAppreciate;
+  static String get quickActionAppreciateSubtitle => _s.quickActionAppreciateSubtitle;
   static String get mlaActivity => _s.mlaActivity;
   static String get viewAll => _s.viewAll;
   static String get hallOfExcellence => _s.hallOfExcellence;
   static const publicGrievance = 'Public Grievance Hearing';
   static String get viewDetails => _s.viewDetails;
+  // MLA Hero Card
+  static String get yourMlaLabel => _s.yourMlaLabel;
+  static String get contactOffice => _s.contactOffice;
+  static String get messageMla => _s.messageMla;
+  static String get meetMla => _s.meetMla;
+  // Community Banner
+  static String get communityBannerHeadline => _s.communityBannerHeadline;
+  static String get communityBannerSubtext => _s.communityBannerSubtext;
+  static String get activeIssues => _s.activeIssues;
+  static String get inProgress => _s.inProgress;
+  static String get issuesResolvedLabel => _s.issuesResolvedLabel;
+  // Community Impact
+  static String get communityImpactHeader => _s.communityImpactHeader;
+  static String get communityImpactTagline => _s.communityImpactTagline;
+  static String get issuesResolvedStat => _s.issuesResolvedStat;
+  static String get ideasImplementedStat => _s.ideasImplementedStat;
+  static String get appreciationsSharedStat => _s.appreciationsSharedStat;
+  // FAB
+  static String get raiseNewIssue => _s.raiseNewIssue;
+  // Status
+  static String get statusNew => _s.statusNew;
 
   // Report
   static String get reportProblem => _s.reportProblem;

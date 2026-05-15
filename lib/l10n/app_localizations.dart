@@ -106,7 +106,7 @@ abstract class S {
   /// No description provided for @tagline.
   ///
   /// In en, this message translates to:
-  /// **'Your MLA. Your Voice.'**
+  /// **'Your voice. Our priority.'**
   String get tagline;
 
   /// No description provided for @constituency.
@@ -358,8 +358,158 @@ abstract class S {
   /// No description provided for @whatWouldYouLike.
   ///
   /// In en, this message translates to:
-  /// **'What would you like to\nshare today?'**
+  /// **'What would you like to do?'**
   String get whatWouldYouLike;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick actions'**
+  String get quickActions;
+
+  /// No description provided for @quickActionIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Issue'**
+  String get quickActionIssue;
+
+  /// No description provided for @quickActionIssueSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Roads, water, safety & more'**
+  String get quickActionIssueSubtitle;
+
+  /// No description provided for @quickActionIdea.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Idea'**
+  String get quickActionIdea;
+
+  /// No description provided for @quickActionIdeaSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest ideas for a better future'**
+  String get quickActionIdeaSubtitle;
+
+  /// No description provided for @quickActionSuggest.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Help'**
+  String get quickActionSuggest;
+
+  /// No description provided for @quickActionSuggestSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Seek help or report a problem'**
+  String get quickActionSuggestSubtitle;
+
+  /// No description provided for @quickActionAppreciate.
+  ///
+  /// In en, this message translates to:
+  /// **'Appreciate Work'**
+  String get quickActionAppreciate;
+
+  /// No description provided for @quickActionAppreciateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank people or projects'**
+  String get quickActionAppreciateSubtitle;
+
+  /// No description provided for @yourMlaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your MLA'**
+  String get yourMlaLabel;
+
+  /// No description provided for @contactOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Office'**
+  String get contactOffice;
+
+  /// No description provided for @messageMla.
+  ///
+  /// In en, this message translates to:
+  /// **'Message MLA'**
+  String get messageMla;
+
+  /// No description provided for @meetMla.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet MLA'**
+  String get meetMla;
+
+  /// No description provided for @communityBannerHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s build a better tomorrow, together.'**
+  String get communityBannerHeadline;
+
+  /// No description provided for @communityBannerSubtext.
+  ///
+  /// In en, this message translates to:
+  /// **'Share issues, ideas and appreciate good work.'**
+  String get communityBannerSubtext;
+
+  /// No description provided for @activeIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Issues'**
+  String get activeIssues;
+
+  /// No description provided for @inProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get inProgress;
+
+  /// No description provided for @issuesResolvedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get issuesResolvedLabel;
+
+  /// No description provided for @communityImpactHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Impact'**
+  String get communityImpactHeader;
+
+  /// No description provided for @communityImpactTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Together we are creating real change'**
+  String get communityImpactTagline;
+
+  /// No description provided for @issuesResolvedStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Issues Resolved'**
+  String get issuesResolvedStat;
+
+  /// No description provided for @ideasImplementedStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Ideas Implemented'**
+  String get ideasImplementedStat;
+
+  /// No description provided for @appreciationsSharedStat.
+  ///
+  /// In en, this message translates to:
+  /// **'Appreciations Shared'**
+  String get appreciationsSharedStat;
+
+  /// No description provided for @raiseNewIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Raise New Issue'**
+  String get raiseNewIssue;
+
+  /// No description provided for @statusNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get statusNew;
 
   /// No description provided for @mlaActivity.
   ///

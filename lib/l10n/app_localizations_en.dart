@@ -12,7 +12,7 @@ class SEn extends S {
   String get appName => 'MLA Connect';
 
   @override
-  String get tagline => 'Your MLA. Your Voice.';
+  String get tagline => 'Your voice. Our priority.';
 
   @override
   String get constituency => 'Constituency';
@@ -140,7 +140,84 @@ class SEn extends S {
   String get goToHome => 'Go to Home';
 
   @override
-  String get whatWouldYouLike => 'What would you like to\nshare today?';
+  String get whatWouldYouLike => 'What would you like to do?';
+
+  @override
+  String get quickActions => 'Quick actions';
+
+  @override
+  String get quickActionIssue => 'Report Issue';
+
+  @override
+  String get quickActionIssueSubtitle => 'Roads, water, safety & more';
+
+  @override
+  String get quickActionIdea => 'Share Idea';
+
+  @override
+  String get quickActionIdeaSubtitle => 'Suggest ideas for a better future';
+
+  @override
+  String get quickActionSuggest => 'Request Help';
+
+  @override
+  String get quickActionSuggestSubtitle => 'Seek help or report a problem';
+
+  @override
+  String get quickActionAppreciate => 'Appreciate Work';
+
+  @override
+  String get quickActionAppreciateSubtitle => 'Thank people or projects';
+
+  @override
+  String get yourMlaLabel => 'Your MLA';
+
+  @override
+  String get contactOffice => 'Contact Office';
+
+  @override
+  String get messageMla => 'Message MLA';
+
+  @override
+  String get meetMla => 'Meet MLA';
+
+  @override
+  String get communityBannerHeadline =>
+      'Let\'s build a better tomorrow, together.';
+
+  @override
+  String get communityBannerSubtext =>
+      'Share issues, ideas and appreciate good work.';
+
+  @override
+  String get activeIssues => 'Active Issues';
+
+  @override
+  String get inProgress => 'In Progress';
+
+  @override
+  String get issuesResolvedLabel => 'Resolved';
+
+  @override
+  String get communityImpactHeader => 'Community Impact';
+
+  @override
+  String get communityImpactTagline => 'Together we are creating real change';
+
+  @override
+  String get issuesResolvedStat => 'Issues Resolved';
+
+  @override
+  String get ideasImplementedStat => 'Ideas Implemented';
+
+  @override
+  String get appreciationsSharedStat => 'Appreciations Shared';
+
+  @override
+  String get raiseNewIssue => 'Raise New Issue';
+
+  @override
+  String get statusNew => 'New';
 
   @override
   String get mlaActivity => 'MLA Activity';

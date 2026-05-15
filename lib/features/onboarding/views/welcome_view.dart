@@ -95,10 +95,7 @@ class WelcomeView extends GetView<OnboardingController> {
                 'Stay updated with developments',
               ),
               const Spacer(),
-              PrimaryButton(
-                text: AppStrings.getStarted,
-                onPressed: () => Get.toNamed(Routes.phone),
-              ),
+              PrimaryButton(text: AppStrings.getStarted, onPressed: () => Get.toNamed(Routes.phone)),
               const SizedBox(height: 8),
             ],
           ),

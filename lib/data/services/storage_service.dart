@@ -15,6 +15,7 @@ class StorageService {
 
   static const _mediaBucket = 'media';
   static const _submissionObjectsBucket = 'submission-objects';
+  static const _profileImagesBucket = 'profile-images';
 
   /// Uploads submission images to `submission-objects/{problems|ideas|…}/{userId}/…`.
   ///
@@ -87,13 +88,13 @@ class StorageService {
 
   Future<String> uploadAvatar(File file, String userId) async {
     final ext = file.path.split('.').last.toLowerCase();
-    final path = 'avatars/$userId.$ext';
+    final path = '$userId/avatar.$ext';
     final bytes = await file.readAsBytes();
-    await _storage.from(_mediaBucket).uploadBinary(
+    await _storage.from(_profileImagesBucket).uploadBinary(
       path,
       bytes,
       fileOptions: FileOptions(contentType: _imageContentType(ext), upsert: true),
     );
-    return _storage.from(_mediaBucket).getPublicUrl(path);
+    return _storage.from(_profileImagesBucket).getPublicUrl(path);
   }
 }

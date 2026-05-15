@@ -57,48 +57,6 @@ class MlaModel {
     final isMl = Get.locale?.languageCode == 'ml';
     return (isMl && bioMl != null && bioMl!.isNotEmpty) ? bioMl! : bio;
   }
-
-  static MlaModel get placeholder => MlaModel(
-        id: '1',
-        name: 'MLA V T Sooraj',
-        photoUrl: 'https://i.pravatar.cc/300?img=68',
-        bio:
-            'Working for the overall development of the constituency. Focused on infrastructure, education, health and environment sustainability.',
-        term: '3rd Term MLA',
-        constituency: 'Your Constituency',
-        stats: const MlaStats(
-          issuesResolved: 1248,
-          activeProjects: 86,
-          appreciations: 2431,
-          ideasImplemented: 18,
-        ),
-        contact: const MlaContact(
-          phone: '+91 9847 123 456',
-          whatsapp: '+91 9847 123 456',
-          email: 'mla@balussery.kerala.gov.in',
-          officeAddress: 'MLA Office, Kozhikode, Kerala',
-        ),
-        initiatives: [
-          MlaInitiative(
-            title: 'Amrita Setu Bridge Project',
-            description: 'New road connectivity for 3 panchayats',
-            imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&q=80',
-            progress: 0.65,
-          ),
-          MlaInitiative(
-            title: 'Drinking Water Scheme',
-            description: '₹4.2 Crore pipeline project for 5 wards',
-            imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
-            progress: 0.85,
-          ),
-          MlaInitiative(
-            title: 'School Renovation Drive',
-            description: '12 government schools upgraded',
-            imageUrl: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=80',
-            progress: 1.0,
-          ),
-        ],
-      );
 }
 
 class MlaStats {
@@ -121,12 +79,7 @@ class MlaContact {
   final String? email;
   final String? officeAddress;
 
-  const MlaContact({
-    required this.phone,
-    this.whatsapp,
-    this.email,
-    this.officeAddress,
-  });
+  const MlaContact({required this.phone, this.whatsapp, this.email, this.officeAddress});
 }
 
 class MlaInitiative {
@@ -135,10 +88,5 @@ class MlaInitiative {
   final String? imageUrl;
   final double progress;
 
-  const MlaInitiative({
-    required this.title,
-    required this.description,
-    this.imageUrl,
-    required this.progress,
-  });
+  const MlaInitiative({required this.title, required this.description, this.imageUrl, required this.progress});
 }
