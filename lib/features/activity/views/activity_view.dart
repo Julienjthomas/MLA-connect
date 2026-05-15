@@ -313,7 +313,7 @@ class _ReportsTab extends StatelessWidget {
     return Obx(() {
       final reports = controller.reports;
       if (reports.isEmpty) {
-        return const ActivityEmptyState();
+        return const ActivityEmptyState(tab: ActivityTab.reports);
       }
       return _FilterChips(
         builder: (filter) {
@@ -362,7 +362,7 @@ class _IdeasTab extends StatelessWidget {
     return Obx(() {
       final ideas = controller.ideas;
       if (ideas.isEmpty) {
-        return const ActivityEmptyState();
+        return const ActivityEmptyState(tab: ActivityTab.ideas);
       }
       return ListView.builder(
         padding: listPadding,
@@ -434,7 +434,7 @@ class _ImprovementsTab extends StatelessWidget {
     return Obx(() {
       final improvements = controller.improvements;
       if (improvements.isEmpty) {
-        return const ActivityEmptyState();
+        return const ActivityEmptyState(tab: ActivityTab.improvements);
       }
       return ListView.builder(
         padding: listPadding,
@@ -513,7 +513,7 @@ class _AppreciationsTab extends StatelessWidget {
     return Obx(() {
       final appreciations = controller.appreciations;
       if (appreciations.isEmpty) {
-        return const ActivityEmptyState();
+        return const ActivityEmptyState(tab: ActivityTab.appreciations);
       }
       return ListView.builder(
         padding: listPadding,

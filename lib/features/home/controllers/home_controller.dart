@@ -47,7 +47,13 @@ class HomeController extends GetxController {
   }
 
   Future<void> _loadActivity() async {
-    final updates = await _updatesService.getUpdates();
-    recentActivity.value = updates.take(5).toList();
+    try {
+      final updates = await _updatesService.getUpdates();
+      if (updates.isNotEmpty) {
+        recentActivity.value = updates.take(5).toList();
+      }
+    } catch (_) {
+      // leave recentActivity empty — section hides gracefully
+    }
   }
 }

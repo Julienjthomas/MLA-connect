@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../constants/app_enums.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../../routes/app_routes.dart';
@@ -7,10 +8,29 @@ import 'action_card.dart';
 import 'primary_button.dart';
 
 class ActivityEmptyState extends StatelessWidget {
-  const ActivityEmptyState({super.key});
+  final ActivityTab tab;
+
+  const ActivityEmptyState({super.key, required this.tab});
+
+  static const _contentTabs = [
+    ActivityTab.reports,
+    ActivityTab.ideas,
+    ActivityTab.improvements,
+    ActivityTab.appreciations,
+  ];
+
+  static String _routeFor(ActivityTab t) => switch (t) {
+        ActivityTab.reports => Routes.reportFlow,
+        ActivityTab.ideas => Routes.ideasFlow,
+        ActivityTab.improvements => Routes.improvementsFlow,
+        ActivityTab.appreciations => Routes.appreciationFlow,
+        ActivityTab.saved => '',
+      };
 
   @override
   Widget build(BuildContext context) {
+    final others = _contentTabs.where((t) => t != tab).toList();
+
     return CustomScrollView(
       slivers: [
         SliverFillRemaining(
@@ -33,43 +53,26 @@ class ActivityEmptyState extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 PrimaryButton(
-                  text: 'Report a Problem',
-                  onPressed: () => Get.toNamed(Routes.reportFlow),
+                  text: tab.addActionLabel!,
+                  onPressed: () => Get.toNamed(_routeFor(tab)),
                 ),
                 const SizedBox(height: 16),
                 IntrinsicHeight(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Expanded(
-                        child: ActionCard(
-                          icon: Icons.lightbulb_outline,
-                          title: 'Share Idea',
-                          subtitle: 'Suggest ideas to improve your area',
-                          accentColor: AppColors.ideaPurple,
-                          onTap: () => Get.toNamed(Routes.ideasFlow),
+                      for (int i = 0; i < others.length; i++) ...[
+                        if (i > 0) const SizedBox(width: 8),
+                        Expanded(
+                          child: ActionCard(
+                            icon: others[i].addFeature!.icon,
+                            title: others[i].addFeature!.label,
+                            subtitle: others[i].addFeature!.subtitle,
+                            accentColor: others[i].addFeature!.color,
+                            onTap: () => Get.toNamed(_routeFor(others[i])),
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ActionCard(
-                          icon: Icons.tips_and_updates_outlined,
-                          title: 'Suggest',
-                          subtitle: 'Improvements for your constituency',
-                          accentColor: AppColors.improveBlue,
-                          onTap: () => Get.toNamed(Routes.improvementsFlow),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ActionCard(
-                          icon: Icons.favorite_outline,
-                          title: 'Appreciate',
-                          subtitle: 'Recognize good work',
-                          accentColor: AppColors.appreciateGreen,
-                          onTap: () => Get.toNamed(Routes.appreciationFlow),
-                        ),
-                      ),
+                      ],
                     ],
                   ),
                 ),

@@ -15,7 +15,7 @@ class MlaHeroBanner extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.mlaDetail),
       child: Container(
-        height: 160,
+        height: 120,
         margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(color: const Color(0xFFF0EEFF), borderRadius: BorderRadius.circular(20)),
         child: ClipRRect(
@@ -26,11 +26,11 @@ class MlaHeroBanner extends StatelessWidget {
               Positioned(top: 0, right: 15, child: _DotGrid()),
               // Purple blob — bottom right
               Positioned(
-                bottom: -90,
-                right: -90,
+                bottom: -60,
+                right: -60,
                 child: Container(
-                  width: 150,
-                  height: 150,
+                  width: 100,
+                  height: 100,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Color(0xFF7C54E8), AppColors.primary],
@@ -70,8 +70,8 @@ class MlaHeroBanner extends StatelessWidget {
                           ),
                           const SizedBox(height: 6),
                           Container(
-                            width: 36,
-                            height: 3,
+                            width: 24,
+                            height: 1,
                             decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(2)),
                           ),
                           const SizedBox(height: 8),

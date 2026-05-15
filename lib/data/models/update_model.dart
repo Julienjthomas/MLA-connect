@@ -11,6 +11,7 @@ class UpdateModel {
   final String? bodyMl;
   final UpdateCategory category;
   final String? imageUrl;
+  final List<String> mediaUrls;
   final int likes;
   final int views;
   final DateTime createdAt;
@@ -23,25 +24,46 @@ class UpdateModel {
     this.bodyMl,
     required this.category,
     this.imageUrl,
+    this.mediaUrls = const [],
     this.likes = 0,
     this.views = 0,
     required this.createdAt,
   });
 
-  factory UpdateModel.fromJson(Map<String, dynamic> json) => UpdateModel(
-        id: jsonIdToString(json['id']),
-        title: json['title'] as String,
-        body: json['body'] as String? ?? '',
-        titleMl: json['title_ml'] as String?,
-        bodyMl: json['body_ml'] as String?,
-        category: UpdateCategoryX.fromString(json['category'] as String? ?? ''),
-        imageUrl: json['cover_image_url'] as String?,
-        likes: json['like_count'] as int? ?? 0,
-        views: json['view_count'] as int? ?? 0,
-        createdAt: DateTime.parse(
-          json['published_at'] as String? ?? json['created_at'] as String,
-        ),
-      );
+  factory UpdateModel.fromJson(Map<String, dynamic> json) {
+    final coverUrl = json['cover_image_url'] as String?;
+    final attachments = (json['media_attachments'] as List?)
+            ?.map((raw) {
+              final m = Map<String, dynamic>.from(raw as Map);
+              final url = m['url'] as String?;
+              final sp = m['storage_path'] as String?;
+              // signed url injected by service, or direct url, or storage_path fallback
+              final signed = m['_signed_url'] as String?;
+              if (signed != null && signed.isNotEmpty) return signed;
+              if (url != null && url.trim().isNotEmpty) return url.trim();
+              if (sp != null && sp.trim().isNotEmpty) return sp.trim();
+              return '';
+            })
+            .where((v) => v.isNotEmpty)
+            .toList() ??
+        [];
+
+    return UpdateModel(
+      id: jsonIdToString(json['id']),
+      title: json['title'] as String,
+      body: json['body'] as String? ?? '',
+      titleMl: json['title_ml'] as String?,
+      bodyMl: json['body_ml'] as String?,
+      category: UpdateCategoryX.fromString(json['category'] as String? ?? ''),
+      imageUrl: coverUrl,
+      mediaUrls: List<String>.from(attachments),
+      likes: json['like_count'] as int? ?? 0,
+      views: json['view_count'] as int? ?? 0,
+      createdAt: DateTime.parse(
+        json['published_at'] as String? ?? json['created_at'] as String,
+      ),
+    );
+  }
 
   // Returns localised title/body based on current app locale
   String get localTitle {
