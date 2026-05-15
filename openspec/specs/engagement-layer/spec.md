@@ -1,4 +1,8 @@
-## ADDED Requirements
+## Purpose
+
+Define engagement data layer: likes, update queries, and notification preference persistence.
+
+## Requirements
 
 ### Requirement: Like action inserts to likes table
 `UpdatesService.likeUpdate` SHALL insert a row into `likes` with `user_id`, `target_type='update'`, `target_id=updateId`. It SHALL use upsert with `onConflict` ignore to be idempotent.

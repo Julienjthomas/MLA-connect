@@ -1,4 +1,8 @@
-## MODIFIED Requirements
+## Purpose
+
+Define updates feed display, detail view, engagement (likes), and navigation behavior.
+
+## Requirements
 
 ### Requirement: Update detail view
 Tapping an update SHALL push `Routes.updateDetail` with the update id; the detail view SHALL show hero image (if present), category chip, title, time-ago, body, and engagement row (views, likes). The detail view SHALL show exactly one Share action — not two.
@@ -10,8 +14,6 @@ Tapping an update SHALL push `Routes.updateDetail` with the update id; the detai
 #### Scenario: Single share action
 - **WHEN** the update detail view renders
 - **THEN** exactly one Share button or icon is visible
-
-## ADDED Requirements
 
 ### Requirement: Like action on updates
 Each update card and the update detail view SHALL show a like button. Tapping it SHALL toggle a like for the current user.
@@ -48,3 +50,14 @@ The "View All" control in the Updates section on the Home page SHALL navigate to
 #### Scenario: Tap View All
 - **WHEN** the user taps "View All" in the Home page Updates section
 - **THEN** the Updates tab is activated or `Routes.updatesList` is pushed
+
+### Requirement: Updates feed data loading
+`UpdatesService.getUpdates()` SHALL query the `posts` table ordered by `published_at` descending, attach media, and sign URLs. On success it SHALL return the filtered list. On any error it SHALL rethrow so callers can handle it — it MUST NOT catch errors silently or return fabricated data.
+
+#### Scenario: Successful load
+- **WHEN** the posts table returns rows
+- **THEN** `getUpdates()` returns the mapped `UpdateModel` list
+
+#### Scenario: Database error propagates
+- **WHEN** the Supabase query throws an exception
+- **THEN** `getUpdates()` rethrows the exception to the caller

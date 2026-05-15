@@ -1,42 +1,45 @@
-## ADDED Requirements
+## Purpose
 
+Define responsive action grid layout constraints and scaling behavior for the home screen.
+## Requirements
 ### Requirement: Action grid height is viewport-budget-constrained
-The action grid height SHALL be calculated by subtracting a reserved budget for surrounding elements from the total screen height, ensuring the MLA Activity section header is always visible without scrolling on the initial viewport.
+The quick actions grid inside the home card MAY use content-driven row heights when horizontal tiles are used. If a height budget is applied, it SHALL subtract reserved space for surrounding elements from the screen height so the Updates/MLA Activity section header remains visible without scrolling on the initial viewport for devices with height ≥ 640px.
 
 #### Scenario: Small device (640px height)
 - **WHEN** the home screen renders on a device with screen height ≤ 700px
-- **THEN** the action grid height SHALL be ≤ 220px so that the MLA Activity section header is visible without scrolling
+- **THEN** the combined quick actions card height (title + grid) SHALL allow the Updates section header to be visible without scrolling
 
 #### Scenario: Medium device (844px height)
 - **WHEN** the home screen renders on a device with screen height between 700px and 900px
-- **THEN** the action grid height SHALL scale proportionally between 220px and 240px
+- **THEN** the quick actions section SHALL not consume excessive vertical space that pushes the Updates header off the first screenful
 
 #### Scenario: Large device (932px+ height)
 - **WHEN** the home screen renders on a device with screen height ≥ 900px
-- **THEN** the action grid height SHALL not exceed 240px (upper clamp)
+- **THEN** tile row height SHALL NOT grow unbounded; optional max row height MAY cap visual size
 
 #### Scenario: Extreme small screen safety
-- **WHEN** calculated grid height falls below 160px
-- **THEN** the system SHALL clamp to a minimum of 160px to prevent unreadable cards
+- **WHEN** calculated or intrinsic grid height would compress tiles below readable minimum
+- **THEN** the system SHALL enforce a minimum tile height so titles remain legible (ellipsis allowed)
 
 ### Requirement: Action card internals scale with tile size
-When an optional tile size hint is provided, the ActionCard widget SHALL scale its icon container size and internal padding proportionally so cards remain visually balanced at any grid height.
+When an optional tile size hint is provided to `ActionCard`, the widget SHALL scale icon and padding as today. **Quick action horizontal tiles** SHALL NOT require `tileSize`; they SHALL use fixed compact dimensions (icon ~20–22px, chip padding ~8–10px) suitable for ~72–88px row height.
 
-#### Scenario: Small tile (≤ 90px)
-- **WHEN** tileSize ≤ 90px is passed to ActionCard
-- **THEN** icon size SHALL be ≤ 20px and internal padding SHALL be ≤ 8px
+#### Scenario: Quick action tile on home
+- **WHEN** `QuickActionTile` (or horizontal layout) renders on the home screen
+- **THEN** icon and padding SHALL use compact fixed sizes without passing `tileSize`
 
-#### Scenario: Standard tile (> 90px)
-- **WHEN** tileSize > 90px is passed to ActionCard
-- **THEN** icon size SHALL be 24px and internal padding SHALL be the default 16px
+#### Scenario: Legacy ActionCard with tileSize
+- **WHEN** `tileSize` is passed to vertical `ActionCard` elsewhere
+- **THEN** existing scaling behavior SHALL be preserved
 
 #### Scenario: No tile size provided
-- **WHEN** tileSize is not passed to ActionCard
+- **WHEN** `tileSize` is not passed to vertical `ActionCard`
 - **THEN** ActionCard SHALL use its default fixed sizes (existing behavior preserved)
 
 ### Requirement: MLA Activity section always in initial viewport
-The MLA Activity section header SHALL be visible without scrolling on first render on all device sizes with screen height ≥ 640px.
+The Updates section header (labeled per current product copy, e.g. **Updates**) SHALL be visible without scrolling on first render on all device sizes with screen height ≥ 640px.
 
 #### Scenario: Citizen opens home screen
 - **WHEN** an authenticated citizen opens the home screen
-- **THEN** the "MLA Activity" section header SHALL be visible in the initial viewport without any scroll gesture on any phone with height ≥ 640px
+- **THEN** the Updates section header SHALL be visible in the initial viewport without any scroll gesture on any phone with height ≥ 640px
+

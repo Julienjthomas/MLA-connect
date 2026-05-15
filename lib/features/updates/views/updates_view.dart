@@ -83,6 +83,21 @@ class UpdatesView extends GetView<UpdatesController> {
                   itemBuilder: (_, __) => const ShimmerCard(),
                 );
               }
+              if (controller.error.isNotEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(controller.error.value, style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary), textAlign: TextAlign.center),
+                        const SizedBox(height: 16),
+                        TextButton(onPressed: controller.loadUpdates, child: const Text('Retry')),
+                      ],
+                    ),
+                  ),
+                );
+              }
               final items = controller.filteredUpdates;
               if (items.isEmpty) {
                 return const EmptyState(title: 'No updates', message: 'No updates for this category yet.');

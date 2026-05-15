@@ -1,9 +1,7 @@
 ## Purpose
 
 Define onboarding navigation, persistence, and assembly-constituency selection gates.
-
 ## Requirements
-
 ### Requirement: Splash routes by auth + onboarding state
 The splash screen SHALL determine the next route from session presence and onboarding completion.
 
@@ -20,15 +18,15 @@ The splash screen SHALL determine the next route from session presence and onboa
 - **THEN** the app resumes onboarding at the panchayat selection step
 
 ### Requirement: Linear onboarding sequence
-The onboarding flow SHALL follow this exact order: welcome → constituency → phone → OTP → panchayat → ward → profile setup → notifications → home.
+The onboarding flow SHALL follow this exact order: welcome → phone → OTP → constituency → panchayat → ward → profile setup → notifications → home.
 
 #### Scenario: Forward navigation
 - **WHEN** the user completes a step
 - **THEN** the next step in the sequence opens via named route
 
-#### Scenario: Constituency is first step after welcome
-- **WHEN** an unauthenticated user taps "Continue" on the welcome screen
-- **THEN** the app navigates to the constituency picker screen (before phone entry)
+#### Scenario: Phone is first step after welcome
+- **WHEN** an unauthenticated user taps "Get Started" on the welcome screen
+- **THEN** the app navigates to the phone number entry screen (constituency picker is NOT shown before login)
 
 ### Requirement: Language selection persists for the session
 The user SHALL pick a UI language during onboarding and have it stored on their profile.
@@ -43,25 +41,6 @@ The user SHALL NOT reach the home shell without selecting both a panchayat and a
 #### Scenario: Skip attempt
 - **WHEN** ward is unselected on the ward step
 - **THEN** the Continue button is disabled
-
-### Requirement: Pre-auth constituency selection
-The constituency picker SHALL be shown to unauthenticated users as the first onboarding step. The selection SHALL be held in memory only (not written to SharedPreferences) and SHALL NOT survive an app kill before login.
-
-#### Scenario: First-time user sees constituency picker
-- **WHEN** an unauthenticated user reaches the onboarding flow
-- **THEN** the constituency picker is shown before the phone number entry screen
-
-#### Scenario: Confirmation held in memory and proceeds to phone
-- **WHEN** user selects a constituency and taps "Next"
-- **THEN** selection is held in memory on OnboardingController and the user navigates to the phone screen
-
-#### Scenario: Kill before login clears selection
-- **WHEN** the user selects a constituency, kills the app before OTP verification, and cold-launches
-- **THEN** no constituency is pre-selected and the splash shows "MLA Connect" as the primary title
-
-#### Scenario: Post-auth constituency written to profile
-- **WHEN** the user successfully verifies OTP and the profile is saved
-- **THEN** the in-memory constituency is written to the user profile row in Supabase
 
 ### Requirement: Constituency picker skipped for returning users
 If the user has already completed constituency selection (profile has a constituencyId), the constituency picker SHALL NOT be shown on re-launch or onboarding resume.
@@ -91,3 +70,4 @@ After session end, the constituency picker SHALL NOT pre-select a constituency f
 #### Scenario: Constituency picker after logout
 - **WHEN** a logged-out user opens the constituency picker immediately after logout
 - **THEN** no constituency row is pre-selected from the previous session
+

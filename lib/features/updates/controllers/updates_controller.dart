@@ -9,6 +9,7 @@ class UpdatesController extends GetxController {
   final RxList<UpdateModel> updates = <UpdateModel>[].obs;
   final Rx<UpdateCategory> selectedCategory = UpdateCategory.all.obs;
   final RxBool loading = false.obs;
+  final RxString error = ''.obs;
   final Rx<UpdateModel?> selectedUpdate = Rx(null);
   final RxSet<String> likedIds = <String>{}.obs;
 
@@ -25,6 +26,7 @@ class UpdatesController extends GetxController {
 
   Future<void> loadUpdates() async {
     loading.value = true;
+    error.value = '';
     try {
       final list = await _service.getUpdates();
       updates.value = list;
@@ -32,7 +34,9 @@ class UpdatesController extends GetxController {
         ..clear()
         ..addAll(await _service.getLikedPostIds(updates.map((u) => u.id)));
     } catch (_) {
+      updates.value = [];
       likedIds.clear();
+      error.value = 'Could not load updates. Please try again.';
     } finally {
       loading.value = false;
     }
