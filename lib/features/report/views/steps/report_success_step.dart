@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:get/get.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -25,14 +26,14 @@ class ReportSuccessStep extends GetView<ReportController> {
               child: const Icon(Icons.check_rounded, color: Colors.white, size: 60),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'Your Report has been\nSubmitted Successfully!',
-              style: TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
+            Text(
+              AppStrings.reportSuccess,
+              style: const TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             Text(
-              'We received your report and our team will take action soon.',
+              AppStrings.reportSuccessMsg,
               style: AppTextStyles.bodyMedium,
               textAlign: TextAlign.center,
             ),
@@ -47,7 +48,7 @@ class ReportSuccessStep extends GetView<ReportController> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(children: [
-                  Text('Your Reference ID', style: AppTextStyles.caption),
+                  Text(AppStrings.yourReferenceId, style: AppTextStyles.caption),
                   const SizedBox(height: 4),
                   SelectableText(
                     refText,
@@ -58,26 +59,25 @@ class ReportSuccessStep extends GetView<ReportController> {
                   TextButton.icon(
                     onPressed: () async {
                       await Clipboard.setData(ClipboardData(text: refText));
-                      Get.snackbar('Copied', 'Reference ID copied to clipboard',
+                      Get.snackbar(AppStrings.copied, AppStrings.referenceIdCopied,
                           snackPosition: SnackPosition.BOTTOM);
                     },
                     icon: const Icon(Icons.copy_rounded, size: 16),
-                    label: Text('Copy', style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
+                    label: Text(AppStrings.copy, style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
                   ),
                 ]),
               );
             }),
             const Spacer(),
             PrimaryButton(
-              text: 'Track in My Activity',
+              text: AppStrings.trackInActivity,
               onPressed: () {
                 Get.until((r) => r.settings.name == '/home');
-                // Switch to activity tab
               },
             ),
             const SizedBox(height: 12),
             SecondaryButton(
-              text: 'Report Another Issue',
+              text: AppStrings.reportAnother,
               onPressed: () {
                 Get.back();
                 Get.toNamed('/report/flow');
@@ -87,7 +87,7 @@ class ReportSuccessStep extends GetView<ReportController> {
             const SizedBox(height: 12),
             TextButton(
               onPressed: () => Get.until((r) => r.settings.name == '/home'),
-              child: Text('Go to Home', style: AppTextStyles.labelMedium.copyWith(color: AppColors.textTertiary)),
+              child: Text(AppStrings.goToHome, style: AppTextStyles.labelMedium.copyWith(color: AppColors.textTertiary)),
             ),
           ],
         ),

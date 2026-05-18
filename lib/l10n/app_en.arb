@@ -178,5 +178,154 @@
 
   "reportNotFound": "Report not found",
   "photos": "Photos",
-  "statusTimeline": "Status Timeline"
+  "statusTimeline": "Status Timeline",
+
+  "featureReportLabel": "Report Problem",
+  "featureReportSubtitle": "Roads, water, waste, safety & public issues",
+  "featureIdeaLabel": "Share Idea",
+  "featureIdeaSubtitle": "Big ideas for the future of our constituency",
+  "featureImproveLabel": "Suggest Improvement",
+  "featureImproveSubtitle": "Practical improvements for a better future",
+  "featureAppreciateLabel": "Appreciate",
+  "featureAppreciateSubtitle": "Recognize good work, staff or projects",
+
+  "communityImpactTitle": "Community Impact",
+  "communityImpactSubtitle": "This month in your constituency",
+  "communityImpactReports": "Reports",
+  "communityImpactIdeas": "Ideas",
+  "communityImpactThanks": "Thanks",
+
+  "events": "Events",
+  "myProfile": "My Profile",
+  "helpFaq": "Help & FAQ",
+  "general": "General",
+  "account": "Account",
+  "logoutConfirm": "Are you sure you want to logout?",
+
+  "copy": "Copy",
+  "done": "Done",
+  "goToHome": "Go to Home",
+  "addMore": "Add More",
+  "callOffice": "Call Office",
+  "retry": "Retry",
+
+  "contactDetailsUnavailable": "Contact details not yet available.",
+  "contactDetailsUnavailableMsg": "The MLA office has not published contact channels for this constituency.",
+  "phoneLabel": "Phone",
+  "emailLabel": "Email",
+  "addressLabel": "Address",
+
+  "aboutMla": "About MLA",
+  "gallery": "Gallery",
+  "mlaDataUnavailable": "MLA data unavailable",
+  "mlaOfficeDetailsUnavailable": "MLA office details unavailable.",
+
+  "ideaSuccessMsg": "Thank you for contributing to a better constituency. Your idea will be reviewed by our team and you will be notified.",
+  "ideaSuccessPublicVisible": "Your public ideas will be visible to the community.",
+  "ideaSuccessPublicUpvote": "People can upvote and suggest improvements.",
+  "ideaSuccessPrivateSent": "Your idea has been sent privately to the MLA office.",
+  "ideaSuccessPrivateOnly": "Only the MLA office can view this idea.",
+  "ideaSuccessTeamReview": "Our team will review and may contact you for more details.",
+  "goToMyActivity": "Go to My Activity",
+  "submitAnotherIdea": "Submit Another Idea",
+
+  "yourReferenceId": "Your Reference ID",
+  "copied": "Copied",
+  "referenceIdCopied": "Reference ID copied to clipboard",
+  "unableToOpen": "Unable to open",
+
+  "publicGrievanceHearing": "Public Grievance Hearing",
+  "addVoiceMessage": "Add Voice Message",
+  "pinLocationOptional": "Pin Location (Optional)",
+
+  "privacyLastUpdated": "Last updated: May 2026",
+  "privacyIntroTitle": "1. Introduction",
+  "privacyIntroBody": "MLA Connect (\"we\", \"us\") is a civic engagement platform. This Privacy Policy describes how we collect, use, and protect your information when you use this app.",
+  "privacyCollectTitle": "2. Information we collect",
+  "privacyCollectBody": "Account information (phone number, name, photo, constituency), submission content (text, images, voice messages, location), and basic device telemetry needed to operate the service.",
+  "privacyUseTitle": "3. How we use your information",
+  "privacyUseBody": "To route your submissions to the appropriate MLA office and departments, to provide status updates, to display public submissions to the community where you have chosen public visibility, and to improve the service.",
+  "privacySharingTitle": "4. Sharing",
+  "privacySharingBody": "We share submission content with the MLA office and the relevant department. Public submissions are visible to other citizens within your constituency. We do not sell your personal data to third parties.",
+  "privacyStorageTitle": "5. Storage and security",
+  "privacyStorageBody": "Data is stored on secure infrastructure with industry-standard access controls. Voice and image attachments are stored in private buckets and accessed via signed URLs.",
+  "privacyChoicesTitle": "6. Your choices",
+  "privacyChoicesBody": "You can choose the visibility of each submission (public, MLA office only, anonymous). You can request deletion of your account and associated data by contacting the MLA office through the app.",
+  "privacyContactTitle": "7. Contact",
+  "privacyContactBody": "For privacy questions, use the Contact MLA Office screen in this app.",
+
+  "helpFaqQ1": "What is MLA Connect?",
+  "helpFaqA1": "MLA Connect is your direct line to your MLA and their office. Report issues, share ideas, suggest improvements, and appreciate good work in your constituency — all in one app.",
+  "helpFaqQ2": "Who can see my report?",
+  "helpFaqA2": "Reports are shared with the MLA office and the relevant department. You choose the visibility — public (visible to the community), MLA office only, or anonymous.",
+  "helpFaqQ3": "How do I track a submission?",
+  "helpFaqA3": "Open the Activity tab in the bottom navigation to see all your submissions and their current status.",
+  "helpFaqQ4": "Will I get notified about updates?",
+  "helpFaqA4": "Yes — you will receive in-app notifications when your submission status changes or the MLA office responds.",
+  "helpFaqQ5": "Can I edit a submission after sending it?",
+  "helpFaqA5": "Submitted reports cannot be edited, but you can add comments or attach further information from the submission detail screen.",
+  "helpFaqQ6": "How do I change my constituency?",
+  "helpFaqA6": "Go to Profile → Edit Profile, or sign out and complete the onboarding flow again with your new constituency.",
+  "helpFaqQ7": "Is my personal data private?",
+  "helpFaqA7": "Yes. Your data is stored securely and shared only with the MLA office as required to act on your submission. See the Privacy Policy for full details.",
+
+  "statusAssigned": "Assigned",
+  "noImprovements": "No Improvements Yet",
+  "noImprovementsMsg": "Suggestions you share will appear here.",
+
+  "activityTabReports": "Reports",
+  "activityTabIdeas": "Ideas",
+  "activityTabImprovements": "Improvements",
+  "activityTabAppreciations": "Appreciations",
+  "activityTabSaved": "Saved",
+
+  "activityFabReport": "Report a Problem",
+  "activityFabIdea": "Share an Idea",
+  "activityFabImprovement": "Suggest Improvement",
+  "activityFabAppreciation": "Send Appreciation",
+
+  "activityGreatGoing": "Great going!",
+  "activityGreatGoingNamed": "Great going, {name}!",
+  "@activityGreatGoingNamed": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "activityContributionsSoFar": "{count} contributions so far",
+  "@activityContributionsSoFar": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "activityCommunityTagline": "You're helping build a better community.",
+
+  "filterAll": "All",
+  "filterActive": "Active",
+  "activityNoMatches": "No matches",
+  "activityNoReportsWithStatus": "No reports with this status.",
+
+  "activityEmptyHeadline": "Start contributing to your community",
+  "activityEmptyMessage": "Report issues, share ideas and track updates from your constituency.",
+
+  "activityIdWard": "ID: {id}  •  {ward}",
+  "@activityIdWard": {
+    "placeholders": {
+      "id": {"type": "String"},
+      "ward": {"type": "String"}
+    }
+  },
+
+  "reportDetail": "Report Detail",
+
+  "visibilityPublic": "Public Wall",
+  "visibilityMlaOnly": "MLA Office Only",
+  "visibilityAnonymous": "Anonymous",
+  "visibilityPublicDesc": "Visible to everyone on the platform",
+  "visibilityMlaOnlyDesc": "Only MLA office can view this",
+  "visibilityAnonymousDesc": "Your name will be hidden",
+
+  "navHome": "Home",
+  "navActivity": "Activity",
+  "navUpdates": "Updates",
+  "navProfile": "Profile"
 }

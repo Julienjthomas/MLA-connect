@@ -87,9 +87,9 @@ class HomeView extends GetView<HomeController> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (hasConstituency)
-                    const Text(
-                      'MLA Connect',
-                      style: TextStyle(
+                    Text(
+                      AppStrings.appName,
+                      style: const TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 11,
                         fontWeight: FontWeight.w400,
@@ -162,28 +162,28 @@ class HomeView extends GetView<HomeController> {
     final tiles = [
       ActionCard(
         icon: FeatureType.report.icon,
-        title: 'Report Problem',
+        title: FeatureType.report.label,
         subtitle: FeatureType.report.subtitle,
         accentColor: FeatureType.report.color,
         onTap: () => Get.toNamed(Routes.reportFlow),
       ),
       ActionCard(
         icon: FeatureType.idea.icon,
-        title: 'Share Idea',
+        title: FeatureType.idea.label,
         subtitle: FeatureType.idea.subtitle,
         accentColor: FeatureType.idea.color,
         onTap: () => Get.toNamed(Routes.ideasFlow),
       ),
       ActionCard(
         icon: FeatureType.improve.icon,
-        title: 'Suggest Improvement',
+        title: FeatureType.improve.label,
         subtitle: FeatureType.improve.subtitle,
         accentColor: FeatureType.improve.color,
         onTap: () => Get.toNamed(Routes.improvementsFlow),
       ),
       ActionCard(
         icon: FeatureType.appreciate.icon,
-        title: 'Appreciate',
+        title: FeatureType.appreciate.label,
         subtitle: FeatureType.appreciate.subtitle,
         accentColor: FeatureType.appreciate.color,
         onTap: () => Get.toNamed(Routes.appreciationFlow),
@@ -425,11 +425,11 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   const Icon(Icons.insights_rounded, color: AppColors.primary, size: 20),
                   const SizedBox(width: 8),
-                  Text('Community Impact', style: AppTextStyles.titleSmall),
+                  Text(AppStrings.communityImpactTitle, style: AppTextStyles.titleSmall),
                 ],
               ),
               const SizedBox(height: 4),
-              Text('This month in your constituency',
+              Text(AppStrings.communityImpactSubtitle,
                   style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
               const SizedBox(height: 14),
               Obx(() {
@@ -438,9 +438,9 @@ class HomeView extends GetView<HomeController> {
                 final appreciations = controller.impactAppreciations.value;
                 return Row(
                   children: [
-                    _impactStat(Icons.report_problem_rounded, AppColors.reportOrange, '$reports', 'Reports'),
-                    _impactStat(Icons.lightbulb_outline_rounded, AppColors.primary, '$ideas', 'Ideas'),
-                    _impactStat(Icons.favorite_rounded, Colors.pink, '$appreciations', 'Thanks'),
+                    _impactStat(Icons.report_problem_rounded, AppColors.reportOrange, '$reports', AppStrings.communityImpactReports),
+                    _impactStat(Icons.lightbulb_outline_rounded, AppColors.primary, '$ideas', AppStrings.communityImpactIdeas),
+                    _impactStat(Icons.favorite_rounded, Colors.pink, '$appreciations', AppStrings.communityImpactThanks),
                   ],
                 );
               }),

@@ -99,6 +99,13 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>mailto</string>
+		<string>https</string>
+		<string>http</string>
+	</array>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app uses the microphone to record voice messages for reports and suggestions.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>

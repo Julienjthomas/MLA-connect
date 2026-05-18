@@ -81,7 +81,7 @@ class AppStrings {
   static String get mlaActivity => _s.mlaActivity;
   static String get viewAll => _s.viewAll;
   static String get hallOfExcellence => _s.hallOfExcellence;
-  static const publicGrievance = 'Public Grievance Hearing';
+  static String get publicGrievance => _s.publicGrievanceHearing;
   static String get viewDetails => _s.viewDetails;
   // MLA Hero Card
   static String get yourMlaLabel => _s.yourMlaLabel;
@@ -108,12 +108,12 @@ class AppStrings {
   // Report
   static String get reportProblem => _s.reportProblem;
   static String get describeIssue => _s.describeIssue;
-  static const addVoiceNote = 'Add Voice Message';
+  static String get addVoiceNote => _s.addVoiceMessage;
   static String get addPhotos => _s.addPhotos;
   static String get selectCategory => _s.selectCategory;
   static String get location => _s.location;
   static String get landmark => _s.landmark;
-  static const gpsLocation = 'Pin Location (Optional)';
+  static String get gpsLocation => _s.pinLocationOptional;
   static String get contactNumber => _s.contactNumber;
   static String get submitReport => _s.submitReport;
   static String get reportSuccess => _s.reportSuccess;
@@ -148,6 +148,46 @@ class AppStrings {
   // Activity
   static String get myActivity => _s.myActivity;
   static String get trackContributions => _s.trackContributions;
+  static String get activityTabReports => _s.activityTabReports;
+  static String get activityTabIdeas => _s.activityTabIdeas;
+  static String get activityTabImprovements => _s.activityTabImprovements;
+  static String get activityTabAppreciations => _s.activityTabAppreciations;
+  static String get activityTabSaved => _s.activityTabSaved;
+  static String get activityFabReport => _s.activityFabReport;
+  static String get activityFabIdea => _s.activityFabIdea;
+  static String get activityFabImprovement => _s.activityFabImprovement;
+  static String get activityFabAppreciation => _s.activityFabAppreciation;
+  static String get activityGreatGoing => _s.activityGreatGoing;
+  static String activityGreatGoingNamed(String name) => _s.activityGreatGoingNamed(name);
+  static String activityContributionsSoFar(int count) => _s.activityContributionsSoFar(count);
+  static String get activityCommunityTagline => _s.activityCommunityTagline;
+  static String get filterAll => _s.filterAll;
+  static String get filterActive => _s.filterActive;
+  static String get activityNoMatches => _s.activityNoMatches;
+  static String get activityNoReportsWithStatus => _s.activityNoReportsWithStatus;
+  static String get activityEmptyHeadline => _s.activityEmptyHeadline;
+  static String get activityEmptyMessage => _s.activityEmptyMessage;
+  static String activityIdWard(String id, String ward) => _s.activityIdWard(id, ward);
+  static String get reportDetail => _s.reportDetail;
+  static String get reportNotFound => _s.reportNotFound;
+  static String get photos => _s.photos;
+  static String get statusSubmitted => _s.statusSubmitted;
+  static String get statusReview => _s.statusReview;
+  static String get statusAssigned => _s.statusAssigned;
+  static String get statusInProgress => _s.statusInProgress;
+  static String get statusResolved => _s.statusResolved;
+  static String get statusClosed => _s.statusClosed;
+  static String get visibilityPublic => _s.visibilityPublic;
+  static String get visibilityMlaOnly => _s.visibilityMlaOnly;
+  static String get visibilityAnonymous => _s.visibilityAnonymous;
+  static String get visibilityPublicDesc => _s.visibilityPublicDesc;
+  static String get visibilityMlaOnlyDesc => _s.visibilityMlaOnlyDesc;
+  static String get visibilityAnonymousDesc => _s.visibilityAnonymousDesc;
+
+  static String get navHome => _s.navHome;
+  static String get navActivity => _s.navActivity;
+  static String get navUpdates => _s.navUpdates;
+  static String get navProfile => _s.navProfile;
   static String get savedEmptyTitle => _s.savedEmptyTitle;
   static String get savedEmptyMsg => _s.savedEmptyMsg;
 
@@ -179,4 +219,85 @@ class AppStrings {
   static String get error => _s.error;
   static String get noInternet => _s.noInternet;
   static String get required => _s.required;
+
+  // Feature tiles (home)
+  static String get featureReportLabel => _s.featureReportLabel;
+  static String get featureReportSubtitle => _s.featureReportSubtitle;
+  static String get featureIdeaLabel => _s.featureIdeaLabel;
+  static String get featureIdeaSubtitle => _s.featureIdeaSubtitle;
+  static String get featureImproveLabel => _s.featureImproveLabel;
+  static String get featureImproveSubtitle => _s.featureImproveSubtitle;
+  static String get featureAppreciateLabel => _s.featureAppreciateLabel;
+  static String get featureAppreciateSubtitle => _s.featureAppreciateSubtitle;
+
+  // Community impact
+  static String get communityImpactTitle => _s.communityImpactTitle;
+  static String get communityImpactSubtitle => _s.communityImpactSubtitle;
+  static String get communityImpactReports => _s.communityImpactReports;
+  static String get communityImpactIdeas => _s.communityImpactIdeas;
+  static String get communityImpactThanks => _s.communityImpactThanks;
+
+  // Profile + misc
+  static String get events => _s.events;
+  static String get myProfile => _s.myProfile;
+  static String get helpFaq => _s.helpFaq;
+  static String get general => _s.general;
+  static String get account => _s.account;
+  static String get logoutConfirm => _s.logoutConfirm;
+
+  static String get copy => _s.copy;
+  static String get done => _s.done;
+  static String get addMore => _s.addMore;
+  static String get callOffice => _s.callOffice;
+  static String get retry => _s.retry;
+
+  static String get contactDetailsUnavailable => _s.contactDetailsUnavailable;
+  static String get contactDetailsUnavailableMsg => _s.contactDetailsUnavailableMsg;
+  static String get phoneLabel => _s.phoneLabel;
+  static String get emailLabel => _s.emailLabel;
+  static String get addressLabel => _s.addressLabel;
+
+  static String get aboutMla => _s.aboutMla;
+  static String get gallery => _s.gallery;
+  static String get mlaDataUnavailable => _s.mlaDataUnavailable;
+  static String get mlaOfficeDetailsUnavailable => _s.mlaOfficeDetailsUnavailable;
+
+  // Idea success
+  static String get ideaSuccessMsg => _s.ideaSuccessMsg;
+  static String get ideaSuccessPublicVisible => _s.ideaSuccessPublicVisible;
+  static String get ideaSuccessPublicUpvote => _s.ideaSuccessPublicUpvote;
+  static String get ideaSuccessPrivateSent => _s.ideaSuccessPrivateSent;
+  static String get ideaSuccessPrivateOnly => _s.ideaSuccessPrivateOnly;
+  static String get ideaSuccessTeamReview => _s.ideaSuccessTeamReview;
+  static String get goToMyActivity => _s.goToMyActivity;
+  static String get submitAnotherIdea => _s.submitAnotherIdea;
+
+  // Report success
+  static String get yourReferenceId => _s.yourReferenceId;
+  static String get copied => _s.copied;
+  static String get referenceIdCopied => _s.referenceIdCopied;
+  static String get unableToOpen => _s.unableToOpen;
+
+  // Privacy policy
+  static String get privacyLastUpdated => _s.privacyLastUpdated;
+  static List<({String title, String body})> get privacySections => [
+        (title: _s.privacyIntroTitle, body: _s.privacyIntroBody),
+        (title: _s.privacyCollectTitle, body: _s.privacyCollectBody),
+        (title: _s.privacyUseTitle, body: _s.privacyUseBody),
+        (title: _s.privacySharingTitle, body: _s.privacySharingBody),
+        (title: _s.privacyStorageTitle, body: _s.privacyStorageBody),
+        (title: _s.privacyChoicesTitle, body: _s.privacyChoicesBody),
+        (title: _s.privacyContactTitle, body: _s.privacyContactBody),
+      ];
+
+  // Help & FAQ
+  static List<({String question, String answer})> get helpFaqs => [
+        (question: _s.helpFaqQ1, answer: _s.helpFaqA1),
+        (question: _s.helpFaqQ2, answer: _s.helpFaqA2),
+        (question: _s.helpFaqQ3, answer: _s.helpFaqA3),
+        (question: _s.helpFaqQ4, answer: _s.helpFaqA4),
+        (question: _s.helpFaqQ5, answer: _s.helpFaqA5),
+        (question: _s.helpFaqQ6, answer: _s.helpFaqA6),
+        (question: _s.helpFaqQ7, answer: _s.helpFaqA7),
+      ];
 }

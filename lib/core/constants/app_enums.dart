@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import 'app_strings.dart';
 
 enum FeatureType { report, appreciate, idea, improve }
 
@@ -19,17 +20,17 @@ extension FeatureTypeX on FeatureType {
       };
 
   String get label => switch (this) {
-        FeatureType.report => 'Report Problem',
-        FeatureType.appreciate => 'Appreciate',
-        FeatureType.idea => 'Share Idea',
-        FeatureType.improve => 'Suggest Improvement',
+        FeatureType.report => AppStrings.featureReportLabel,
+        FeatureType.appreciate => AppStrings.featureAppreciateLabel,
+        FeatureType.idea => AppStrings.featureIdeaLabel,
+        FeatureType.improve => AppStrings.featureImproveLabel,
       };
 
   String get subtitle => switch (this) {
-        FeatureType.report => 'Roads, water, waste, safety & public issues',
-        FeatureType.appreciate => 'Recognize good work, staff or projects',
-        FeatureType.idea => 'Big ideas for the future of our constituency',
-        FeatureType.improve => 'Practical improvements for a better future',
+        FeatureType.report => AppStrings.featureReportSubtitle,
+        FeatureType.appreciate => AppStrings.featureAppreciateSubtitle,
+        FeatureType.idea => AppStrings.featureIdeaSubtitle,
+        FeatureType.improve => AppStrings.featureImproveSubtitle,
       };
 
   IconData get icon => switch (this) {
@@ -44,12 +45,12 @@ enum SubmissionStatus { submitted, underReview, assigned, inProgress, resolved, 
 
 extension SubmissionStatusX on SubmissionStatus {
   String get label => switch (this) {
-        SubmissionStatus.submitted => 'Submitted',
-        SubmissionStatus.underReview => 'Under Review',
-        SubmissionStatus.assigned => 'Assigned',
-        SubmissionStatus.inProgress => 'In Progress',
-        SubmissionStatus.resolved => 'Resolved',
-        SubmissionStatus.rejected => 'Rejected',
+        SubmissionStatus.submitted => AppStrings.statusSubmitted,
+        SubmissionStatus.underReview => AppStrings.statusReview,
+        SubmissionStatus.assigned => AppStrings.statusAssigned,
+        SubmissionStatus.inProgress => AppStrings.statusInProgress,
+        SubmissionStatus.resolved => AppStrings.statusResolved,
+        SubmissionStatus.rejected => AppStrings.statusClosed,
       };
 
   Color get color => switch (this) {
@@ -133,15 +134,15 @@ enum SubmissionVisibility { public, mlaOnly, anonymous }
 
 extension SubmissionVisibilityX on SubmissionVisibility {
   String get label => switch (this) {
-        SubmissionVisibility.public => 'Public Wall',
-        SubmissionVisibility.mlaOnly => 'MLA Office Only',
-        SubmissionVisibility.anonymous => 'Anonymous',
+        SubmissionVisibility.public => AppStrings.visibilityPublic,
+        SubmissionVisibility.mlaOnly => AppStrings.visibilityMlaOnly,
+        SubmissionVisibility.anonymous => AppStrings.visibilityAnonymous,
       };
 
   String get description => switch (this) {
-        SubmissionVisibility.public => 'Visible to everyone on the platform',
-        SubmissionVisibility.mlaOnly => 'Only MLA office can view this',
-        SubmissionVisibility.anonymous => 'Your name will be hidden',
+        SubmissionVisibility.public => AppStrings.visibilityPublicDesc,
+        SubmissionVisibility.mlaOnly => AppStrings.visibilityMlaOnlyDesc,
+        SubmissionVisibility.anonymous => AppStrings.visibilityAnonymousDesc,
       };
 
   String get dbValue => name;
@@ -185,11 +186,11 @@ enum ActivityTab { reports, ideas, improvements, appreciations, saved }
 
 extension ActivityTabX on ActivityTab {
   String get label => switch (this) {
-        ActivityTab.reports => 'Reports',
-        ActivityTab.ideas => 'Ideas',
-        ActivityTab.improvements => 'Improvements',
-        ActivityTab.appreciations => 'Appreciations',
-        ActivityTab.saved => 'Saved',
+        ActivityTab.reports => AppStrings.activityTabReports,
+        ActivityTab.ideas => AppStrings.activityTabIdeas,
+        ActivityTab.improvements => AppStrings.activityTabImprovements,
+        ActivityTab.appreciations => AppStrings.activityTabAppreciations,
+        ActivityTab.saved => AppStrings.activityTabSaved,
       };
 
   FeatureType? get addFeature => switch (this) {
@@ -201,10 +202,10 @@ extension ActivityTabX on ActivityTab {
       };
 
   String? get addActionLabel => switch (this) {
-        ActivityTab.reports => 'Report a Problem',
-        ActivityTab.ideas => 'Share an Idea',
-        ActivityTab.improvements => 'Suggest Improvement',
-        ActivityTab.appreciations => 'Send Appreciation',
+        ActivityTab.reports => AppStrings.activityFabReport,
+        ActivityTab.ideas => AppStrings.activityFabIdea,
+        ActivityTab.improvements => AppStrings.activityFabImprovement,
+        ActivityTab.appreciations => AppStrings.activityFabAppreciation,
         ActivityTab.saved => null,
       };
 }

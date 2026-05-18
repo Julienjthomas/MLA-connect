@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../data/models/mla_model.dart';
@@ -41,7 +42,7 @@ class _ContactMlaOfficeViewState extends State<ContactMlaOfficeView> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      Get.snackbar('Unable to open', uri.toString(),
+      Get.snackbar(AppStrings.unableToOpen, uri.toString(),
           snackPosition: SnackPosition.BOTTOM);
     }
   }
@@ -53,13 +54,13 @@ class _ContactMlaOfficeViewState extends State<ContactMlaOfficeView> {
       appBar: AppBar(
         backgroundColor: AppColors.surface,
         elevation: 0,
-        title: const Text('Contact MLA Office', style: AppTextStyles.titleMedium),
+        title: Text(AppStrings.contactMlaOffice, style: AppTextStyles.titleMedium),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _mla == null
               ? Center(
-                  child: Text('MLA office details unavailable.',
+                  child: Text(AppStrings.mlaOfficeDetailsUnavailable,
                       style: AppTextStyles.bodyMedium))
               : ListView(
                   padding: const EdgeInsets.all(16),
@@ -83,10 +84,37 @@ class _ContactMlaOfficeViewState extends State<ContactMlaOfficeView> {
                       ),
                     ),
                     const SizedBox(height: 16),
+                    if (_mla!.contact.phone.isEmpty &&
+                        (_mla!.contact.email ?? '').isEmpty &&
+                        (_mla!.contact.officeAddress ?? '').isEmpty)
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.grey200),
+                        ),
+                        child: Column(
+                          children: [
+                            const Icon(Icons.info_outline_rounded,
+                                size: 32, color: AppColors.grey400),
+                            const SizedBox(height: 8),
+                            Text(AppStrings.contactDetailsUnavailable,
+                                style: AppTextStyles.bodyMedium,
+                                textAlign: TextAlign.center),
+                            const SizedBox(height: 4),
+                            Text(
+                                AppStrings.contactDetailsUnavailableMsg,
+                                style: AppTextStyles.caption
+                                    .copyWith(color: AppColors.textTertiary),
+                                textAlign: TextAlign.center),
+                          ],
+                        ),
+                      ),
                     if (_mla!.contact.phone.isNotEmpty)
                       _entry(
                         icon: Icons.phone_outlined,
-                        label: 'Phone',
+                        label: AppStrings.phoneLabel,
                         value: _mla!.contact.phone,
                         onTap: () =>
                             _open(Uri(scheme: 'tel', path: _mla!.contact.phone)),
@@ -94,14 +122,14 @@ class _ContactMlaOfficeViewState extends State<ContactMlaOfficeView> {
                     if ((_mla!.contact.email ?? '').isNotEmpty)
                       _entry(
                         icon: Icons.mail_outline_rounded,
-                        label: 'Email',
+                        label: AppStrings.emailLabel,
                         value: _mla!.contact.email!,
                         onTap: () => _open(Uri(scheme: 'mailto', path: _mla!.contact.email)),
                       ),
                     if ((_mla!.contact.officeAddress ?? '').isNotEmpty)
                       _entry(
                         icon: Icons.location_on_outlined,
-                        label: 'Address',
+                        label: AppStrings.addressLabel,
                         value: _mla!.contact.officeAddress!,
                         onTap: () => _open(Uri(
                             scheme: 'https',

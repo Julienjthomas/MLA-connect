@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
@@ -14,7 +15,7 @@ class ReportDetailView extends GetView<ReportDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const KeralaAppBar(title: 'Report Detail'),
+      appBar: KeralaAppBar(title: AppStrings.reportDetail),
       body: Obx(() {
         if (controller.loading.value) {
           return const Padding(
@@ -33,7 +34,7 @@ class ReportDetailView extends GetView<ReportDetailController> {
           );
         }
         final report = controller.report.value;
-        if (report == null) return const Center(child: Text('Report not found'));
+        if (report == null) return Center(child: Text(AppStrings.reportNotFound));
         final description = report.description.trim();
         final title = report.title.trim();
         final showDescription = description.isNotEmpty && description != title;
@@ -49,7 +50,7 @@ class ReportDetailView extends GetView<ReportDetailController> {
                 ],
               ),
               const SizedBox(height: 8),
-              Text('ID: ${report.shortId}  •  ${report.wardName}', style: AppTextStyles.caption),
+              Text(AppStrings.activityIdWard(report.shortId, report.wardName), style: AppTextStyles.caption),
               const SizedBox(height: 4),
               Text(report.timeAgo, style: AppTextStyles.caption),
               if (showDescription) ...[
@@ -58,7 +59,7 @@ class ReportDetailView extends GetView<ReportDetailController> {
               ],
               if (report.mediaUrls.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                const Text('Photos', style: AppTextStyles.titleSmall),
+                Text(AppStrings.photos, style: AppTextStyles.titleSmall),
                 const SizedBox(height: 8),
                 SizedBox(
                   height: 100,

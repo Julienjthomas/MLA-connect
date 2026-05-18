@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../constants/app_enums.dart';
+import '../constants/app_strings.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import '../../routes/app_routes.dart';
@@ -40,14 +41,14 @@ class ActivityEmptyState extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Start contributing to your community',
+                Text(
+                  AppStrings.activityEmptyHeadline,
                   style: AppTextStyles.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Report issues, share ideas and track updates from your constituency.',
+                  AppStrings.activityEmptyMessage,
                   style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
                   textAlign: TextAlign.center,
                 ),

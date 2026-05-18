@@ -1044,6 +1044,672 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Status Timeline'**
   String get statusTimeline;
+
+  /// No description provided for @featureReportLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Problem'**
+  String get featureReportLabel;
+
+  /// No description provided for @featureReportSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Roads, water, waste, safety & public issues'**
+  String get featureReportSubtitle;
+
+  /// No description provided for @featureIdeaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Idea'**
+  String get featureIdeaLabel;
+
+  /// No description provided for @featureIdeaSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Big ideas for the future of our constituency'**
+  String get featureIdeaSubtitle;
+
+  /// No description provided for @featureImproveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest Improvement'**
+  String get featureImproveLabel;
+
+  /// No description provided for @featureImproveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Practical improvements for a better future'**
+  String get featureImproveSubtitle;
+
+  /// No description provided for @featureAppreciateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Appreciate'**
+  String get featureAppreciateLabel;
+
+  /// No description provided for @featureAppreciateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recognize good work, staff or projects'**
+  String get featureAppreciateSubtitle;
+
+  /// No description provided for @communityImpactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Impact'**
+  String get communityImpactTitle;
+
+  /// No description provided for @communityImpactSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This month in your constituency'**
+  String get communityImpactSubtitle;
+
+  /// No description provided for @communityImpactReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get communityImpactReports;
+
+  /// No description provided for @communityImpactIdeas.
+  ///
+  /// In en, this message translates to:
+  /// **'Ideas'**
+  String get communityImpactIdeas;
+
+  /// No description provided for @communityImpactThanks.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks'**
+  String get communityImpactThanks;
+
+  /// No description provided for @events.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get events;
+
+  /// No description provided for @myProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get myProfile;
+
+  /// No description provided for @helpFaq.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & FAQ'**
+  String get helpFaq;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout?'**
+  String get logoutConfirm;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @addMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Add More'**
+  String get addMore;
+
+  /// No description provided for @callOffice.
+  ///
+  /// In en, this message translates to:
+  /// **'Call Office'**
+  String get callOffice;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @contactDetailsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact details not yet available.'**
+  String get contactDetailsUnavailable;
+
+  /// No description provided for @contactDetailsUnavailableMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'The MLA office has not published contact channels for this constituency.'**
+  String get contactDetailsUnavailableMsg;
+
+  /// No description provided for @phoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phoneLabel;
+
+  /// No description provided for @emailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailLabel;
+
+  /// No description provided for @addressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressLabel;
+
+  /// No description provided for @aboutMla.
+  ///
+  /// In en, this message translates to:
+  /// **'About MLA'**
+  String get aboutMla;
+
+  /// No description provided for @gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get gallery;
+
+  /// No description provided for @mlaDataUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA data unavailable'**
+  String get mlaDataUnavailable;
+
+  /// No description provided for @mlaOfficeDetailsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA office details unavailable.'**
+  String get mlaOfficeDetailsUnavailable;
+
+  /// No description provided for @ideaSuccessMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for contributing to a better constituency. Your idea will be reviewed by our team and you will be notified.'**
+  String get ideaSuccessMsg;
+
+  /// No description provided for @ideaSuccessPublicVisible.
+  ///
+  /// In en, this message translates to:
+  /// **'Your public ideas will be visible to the community.'**
+  String get ideaSuccessPublicVisible;
+
+  /// No description provided for @ideaSuccessPublicUpvote.
+  ///
+  /// In en, this message translates to:
+  /// **'People can upvote and suggest improvements.'**
+  String get ideaSuccessPublicUpvote;
+
+  /// No description provided for @ideaSuccessPrivateSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Your idea has been sent privately to the MLA office.'**
+  String get ideaSuccessPrivateSent;
+
+  /// No description provided for @ideaSuccessPrivateOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the MLA office can view this idea.'**
+  String get ideaSuccessPrivateOnly;
+
+  /// No description provided for @ideaSuccessTeamReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Our team will review and may contact you for more details.'**
+  String get ideaSuccessTeamReview;
+
+  /// No description provided for @goToMyActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to My Activity'**
+  String get goToMyActivity;
+
+  /// No description provided for @submitAnotherIdea.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Another Idea'**
+  String get submitAnotherIdea;
+
+  /// No description provided for @yourReferenceId.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Reference ID'**
+  String get yourReferenceId;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copied;
+
+  /// No description provided for @referenceIdCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference ID copied to clipboard'**
+  String get referenceIdCopied;
+
+  /// No description provided for @unableToOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to open'**
+  String get unableToOpen;
+
+  /// No description provided for @publicGrievanceHearing.
+  ///
+  /// In en, this message translates to:
+  /// **'Public Grievance Hearing'**
+  String get publicGrievanceHearing;
+
+  /// No description provided for @addVoiceMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Voice Message'**
+  String get addVoiceMessage;
+
+  /// No description provided for @pinLocationOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin Location (Optional)'**
+  String get pinLocationOptional;
+
+  /// No description provided for @privacyLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: May 2026'**
+  String get privacyLastUpdated;
+
+  /// No description provided for @privacyIntroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Introduction'**
+  String get privacyIntroTitle;
+
+  /// No description provided for @privacyIntroBody.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA Connect (\"we\", \"us\") is a civic engagement platform. This Privacy Policy describes how we collect, use, and protect your information when you use this app.'**
+  String get privacyIntroBody;
+
+  /// No description provided for @privacyCollectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Information we collect'**
+  String get privacyCollectTitle;
+
+  /// No description provided for @privacyCollectBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Account information (phone number, name, photo, constituency), submission content (text, images, voice messages, location), and basic device telemetry needed to operate the service.'**
+  String get privacyCollectBody;
+
+  /// No description provided for @privacyUseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'3. How we use your information'**
+  String get privacyUseTitle;
+
+  /// No description provided for @privacyUseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'To route your submissions to the appropriate MLA office and departments, to provide status updates, to display public submissions to the community where you have chosen public visibility, and to improve the service.'**
+  String get privacyUseBody;
+
+  /// No description provided for @privacySharingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Sharing'**
+  String get privacySharingTitle;
+
+  /// No description provided for @privacySharingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We share submission content with the MLA office and the relevant department. Public submissions are visible to other citizens within your constituency. We do not sell your personal data to third parties.'**
+  String get privacySharingBody;
+
+  /// No description provided for @privacyStorageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'5. Storage and security'**
+  String get privacyStorageTitle;
+
+  /// No description provided for @privacyStorageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Data is stored on secure infrastructure with industry-standard access controls. Voice and image attachments are stored in private buckets and accessed via signed URLs.'**
+  String get privacyStorageBody;
+
+  /// No description provided for @privacyChoicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'6. Your choices'**
+  String get privacyChoicesTitle;
+
+  /// No description provided for @privacyChoicesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can choose the visibility of each submission (public, MLA office only, anonymous). You can request deletion of your account and associated data by contacting the MLA office through the app.'**
+  String get privacyChoicesBody;
+
+  /// No description provided for @privacyContactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'7. Contact'**
+  String get privacyContactTitle;
+
+  /// No description provided for @privacyContactBody.
+  ///
+  /// In en, this message translates to:
+  /// **'For privacy questions, use the Contact MLA Office screen in this app.'**
+  String get privacyContactBody;
+
+  /// No description provided for @helpFaqQ1.
+  ///
+  /// In en, this message translates to:
+  /// **'What is MLA Connect?'**
+  String get helpFaqQ1;
+
+  /// No description provided for @helpFaqA1.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA Connect is your direct line to your MLA and their office. Report issues, share ideas, suggest improvements, and appreciate good work in your constituency — all in one app.'**
+  String get helpFaqA1;
+
+  /// No description provided for @helpFaqQ2.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see my report?'**
+  String get helpFaqQ2;
+
+  /// No description provided for @helpFaqA2.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports are shared with the MLA office and the relevant department. You choose the visibility — public (visible to the community), MLA office only, or anonymous.'**
+  String get helpFaqA2;
+
+  /// No description provided for @helpFaqQ3.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I track a submission?'**
+  String get helpFaqQ3;
+
+  /// No description provided for @helpFaqA3.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Activity tab in the bottom navigation to see all your submissions and their current status.'**
+  String get helpFaqA3;
+
+  /// No description provided for @helpFaqQ4.
+  ///
+  /// In en, this message translates to:
+  /// **'Will I get notified about updates?'**
+  String get helpFaqQ4;
+
+  /// No description provided for @helpFaqA4.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes — you will receive in-app notifications when your submission status changes or the MLA office responds.'**
+  String get helpFaqA4;
+
+  /// No description provided for @helpFaqQ5.
+  ///
+  /// In en, this message translates to:
+  /// **'Can I edit a submission after sending it?'**
+  String get helpFaqQ5;
+
+  /// No description provided for @helpFaqA5.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted reports cannot be edited, but you can add comments or attach further information from the submission detail screen.'**
+  String get helpFaqA5;
+
+  /// No description provided for @helpFaqQ6.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I change my constituency?'**
+  String get helpFaqQ6;
+
+  /// No description provided for @helpFaqA6.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Profile → Edit Profile, or sign out and complete the onboarding flow again with your new constituency.'**
+  String get helpFaqA6;
+
+  /// No description provided for @helpFaqQ7.
+  ///
+  /// In en, this message translates to:
+  /// **'Is my personal data private?'**
+  String get helpFaqQ7;
+
+  /// No description provided for @helpFaqA7.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes. Your data is stored securely and shared only with the MLA office as required to act on your submission. See the Privacy Policy for full details.'**
+  String get helpFaqA7;
+
+  /// No description provided for @statusAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned'**
+  String get statusAssigned;
+
+  /// No description provided for @noImprovements.
+  ///
+  /// In en, this message translates to:
+  /// **'No Improvements Yet'**
+  String get noImprovements;
+
+  /// No description provided for @noImprovementsMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestions you share will appear here.'**
+  String get noImprovementsMsg;
+
+  /// No description provided for @activityTabReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get activityTabReports;
+
+  /// No description provided for @activityTabIdeas.
+  ///
+  /// In en, this message translates to:
+  /// **'Ideas'**
+  String get activityTabIdeas;
+
+  /// No description provided for @activityTabImprovements.
+  ///
+  /// In en, this message translates to:
+  /// **'Improvements'**
+  String get activityTabImprovements;
+
+  /// No description provided for @activityTabAppreciations.
+  ///
+  /// In en, this message translates to:
+  /// **'Appreciations'**
+  String get activityTabAppreciations;
+
+  /// No description provided for @activityTabSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get activityTabSaved;
+
+  /// No description provided for @activityFabReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report a Problem'**
+  String get activityFabReport;
+
+  /// No description provided for @activityFabIdea.
+  ///
+  /// In en, this message translates to:
+  /// **'Share an Idea'**
+  String get activityFabIdea;
+
+  /// No description provided for @activityFabImprovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest Improvement'**
+  String get activityFabImprovement;
+
+  /// No description provided for @activityFabAppreciation.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Appreciation'**
+  String get activityFabAppreciation;
+
+  /// No description provided for @activityGreatGoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Great going!'**
+  String get activityGreatGoing;
+
+  /// No description provided for @activityGreatGoingNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Great going, {name}!'**
+  String activityGreatGoingNamed(String name);
+
+  /// No description provided for @activityContributionsSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} contributions so far'**
+  String activityContributionsSoFar(int count);
+
+  /// No description provided for @activityCommunityTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re helping build a better community.'**
+  String get activityCommunityTagline;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @filterActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get filterActive;
+
+  /// No description provided for @activityNoMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches'**
+  String get activityNoMatches;
+
+  /// No description provided for @activityNoReportsWithStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'No reports with this status.'**
+  String get activityNoReportsWithStatus;
+
+  /// No description provided for @activityEmptyHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Start contributing to your community'**
+  String get activityEmptyHeadline;
+
+  /// No description provided for @activityEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Report issues, share ideas and track updates from your constituency.'**
+  String get activityEmptyMessage;
+
+  /// No description provided for @activityIdWard.
+  ///
+  /// In en, this message translates to:
+  /// **'ID: {id}  •  {ward}'**
+  String activityIdWard(String id, String ward);
+
+  /// No description provided for @reportDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Detail'**
+  String get reportDetail;
+
+  /// No description provided for @visibilityPublic.
+  ///
+  /// In en, this message translates to:
+  /// **'Public Wall'**
+  String get visibilityPublic;
+
+  /// No description provided for @visibilityMlaOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA Office Only'**
+  String get visibilityMlaOnly;
+
+  /// No description provided for @visibilityAnonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get visibilityAnonymous;
+
+  /// No description provided for @visibilityPublicDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Visible to everyone on the platform'**
+  String get visibilityPublicDesc;
+
+  /// No description provided for @visibilityMlaOnlyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Only MLA office can view this'**
+  String get visibilityMlaOnlyDesc;
+
+  /// No description provided for @visibilityAnonymousDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name will be hidden'**
+  String get visibilityAnonymousDesc;
+
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @navActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get navActivity;
+
+  /// No description provided for @navUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates'**
+  String get navUpdates;
+
+  /// No description provided for @navProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get navProfile;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

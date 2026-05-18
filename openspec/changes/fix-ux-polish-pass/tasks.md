@@ -34,7 +34,7 @@
 ## 6. Private idea confirmation copy
 
 - [x] 6.1 In `idea_success_step.dart`, branch copy on `IdeaController.visibility`
-- [ ] 6.2 Add new localized strings `ideaSuccessPublicBody` and `ideaSuccessPrivateBody` to `app_en.arb` and `app_ml.arb` (deferred to §8 ml audit; current copy is hard-coded English to keep change scoped)
+- [x] 6.2 Add localized idea success strings to `app_en.arb` / `app_ml.arb`; wire `idea_success_step.dart` via `AppStrings`
 - [x] 6.3 Public path renders: "Your public ideas will be visible to the community."
 - [x] 6.4 Private path renders private-appropriate copy with no community-visibility wording
 
@@ -49,7 +49,7 @@
 - [x] 8.1 Diff keys present in `lib/l10n/app_en.arb` but missing/empty in `lib/l10n/app_ml.arb` — diff shows 0 missing keys; ARB is fully translated
 - [x] 8.2 Fill in Malayalam translations for every missing key — no missing keys
 - [x] 8.3 Re-run `flutter gen-l10n`; verify no codegen warnings about untranslated strings — clean
-- [ ] 8.4 **Follow-up needed (out of scope):** ~38 hardcoded English literals across features (`Text('...')`, `hintText: '...'`) bypass the ARB. A separate "extract-hardcoded-strings" change should pull these into ARB and translate them. Examples: report_details_step `'Describe the Problem'`, `'Problem Description *'`; home_view `_buildActionGrid` titles `'Report Problem'/'Share Idea'/'Suggest Improvement'/'Appreciate'`; idea_success_step copy added in §6.
+- [x] 8.4 Localized profile screens (Help/FAQ, Privacy, Contact MLA Office), report/idea success steps, and remaining `AppStrings` const literals; multi-step flow hints still English — follow-up change if needed
 
 ## 9. Profile — Help & FAQ
 

@@ -197,29 +197,21 @@ class _ContributionBanner extends StatelessWidget {
                   children: [
                     const Text('👋 ', style: TextStyle(fontSize: 16)),
                     Text(
-                      'Great going${firstName.isNotEmpty ? ', $firstName' : ''}!',
+                      firstName.isNotEmpty
+                          ? AppStrings.activityGreatGoingNamed(firstName)
+                          : AppStrings.activityGreatGoing,
                       style: AppTextStyles.labelMedium.copyWith(color: AppColors.primary),
                     ),
                   ],
                 ),
                 const SizedBox(height: 6),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '$total ',
-                        style: AppTextStyles.headlineLarge.copyWith(color: AppColors.primary, height: 1),
-                      ),
-                      TextSpan(
-                        text: 'contributions so far',
-                        style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
-                      ),
-                    ],
-                  ),
+                Text(
+                  AppStrings.activityContributionsSoFar(total),
+                  style: AppTextStyles.headlineLarge.copyWith(color: AppColors.primary, height: 1.2),
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'You\'re helping build a better community.',
+                  AppStrings.activityCommunityTagline,
                   style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),
                 ),
               ],
@@ -253,12 +245,12 @@ class _FilterChips extends StatefulWidget {
 class _FilterChipsState extends State<_FilterChips> {
   SubmissionStatus? _filter;
 
-  static const _options = <(String, SubmissionStatus?)>[
-    ('All', null),
-    ('Active', SubmissionStatus.inProgress),
-    ('Resolved', SubmissionStatus.resolved),
-    ('Closed', SubmissionStatus.rejected),
-  ];
+  List<(String, SubmissionStatus?)> get _options => [
+        (AppStrings.filterAll, null),
+        (AppStrings.filterActive, SubmissionStatus.inProgress),
+        (AppStrings.statusResolved, SubmissionStatus.resolved),
+        (AppStrings.statusClosed, SubmissionStatus.rejected),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -321,10 +313,10 @@ class _ReportsTab extends StatelessWidget {
               ? reports
               : reports.where((r) => r.status == filter).toList();
           if (filtered.isEmpty) {
-            return const Expanded(
+            return Expanded(
               child: EmptyState(
-                title: 'No matches',
-                message: 'No reports with this status.',
+                title: AppStrings.activityNoMatches,
+                message: AppStrings.activityNoReportsWithStatus,
               ),
             );
           }

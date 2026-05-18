@@ -491,4 +491,370 @@ class SEn extends S {
 
   @override
   String get statusTimeline => 'Status Timeline';
+
+  @override
+  String get featureReportLabel => 'Report Problem';
+
+  @override
+  String get featureReportSubtitle =>
+      'Roads, water, waste, safety & public issues';
+
+  @override
+  String get featureIdeaLabel => 'Share Idea';
+
+  @override
+  String get featureIdeaSubtitle =>
+      'Big ideas for the future of our constituency';
+
+  @override
+  String get featureImproveLabel => 'Suggest Improvement';
+
+  @override
+  String get featureImproveSubtitle =>
+      'Practical improvements for a better future';
+
+  @override
+  String get featureAppreciateLabel => 'Appreciate';
+
+  @override
+  String get featureAppreciateSubtitle =>
+      'Recognize good work, staff or projects';
+
+  @override
+  String get communityImpactTitle => 'Community Impact';
+
+  @override
+  String get communityImpactSubtitle => 'This month in your constituency';
+
+  @override
+  String get communityImpactReports => 'Reports';
+
+  @override
+  String get communityImpactIdeas => 'Ideas';
+
+  @override
+  String get communityImpactThanks => 'Thanks';
+
+  @override
+  String get events => 'Events';
+
+  @override
+  String get myProfile => 'My Profile';
+
+  @override
+  String get helpFaq => 'Help & FAQ';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get logoutConfirm => 'Are you sure you want to logout?';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get addMore => 'Add More';
+
+  @override
+  String get callOffice => 'Call Office';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get contactDetailsUnavailable => 'Contact details not yet available.';
+
+  @override
+  String get contactDetailsUnavailableMsg =>
+      'The MLA office has not published contact channels for this constituency.';
+
+  @override
+  String get phoneLabel => 'Phone';
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get addressLabel => 'Address';
+
+  @override
+  String get aboutMla => 'About MLA';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get mlaDataUnavailable => 'MLA data unavailable';
+
+  @override
+  String get mlaOfficeDetailsUnavailable => 'MLA office details unavailable.';
+
+  @override
+  String get ideaSuccessMsg =>
+      'Thank you for contributing to a better constituency. Your idea will be reviewed by our team and you will be notified.';
+
+  @override
+  String get ideaSuccessPublicVisible =>
+      'Your public ideas will be visible to the community.';
+
+  @override
+  String get ideaSuccessPublicUpvote =>
+      'People can upvote and suggest improvements.';
+
+  @override
+  String get ideaSuccessPrivateSent =>
+      'Your idea has been sent privately to the MLA office.';
+
+  @override
+  String get ideaSuccessPrivateOnly =>
+      'Only the MLA office can view this idea.';
+
+  @override
+  String get ideaSuccessTeamReview =>
+      'Our team will review and may contact you for more details.';
+
+  @override
+  String get goToMyActivity => 'Go to My Activity';
+
+  @override
+  String get submitAnotherIdea => 'Submit Another Idea';
+
+  @override
+  String get yourReferenceId => 'Your Reference ID';
+
+  @override
+  String get copied => 'Copied';
+
+  @override
+  String get referenceIdCopied => 'Reference ID copied to clipboard';
+
+  @override
+  String get unableToOpen => 'Unable to open';
+
+  @override
+  String get publicGrievanceHearing => 'Public Grievance Hearing';
+
+  @override
+  String get addVoiceMessage => 'Add Voice Message';
+
+  @override
+  String get pinLocationOptional => 'Pin Location (Optional)';
+
+  @override
+  String get privacyLastUpdated => 'Last updated: May 2026';
+
+  @override
+  String get privacyIntroTitle => '1. Introduction';
+
+  @override
+  String get privacyIntroBody =>
+      'MLA Connect (\"we\", \"us\") is a civic engagement platform. This Privacy Policy describes how we collect, use, and protect your information when you use this app.';
+
+  @override
+  String get privacyCollectTitle => '2. Information we collect';
+
+  @override
+  String get privacyCollectBody =>
+      'Account information (phone number, name, photo, constituency), submission content (text, images, voice messages, location), and basic device telemetry needed to operate the service.';
+
+  @override
+  String get privacyUseTitle => '3. How we use your information';
+
+  @override
+  String get privacyUseBody =>
+      'To route your submissions to the appropriate MLA office and departments, to provide status updates, to display public submissions to the community where you have chosen public visibility, and to improve the service.';
+
+  @override
+  String get privacySharingTitle => '4. Sharing';
+
+  @override
+  String get privacySharingBody =>
+      'We share submission content with the MLA office and the relevant department. Public submissions are visible to other citizens within your constituency. We do not sell your personal data to third parties.';
+
+  @override
+  String get privacyStorageTitle => '5. Storage and security';
+
+  @override
+  String get privacyStorageBody =>
+      'Data is stored on secure infrastructure with industry-standard access controls. Voice and image attachments are stored in private buckets and accessed via signed URLs.';
+
+  @override
+  String get privacyChoicesTitle => '6. Your choices';
+
+  @override
+  String get privacyChoicesBody =>
+      'You can choose the visibility of each submission (public, MLA office only, anonymous). You can request deletion of your account and associated data by contacting the MLA office through the app.';
+
+  @override
+  String get privacyContactTitle => '7. Contact';
+
+  @override
+  String get privacyContactBody =>
+      'For privacy questions, use the Contact MLA Office screen in this app.';
+
+  @override
+  String get helpFaqQ1 => 'What is MLA Connect?';
+
+  @override
+  String get helpFaqA1 =>
+      'MLA Connect is your direct line to your MLA and their office. Report issues, share ideas, suggest improvements, and appreciate good work in your constituency — all in one app.';
+
+  @override
+  String get helpFaqQ2 => 'Who can see my report?';
+
+  @override
+  String get helpFaqA2 =>
+      'Reports are shared with the MLA office and the relevant department. You choose the visibility — public (visible to the community), MLA office only, or anonymous.';
+
+  @override
+  String get helpFaqQ3 => 'How do I track a submission?';
+
+  @override
+  String get helpFaqA3 =>
+      'Open the Activity tab in the bottom navigation to see all your submissions and their current status.';
+
+  @override
+  String get helpFaqQ4 => 'Will I get notified about updates?';
+
+  @override
+  String get helpFaqA4 =>
+      'Yes — you will receive in-app notifications when your submission status changes or the MLA office responds.';
+
+  @override
+  String get helpFaqQ5 => 'Can I edit a submission after sending it?';
+
+  @override
+  String get helpFaqA5 =>
+      'Submitted reports cannot be edited, but you can add comments or attach further information from the submission detail screen.';
+
+  @override
+  String get helpFaqQ6 => 'How do I change my constituency?';
+
+  @override
+  String get helpFaqA6 =>
+      'Go to Profile → Edit Profile, or sign out and complete the onboarding flow again with your new constituency.';
+
+  @override
+  String get helpFaqQ7 => 'Is my personal data private?';
+
+  @override
+  String get helpFaqA7 =>
+      'Yes. Your data is stored securely and shared only with the MLA office as required to act on your submission. See the Privacy Policy for full details.';
+
+  @override
+  String get statusAssigned => 'Assigned';
+
+  @override
+  String get noImprovements => 'No Improvements Yet';
+
+  @override
+  String get noImprovementsMsg => 'Suggestions you share will appear here.';
+
+  @override
+  String get activityTabReports => 'Reports';
+
+  @override
+  String get activityTabIdeas => 'Ideas';
+
+  @override
+  String get activityTabImprovements => 'Improvements';
+
+  @override
+  String get activityTabAppreciations => 'Appreciations';
+
+  @override
+  String get activityTabSaved => 'Saved';
+
+  @override
+  String get activityFabReport => 'Report a Problem';
+
+  @override
+  String get activityFabIdea => 'Share an Idea';
+
+  @override
+  String get activityFabImprovement => 'Suggest Improvement';
+
+  @override
+  String get activityFabAppreciation => 'Send Appreciation';
+
+  @override
+  String get activityGreatGoing => 'Great going!';
+
+  @override
+  String activityGreatGoingNamed(String name) {
+    return 'Great going, $name!';
+  }
+
+  @override
+  String activityContributionsSoFar(int count) {
+    return '$count contributions so far';
+  }
+
+  @override
+  String get activityCommunityTagline =>
+      'You\'re helping build a better community.';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterActive => 'Active';
+
+  @override
+  String get activityNoMatches => 'No matches';
+
+  @override
+  String get activityNoReportsWithStatus => 'No reports with this status.';
+
+  @override
+  String get activityEmptyHeadline => 'Start contributing to your community';
+
+  @override
+  String get activityEmptyMessage =>
+      'Report issues, share ideas and track updates from your constituency.';
+
+  @override
+  String activityIdWard(String id, String ward) {
+    return 'ID: $id  •  $ward';
+  }
+
+  @override
+  String get reportDetail => 'Report Detail';
+
+  @override
+  String get visibilityPublic => 'Public Wall';
+
+  @override
+  String get visibilityMlaOnly => 'MLA Office Only';
+
+  @override
+  String get visibilityAnonymous => 'Anonymous';
+
+  @override
+  String get visibilityPublicDesc => 'Visible to everyone on the platform';
+
+  @override
+  String get visibilityMlaOnlyDesc => 'Only MLA office can view this';
+
+  @override
+  String get visibilityAnonymousDesc => 'Your name will be hidden';
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navActivity => 'Activity';
+
+  @override
+  String get navUpdates => 'Updates';
+
+  @override
+  String get navProfile => 'Profile';
 }

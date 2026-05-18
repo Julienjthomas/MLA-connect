@@ -1,17 +1,17 @@
 ## 1. Pre-flight checks
 
-- [ ] 1.1 Confirm source folder `/Users/julien/Downloads/AppIcons` still present and intact
-- [ ] 1.2 Check `android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml` — if exists, decide whether to remove (adaptive icon would override PNG) or keep and update foreground/background
-- [ ] 1.3 Note any `ic_launcher_round.png` in repo mipmaps (round icon variant)
+- [x] 1.1 Confirm source folder `/Users/julien/Downloads/AppIcons` still present and intact
+- [x] 1.2 Check `android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml` — if exists, decide whether to remove (adaptive icon would override PNG) or keep and update foreground/background
+- [x] 1.3 Note any `ic_launcher_round.png` in repo mipmaps (round icon variant)
 
 ## 2. Android icon swap
 
-- [ ] 2.1 Copy `AppIcons/android/mipmap-mdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-mdpi/ic_launcher.png`
-- [ ] 2.2 Copy `AppIcons/android/mipmap-hdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-hdpi/ic_launcher.png`
-- [ ] 2.3 Copy `AppIcons/android/mipmap-xhdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-xhdpi/ic_launcher.png`
-- [ ] 2.4 Copy `AppIcons/android/mipmap-xxhdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png`
-- [ ] 2.5 Copy `AppIcons/android/mipmap-xxxhdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png`
-- [ ] 2.6 If `ic_launcher_round.png` existed in any mipmap dir, overwrite with the same new `ic_launcher.png` per density (or remove + drop reference in `AndroidManifest.xml`)
+- [x] 2.1 Copy `AppIcons/android/mipmap-mdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-mdpi/ic_launcher.png`
+- [x] 2.2 Copy `AppIcons/android/mipmap-hdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-hdpi/ic_launcher.png`
+- [x] 2.3 Copy `AppIcons/android/mipmap-xhdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-xhdpi/ic_launcher.png`
+- [x] 2.4 Copy `AppIcons/android/mipmap-xxhdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png`
+- [x] 2.5 Copy `AppIcons/android/mipmap-xxxhdpi/ic_launcher.png` → `android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png`
+- [x] 2.6 If `ic_launcher_round.png` existed in any mipmap dir, overwrite with the same new `ic_launcher.png` per density (or remove + drop reference in `AndroidManifest.xml`)
 
 ## 3. iOS icon swap
 
@@ -34,9 +34,9 @@
 
 ## 4. Verify & build
 
-- [ ] 4.1 `flutter clean`
-- [ ] 4.2 `flutter pub get`
-- [ ] 4.3 `flutter build apk --debug` — confirm Android build succeeds
+- [x] 4.1 `flutter clean`
+- [x] 4.2 `flutter pub get`
+- [x] 4.3 `flutter build apk --debug` — confirm Android build succeeds
 - [ ] 4.4 `flutter build ios --debug --no-codesign` — confirm iOS build succeeds
 - [ ] 4.5 Install on Android device/emulator, uninstall first to bust icon cache, verify new launcher icon
 - [ ] 4.6 Install on iOS simulator/device, verify home-screen, Settings, and Spotlight icons

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_enums.dart';
+import '../constants/app_strings.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import 'status_chip.dart';
@@ -73,7 +74,7 @@ class ActivityCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'ID: $id  •  $ward',
+                    AppStrings.activityIdWard(id, ward),
                     style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
                   ),
                   const SizedBox(height: 8),
