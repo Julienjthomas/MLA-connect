@@ -1,13 +1,12 @@
-import 'dart:math';
+import 'package:uuid/uuid.dart';
 
 class SubmissionUtils {
   SubmissionUtils._();
 
-  static String generateReferenceId(String prefix) {
-    final now = DateTime.now();
-    final date = '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}';
-    final rand = Random.secure();
-    final hex = List.generate(6, (_) => rand.nextInt(256).toRadixString(16).padLeft(2, '0')).join();
-    return '$prefix$date$hex';
-  }
+  static const _uuid = Uuid();
+
+  /// Generates a random unique submission reference ID as a UUID v4 string.
+  /// The [prefix] is accepted for backward compatibility with existing callers
+  /// but is no longer included — the returned value is a plain UUID v4.
+  static String generateReferenceId([String? prefix]) => _uuid.v4();
 }

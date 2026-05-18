@@ -6,16 +6,38 @@ import 'package:image_picker/image_picker.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../data/models/appreciation_model.dart';
 import '../../../data/services/appreciation_service.dart';
+import '../../../data/services/mla_service.dart';
 import '../../../data/services/storage_service.dart';
 import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
 
+/// A selectable appreciation recipient: the MLA or a member of MLA's direct staff.
+class AppreciationRecipient {
+  final String type; // 'mla' | 'staff'
+  final String id;
+  final String name;
+  final String? designation;
+  final String? photoUrl;
+
+  const AppreciationRecipient({
+    required this.type,
+    required this.id,
+    required this.name,
+    this.designation,
+    this.photoUrl,
+  });
+}
+
 class AppreciationController extends GetxController {
   final _service = AppreciationService();
   final _storage = StorageService();
+  final _mlaService = MlaService();
 
   // Form state
   final RxString recipientCategory = ''.obs;
+  final Rxn<AppreciationRecipient> selectedRecipient = Rxn<AppreciationRecipient>();
+  final RxList<AppreciationRecipient> recipients = <AppreciationRecipient>[].obs;
+  final RxBool loadingRecipients = false.obs;
   final staffController = TextEditingController();
   final departmentController = TextEditingController();
   final relatedWorkController = TextEditingController();
@@ -41,6 +63,40 @@ class AppreciationController extends GetxController {
   void onInit() {
     super.onInit();
     pageController = PageController();
+    loadRecipients();
+  }
+
+  Future<void> loadRecipients() async {
+    loadingRecipients.value = true;
+    try {
+      final list = <AppreciationRecipient>[];
+      final cid = Get.find<AuthController>().user.value?.constituencyId;
+      final mla = await _mlaService.getMlaProfile(constituencyId: cid);
+      if (mla != null) {
+        list.add(AppreciationRecipient(
+          type: 'mla',
+          id: mla.id,
+          name: mla.name,
+          designation: 'MLA',
+          photoUrl: mla.photoUrl,
+        ));
+      }
+      final staff = await _mlaService.getPublicStaff();
+      for (final s in staff) {
+        list.add(AppreciationRecipient(
+          type: 'staff',
+          id: s.id,
+          name: s.fullName,
+          designation: s.designation,
+          photoUrl: s.photoUrl,
+        ));
+      }
+      recipients.value = list;
+    } catch (_) {
+      // leave empty — UI will show empty state
+    } finally {
+      loadingRecipients.value = false;
+    }
   }
 
   @override
@@ -56,8 +112,8 @@ class AppreciationController extends GetxController {
   bool validateCurrentStep() {
     switch (currentStep.value) {
       case 0:
-        if (recipientCategory.value.isEmpty) {
-          Get.snackbar('Required', 'Please select a recipient category', snackPosition: SnackPosition.BOTTOM);
+        if (selectedRecipient.value == null) {
+          Get.snackbar('Required', 'Please select a recipient', snackPosition: SnackPosition.BOTTOM);
           return false;
         }
         return true;
@@ -125,9 +181,10 @@ class AppreciationController extends GetxController {
           userId: uid,
         );
       }
+      final recipient = selectedRecipient.value;
       final data = AppreciationFormData(
-        recipientCategory: recipientCategory.value,
-        staffName: staffController.text.trim(),
+        recipientCategory: recipient?.type == 'mla' ? 'MLA' : (recipient?.designation ?? 'MLA Staff'),
+        staffName: recipient?.name ?? '',
         department: departmentController.text.trim(),
         relatedWork: relatedWorkController.text.trim(),
         message: messageController.text.trim(),

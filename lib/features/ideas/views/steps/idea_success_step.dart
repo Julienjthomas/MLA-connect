@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/constants/app_enums.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
+import '../../controllers/idea_controller.dart';
 
 class IdeaSuccessStep extends StatelessWidget {
   const IdeaSuccessStep({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final visibility = Get.isRegistered<IdeaController>()
+        ? Get.find<IdeaController>().visibility.value
+        : SubmissionVisibility.public;
+    final isPublic = visibility == SubmissionVisibility.public;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -29,10 +35,17 @@ class IdeaSuccessStep extends StatelessWidget {
             Text('Thank you for contributing to a better constituency. Your idea will be reviewed by our team and you will be notified.',
                 style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const SizedBox(height: 24),
-            _whatNext('Your idea will be visible to the community.', Icons.people_outline),
-            const SizedBox(height: 10),
-            _whatNext('People can upvote and suggest improvements.', Icons.thumb_up_outlined),
-            const SizedBox(height: 10),
+            if (isPublic) ...[
+              _whatNext('Your public ideas will be visible to the community.', Icons.people_outline),
+              const SizedBox(height: 10),
+              _whatNext('People can upvote and suggest improvements.', Icons.thumb_up_outlined),
+              const SizedBox(height: 10),
+            ] else ...[
+              _whatNext('Your idea has been sent privately to the MLA office.', Icons.lock_outline_rounded),
+              const SizedBox(height: 10),
+              _whatNext('Only the MLA office can view this idea.', Icons.visibility_off_outlined),
+              const SizedBox(height: 10),
+            ],
             _whatNext('Our team will review and may contact you for more details.', Icons.mark_email_read_outlined),
             const Spacer(),
             PrimaryButton(text: 'Go to My Activity', onPressed: () => Get.until((r) => r.settings.name == '/home'), backgroundColor: AppColors.ideaPurple),

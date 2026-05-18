@@ -41,6 +41,8 @@ class HomeView extends GetView<HomeController> {
               _buildHallOfExcellence(),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
               _buildGrievanceCard(),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              _buildCommunityImpact(),
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
             ],
           ),
@@ -154,59 +156,60 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  // Tiles order: Report, Idea, Improve, Appreciate
-  SliverPadding _buildActionGrid(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-    // Budget: subtract fixed-height elements so MLA Activity section always fits in viewport.
-    // Reserved: SafeArea~44, AppBar~56, hero+gap~116, section title~52, grid padding~16,
-    //           MLA header~56, bottom nav~60 = ~400px total.
-    final gridHeight = (screenHeight - 400).clamp(160.0, 240.0);
-    final tileSize = (gridHeight - 12) / 2; // 2 rows, 12px spacing
-    final aspectRatio = ((screenWidth - 44) / 2) / tileSize;
+  // Tiles order: Report, Idea, Improve, Appreciate.
+  // IntrinsicHeight makes both tiles in a row match the tallest's natural height.
+  SliverToBoxAdapter _buildActionGrid(BuildContext context) {
+    final tiles = [
+      ActionCard(
+        icon: FeatureType.report.icon,
+        title: 'Report Problem',
+        subtitle: FeatureType.report.subtitle,
+        accentColor: FeatureType.report.color,
+        onTap: () => Get.toNamed(Routes.reportFlow),
+      ),
+      ActionCard(
+        icon: FeatureType.idea.icon,
+        title: 'Share Idea',
+        subtitle: FeatureType.idea.subtitle,
+        accentColor: FeatureType.idea.color,
+        onTap: () => Get.toNamed(Routes.ideasFlow),
+      ),
+      ActionCard(
+        icon: FeatureType.improve.icon,
+        title: 'Suggest Improvement',
+        subtitle: FeatureType.improve.subtitle,
+        accentColor: FeatureType.improve.color,
+        onTap: () => Get.toNamed(Routes.improvementsFlow),
+      ),
+      ActionCard(
+        icon: FeatureType.appreciate.icon,
+        title: 'Appreciate',
+        subtitle: FeatureType.appreciate.subtitle,
+        accentColor: FeatureType.appreciate.color,
+        onTap: () => Get.toNamed(Routes.appreciationFlow),
+      ),
+    ];
 
-    return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      sliver: SliverGrid(
-        delegate: SliverChildListDelegate([
-          ActionCard(
-            icon: FeatureType.report.icon,
-            title: 'Report Problem',
-            subtitle: FeatureType.report.subtitle,
-            accentColor: FeatureType.report.color,
-            onTap: () => Get.toNamed(Routes.reportFlow),
-            tileSize: tileSize,
+    Widget row(Widget a, Widget b) => IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: a),
+              const SizedBox(width: 12),
+              Expanded(child: b),
+            ],
           ),
-          ActionCard(
-            icon: FeatureType.idea.icon,
-            title: 'Share Idea',
-            subtitle: FeatureType.idea.subtitle,
-            accentColor: FeatureType.idea.color,
-            onTap: () => Get.toNamed(Routes.ideasFlow),
-            tileSize: tileSize,
-          ),
-          ActionCard(
-            icon: FeatureType.improve.icon,
-            title: 'Suggest Improvement',
-            subtitle: FeatureType.improve.subtitle,
-            accentColor: FeatureType.improve.color,
-            onTap: () => Get.toNamed(Routes.improvementsFlow),
-            tileSize: tileSize,
-          ),
-          ActionCard(
-            icon: FeatureType.appreciate.icon,
-            title: 'Appreciate',
-            subtitle: FeatureType.appreciate.subtitle,
-            accentColor: FeatureType.appreciate.color,
-            onTap: () => Get.toNamed(Routes.appreciationFlow),
-            tileSize: tileSize,
-          ),
-        ]),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: aspectRatio,
+        );
+
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            row(tiles[0], tiles[1]),
+            const SizedBox(height: 12),
+            row(tiles[2], tiles[3]),
+          ],
         ),
       ),
     );
@@ -360,6 +363,54 @@ class HomeView extends GetView<HomeController> {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Material(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          child: InkWell(
+            onTap: () => Get.toNamed(Routes.eventsList),
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppColors.grey200),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
+                    child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(controller.grievanceEvent['title']!, style: AppTextStyles.titleSmall),
+                        Text(controller.grievanceEvent['date']!, style: AppTextStyles.caption),
+                        Text(controller.grievanceEvent['venue']!, style: AppTextStyles.caption),
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Get.toNamed(Routes.eventsList),
+                    child: Text(AppStrings.viewDetails, style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildCommunityImpact() {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -367,32 +418,53 @@ class HomeView extends GetView<HomeController> {
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.grey200),
           ),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
-                child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
+              Row(
+                children: [
+                  const Icon(Icons.insights_rounded, color: AppColors.primary, size: 20),
+                  const SizedBox(width: 8),
+                  Text('Community Impact', style: AppTextStyles.titleSmall),
+                ],
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(height: 4),
+              Text('This month in your constituency',
+                  style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+              const SizedBox(height: 14),
+              Obx(() {
+                final reports = controller.impactReports.value;
+                final ideas = controller.impactIdeas.value;
+                final appreciations = controller.impactAppreciations.value;
+                return Row(
                   children: [
-                    Text(controller.grievanceEvent['title']!, style: AppTextStyles.titleSmall),
-                    Text(controller.grievanceEvent['date']!, style: AppTextStyles.caption),
-                    Text(controller.grievanceEvent['venue']!, style: AppTextStyles.caption),
+                    _impactStat(Icons.report_problem_rounded, AppColors.reportOrange, '$reports', 'Reports'),
+                    _impactStat(Icons.lightbulb_outline_rounded, AppColors.primary, '$ideas', 'Ideas'),
+                    _impactStat(Icons.favorite_rounded, Colors.pink, '$appreciations', 'Thanks'),
                   ],
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text(AppStrings.viewDetails, style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
-              ),
+                );
+              }),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _impactStat(IconData icon, Color color, String value, String label) {
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(height: 6),
+          Text(value, style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700)),
+          Text(label, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+        ],
       ),
     );
   }
@@ -446,3 +518,4 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
+

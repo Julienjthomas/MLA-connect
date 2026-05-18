@@ -123,20 +123,22 @@ class ReportDetailsStep extends GetView<ReportController> {
                   contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 56),
                 ),
               ),
+              // Corner mic shortcut: triggers voice attachment recording,
+              // does NOT inject transcription into the description field.
               VoiceInputWidget(
                 overlayInField: true,
-                onTranscript: (t) {
-                  final c = controller.descriptionController;
-                  final cur = c.text.trim();
-                  if (cur.isEmpty) {
-                    c.text = t;
-                  } else {
-                    c.text = '$cur\n$t';
-                  }
-                },
                 onRecorded: (path) => controller.voiceRecordingPath.value = path,
               ),
             ],
+          ),
+
+          const SizedBox(height: 20),
+
+          // Voice message attachment — parallel to image upload above.
+          const Text('Insert Voice Message', style: AppTextStyles.titleSmall),
+          const SizedBox(height: 8),
+          VoiceInputWidget(
+            onRecorded: (path) => controller.voiceRecordingPath.value = path,
           ),
 
           const SizedBox(height: 20),

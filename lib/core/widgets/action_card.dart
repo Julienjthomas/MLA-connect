@@ -38,6 +38,7 @@ class ActionCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               padding: EdgeInsets.all(iconPadding),
@@ -48,10 +49,18 @@ class ActionCard extends StatelessWidget {
               child: Icon(icon, color: accentColor, size: iconSize),
             ),
             const SizedBox(height: 6),
-            Text(title, style: AppTextStyles.titleMedium.copyWith(color: accentColor), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(
+              title,
+              style: AppTextStyles.titleMedium.copyWith(color: accentColor, height: 1.15),
+              softWrap: true,
+              overflow: TextOverflow.visible,
+            ),
             const SizedBox(height: 2),
-            Expanded(
-              child: Text(subtitle, style: AppTextStyles.caption, maxLines: 2, overflow: TextOverflow.ellipsis),
+            Text(
+              subtitle,
+              style: AppTextStyles.caption.copyWith(height: 1.2),
+              softWrap: true,
+              overflow: TextOverflow.visible,
             ),
           ],
         ),

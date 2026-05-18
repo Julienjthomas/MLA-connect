@@ -41,6 +41,10 @@ import '../features/updates/bindings/updates_binding.dart';
 import '../features/updates/views/update_detail_view.dart';
 import '../features/profile/bindings/profile_edit_binding.dart';
 import '../features/profile/views/profile_edit_view.dart';
+import '../features/home/views/events_list_view.dart';
+import '../features/profile/views/help_faq_view.dart';
+import '../features/profile/views/privacy_policy_view.dart';
+import '../features/profile/views/contact_mla_office_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -156,6 +160,26 @@ class AppPages {
       name: Routes.profileEdit,
       page: () => const ProfileEditView(),
       binding: ProfileEditBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.eventsList,
+      page: () => const EventsListView(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.helpFaq,
+      page: () => const HelpFaqView(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.privacyPolicy,
+      page: () => const PrivacyPolicyView(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.contactMlaOffice,
+      page: () => const ContactMlaOfficeView(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

@@ -20,14 +20,44 @@ class UpdateDetailView extends GetView<UpdatesController> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: update.imageUrl != null ? 280 : 0,
+            expandedHeight: update.imageUrl != null ? 280 : kToolbarHeight,
             pinned: true,
             backgroundColor: AppColors.surface,
+            foregroundColor: AppColors.textPrimary,
+            leading: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Material(
+                color: AppColors.surface.withValues(alpha: 0.7),
+                shape: const CircleBorder(),
+                child: InkWell(
+                  customBorder: const CircleBorder(),
+                  onTap: () => Get.back(),
+                  child: const SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20),
+                  ),
+                ),
+              ),
+            ),
             flexibleSpace: update.imageUrl != null
                 ? FlexibleSpaceBar(
-                    background: CachedNetworkImage(
-                      imageUrl: update.imageUrl!,
-                      fit: BoxFit.cover,
+                    background: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedNetworkImage(imageUrl: update.imageUrl!, fit: BoxFit.cover),
+                        // Top gradient ensures back chip + status icons readable on dark images.
+                        const DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0x66000000), Color(0x00000000)],
+                              stops: [0.0, 0.45],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : null,
@@ -52,36 +82,40 @@ class UpdateDetailView extends GetView<UpdatesController> {
                     final liked = controller.likedIds.contains(update.id);
                     final current = controller.updates.firstWhereOrNull((u) => u.id == update.id);
                     final likes = current?.likes ?? update.likes;
-                    return Row(children: [
-                      const Icon(Icons.visibility_outlined, size: 16, color: AppColors.grey500),
-                      const SizedBox(width: 4),
-                      Text('${update.views} views', style: AppTextStyles.caption),
-                      const SizedBox(width: 16),
-                      GestureDetector(
-                        onTap: () => controller.toggleLike(update.id),
-                        child: Row(children: [
-                          Icon(
-                            liked ? Icons.favorite : Icons.favorite_outline,
-                            size: 16,
-                            color: AppColors.statusRejected,
+                    return Row(
+                      children: [
+                        const Icon(Icons.visibility_outlined, size: 16, color: AppColors.grey500),
+                        const SizedBox(width: 4),
+                        Text('${update.views} views', style: AppTextStyles.caption),
+                        const SizedBox(width: 16),
+                        GestureDetector(
+                          onTap: () => controller.toggleLike(update.id),
+                          child: Row(
+                            children: [
+                              Icon(
+                                liked ? Icons.favorite : Icons.favorite_outline,
+                                size: 16,
+                                color: AppColors.statusRejected,
+                              ),
+                              const SizedBox(width: 4),
+                              Text('$likes likes', style: AppTextStyles.caption),
+                            ],
                           ),
-                          const SizedBox(width: 4),
-                          Text('$likes likes', style: AppTextStyles.caption),
-                        ]),
-                      ),
-                      const Spacer(),
-                      OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.share, size: 16),
-                        label: const Text('Share'),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                          minimumSize: Size.zero,
-                          side: const BorderSide(color: AppColors.grey300),
-                          foregroundColor: AppColors.textSecondary,
                         ),
-                      ),
-                    ]);
+                        const Spacer(),
+                        OutlinedButton.icon(
+                          onPressed: () {},
+                          icon: const Icon(Icons.share, size: 16),
+                          label: const Text('Share'),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                            minimumSize: Size.zero,
+                            side: const BorderSide(color: AppColors.grey300),
+                            foregroundColor: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    );
                   }),
                 ],
               ),

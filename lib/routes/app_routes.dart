@@ -31,4 +31,9 @@ abstract class Routes {
   static const longFormComposer = '/long-form-composer';
 
   static const profileEdit = '/profile/edit';
+
+  static const eventsList = '/events';
+  static const helpFaq = '/profile/help-faq';
+  static const privacyPolicy = '/profile/privacy-policy';
+  static const contactMlaOffice = '/profile/contact-mla';
 }

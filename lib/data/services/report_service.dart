@@ -40,8 +40,9 @@ class ReportService {
     return ReportModel.fromJson(map);
   }
 
+  /// Returns the generated `reference_id` (UUID v4) for the new report row.
   Future<String> submitReport(ReportFormData data, String userId) async {
-    final referenceId = SubmissionUtils.generateReferenceId('RP');
+    final referenceId = SubmissionUtils.generateReferenceId();
     final res = await _db
         .from('submissions')
         .insert(data.toJson(userId, referenceId))
@@ -71,6 +72,8 @@ class ReportService {
       );
     }
 
-    return submissionId;
+    // Surface the reference_id (UUID v4) to the UI for display & copy.
+    // submissionId is intentionally unused by the caller; the row exists in DB.
+    return referenceId;
   }
 }

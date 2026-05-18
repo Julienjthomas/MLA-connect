@@ -11,8 +11,8 @@ import 'quick_action_tile.dart';
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key});
 
-  /// Row height for each tile; sized for icon chip + 2-line text at up to ~1.3 text scale.
-  static const double _tileRowHeight = 84;
+  /// Row height for each tile; sized for icon chip + 2-line title + 2-line subtitle.
+  static const double _tileRowHeight = 96;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -37,10 +38,8 @@ class ReportSuccessStep extends GetView<ReportController> {
             ),
             const SizedBox(height: 24),
             Obx(() {
-              final id = controller.submittedId.value;
-              final refText = id.isEmpty
-                  ? 'RP2024001256'
-                  : 'RP${(id.length <= 8 ? id : id.substring(0, 8)).toUpperCase()}';
+              final refText = controller.submittedId.value;
+              if (refText.isEmpty) return const SizedBox.shrink();
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 decoration: BoxDecoration(
@@ -50,9 +49,20 @@ class ReportSuccessStep extends GetView<ReportController> {
                 child: Column(children: [
                   Text('Your Reference ID', style: AppTextStyles.caption),
                   const SizedBox(height: 4),
-                  Text(
+                  SelectableText(
                     refText,
-                    style: AppTextStyles.titleLarge.copyWith(color: AppColors.primary),
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.titleSmall.copyWith(color: AppColors.primary, fontFamily: 'Poppins'),
+                  ),
+                  const SizedBox(height: 6),
+                  TextButton.icon(
+                    onPressed: () async {
+                      await Clipboard.setData(ClipboardData(text: refText));
+                      Get.snackbar('Copied', 'Reference ID copied to clipboard',
+                          snackPosition: SnackPosition.BOTTOM);
+                    },
+                    icon: const Icon(Icons.copy_rounded, size: 16),
+                    label: Text('Copy', style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
                   ),
                 ]),
               );

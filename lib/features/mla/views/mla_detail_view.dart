@@ -45,10 +45,14 @@ class MlaDetailView extends GetView<MlaController> {
                 background: Stack(
                   fit: StackFit.expand,
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80',
-                      fit: BoxFit.cover,
-                    ),
+                    if ((mla.coverImageUrl ?? '').isNotEmpty)
+                      CachedNetworkImage(
+                        imageUrl: mla.coverImageUrl!,
+                        fit: BoxFit.cover,
+                        errorWidget: (_, __, ___) => Container(color: AppColors.primaryDark),
+                      )
+                    else
+                      Container(color: AppColors.primaryDark),
                     Container(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
@@ -105,30 +109,7 @@ class MlaDetailView extends GetView<MlaController> {
               ),
             ),
 
-            // Stats
-            SliverToBoxAdapter(
-              child: Container(
-                margin: const EdgeInsets.all(16),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8)],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _stat('${mla.stats.issuesResolved}', 'Issues\nResolved', AppColors.reportOrange),
-                    _vDivider(),
-                    _stat('${mla.stats.activeProjects}', 'Active\nProjects', AppColors.improveBlue),
-                    _vDivider(),
-                    _stat('${mla.stats.appreciations}', 'Appre-\nciations', AppColors.appreciateGreen),
-                    _vDivider(),
-                    _stat('${mla.stats.ideasImplemented}', 'Ideas\nDone', AppColors.ideaPurple),
-                  ],
-                ),
-              ),
-            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
             // About MLA — expandable
             SliverToBoxAdapter(
@@ -137,6 +118,12 @@ class MlaDetailView extends GetView<MlaController> {
                 child: _ExpandableAbout(mla: mla),
               ),
             ),
+
+            // Photo gallery — hidden when empty.
+            if (mla.galleryUrls.isNotEmpty)
+              SliverToBoxAdapter(
+                child: _PhotoGallery(urls: mla.galleryUrls),
+              ),
 
             const SliverToBoxAdapter(child: SizedBox(height: 100)),
           ],
@@ -181,18 +168,6 @@ class MlaDetailView extends GetView<MlaController> {
       );
     });
   }
-
-  Widget _stat(String value, String label, Color color) {
-    return Column(
-      children: [
-        Text(value, style: AppTextStyles.titleLarge.copyWith(color: color, fontSize: 22)),
-        const SizedBox(height: 4),
-        Text(label, style: AppTextStyles.caption.copyWith(height: 1.2), textAlign: TextAlign.center),
-      ],
-    );
-  }
-
-  Widget _vDivider() => Container(width: 1, height: 40, color: AppColors.grey200);
 
   void _call(String phone) async {
     final uri = Uri(scheme: 'tel', path: phone.replaceAll(' ', ''));
@@ -248,7 +223,7 @@ class _ExpandableAboutState extends State<_ExpandableAbout> {
             firstChild: Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: Text(
-                mla.localBio,
+                _aboutText(mla),
                 style: AppTextStyles.bodyMedium,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
@@ -259,7 +234,7 @@ class _ExpandableAboutState extends State<_ExpandableAbout> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(mla.localBio, style: AppTextStyles.bodyMedium),
+                  Text(_aboutText(mla), style: AppTextStyles.bodyMedium),
                   if (mla.education != null) ...[
                     const SizedBox(height: 12),
                     Row(
@@ -278,6 +253,118 @@ class _ExpandableAboutState extends State<_ExpandableAbout> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+String _aboutText(MlaModel mla) {
+  final bio = mla.localBio.trim();
+  if (bio.isNotEmpty) return bio;
+  final constituency = mla.constituency.trim();
+  if (constituency.isNotEmpty) {
+    return 'Serving the people of $constituency. More about the MLA will be added soon.';
+  }
+  return 'More about the MLA will be added soon.';
+}
+
+class _PhotoGallery extends StatelessWidget {
+  final List<String> urls;
+  const _PhotoGallery({required this.urls});
+
+  void _openViewer(BuildContext context, int initialIndex) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => _GalleryViewer(urls: urls, initialIndex: initialIndex),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Text('Gallery', style: AppTextStyles.headlineSmall),
+          ),
+          SizedBox(
+            height: 110,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: urls.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 10),
+              itemBuilder: (_, i) {
+                return GestureDetector(
+                  onTap: () => _openViewer(context, i),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: CachedNetworkImage(
+                      imageUrl: urls[i],
+                      width: 140,
+                      height: 110,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) => Container(
+                        width: 140,
+                        height: 110,
+                        color: AppColors.grey200,
+                        child: const Icon(Icons.broken_image_outlined, color: AppColors.grey400),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GalleryViewer extends StatefulWidget {
+  final List<String> urls;
+  final int initialIndex;
+  const _GalleryViewer({required this.urls, required this.initialIndex});
+
+  @override
+  State<_GalleryViewer> createState() => _GalleryViewerState();
+}
+
+class _GalleryViewerState extends State<_GalleryViewer> {
+  late final PageController _pc = PageController(initialPage: widget.initialIndex);
+
+  @override
+  void dispose() {
+    _pc.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
+      body: PageView.builder(
+        controller: _pc,
+        itemCount: widget.urls.length,
+        itemBuilder: (_, i) => InteractiveViewer(
+          child: Center(
+            child: CachedNetworkImage(
+              imageUrl: widget.urls[i],
+              fit: BoxFit.contain,
+              errorWidget: (_, __, ___) =>
+                  const Icon(Icons.broken_image_outlined, color: Colors.white54, size: 64),
+            ),
+          ),
+        ),
       ),
     );
   }

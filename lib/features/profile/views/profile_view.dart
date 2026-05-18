@@ -54,9 +54,21 @@ class ProfileView extends GetView<ProfileController> {
             ),
             onTap: () => controller.pickLanguage(context),
           ),
-          _SettingsTile(icon: Icons.help_outline_rounded, title: 'Help & FAQ', onTap: () {}),
-          _SettingsTile(icon: Icons.phone_outlined, title: 'Contact MLA Office', onTap: () {}),
-          _SettingsTile(icon: Icons.privacy_tip_outlined, title: 'Privacy Policy', onTap: () {}),
+          _SettingsTile(
+            icon: Icons.help_outline_rounded,
+            title: 'Help & FAQ',
+            onTap: () => Get.toNamed(Routes.helpFaq),
+          ),
+          _SettingsTile(
+            icon: Icons.phone_outlined,
+            title: 'Contact MLA Office',
+            onTap: () => Get.toNamed(Routes.contactMlaOffice),
+          ),
+          _SettingsTile(
+            icon: Icons.privacy_tip_outlined,
+            title: 'Privacy Policy',
+            onTap: () => Get.toNamed(Routes.privacyPolicy),
+          ),
           const SizedBox(height: 8),
           const _SectionLabel('Account'),
           _SettingsTile(
