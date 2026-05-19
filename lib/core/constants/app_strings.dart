@@ -148,6 +148,10 @@ class AppStrings {
   // Activity
   static String get myActivity => _s.myActivity;
   static String get trackContributions => _s.trackContributions;
+  static String get seeYourImpact => _s.seeYourImpact;
+  static String get yourImpact => _s.yourImpact;
+  static String get keepItUp => _s.keepItUp;
+  static String get chooseOptionToStart => _s.chooseOptionToStart;
   static String get activityTabReports => _s.activityTabReports;
   static String get activityTabIdeas => _s.activityTabIdeas;
   static String get activityTabImprovements => _s.activityTabImprovements;
@@ -169,6 +173,9 @@ class AppStrings {
   static String get activityEmptyMessage => _s.activityEmptyMessage;
   static String activityIdWard(String id, String ward) => _s.activityIdWard(id, ward);
   static String get reportDetail => _s.reportDetail;
+  static String get ideaDetail => _s.ideaDetail;
+  static String get improvementDetail => _s.improvementDetail;
+  static String get appreciationDetail => _s.appreciationDetail;
   static String get reportNotFound => _s.reportNotFound;
   static String get photos => _s.photos;
   static String get statusSubmitted => _s.statusSubmitted;
@@ -177,6 +184,16 @@ class AppStrings {
   static String get statusInProgress => _s.statusInProgress;
   static String get statusResolved => _s.statusResolved;
   static String get statusClosed => _s.statusClosed;
+  static String get statusDescSubmitted => _s.statusDescSubmitted;
+  static String get statusDescUnderReview => _s.statusDescUnderReview;
+  static String get statusDescAssigned => _s.statusDescAssigned;
+  static String get statusDescInProgress => _s.statusDescInProgress;
+  static String get statusDescResolved => _s.statusDescResolved;
+  static String get statusDescRejected => _s.statusDescRejected;
+  static String get needHelp => _s.needHelp;
+  static String get needHelpSubtitle => _s.needHelpSubtitle;
+  static String get addUpdateComment => _s.addUpdateComment;
+  static String get description => _s.description;
   static String get visibilityPublic => _s.visibilityPublic;
   static String get visibilityMlaOnly => _s.visibilityMlaOnly;
   static String get visibilityAnonymous => _s.visibilityAnonymous;

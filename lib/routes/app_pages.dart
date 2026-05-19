@@ -28,10 +28,13 @@ import '../features/mla/bindings/mla_binding.dart';
 import '../features/mla/views/mla_detail_view.dart';
 import '../features/appreciation/bindings/appreciation_binding.dart';
 import '../features/appreciation/views/appreciation_flow_view.dart';
+import '../features/appreciation/views/appreciation_detail_view.dart';
 import '../features/ideas/bindings/idea_binding.dart';
 import '../features/ideas/views/idea_flow_view.dart';
+import '../features/ideas/views/idea_detail_view.dart';
 import '../features/improvements/bindings/improvement_binding.dart';
 import '../features/improvements/views/improvement_flow_view.dart';
+import '../features/improvements/views/improvement_detail_view.dart';
 import '../features/achievements/bindings/achievements_binding.dart';
 import '../features/achievements/views/achievements_listing_view.dart';
 import '../features/achievements/views/add_achievement_view.dart';
@@ -127,15 +130,30 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
     GetPage(
+      name: Routes.appreciationDetail,
+      page: () => const AppreciationDetailView(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
       name: Routes.ideasFlow,
       page: () => const IdeaFlowView(),
       binding: IdeaBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
+      name: Routes.ideaDetail,
+      page: () => const IdeaDetailView(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
       name: Routes.improvementsFlow,
       page: () => const ImprovementFlowView(),
       binding: ImprovementBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.improvementDetail,
+      page: () => const ImprovementDetailView(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

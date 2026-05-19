@@ -5,10 +5,8 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/activity_card.dart';
-import '../../../core/widgets/activity_empty_state.dart';
-import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/shimmer_loader.dart';
-import '../../../core/widgets/submission_media_image.dart';
+import '../../../core/widgets/status_chip.dart';
 import '../../../routes/app_routes.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../controllers/activity_controller.dart';
@@ -99,7 +97,7 @@ class _ActivityShellState extends State<_ActivityShell> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(AppStrings.myActivity, style: AppTextStyles.titleLarge),
-            Text(AppStrings.trackContributions, style: AppTextStyles.caption),
+            Text(AppStrings.seeYourImpact, style: AppTextStyles.caption),
           ],
         ),
         actions: const [],
@@ -132,6 +130,7 @@ class _ActivityShellState extends State<_ActivityShell> {
                 widget.controller.totalIdeas +
                 widget.controller.totalImprovements +
                 widget.controller.totalAppreciations;
+            if (total == 0) return const SizedBox.shrink();
             return _ContributionBanner(firstName: firstName, total: total);
           }),
           Container(
@@ -195,7 +194,8 @@ class _ContributionBanner extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Text('👋 ', style: TextStyle(fontSize: 16)),
+                    const Icon(Icons.emoji_events_rounded, color: AppColors.primary, size: 20),
+                    const SizedBox(width: 6),
                     Text(
                       firstName.isNotEmpty
                           ? AppStrings.activityGreatGoingNamed(firstName)
@@ -217,15 +217,23 @@ class _ContributionBanner extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 12),
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.12),
-              shape: BoxShape.circle,
+          const SizedBox(width: 16),
+          GestureDetector(
+            onTap: () {},
+            child: Column(
+              children: [
+                const Icon(Icons.trending_up_rounded, color: AppColors.primary, size: 28),
+                const SizedBox(height: 4),
+                Text(
+                  AppStrings.yourImpact,
+                  style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
+                ),
+                Text(
+                  AppStrings.keepItUp,
+                  style: AppTextStyles.labelMedium.copyWith(color: AppColors.primary),
+                ),
+              ],
             ),
-            child: const Icon(Icons.emoji_events_rounded, color: AppColors.primary, size: 34),
           ),
         ],
       ),
@@ -233,64 +241,110 @@ class _ContributionBanner extends StatelessWidget {
   }
 }
 
-class _FilterChips extends StatefulWidget {
-  final Widget Function(SubmissionStatus? filter) builder;
+class _EmptyActivitySection extends StatelessWidget {
+  const _EmptyActivitySection();
 
-  const _FilterChips({required this.builder});
+  static const _allTabs = [
+    ActivityTab.reports,
+    ActivityTab.ideas,
+    ActivityTab.improvements,
+    ActivityTab.appreciations,
+  ];
 
-  @override
-  State<_FilterChips> createState() => _FilterChipsState();
-}
-
-class _FilterChipsState extends State<_FilterChips> {
-  SubmissionStatus? _filter;
-
-  List<(String, SubmissionStatus?)> get _options => [
-        (AppStrings.filterAll, null),
-        (AppStrings.filterActive, SubmissionStatus.inProgress),
-        (AppStrings.statusResolved, SubmissionStatus.resolved),
-        (AppStrings.statusClosed, SubmissionStatus.rejected),
-      ];
+  static String _routeFor(ActivityTab t) => switch (t) {
+        ActivityTab.reports => Routes.reportFlow,
+        ActivityTab.ideas => Routes.ideasFlow,
+        ActivityTab.improvements => Routes.improvementsFlow,
+        ActivityTab.appreciations => Routes.appreciationFlow,
+        ActivityTab.saved => '',
+      };
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: 44,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            children: _options.map((opt) {
-              final (label, value) = opt;
-              final selected = _filter == value;
-              return Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: ChoiceChip(
-                  label: Text(label),
-                  selected: selected,
-                  onSelected: (_) => setState(() => _filter = value),
-                  selectedColor: AppColors.primary.withValues(alpha: 0.12),
-                  labelStyle: AppTextStyles.labelMedium.copyWith(
-                    color: selected ? AppColors.primary : AppColors.grey500,
-                    fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
-                      color: selected ? AppColors.primary : AppColors.grey200,
-                    ),
-                  ),
-                  backgroundColor: AppColors.surface,
-                  showCheckmark: false,
-                ),
-              );
-            }).toList(),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(AppStrings.whatWouldYouLike, style: AppTextStyles.headlineSmall),
+          const SizedBox(height: 4),
+          Text(
+            AppStrings.chooseOptionToStart,
+            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),
           ),
+          const SizedBox(height: 16),
+          ..._allTabs.map((tab) {
+            final feature = tab.addFeature!;
+            return _ActionListTile(
+              icon: feature.icon,
+              title: feature.label,
+              subtitle: feature.subtitle,
+              accentColor: feature.color,
+              accentColorLight: feature.lightColor,
+              onTap: () => Get.toNamed(_routeFor(tab)),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActionListTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color accentColor;
+  final Color accentColorLight;
+  final VoidCallback onTap;
+
+  const _ActionListTile({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.accentColor,
+    required this.accentColorLight,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.grey200),
         ),
-        widget.builder(_filter),
-      ],
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(color: accentColorLight, shape: BoxShape.circle),
+              child: Icon(icon, color: accentColor, size: 24),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: AppTextStyles.titleSmall),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.chevron_right_rounded, color: AppColors.primary, size: 22),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -305,38 +359,21 @@ class _ReportsTab extends StatelessWidget {
     return Obx(() {
       final reports = controller.reports;
       if (reports.isEmpty) {
-        return const ActivityEmptyState(tab: ActivityTab.reports);
+        return const SingleChildScrollView(child: _EmptyActivitySection());
       }
-      return _FilterChips(
-        builder: (filter) {
-          final filtered = filter == null
-              ? reports
-              : reports.where((r) => r.status == filter).toList();
-          if (filtered.isEmpty) {
-            return Expanded(
-              child: EmptyState(
-                title: AppStrings.activityNoMatches,
-                message: AppStrings.activityNoReportsWithStatus,
-              ),
-            );
-          }
-          return Expanded(
-            child: ListView.builder(
-              padding: listPadding,
-              itemCount: filtered.length,
-              itemBuilder: (_, i) {
-                final r = filtered[i];
-                return ActivityCard(
-                  title: r.title,
-                  id: r.shortId,
-                  ward: r.wardName,
-                  status: r.status,
-                  timeAgo: r.timeAgo,
-                  imageUrl: r.mediaUrls.isNotEmpty ? r.mediaUrls.first : null,
-                  onTap: () => Get.toNamed(Routes.reportDetail, arguments: r.id),
-                );
-              },
-            ),
+      return ListView.builder(
+        padding: listPadding,
+        itemCount: reports.length,
+        itemBuilder: (_, i) {
+          final r = reports[i];
+          return ActivityCard(
+            title: r.title,
+            id: r.shortId,
+            ward: r.wardName,
+            status: r.status,
+            timeAgo: r.timeAgo,
+            imageUrl: r.mediaUrls.isNotEmpty ? r.mediaUrls.first : null,
+            onTap: () => Get.toNamed(Routes.reportDetail, arguments: r.id),
           );
         },
       );
@@ -354,61 +391,23 @@ class _IdeasTab extends StatelessWidget {
     return Obx(() {
       final ideas = controller.ideas;
       if (ideas.isEmpty) {
-        return const ActivityEmptyState(tab: ActivityTab.ideas);
+        return const SingleChildScrollView(child: _EmptyActivitySection());
       }
       return ListView.builder(
         padding: listPadding,
         itemCount: ideas.length,
         itemBuilder: (_, i) {
           final idea = ideas[i];
-          return Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.grey200),
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: idea.mediaUrls.isNotEmpty
-                      ? SubmissionMediaImage(
-                          reference: idea.mediaUrls.first,
-                          width: 44,
-                          height: 44,
-                          placeholder: Container(
-                            width: 44,
-                            height: 44,
-                            color: AppColors.ideaPurpleLight,
-                            alignment: Alignment.center,
-                            child: const Icon(Icons.lightbulb_rounded, color: AppColors.ideaPurple, size: 22),
-                          ),
-                        )
-                      : Container(
-                          width: 44,
-                          height: 44,
-                          color: AppColors.ideaPurpleLight,
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.lightbulb_rounded, color: AppColors.ideaPurple, size: 22),
-                        ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(idea.title, style: AppTextStyles.titleSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: 4),
-                      Text(idea.topic, style: AppTextStyles.caption.copyWith(color: AppColors.ideaPurple)),
-                      const SizedBox(height: 4),
-                      Text(idea.timeAgo, style: AppTextStyles.caption),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          return ActivityCard(
+            title: idea.title,
+            id: idea.id.length > 6 ? idea.id.substring(idea.id.length - 6).toUpperCase() : idea.id.toUpperCase(),
+            timeAgo: idea.timeAgo,
+            imageUrl: idea.mediaUrls.isNotEmpty ? idea.mediaUrls.first : null,
+            accentColor: AppColors.ideaPurple,
+            accentColorLight: AppColors.ideaPurpleLight,
+            placeholderIcon: Icons.lightbulb_rounded,
+            statusWidget: CategoryChip(label: idea.topic, color: AppColors.ideaPurple),
+            onTap: () => Get.toNamed(Routes.ideaDetail, arguments: idea),
           );
         },
       );
@@ -426,68 +425,26 @@ class _ImprovementsTab extends StatelessWidget {
     return Obx(() {
       final improvements = controller.improvements;
       if (improvements.isEmpty) {
-        return const ActivityEmptyState(tab: ActivityTab.improvements);
+        return const SingleChildScrollView(child: _EmptyActivitySection());
       }
       return ListView.builder(
         padding: listPadding,
         itemCount: improvements.length,
         itemBuilder: (_, i) {
-          final improvement = improvements[i];
-          return Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.grey200),
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: improvement.mediaUrls.isNotEmpty
-                      ? SubmissionMediaImage(
-                          reference: improvement.mediaUrls.first,
-                          width: 44,
-                          height: 44,
-                          placeholder: Container(
-                            width: 44,
-                            height: 44,
-                            color: AppColors.improveBlue.withValues(alpha: 0.12),
-                            alignment: Alignment.center,
-                            child: const Icon(Icons.tips_and_updates_outlined, color: AppColors.improveBlue, size: 22),
-                          ),
-                        )
-                      : Container(
-                          width: 44,
-                          height: 44,
-                          color: AppColors.improveBlue.withValues(alpha: 0.12),
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.tips_and_updates_outlined, color: AppColors.improveBlue, size: 22),
-                        ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        improvement.title.isNotEmpty ? improvement.title : improvement.suggestion,
-                        style: AppTextStyles.titleSmall,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (improvement.department != null && improvement.department!.isNotEmpty) ...[
-                        const SizedBox(height: 4),
-                        Text(improvement.department!, style: AppTextStyles.caption.copyWith(color: AppColors.improveBlue)),
-                      ],
-                      const SizedBox(height: 4),
-                      Text(improvement.timeAgo, style: AppTextStyles.caption),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          final imp = improvements[i];
+          final shortId = imp.id.length > 6 ? imp.id.substring(imp.id.length - 6).toUpperCase() : imp.id.toUpperCase();
+          return ActivityCard(
+            title: imp.title.isNotEmpty ? imp.title : imp.suggestion,
+            id: shortId,
+            timeAgo: imp.timeAgo,
+            imageUrl: imp.mediaUrls.isNotEmpty ? imp.mediaUrls.first : null,
+            accentColor: AppColors.improveBlue,
+            accentColorLight: AppColors.improveBlue.withValues(alpha: 0.12),
+            placeholderIcon: Icons.tips_and_updates_outlined,
+            statusWidget: imp.department != null && imp.department!.isNotEmpty
+                ? CategoryChip(label: imp.department!, color: AppColors.improveBlue)
+                : null,
+            onTap: () => Get.toNamed(Routes.improvementDetail, arguments: imp),
           );
         },
       );
@@ -505,48 +462,25 @@ class _AppreciationsTab extends StatelessWidget {
     return Obx(() {
       final appreciations = controller.appreciations;
       if (appreciations.isEmpty) {
-        return const ActivityEmptyState(tab: ActivityTab.appreciations);
+        return const SingleChildScrollView(child: _EmptyActivitySection());
       }
       return ListView.builder(
         padding: listPadding,
         itemCount: appreciations.length,
         itemBuilder: (_, i) {
           final a = appreciations[i];
-          return Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.grey200),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: AppColors.appreciateGreenLight,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(Icons.favorite_rounded, color: AppColors.appreciateGreen, size: 22),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(a.recipientCategory, style: AppTextStyles.titleSmall),
-                      if (a.staffName != null && a.staffName!.isNotEmpty)
-                        Text(a.staffName!, style: AppTextStyles.caption.copyWith(color: AppColors.appreciateGreen)),
-                      const SizedBox(height: 4),
-                      Text(a.visibility.label, style: AppTextStyles.caption),
-                      Text(a.timeAgo, style: AppTextStyles.caption),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          final shortId = a.id.length > 6 ? a.id.substring(a.id.length - 6).toUpperCase() : a.id.toUpperCase();
+          return ActivityCard(
+            title: a.staffName != null && a.staffName!.isNotEmpty
+                ? a.staffName!
+                : a.recipientCategory,
+            id: shortId,
+            timeAgo: a.timeAgo,
+            accentColor: AppColors.appreciateGreen,
+            accentColorLight: AppColors.appreciateGreenLight,
+            placeholderIcon: Icons.favorite_rounded,
+            statusWidget: CategoryChip(label: a.recipientCategory, color: AppColors.appreciateGreen),
+            onTap: () => Get.toNamed(Routes.appreciationDetail, arguments: a),
           );
         },
       );

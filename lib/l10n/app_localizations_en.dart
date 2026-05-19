@@ -331,6 +331,18 @@ class SEn extends S {
   String get trackContributions => 'Track all your contributions and updates';
 
   @override
+  String get seeYourImpact => 'See your impact and stay involved';
+
+  @override
+  String get yourImpact => 'Your impact';
+
+  @override
+  String get keepItUp => 'Keep it up!';
+
+  @override
+  String get chooseOptionToStart => 'Choose an option to get started.';
+
+  @override
   String get updates => 'Updates';
 
   @override
@@ -413,6 +425,42 @@ class SEn extends S {
 
   @override
   String get statusClosed => 'Closed';
+
+  @override
+  String get statusDescSubmitted =>
+      'Your report has been received and will be reviewed soon.';
+
+  @override
+  String get statusDescUnderReview =>
+      'Our team is currently reviewing your report.';
+
+  @override
+  String get statusDescAssigned =>
+      'Your report has been assigned to the relevant department.';
+
+  @override
+  String get statusDescInProgress => 'Action is being taken on your report.';
+
+  @override
+  String get statusDescResolved =>
+      'Your report has been resolved successfully.';
+
+  @override
+  String get statusDescRejected =>
+      'Your report could not be processed at this time.';
+
+  @override
+  String get needHelp => 'Need help?';
+
+  @override
+  String get needHelpSubtitle =>
+      'Contact support for any queries regarding your report.';
+
+  @override
+  String get addUpdateComment => 'Add an Update / Comment';
+
+  @override
+  String get description => 'Description';
 
   @override
   String get categoryRoad => 'Road & Infrastructure';
@@ -827,6 +875,15 @@ class SEn extends S {
 
   @override
   String get reportDetail => 'Report Detail';
+
+  @override
+  String get ideaDetail => 'Idea Detail';
+
+  @override
+  String get improvementDetail => 'Improvement Detail';
+
+  @override
+  String get appreciationDetail => 'Appreciation Detail';
 
   @override
   String get visibilityPublic => 'Public Wall';

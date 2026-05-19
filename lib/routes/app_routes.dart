@@ -20,8 +20,11 @@ abstract class Routes {
   static const reportDetail = '/report/detail';
 
   static const appreciationFlow = '/appreciation/flow';
+  static const appreciationDetail = '/appreciation/detail';
   static const ideasFlow = '/ideas/flow';
+  static const ideaDetail = '/ideas/detail';
   static const improvementsFlow = '/improvements/flow';
+  static const improvementDetail = '/improvements/detail';
 
   static const updateDetail = '/updates/detail';
 

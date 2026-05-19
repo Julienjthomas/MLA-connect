@@ -727,6 +727,30 @@ abstract class S {
   /// **'Track all your contributions and updates'**
   String get trackContributions;
 
+  /// No description provided for @seeYourImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'See your impact and stay involved'**
+  String get seeYourImpact;
+
+  /// No description provided for @yourImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Your impact'**
+  String get yourImpact;
+
+  /// No description provided for @keepItUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it up!'**
+  String get keepItUp;
+
+  /// No description provided for @chooseOptionToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an option to get started.'**
+  String get chooseOptionToStart;
+
   /// No description provided for @updates.
   ///
   /// In en, this message translates to:
@@ -894,6 +918,66 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Closed'**
   String get statusClosed;
+
+  /// No description provided for @statusDescSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Your report has been received and will be reviewed soon.'**
+  String get statusDescSubmitted;
+
+  /// No description provided for @statusDescUnderReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Our team is currently reviewing your report.'**
+  String get statusDescUnderReview;
+
+  /// No description provided for @statusDescAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'Your report has been assigned to the relevant department.'**
+  String get statusDescAssigned;
+
+  /// No description provided for @statusDescInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Action is being taken on your report.'**
+  String get statusDescInProgress;
+
+  /// No description provided for @statusDescResolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Your report has been resolved successfully.'**
+  String get statusDescResolved;
+
+  /// No description provided for @statusDescRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Your report could not be processed at this time.'**
+  String get statusDescRejected;
+
+  /// No description provided for @needHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Need help?'**
+  String get needHelp;
+
+  /// No description provided for @needHelpSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact support for any queries regarding your report.'**
+  String get needHelpSubtitle;
+
+  /// No description provided for @addUpdateComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an Update / Comment'**
+  String get addUpdateComment;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
 
   /// No description provided for @categoryRoad.
   ///
@@ -1650,6 +1734,24 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Report Detail'**
   String get reportDetail;
+
+  /// No description provided for @ideaDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Idea Detail'**
+  String get ideaDetail;
+
+  /// No description provided for @improvementDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Improvement Detail'**
+  String get improvementDetail;
+
+  /// No description provided for @appreciationDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Appreciation Detail'**
+  String get appreciationDetail;
 
   /// No description provided for @visibilityPublic.
   ///

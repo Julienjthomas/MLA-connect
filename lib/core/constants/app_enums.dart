@@ -78,6 +78,15 @@ extension SubmissionStatusX on SubmissionStatus {
         SubmissionStatus.rejected => AppColors.statusRejectedBg,
       };
 
+  String get statusDescription => switch (this) {
+        SubmissionStatus.submitted => AppStrings.statusDescSubmitted,
+        SubmissionStatus.underReview => AppStrings.statusDescUnderReview,
+        SubmissionStatus.assigned => AppStrings.statusDescAssigned,
+        SubmissionStatus.inProgress => AppStrings.statusDescInProgress,
+        SubmissionStatus.resolved => AppStrings.statusDescResolved,
+        SubmissionStatus.rejected => AppStrings.statusDescRejected,
+      };
+
   static SubmissionStatus fromString(String s) => switch (s) {
         'under_review' => SubmissionStatus.underReview,
         'assigned' => SubmissionStatus.assigned,

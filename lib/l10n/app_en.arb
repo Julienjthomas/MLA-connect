@@ -118,6 +118,10 @@
 
   "myActivity": "My Activity",
   "trackContributions": "Track all your contributions and updates",
+  "seeYourImpact": "See your impact and stay involved",
+  "yourImpact": "Your impact",
+  "keepItUp": "Keep it up!",
+  "chooseOptionToStart": "Choose an option to get started.",
 
   "updates": "Updates",
   "stayUpdated": "Stay updated with the latest activities",
@@ -150,6 +154,16 @@
   "statusInProgress": "In Progress",
   "statusResolved": "Resolved",
   "statusClosed": "Closed",
+  "statusDescSubmitted": "Your report has been received and will be reviewed soon.",
+  "statusDescUnderReview": "Our team is currently reviewing your report.",
+  "statusDescAssigned": "Your report has been assigned to the relevant department.",
+  "statusDescInProgress": "Action is being taken on your report.",
+  "statusDescResolved": "Your report has been resolved successfully.",
+  "statusDescRejected": "Your report could not be processed at this time.",
+  "needHelp": "Need help?",
+  "needHelpSubtitle": "Contact support for any queries regarding your report.",
+  "addUpdateComment": "Add an Update / Comment",
+  "description": "Description",
 
   "categoryRoad": "Road & Infrastructure",
   "categoryWater": "Water Supply",
@@ -316,6 +330,9 @@
   },
 
   "reportDetail": "Report Detail",
+  "ideaDetail": "Idea Detail",
+  "improvementDetail": "Improvement Detail",
+  "appreciationDetail": "Appreciation Detail",
 
   "visibilityPublic": "Public Wall",
   "visibilityMlaOnly": "MLA Office Only",

@@ -338,6 +338,18 @@ class SMl extends S {
       'നിങ്ങളുടെ എല്ലാ സംഭാവനകളും അപ്ഡേറ്റുകളും ട്രാക്ക് ചെയ്യുക';
 
   @override
+  String get seeYourImpact => 'See your impact and stay involved';
+
+  @override
+  String get yourImpact => 'Your impact';
+
+  @override
+  String get keepItUp => 'Keep it up!';
+
+  @override
+  String get chooseOptionToStart => 'Choose an option to get started.';
+
+  @override
   String get updates => 'അപ്ഡേറ്റുകൾ';
 
   @override
@@ -422,6 +434,42 @@ class SMl extends S {
 
   @override
   String get statusClosed => 'അടച്ചു';
+
+  @override
+  String get statusDescSubmitted =>
+      'Your report has been received and will be reviewed soon.';
+
+  @override
+  String get statusDescUnderReview =>
+      'Our team is currently reviewing your report.';
+
+  @override
+  String get statusDescAssigned =>
+      'Your report has been assigned to the relevant department.';
+
+  @override
+  String get statusDescInProgress => 'Action is being taken on your report.';
+
+  @override
+  String get statusDescResolved =>
+      'Your report has been resolved successfully.';
+
+  @override
+  String get statusDescRejected =>
+      'Your report could not be processed at this time.';
+
+  @override
+  String get needHelp => 'Need help?';
+
+  @override
+  String get needHelpSubtitle =>
+      'Contact support for any queries regarding your report.';
+
+  @override
+  String get addUpdateComment => 'Add an Update / Comment';
+
+  @override
+  String get description => 'Description';
 
   @override
   String get categoryRoad => 'റോഡും അടിസ്ഥാന സൗകര്യങ്ങളും';
@@ -838,6 +886,15 @@ class SMl extends S {
 
   @override
   String get reportDetail => 'റിപ്പോർട്ട് വിശദാംശം';
+
+  @override
+  String get ideaDetail => 'Idea Detail';
+
+  @override
+  String get improvementDetail => 'Improvement Detail';
+
+  @override
+  String get appreciationDetail => 'Appreciation Detail';
 
   @override
   String get visibilityPublic => 'പൊതു മതിൽ';

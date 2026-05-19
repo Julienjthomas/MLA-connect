@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../constants/app_enums.dart';
-import '../constants/app_strings.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 import 'status_chip.dart';
@@ -9,23 +8,29 @@ import 'submission_media_image.dart';
 class ActivityCard extends StatelessWidget {
   final String title;
   final String id;
-  final String ward;
-  final SubmissionStatus status;
+  final String? ward;
+  final SubmissionStatus? status;
   final String timeAgo;
   final String? imageUrl;
+  final Color? accentColor;
+  final Color? accentColorLight;
+  final IconData? placeholderIcon;
+  final Widget? statusWidget;
   final VoidCallback? onTap;
-  final VoidCallback? onMore;
 
   const ActivityCard({
     super.key,
     required this.title,
     required this.id,
-    required this.ward,
-    required this.status,
     required this.timeAgo,
+    this.ward,
+    this.status,
     this.imageUrl,
+    this.accentColor,
+    this.accentColorLight,
+    this.placeholderIcon,
+    this.statusWidget,
     this.onTap,
-    this.onMore,
   });
 
   @override
@@ -38,17 +43,20 @@ class ActivityCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2))],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+          ],
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: imageUrl != null
                   ? SubmissionMediaImage(
                       reference: imageUrl!,
-                      width: 64,
-                      height: 64,
+                      width: 72,
+                      height: 72,
                       borderRadius: BorderRadius.circular(10),
                       placeholder: _placeholder(),
                       errorWidget: _placeholder(),
@@ -60,34 +68,41 @@ class ActivityCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.titleMedium,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
-                      Expanded(
-                        child: Text(title, style: AppTextStyles.titleMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                      Text(
+                        'ID: $id',
+                        style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
                       ),
-                      if (onMore != null)
-                        GestureDetector(
-                          onTap: onMore,
-                          child: const Icon(Icons.more_vert, size: 18, color: AppColors.grey500),
+                      if (status != null || statusWidget != null) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          child: Text('•', style: AppTextStyles.caption.copyWith(color: AppColors.grey400)),
                         ),
+                        statusWidget ?? StatusChip(status: status!),
+                      ],
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    AppStrings.activityIdWard(id, ward),
-                    style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
-                  ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
-                      StatusChip(status: status),
-                      const Spacer(),
-                      Text(timeAgo, style: AppTextStyles.caption),
+                      const Icon(Icons.calendar_today_outlined, size: 12, color: AppColors.grey400),
+                      const SizedBox(width: 4),
+                      Text(timeAgo, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
                     ],
                   ),
                 ],
               ),
             ),
+            const SizedBox(width: 8),
+            const Icon(Icons.chevron_right_rounded, size: 20, color: AppColors.grey400),
           ],
         ),
       ),
@@ -95,11 +110,14 @@ class ActivityCard extends StatelessWidget {
   }
 
   Widget _placeholder() {
+    final color = accentColor ?? AppColors.grey400;
+    final bg = accentColorLight ?? AppColors.grey100;
+    final icon = placeholderIcon ?? Icons.image_outlined;
     return Container(
-      width: 64,
-      height: 64,
-      color: AppColors.grey100,
-      child: const Icon(Icons.image_outlined, color: AppColors.grey400, size: 28),
+      width: 72,
+      height: 72,
+      color: bg,
+      child: Icon(icon, color: color, size: 28),
     );
   }
 }

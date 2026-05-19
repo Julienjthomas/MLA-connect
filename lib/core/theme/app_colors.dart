@@ -40,7 +40,7 @@ class AppColors {
   static const Color grey600 = Color(0xFF757575);
 
   // Status
-  static const Color statusSubmitted = Color(0xFF9E9E9E);
+  static const Color statusSubmitted = Color(0xFF5B2EE2);
   static const Color statusUnderReview = Color(0xFFFFA726);
   static const Color statusAssigned = Color(0xFF29B6F6);
   static const Color statusInProgress = Color(0xFF1E88E5);
@@ -48,7 +48,7 @@ class AppColors {
   static const Color statusRejected = Color(0xFFE53935);
 
   // Status backgrounds
-  static const Color statusSubmittedBg = Color(0xFFF5F5F5);
+  static const Color statusSubmittedBg = Color(0xFFEDE7FF);
   static const Color statusUnderReviewBg = Color(0xFFFFF8E1);
   static const Color statusAssignedBg = Color(0xFFE1F5FE);
   static const Color statusInProgressBg = Color(0xFFE3F2FD);
