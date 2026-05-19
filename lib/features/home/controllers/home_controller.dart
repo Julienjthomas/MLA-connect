@@ -26,11 +26,11 @@ class HomeController extends GetxController {
     {'name': 'Arya Krishnan', 'school': 'GHSS Kodanchery', 'grade': 'A+', 'achievement': 'SSLC Full A+'},
   ];
 
-  final grievanceEvent = {
-    'title': 'Public Grievance Hearing',
-    'date': 'May 25, 2024 • 10:00 AM',
-    'venue': 'Town Hall',
-  };
+  final grievanceEvents = [
+    {'title': 'Public Grievance Hearing', 'date': 'May 25, 2024 • 10:00 AM', 'venue': 'Town Hall'},
+    {'title': 'Constituency Meet & Greet', 'date': 'Jun 1, 2024 • 9:00 AM', 'venue': 'Community Centre'},
+    {'title': 'Ward Development Review', 'date': 'Jun 8, 2024 • 11:00 AM', 'venue': 'Municipal Office'},
+  ];
 
   @override
   void onInit() {

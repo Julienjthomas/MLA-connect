@@ -10,7 +10,7 @@ class EventsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.isRegistered<HomeController>() ? Get.find<HomeController>() : Get.put(HomeController());
-    final events = [controller.grievanceEvent];
+    final events = controller.grievanceEvents;
 
     return Scaffold(
       backgroundColor: AppColors.background,

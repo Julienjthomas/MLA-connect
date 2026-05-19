@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../data/models/update_model.dart';
@@ -12,6 +13,13 @@ class UpdatesController extends GetxController {
   final RxString error = ''.obs;
   final Rx<UpdateModel?> selectedUpdate = Rx(null);
   final RxSet<String> likedIds = <String>{}.obs;
+  final ScrollController filterScrollController = ScrollController();
+
+  @override
+  void onClose() {
+    filterScrollController.dispose();
+    super.onClose();
+  }
 
   List<UpdateModel> get filteredUpdates {
     if (selectedCategory.value == UpdateCategory.all) return updates;
@@ -42,7 +50,21 @@ class UpdatesController extends GetxController {
     }
   }
 
-  void selectCategory(UpdateCategory cat) => selectedCategory.value = cat;
+  void selectCategory(UpdateCategory cat) {
+    selectedCategory.value = cat;
+    // Scroll filter row so selected chip is visible. Each chip ~90px wide + 8px margin.
+    final idx = UpdateCategory.values.indexOf(cat);
+    final offset = (idx * 98.0).clamp(0.0, double.infinity);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (filterScrollController.hasClients) {
+        filterScrollController.animateTo(
+          offset,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
 
   Future<void> toggleLike(String id) async {
     final idx = updates.indexWhere((u) => u.id == id);

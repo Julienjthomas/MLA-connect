@@ -193,6 +193,7 @@ class AppStrings {
 
   // Updates
   static String get updates => _s.updates;
+  static String get recentUpdates => 'Recent Updates';
   static String get stayUpdated => _s.stayUpdated;
 
   // Profile

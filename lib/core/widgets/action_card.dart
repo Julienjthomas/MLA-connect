@@ -9,6 +9,7 @@ class ActionCard extends StatelessWidget {
   final Color accentColor;
   final VoidCallback onTap;
   final double? tileSize;
+  final String? backgroundImage;
 
   const ActionCard({
     super.key,
@@ -18,49 +19,120 @@ class ActionCard extends StatelessWidget {
     required this.accentColor,
     required this.onTap,
     this.tileSize,
+    this.backgroundImage,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = (tileSize != null && tileSize! <= 90) ? 18.0 : 22.0;
-    final double iconPadding = (tileSize != null && tileSize! <= 90) ? 7.0 : 9.0;
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
-            BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2)),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 10, offset: const Offset(0, 3)),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
           children: [
-            Container(
-              padding: EdgeInsets.all(iconPadding),
-              decoration: BoxDecoration(
-                color: accentColor.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(10),
+            // Background image + gradient in lower portion
+            if (backgroundImage != null)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 110,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      backgroundImage!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Container(color: accentColor.withValues(alpha: 0.08)),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: const [0.0, 0.45, 1.0],
+                          colors: [
+                            AppColors.surface,
+                            AppColors.surface.withValues(alpha: 0.75),
+                            accentColor.withValues(alpha: 0.15),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Icon(icon, color: accentColor, size: iconSize),
+
+            // Card content
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 48),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Circular icon container
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(color: accentColor.withValues(alpha: 0.15), shape: BoxShape.circle),
+                    child: Icon(icon, color: accentColor, size: 22),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    title,
+                    style: AppTextStyles.titleLarge.copyWith(
+                      color: accentColor,
+                      height: 1.15,
+                      shadows: const [
+                        Shadow(color: Colors.white, blurRadius: 8, offset: Offset(0, 0)),
+                        Shadow(color: Colors.white, blurRadius: 12, offset: Offset(0, 0)),
+                      ],
+                    ),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                  const SizedBox(height: 4),
+                  // Accent underline bar
+                  Container(
+                    width: 24,
+                    height: 3,
+                    decoration: BoxDecoration(color: accentColor, borderRadius: BorderRadius.circular(2)),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    subtitle,
+                    style: AppTextStyles.caption.copyWith(height: 1.2, color: AppColors.textSecondary),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 6),
-            Text(
-              title,
-              style: AppTextStyles.titleMedium.copyWith(color: accentColor, height: 1.15),
-              softWrap: true,
-              overflow: TextOverflow.visible,
-            ),
-            const SizedBox(height: 2),
-            Text(
-              subtitle,
-              style: AppTextStyles.caption.copyWith(height: 1.2),
-              softWrap: true,
-              overflow: TextOverflow.visible,
+
+            // Circular arrow CTA — bottom right over image zone
+            Positioned(
+              right: 12,
+              bottom: 12,
+              child: GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
+                  ),
+                  child: Icon(Icons.arrow_forward_rounded, color: accentColor, size: 18),
+                ),
+              ),
             ),
           ],
         ),

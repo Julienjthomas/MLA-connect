@@ -34,10 +34,17 @@ extension FeatureTypeX on FeatureType {
       };
 
   IconData get icon => switch (this) {
-        FeatureType.report => Icons.warning_amber_rounded,
+        FeatureType.report => Icons.report_rounded,
         FeatureType.appreciate => Icons.favorite_rounded,
         FeatureType.idea => Icons.lightbulb_rounded,
         FeatureType.improve => Icons.build_rounded,
+      };
+
+  String get backgroundImage => switch (this) {
+        FeatureType.report => 'assets/images/card_report.png',
+        FeatureType.appreciate => 'assets/images/card_appreciate.png',
+        FeatureType.idea => 'assets/images/card_idea.png',
+        FeatureType.improve => 'assets/images/card_improve.png',
       };
 }
 

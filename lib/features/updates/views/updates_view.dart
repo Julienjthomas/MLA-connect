@@ -45,6 +45,7 @@ class UpdatesView extends GetView<UpdatesController> {
             height: 52,
             child: Obx(
               () => ListView(
+                controller: controller.filterScrollController,
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 children: UpdateCategory.values.map((cat) {
