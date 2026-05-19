@@ -23,10 +23,9 @@ class IdeaSuccessStep extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            Container(
-              width: 100, height: 100,
-              decoration: const BoxDecoration(color: AppColors.ideaPurple, shape: BoxShape.circle),
-              child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 56),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Image.asset('assets/images/app_logo.png', width: 100, height: 100, fit: BoxFit.cover),
             ),
             const SizedBox(height: 24),
             Text(AppStrings.ideaSuccess,

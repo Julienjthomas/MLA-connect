@@ -66,11 +66,9 @@ class HomeView extends GetView<HomeController> {
         final title = hasConstituency ? constituencyName : AppStrings.appName;
         return Row(
           children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(8)),
-              child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 16),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset('assets/images/app_logo.png', width: 32, height: 32, fit: BoxFit.cover),
             ),
             const SizedBox(width: 8),
             Expanded(

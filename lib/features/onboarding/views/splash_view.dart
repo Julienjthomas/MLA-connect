@@ -25,7 +25,6 @@ class SplashView extends GetView<SplashController> {
                     width: 96,
                     height: 96,
                     decoration: BoxDecoration(
-                      color: Colors.white,
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
@@ -35,7 +34,10 @@ class SplashView extends GetView<SplashController> {
                         ),
                       ],
                     ),
-                    child: const Icon(Icons.rocket_launch_rounded, color: AppColors.primary, size: 52),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(24),
+                        child: Image.asset('assets/images/app_logo.png', width: 96, height: 96, fit: BoxFit.cover),
+                      ),
                   ),
                   const SizedBox(height: 24),
                   Obx(() {

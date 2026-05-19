@@ -26,11 +26,9 @@ class WelcomeView extends GetView<OnboardingController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(12)),
-                    child: const Icon(Icons.rocket_launch_rounded, color: Colors.white, size: 24),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset('assets/images/app_logo.png', width: 44, height: 44, fit: BoxFit.cover),
                   ),
                   const SizedBox(width: 10),
                   Obx(() {
