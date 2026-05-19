@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -22,15 +23,15 @@ class AppreciationSuccessStep extends StatelessWidget {
               child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 56),
             ),
             const SizedBox(height: 24),
-            const Text('Thank You!\nYour appreciation has been\nshared successfully.',
-                style: TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
+            Text(AppStrings.appreciationSuccess,
+                style: const TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
                 textAlign: TextAlign.center),
             const SizedBox(height: 12),
-            Text('Your kind words will motivate them to do even better.',
+            Text(AppStrings.appreciateSuccessMotivation,
                 style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const Spacer(),
             PrimaryButton(
-              text: 'Go to My Activity',
+              text: AppStrings.goToMyActivity,
               onPressed: () => Get.until((r) => r.settings.name == '/home'),
               backgroundColor: AppColors.appreciateGreen,
             ),
@@ -40,7 +41,7 @@ class AppreciationSuccessStep extends StatelessWidget {
                 Get.back();
                 Get.toNamed('/appreciation/flow');
               },
-              child: Text('Send Another Appreciation', style: AppTextStyles.labelMedium.copyWith(color: AppColors.appreciateGreen)),
+              child: Text(AppStrings.appreciateSendAnother, style: AppTextStyles.labelMedium.copyWith(color: AppColors.appreciateGreen)),
             ),
             const SizedBox(height: 8),
           ],

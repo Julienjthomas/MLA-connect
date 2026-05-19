@@ -7,12 +7,7 @@ class StepperHeader extends StatelessWidget {
   final int currentStep;
   final Color? accentColor;
 
-  const StepperHeader({
-    super.key,
-    required this.steps,
-    required this.currentStep,
-    this.accentColor,
-  });
+  const StepperHeader({super.key, required this.steps, required this.currentStep, this.accentColor});
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +23,7 @@ class StepperHeader extends StatelessWidget {
                 // Connector line
                 final stepIndex = i ~/ 2;
                 final isCompleted = stepIndex < currentStep;
-                return Expanded(
-                  child: Container(
-                    height: 2,
-                    color: isCompleted ? color : AppColors.grey200,
-                  ),
-                );
+                return Expanded(child: Container(height: 2, color: isCompleted ? color : AppColors.grey200));
               }
               // Step dot
               final stepIndex = i ~/ 2;
@@ -47,8 +37,8 @@ class StepperHeader extends StatelessWidget {
                   color: isCompleted
                       ? color
                       : isActive
-                          ? Colors.white
-                          : AppColors.grey200,
+                      ? Colors.white
+                      : AppColors.grey200,
                   shape: BoxShape.circle,
                   border: isActive ? Border.all(color: color, width: 2) : null,
                 ),

@@ -1710,6 +1710,822 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Profile'**
   String get navProfile;
+
+  /// No description provided for @reportDescribeProblem.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the Problem'**
+  String get reportDescribeProblem;
+
+  /// No description provided for @reportDescribeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please provide details about the issue'**
+  String get reportDescribeSubtitle;
+
+  /// No description provided for @reportCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category *'**
+  String get reportCategoryLabel;
+
+  /// No description provided for @reportCategoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the problem category'**
+  String get reportCategoryHint;
+
+  /// No description provided for @reportDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem Description *'**
+  String get reportDescriptionLabel;
+
+  /// No description provided for @reportDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the problem in detail...'**
+  String get reportDescriptionHint;
+
+  /// No description provided for @reportDetailsLocationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the exact location of the problem'**
+  String get reportDetailsLocationHint;
+
+  /// No description provided for @reportNextReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Review →'**
+  String get reportNextReview;
+
+  /// No description provided for @reportLocationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us find the exact location of the issue'**
+  String get reportLocationSubtitle;
+
+  /// No description provided for @reportPanchayatLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Panchayat'**
+  String get reportPanchayatLabel;
+
+  /// No description provided for @reportWardLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ward *'**
+  String get reportWardLabel;
+
+  /// No description provided for @reportLandmarkAreaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Landmark / Area (Optional)'**
+  String get reportLandmarkAreaLabel;
+
+  /// No description provided for @reportLocationDescLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Description *'**
+  String get reportLocationDescLabel;
+
+  /// No description provided for @reportLocationDescHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the location'**
+  String get reportLocationDescHint;
+
+  /// No description provided for @reportGpsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the location icon to use GPS'**
+  String get reportGpsNote;
+
+  /// No description provided for @reportMapPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to pin on map'**
+  String get reportMapPin;
+
+  /// No description provided for @reportContactLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Number (Optional)'**
+  String get reportContactLabel;
+
+  /// No description provided for @reportVisibilitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who can see this report'**
+  String get reportVisibilitySubtitle;
+
+  /// No description provided for @reportVisibilityFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility Option *'**
+  String get reportVisibilityFieldLabel;
+
+  /// No description provided for @reportReviewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Report'**
+  String get reportReviewHeading;
+
+  /// No description provided for @reportReviewSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please review your report before submitting'**
+  String get reportReviewSubtitle;
+
+  /// No description provided for @reportReviewSectionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Problem Details'**
+  String get reportReviewSectionDetails;
+
+  /// No description provided for @reportReviewRowCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get reportReviewRowCategory;
+
+  /// No description provided for @reportReviewRowTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get reportReviewRowTitle;
+
+  /// No description provided for @reportReviewRowDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get reportReviewRowDescription;
+
+  /// No description provided for @reportReviewRowVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get reportReviewRowVisibility;
+
+  /// No description provided for @reportReviewRowLandmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Landmark'**
+  String get reportReviewRowLandmark;
+
+  /// No description provided for @reportReviewRowContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get reportReviewRowContact;
+
+  /// No description provided for @categoryRoadDamage.
+  ///
+  /// In en, this message translates to:
+  /// **'Road Damage'**
+  String get categoryRoadDamage;
+
+  /// No description provided for @categoryStreetlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Street Light'**
+  String get categoryStreetlight;
+
+  /// No description provided for @categoryDrainage.
+  ///
+  /// In en, this message translates to:
+  /// **'Drainage'**
+  String get categoryDrainage;
+
+  /// No description provided for @categoryWasteManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Waste Management'**
+  String get categoryWasteManagement;
+
+  /// No description provided for @categoryPublicSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'Public Safety'**
+  String get categoryPublicSafety;
+
+  /// No description provided for @appreciateWhoHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Who are you appreciating?'**
+  String get appreciateWhoHeading;
+
+  /// No description provided for @appreciateWhoSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your MLA or a direct staff member.'**
+  String get appreciateWhoSubtitle;
+
+  /// No description provided for @appreciateRecipientLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient *'**
+  String get appreciateRecipientLabel;
+
+  /// No description provided for @appreciateNoRecipients.
+  ///
+  /// In en, this message translates to:
+  /// **'No recipients available yet.'**
+  String get appreciateNoRecipients;
+
+  /// No description provided for @appreciateMlaBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA'**
+  String get appreciateMlaBadge;
+
+  /// No description provided for @appreciateRelatedWorkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Related Work / Project (Optional)'**
+  String get appreciateRelatedWorkLabel;
+
+  /// No description provided for @appreciateRelatedWorkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Road repair at Kuttikattoor'**
+  String get appreciateRelatedWorkHint;
+
+  /// No description provided for @appreciateNextMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Your Message →'**
+  String get appreciateNextMessage;
+
+  /// No description provided for @appreciateMessageHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Appreciation'**
+  String get appreciateMessageHeading;
+
+  /// No description provided for @appreciateMessageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your appreciation message'**
+  String get appreciateMessageSubtitle;
+
+  /// No description provided for @appreciateMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'I appreciate the quick action taken by the team...'**
+  String get appreciateMessageHint;
+
+  /// No description provided for @appreciateAddPhotoLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Photo / Video (Optional)'**
+  String get appreciateAddPhotoLabel;
+
+  /// No description provided for @appreciateNextVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Visibility →'**
+  String get appreciateNextVisibility;
+
+  /// No description provided for @appreciateVisibilityHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility Option'**
+  String get appreciateVisibilityHeading;
+
+  /// No description provided for @appreciateVisibilitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you want to share'**
+  String get appreciateVisibilitySubtitle;
+
+  /// No description provided for @appreciateNextReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Review →'**
+  String get appreciateNextReview;
+
+  /// No description provided for @appreciateReviewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your appreciation'**
+  String get appreciateReviewHeading;
+
+  /// No description provided for @appreciateReviewSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please review before submitting'**
+  String get appreciateReviewSubtitle;
+
+  /// No description provided for @appreciateCardRecipient.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient'**
+  String get appreciateCardRecipient;
+
+  /// No description provided for @appreciateCardMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Message'**
+  String get appreciateCardMessage;
+
+  /// No description provided for @appreciateCardVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get appreciateCardVisibility;
+
+  /// No description provided for @appreciateRowStaff.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff'**
+  String get appreciateRowStaff;
+
+  /// No description provided for @appreciateRowRelatedWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Related Work'**
+  String get appreciateRowRelatedWork;
+
+  /// No description provided for @appreciateRowAnonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get appreciateRowAnonymous;
+
+  /// No description provided for @appreciateSubmitBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Appreciation'**
+  String get appreciateSubmitBtn;
+
+  /// No description provided for @appreciateSuccessMotivation.
+  ///
+  /// In en, this message translates to:
+  /// **'Your kind words will motivate them to do even better.'**
+  String get appreciateSuccessMotivation;
+
+  /// No description provided for @appreciateSendAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Another Appreciation'**
+  String get appreciateSendAnother;
+
+  /// No description provided for @ideaDetailsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Idea Details'**
+  String get ideaDetailsHeading;
+
+  /// No description provided for @ideaDetailsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your idea'**
+  String get ideaDetailsSubtitle;
+
+  /// No description provided for @ideaTopicLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What is your idea about? (Topic) *'**
+  String get ideaTopicLabel;
+
+  /// No description provided for @ideaCustomTopicLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Topic *'**
+  String get ideaCustomTopicLabel;
+
+  /// No description provided for @ideaCustomTopicHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your topic'**
+  String get ideaCustomTopicHint;
+
+  /// No description provided for @ideaTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Idea Title *'**
+  String get ideaTitleLabel;
+
+  /// No description provided for @ideaTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Smart drainage system for your area'**
+  String get ideaTitleHint;
+
+  /// No description provided for @ideaDescLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your idea in detail'**
+  String get ideaDescLabel;
+
+  /// No description provided for @ideaDescHint.
+  ///
+  /// In en, this message translates to:
+  /// **'My idea is to build a smart drainage system...'**
+  String get ideaDescHint;
+
+  /// No description provided for @ideaNextImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Impact & Benefits →'**
+  String get ideaNextImpact;
+
+  /// No description provided for @ideaImpactHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Benefits & Expected Impact'**
+  String get ideaImpactHeading;
+
+  /// No description provided for @ideaImpactSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us understand the potential impact'**
+  String get ideaImpactSubtitle;
+
+  /// No description provided for @ideaBenefitsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'List 2–3 major advantages for the constituency *'**
+  String get ideaBenefitsLabel;
+
+  /// No description provided for @ideaBenefitsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'• Reduces flooding in low-lying areas\n• Protects public health...'**
+  String get ideaBenefitsHint;
+
+  /// No description provided for @ideaBeneficiariesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Who will benefit from this idea? *'**
+  String get ideaBeneficiariesLabel;
+
+  /// No description provided for @ideaResourcesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated Resources (Optional)'**
+  String get ideaResourcesLabel;
+
+  /// No description provided for @ideaResourcesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Range'**
+  String get ideaResourcesHint;
+
+  /// No description provided for @ideaNextVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Visibility →'**
+  String get ideaNextVisibility;
+
+  /// No description provided for @ideaVisibilityHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility & Collaboration'**
+  String get ideaVisibilityHeading;
+
+  /// No description provided for @ideaVisibilitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you want to share your idea'**
+  String get ideaVisibilitySubtitle;
+
+  /// No description provided for @ideaVisibilityFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility Option *'**
+  String get ideaVisibilityFieldLabel;
+
+  /// No description provided for @ideaDiscussionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Community Discussion'**
+  String get ideaDiscussionLabel;
+
+  /// No description provided for @ideaDiscussionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'People can comment and suggest improvements'**
+  String get ideaDiscussionSubtitle;
+
+  /// No description provided for @ideaContactLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow MLA Office to Contact Me'**
+  String get ideaContactLabel;
+
+  /// No description provided for @ideaContactSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA office can reach out for more details'**
+  String get ideaContactSubtitle;
+
+  /// No description provided for @ideaNextReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Review Idea →'**
+  String get ideaNextReview;
+
+  /// No description provided for @ideaReviewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Please review your idea before submitting'**
+  String get ideaReviewHeading;
+
+  /// No description provided for @ideaCardDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Idea Details'**
+  String get ideaCardDetails;
+
+  /// No description provided for @ideaCardImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Impact & Benefits'**
+  String get ideaCardImpact;
+
+  /// No description provided for @ideaCardVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get ideaCardVisibility;
+
+  /// No description provided for @ideaRowTopic.
+  ///
+  /// In en, this message translates to:
+  /// **'Topic'**
+  String get ideaRowTopic;
+
+  /// No description provided for @ideaRowBenefits.
+  ///
+  /// In en, this message translates to:
+  /// **'Benefits'**
+  String get ideaRowBenefits;
+
+  /// No description provided for @ideaRowBeneficiaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Beneficiaries'**
+  String get ideaRowBeneficiaries;
+
+  /// No description provided for @ideaRowResources.
+  ///
+  /// In en, this message translates to:
+  /// **'Resources'**
+  String get ideaRowResources;
+
+  /// No description provided for @ideaRowDiscussion.
+  ///
+  /// In en, this message translates to:
+  /// **'Community Discussion'**
+  String get ideaRowDiscussion;
+
+  /// No description provided for @ideaRowContact.
+  ///
+  /// In en, this message translates to:
+  /// **'MLA Contact'**
+  String get ideaRowContact;
+
+  /// No description provided for @ideaEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get ideaEnabled;
+
+  /// No description provided for @ideaDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get ideaDisabled;
+
+  /// No description provided for @ideaSubmitBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Idea 🚀'**
+  String get ideaSubmitBtn;
+
+  /// No description provided for @improveHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion Details'**
+  String get improveHeading;
+
+  /// No description provided for @improveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your improvement suggestion'**
+  String get improveSubtitle;
+
+  /// No description provided for @improveDeptLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Department (Optional)'**
+  String get improveDeptLabel;
+
+  /// No description provided for @improveDeptHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Department'**
+  String get improveDeptHint;
+
+  /// No description provided for @improveSuggestionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Suggestion *'**
+  String get improveSuggestionLabel;
+
+  /// No description provided for @improveSuggestionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your improvement suggestion in detail...'**
+  String get improveSuggestionHint;
+
+  /// No description provided for @improveNextLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Location →'**
+  String get improveNextLocation;
+
+  /// No description provided for @improveLocationHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Location (Optional)'**
+  String get improveLocationHeading;
+
+  /// No description provided for @improveLocationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where should this improvement be made?'**
+  String get improveLocationSubtitle;
+
+  /// No description provided for @improveLocationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Location / Area'**
+  String get improveLocationLabel;
+
+  /// No description provided for @improveLocationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Near the main market'**
+  String get improveLocationHint;
+
+  /// No description provided for @improveLandmarkLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Landmark (Optional)'**
+  String get improveLandmarkLabel;
+
+  /// No description provided for @improveLandmarkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby landmark'**
+  String get improveLandmarkHint;
+
+  /// No description provided for @improveNextReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: Review →'**
+  String get improveNextReview;
+
+  /// No description provided for @improveReviewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your suggestion'**
+  String get improveReviewHeading;
+
+  /// No description provided for @improveReviewSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please review before submitting'**
+  String get improveReviewSubtitle;
+
+  /// No description provided for @improveCardDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion Details'**
+  String get improveCardDetails;
+
+  /// No description provided for @improveRowDept.
+  ///
+  /// In en, this message translates to:
+  /// **'Department'**
+  String get improveRowDept;
+
+  /// No description provided for @improveRowSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion'**
+  String get improveRowSuggestion;
+
+  /// No description provided for @improveRowLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get improveRowLocation;
+
+  /// No description provided for @improveRowLandmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Landmark'**
+  String get improveRowLandmark;
+
+  /// No description provided for @improveSubmitBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Suggestion'**
+  String get improveSubmitBtn;
+
+  /// No description provided for @improveSuccessMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Our team will review your suggestion and take appropriate action.'**
+  String get improveSuccessMsg;
+
+  /// No description provided for @improveGoHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Home'**
+  String get improveGoHome;
+
+  /// No description provided for @yesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yesLabel;
+
+  /// No description provided for @noLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get noLabel;
+
+  /// No description provided for @maximumReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum reached'**
+  String get maximumReached;
+
+  /// No description provided for @maximumFilesMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum 10 files allowed'**
+  String get maximumFilesMsg;
+
+  /// No description provided for @stepDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get stepDetails;
+
+  /// No description provided for @stepVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get stepVisibility;
+
+  /// No description provided for @stepReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get stepReview;
+
+  /// No description provided for @stepDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get stepDone;
+
+  /// No description provided for @stepImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Impact'**
+  String get stepImpact;
+
+  /// No description provided for @stepRecipient.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipient'**
+  String get stepRecipient;
+
+  /// No description provided for @stepMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get stepMessage;
+
+  /// No description provided for @stepSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggestion'**
+  String get stepSuggestion;
+
+  /// No description provided for @stepLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get stepLocation;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

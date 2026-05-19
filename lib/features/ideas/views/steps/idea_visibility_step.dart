@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -16,11 +17,11 @@ class IdeaVisibilityStep extends GetView<IdeaController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Visibility & Collaboration', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.ideaVisibilityHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Choose how you want to share your idea', style: AppTextStyles.bodySmall),
+          Text(AppStrings.ideaVisibilitySubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 24),
-          Text('Visibility Option *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.ideaVisibilityFieldLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
           Obx(() => Column(
                 children: SubmissionVisibility.values.map((v) {
@@ -54,13 +55,13 @@ class IdeaVisibilityStep extends GetView<IdeaController> {
                 }).toList(),
               )),
           const SizedBox(height: 16),
-          Obx(() => _toggle('Allow Community Discussion', 'People can comment and suggest improvements',
+          Obx(() => _toggle(AppStrings.ideaDiscussionLabel, AppStrings.ideaDiscussionSubtitle,
               controller.allowDiscussion.value, (v) => controller.allowDiscussion.value = v)),
           const SizedBox(height: 12),
-          Obx(() => _toggle('Allow MLA Office to Contact Me', 'MLA office can reach out for more details',
+          Obx(() => _toggle(AppStrings.ideaContactLabel, AppStrings.ideaContactSubtitle,
               controller.allowContact.value, (v) => controller.allowContact.value = v)),
           const SizedBox(height: 32),
-          PrimaryButton(text: 'Next: Review Idea →', onPressed: controller.nextStep, backgroundColor: AppColors.ideaPurple),
+          PrimaryButton(text: AppStrings.ideaNextReview, onPressed: controller.nextStep, backgroundColor: AppColors.ideaPurple),
           const SizedBox(height: 20),
         ],
       ),

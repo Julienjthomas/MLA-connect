@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/constants/app_enums.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../data/models/idea_model.dart';
 import '../../../data/services/idea_service.dart';
 import '../../../data/services/storage_service.dart';
@@ -33,7 +34,7 @@ class IdeaController extends GetxController {
   final RxString submittedId = ''.obs;
   late PageController pageController;
 
-  final List<String> steps = ['Details', 'Impact', 'Visibility', 'Review', 'Done'];
+  List<String> get steps => [AppStrings.stepDetails, AppStrings.stepImpact, AppStrings.stepVisibility, AppStrings.stepReview, AppStrings.stepDone];
 
   final List<String> topics = [
     'Infrastructure', 'Education', 'Health', 'Environment',

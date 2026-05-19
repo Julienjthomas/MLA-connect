@@ -857,4 +857,424 @@ class SEn extends S {
 
   @override
   String get navProfile => 'Profile';
+
+  @override
+  String get reportDescribeProblem => 'Describe the Problem';
+
+  @override
+  String get reportDescribeSubtitle => 'Please provide details about the issue';
+
+  @override
+  String get reportCategoryLabel => 'Category *';
+
+  @override
+  String get reportCategoryHint => 'Enter the problem category';
+
+  @override
+  String get reportDescriptionLabel => 'Problem Description *';
+
+  @override
+  String get reportDescriptionHint => 'Describe the problem in detail...';
+
+  @override
+  String get reportDetailsLocationHint =>
+      'Describe the exact location of the problem';
+
+  @override
+  String get reportNextReview => 'Next: Review →';
+
+  @override
+  String get reportLocationSubtitle =>
+      'Help us find the exact location of the issue';
+
+  @override
+  String get reportPanchayatLabel => 'Panchayat';
+
+  @override
+  String get reportWardLabel => 'Ward *';
+
+  @override
+  String get reportLandmarkAreaLabel => 'Landmark / Area (Optional)';
+
+  @override
+  String get reportLocationDescLabel => 'Location Description *';
+
+  @override
+  String get reportLocationDescHint => 'Describe the location';
+
+  @override
+  String get reportGpsNote => 'Tap the location icon to use GPS';
+
+  @override
+  String get reportMapPin => 'Tap to pin on map';
+
+  @override
+  String get reportContactLabel => 'Contact Number (Optional)';
+
+  @override
+  String get reportVisibilitySubtitle => 'Choose who can see this report';
+
+  @override
+  String get reportVisibilityFieldLabel => 'Visibility Option *';
+
+  @override
+  String get reportReviewHeading => 'Review Report';
+
+  @override
+  String get reportReviewSubtitle =>
+      'Please review your report before submitting';
+
+  @override
+  String get reportReviewSectionDetails => 'Problem Details';
+
+  @override
+  String get reportReviewRowCategory => 'Category';
+
+  @override
+  String get reportReviewRowTitle => 'Title';
+
+  @override
+  String get reportReviewRowDescription => 'Description';
+
+  @override
+  String get reportReviewRowVisibility => 'Visibility';
+
+  @override
+  String get reportReviewRowLandmark => 'Landmark';
+
+  @override
+  String get reportReviewRowContact => 'Contact';
+
+  @override
+  String get categoryRoadDamage => 'Road Damage';
+
+  @override
+  String get categoryStreetlight => 'Street Light';
+
+  @override
+  String get categoryDrainage => 'Drainage';
+
+  @override
+  String get categoryWasteManagement => 'Waste Management';
+
+  @override
+  String get categoryPublicSafety => 'Public Safety';
+
+  @override
+  String get appreciateWhoHeading => 'Who are you appreciating?';
+
+  @override
+  String get appreciateWhoSubtitle =>
+      'Choose your MLA or a direct staff member.';
+
+  @override
+  String get appreciateRecipientLabel => 'Recipient *';
+
+  @override
+  String get appreciateNoRecipients => 'No recipients available yet.';
+
+  @override
+  String get appreciateMlaBadge => 'MLA';
+
+  @override
+  String get appreciateRelatedWorkLabel => 'Related Work / Project (Optional)';
+
+  @override
+  String get appreciateRelatedWorkHint => 'e.g. Road repair at Kuttikattoor';
+
+  @override
+  String get appreciateNextMessage => 'Next: Your Message →';
+
+  @override
+  String get appreciateMessageHeading => 'Your Appreciation';
+
+  @override
+  String get appreciateMessageSubtitle => 'Write your appreciation message';
+
+  @override
+  String get appreciateMessageHint =>
+      'I appreciate the quick action taken by the team...';
+
+  @override
+  String get appreciateAddPhotoLabel => 'Add Photo / Video (Optional)';
+
+  @override
+  String get appreciateNextVisibility => 'Next: Visibility →';
+
+  @override
+  String get appreciateVisibilityHeading => 'Visibility Option';
+
+  @override
+  String get appreciateVisibilitySubtitle => 'Choose how you want to share';
+
+  @override
+  String get appreciateNextReview => 'Next: Review →';
+
+  @override
+  String get appreciateReviewHeading => 'Review your appreciation';
+
+  @override
+  String get appreciateReviewSubtitle => 'Please review before submitting';
+
+  @override
+  String get appreciateCardRecipient => 'Recipient';
+
+  @override
+  String get appreciateCardMessage => 'Your Message';
+
+  @override
+  String get appreciateCardVisibility => 'Visibility';
+
+  @override
+  String get appreciateRowStaff => 'Staff';
+
+  @override
+  String get appreciateRowRelatedWork => 'Related Work';
+
+  @override
+  String get appreciateRowAnonymous => 'Anonymous';
+
+  @override
+  String get appreciateSubmitBtn => 'Submit Appreciation';
+
+  @override
+  String get appreciateSuccessMotivation =>
+      'Your kind words will motivate them to do even better.';
+
+  @override
+  String get appreciateSendAnother => 'Send Another Appreciation';
+
+  @override
+  String get ideaDetailsHeading => 'Idea Details';
+
+  @override
+  String get ideaDetailsSubtitle => 'Tell us about your idea';
+
+  @override
+  String get ideaTopicLabel => 'What is your idea about? (Topic) *';
+
+  @override
+  String get ideaCustomTopicLabel => 'Custom Topic *';
+
+  @override
+  String get ideaCustomTopicHint => 'Enter your topic';
+
+  @override
+  String get ideaTitleLabel => 'Idea Title *';
+
+  @override
+  String get ideaTitleHint => 'e.g. Smart drainage system for your area';
+
+  @override
+  String get ideaDescLabel => 'Describe your idea in detail';
+
+  @override
+  String get ideaDescHint => 'My idea is to build a smart drainage system...';
+
+  @override
+  String get ideaNextImpact => 'Next: Impact & Benefits →';
+
+  @override
+  String get ideaImpactHeading => 'Key Benefits & Expected Impact';
+
+  @override
+  String get ideaImpactSubtitle => 'Help us understand the potential impact';
+
+  @override
+  String get ideaBenefitsLabel =>
+      'List 2–3 major advantages for the constituency *';
+
+  @override
+  String get ideaBenefitsHint =>
+      '• Reduces flooding in low-lying areas\n• Protects public health...';
+
+  @override
+  String get ideaBeneficiariesLabel => 'Who will benefit from this idea? *';
+
+  @override
+  String get ideaResourcesLabel => 'Estimated Resources (Optional)';
+
+  @override
+  String get ideaResourcesHint => 'Select Range';
+
+  @override
+  String get ideaNextVisibility => 'Next: Visibility →';
+
+  @override
+  String get ideaVisibilityHeading => 'Visibility & Collaboration';
+
+  @override
+  String get ideaVisibilitySubtitle => 'Choose how you want to share your idea';
+
+  @override
+  String get ideaVisibilityFieldLabel => 'Visibility Option *';
+
+  @override
+  String get ideaDiscussionLabel => 'Allow Community Discussion';
+
+  @override
+  String get ideaDiscussionSubtitle =>
+      'People can comment and suggest improvements';
+
+  @override
+  String get ideaContactLabel => 'Allow MLA Office to Contact Me';
+
+  @override
+  String get ideaContactSubtitle => 'MLA office can reach out for more details';
+
+  @override
+  String get ideaNextReview => 'Next: Review Idea →';
+
+  @override
+  String get ideaReviewHeading => 'Please review your idea before submitting';
+
+  @override
+  String get ideaCardDetails => 'Idea Details';
+
+  @override
+  String get ideaCardImpact => 'Impact & Benefits';
+
+  @override
+  String get ideaCardVisibility => 'Visibility';
+
+  @override
+  String get ideaRowTopic => 'Topic';
+
+  @override
+  String get ideaRowBenefits => 'Benefits';
+
+  @override
+  String get ideaRowBeneficiaries => 'Beneficiaries';
+
+  @override
+  String get ideaRowResources => 'Resources';
+
+  @override
+  String get ideaRowDiscussion => 'Community Discussion';
+
+  @override
+  String get ideaRowContact => 'MLA Contact';
+
+  @override
+  String get ideaEnabled => 'Enabled';
+
+  @override
+  String get ideaDisabled => 'Disabled';
+
+  @override
+  String get ideaSubmitBtn => 'Submit Idea 🚀';
+
+  @override
+  String get improveHeading => 'Suggestion Details';
+
+  @override
+  String get improveSubtitle => 'Share your improvement suggestion';
+
+  @override
+  String get improveDeptLabel => 'Target Department (Optional)';
+
+  @override
+  String get improveDeptHint => 'Select Department';
+
+  @override
+  String get improveSuggestionLabel => 'Your Suggestion *';
+
+  @override
+  String get improveSuggestionHint =>
+      'Describe your improvement suggestion in detail...';
+
+  @override
+  String get improveNextLocation => 'Next: Location →';
+
+  @override
+  String get improveLocationHeading => 'Location (Optional)';
+
+  @override
+  String get improveLocationSubtitle =>
+      'Where should this improvement be made?';
+
+  @override
+  String get improveLocationLabel => 'Location / Area';
+
+  @override
+  String get improveLocationHint => 'e.g. Near the main market';
+
+  @override
+  String get improveLandmarkLabel => 'Landmark (Optional)';
+
+  @override
+  String get improveLandmarkHint => 'Nearby landmark';
+
+  @override
+  String get improveNextReview => 'Next: Review →';
+
+  @override
+  String get improveReviewHeading => 'Review your suggestion';
+
+  @override
+  String get improveReviewSubtitle => 'Please review before submitting';
+
+  @override
+  String get improveCardDetails => 'Suggestion Details';
+
+  @override
+  String get improveRowDept => 'Department';
+
+  @override
+  String get improveRowSuggestion => 'Suggestion';
+
+  @override
+  String get improveRowLocation => 'Location';
+
+  @override
+  String get improveRowLandmark => 'Landmark';
+
+  @override
+  String get improveSubmitBtn => 'Submit Suggestion';
+
+  @override
+  String get improveSuccessMsg =>
+      'Our team will review your suggestion and take appropriate action.';
+
+  @override
+  String get improveGoHome => 'Go to Home';
+
+  @override
+  String get yesLabel => 'Yes';
+
+  @override
+  String get noLabel => 'No';
+
+  @override
+  String get maximumReached => 'Maximum reached';
+
+  @override
+  String get maximumFilesMsg => 'Maximum 10 files allowed';
+
+  @override
+  String get stepDetails => 'Details';
+
+  @override
+  String get stepVisibility => 'Visibility';
+
+  @override
+  String get stepReview => 'Review';
+
+  @override
+  String get stepDone => 'Done';
+
+  @override
+  String get stepImpact => 'Impact';
+
+  @override
+  String get stepRecipient => 'Recipient';
+
+  @override
+  String get stepMessage => 'Message';
+
+  @override
+  String get stepSuggestion => 'Suggestion';
+
+  @override
+  String get stepLocation => 'Location';
 }

@@ -1,56 +1,26 @@
-## Purpose
+## ADDED Requirements
 
-Define MLA profile presentation and contact actions for the active assembly constituency.
+### Requirement: MLA profile is fully functional
+The MLA profile screen SHALL render real data for the user's MLA (name, photo, party, constituency, contact links, About text) with no placeholder or "coming soon" sections.
 
-## Requirements
+#### Scenario: User opens MLA profile
+- **WHEN** an authenticated user opens the MLA profile screen
+- **THEN** the screen SHALL display the MLA's real name, photo, party, constituency, and contact actions
+- **THEN** no placeholder text SHALL be visible
 
-### Requirement: Collapsing hero with avatar, name, constituency, term
-The detail view SHALL use a `SliverAppBar` with `expandedHeight: 240` showing background image, avatar, MLA name, and constituency. The MLA name SHALL be positioned slightly higher than center for better visual balance. No tick/verified mark and no term badge SHALL be shown.
+### Requirement: About MLA section is populated
+The MLA profile SHALL include an "About MLA" section containing a non-empty biographical description sourced from the MLA record.
 
-#### Scenario: Hero collapse
-- **WHEN** the user scrolls down
-- **THEN** the hero collapses to a pinned app bar
+#### Scenario: About section visible
+- **WHEN** the MLA profile renders for an MLA whose `about` field is set
+- **THEN** the About section SHALL display the full text
 
-#### Scenario: No tick or term badge
-- **WHEN** the view renders
-- **THEN** no verified checkmark icon and no "Third Term" or any term badge are visible
+#### Scenario: About section fallback
+- **WHEN** the MLA's `about` field is empty
+- **THEN** the section SHALL display a short fallback description (e.g. constituency-based) rather than an empty card
 
-### Requirement: Call CTA only — no WhatsApp
-The view SHALL show a sticky bottom bar with a single Call Office button (opens `tel:` URI). No WhatsApp button SHALL be present.
+## REMOVED Requirements
 
-#### Scenario: Tap Call
-- **WHEN** the user taps Call Office
-- **THEN** `launchUrl(Uri(scheme: 'tel', path: <phone>))` is invoked
-
-#### Scenario: No share button
-- **WHEN** the view renders
-- **THEN** no Share action is visible in the app bar or bottom bar
-
-### Requirement: Expandable About MLA section
-The About MLA section SHALL be collapsible. By default it shows a truncated preview (2–3 lines). Tapping "Read more" / a chevron expands to full content.
-
-#### Scenario: Expand about
-- **WHEN** the user taps the expand control
-- **THEN** the full bio text is revealed with animation
-
-#### Scenario: Collapse about
-- **WHEN** the user taps the collapse control while expanded
-- **THEN** the text returns to truncated preview
-
-### Requirement: Educational details in About section
-The About section SHALL include the MLA's educational background (degree, institution) if present in `MlaModel`.
-
-#### Scenario: Education present
-- **WHEN** `MlaModel.education` is non-null
-- **THEN** the education line renders beneath the bio
-
-#### Scenario: Education absent
-- **WHEN** `MlaModel.education` is null
-- **THEN** no education row renders
-
-### Requirement: Office address in contact section
-The view SHALL display the MLA's office address below the call button if present in `MlaModel`.
-
-#### Scenario: Address shown
-- **WHEN** `MlaModel.officeAddress` is non-null
-- **THEN** the address text is visible in the contact area
+### Requirement: Issues Resolved analytics on MLA profile
+**Reason**: Stakeholder request — analytics like "Issues Resolved" do not belong on the MLA profile.
+**Migration**: Remove the analytics widget block from `mla_detail_view.dart`. No data migration required; underlying data sources may remain for use elsewhere.

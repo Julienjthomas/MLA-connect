@@ -7,6 +7,7 @@ import '../../../core/constants/app_enums.dart';
 import '../../../data/models/report_model.dart';
 import '../../../data/services/report_service.dart';
 import '../../../data/services/storage_service.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
 
@@ -36,7 +37,7 @@ class ReportController extends GetxController {
 
   late PageController pageController;
 
-  final List<String> steps = ['Details', 'Visibility', 'Review', 'Done'];
+  List<String> get steps => [AppStrings.stepDetails, AppStrings.stepVisibility, AppStrings.stepReview, AppStrings.stepDone];
 
   @override
   void onInit() {

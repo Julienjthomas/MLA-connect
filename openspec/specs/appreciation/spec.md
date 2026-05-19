@@ -1,21 +1,13 @@
-## MODIFIED Requirements
-
-### Requirement: Visibility selection
-The Visibility step SHALL allow exactly one of: `public`, `mlaOnly`, `anonymous` (`SubmissionVisibility`). The UI SHALL present exactly three distinct options — no duplicate or redundant anonymous entries.
-
-#### Scenario: Anonymous toggle
-- **WHEN** the user picks `anonymous`
-- **THEN** `anonymous: true` is sent on submit and the user's name is hidden in any public listing
-
-#### Scenario: No duplicate options
-- **WHEN** the Visibility step renders
-- **THEN** exactly three options appear and `anonymous` appears only once
-
 ## ADDED Requirements
 
-### Requirement: Keyboard dismissal on tap outside
-Any text field in the appreciation flow SHALL dismiss the keyboard when the user taps anywhere outside the keyboard or text field area.
+### Requirement: Appreciation recipients limited to MLA and direct staff
+The appreciation flow's recipient picker SHALL only allow selecting the MLA or a member of the MLA's direct staff. No other recipients (general public users, third parties, free-text entries) SHALL be selectable.
 
-#### Scenario: Tap outside keyboard
-- **WHEN** a text field is focused and keyboard is visible
-- **THEN** tapping outside the field dismisses the keyboard without submitting the form
+#### Scenario: Recipient list contents
+- **WHEN** the user reaches the recipient step
+- **THEN** the list SHALL contain the MLA as the first entry followed by direct staff members
+- **THEN** no other users SHALL appear in the list
+
+#### Scenario: No free-text recipient
+- **WHEN** the user is on the recipient step
+- **THEN** the UI SHALL NOT offer a free-text input to type an arbitrary recipient name

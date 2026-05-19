@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/stepper_header.dart';
@@ -27,7 +28,7 @@ class IdeaFlowView extends GetView<IdeaController> {
           child: Obx(
             () => controller.currentStep.value == controller.steps.length - 1
                 ? const SizedBox.shrink()
-                : KeralaAppBar(title: 'Share Idea', onBack: controller.previousStep),
+                : KeralaAppBar(title: AppStrings.shareIdea, onBack: controller.previousStep),
           ),
         ),
         body: Column(

@@ -103,14 +103,14 @@ enum ReportCategory {
 
 extension ReportCategoryX on ReportCategory {
   String get label => switch (this) {
-        ReportCategory.road => 'Road Damage',
-        ReportCategory.water => 'Water Supply',
-        ReportCategory.electricity => 'Electricity',
-        ReportCategory.streetlight => 'Street Light',
-        ReportCategory.drainage => 'Drainage',
-        ReportCategory.waste => 'Waste Management',
-        ReportCategory.safety => 'Public Safety',
-        ReportCategory.other => 'Other',
+        ReportCategory.road => AppStrings.categoryRoadDamage,
+        ReportCategory.water => AppStrings.categoryWater,
+        ReportCategory.electricity => AppStrings.categoryElectricity,
+        ReportCategory.streetlight => AppStrings.categoryStreetlight,
+        ReportCategory.drainage => AppStrings.categoryDrainage,
+        ReportCategory.waste => AppStrings.categoryWasteManagement,
+        ReportCategory.safety => AppStrings.categoryPublicSafety,
+        ReportCategory.other => AppStrings.categoryOther,
       };
 
   IconData get icon => switch (this) {

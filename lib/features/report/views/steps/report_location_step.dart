@@ -17,13 +17,13 @@ class ReportLocationStep extends GetView<ReportController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Location', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.location, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Help us find the exact location of the issue', style: AppTextStyles.bodySmall),
+          Text(AppStrings.reportLocationSubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
 
           // Panchayat (read-only from user profile for now)
-          Text('Panchayat', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportPanchayatLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(14),
@@ -36,7 +36,7 @@ class ReportLocationStep extends GetView<ReportController> {
               const Icon(Icons.location_city_outlined, size: 18, color: AppColors.grey500),
               const SizedBox(width: 10),
               Text(
-                Get.find<AuthController>().user.value?.localBodyName ?? 'Your panchayat',
+                Get.find<AuthController>().user.value?.localBodyName ?? AppStrings.reportPanchayatLabel,
                 style: AppTextStyles.bodyMedium,
               ),
             ]),
@@ -45,37 +45,35 @@ class ReportLocationStep extends GetView<ReportController> {
           const SizedBox(height: 14),
 
           // Ward
-          Text('Ward *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportWardLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
-          TextField(
-            decoration: const InputDecoration(
+          const TextField(
+            decoration: InputDecoration(
               prefixIcon: Icon(Icons.map_outlined, size: 20),
-              hintText: 'e.g. Ward 12 – Kuttikattoor',
             ),
           ),
 
           const SizedBox(height: 14),
 
           // Landmark
-          Text('Landmark / Area (Optional)', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportLandmarkAreaLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
             controller: controller.landmarkController,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.place_outlined, size: 20),
-              hintText: 'e.g. Near Kuttikattoor Juma Masjid',
             ),
           ),
 
           const SizedBox(height: 14),
 
           // Location description
-          Text('Location Description *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportLocationDescLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
             controller: controller.locationController,
-            decoration: const InputDecoration(
-              hintText: 'Describe the location',
+            decoration: InputDecoration(
+              hintText: AppStrings.reportLocationDescHint,
             ),
           ),
 
@@ -83,7 +81,7 @@ class ReportLocationStep extends GetView<ReportController> {
           Row(children: [
             const Icon(Icons.info_outline, size: 13, color: AppColors.textTertiary),
             const SizedBox(width: 4),
-            Text('Tap the location icon to use GPS', style: AppTextStyles.caption),
+            Text(AppStrings.reportGpsNote, style: AppTextStyles.caption),
           ]),
 
           const SizedBox(height: 14),
@@ -102,7 +100,7 @@ class ReportLocationStep extends GetView<ReportController> {
                 children: [
                   const Icon(Icons.map_outlined, size: 40, color: AppColors.grey400),
                   const SizedBox(height: 8),
-                  Text('Tap to pin on map', style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey500)),
+                  Text(AppStrings.reportMapPin, style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey500)),
                 ],
               ),
             ),
@@ -111,21 +109,20 @@ class ReportLocationStep extends GetView<ReportController> {
           const SizedBox(height: 14),
 
           // Contact number
-          Text('Contact Number (Optional)', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportContactLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
             controller: controller.contactController,
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.phone_outlined, size: 20),
-              hintText: '+91 90 47 123 456',
             ),
           ),
 
           const SizedBox(height: 32),
 
           PrimaryButton(
-            text: 'Next: Review →',
+            text: AppStrings.reportNextReview,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.reportOrange,
           ),

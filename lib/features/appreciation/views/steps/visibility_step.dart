@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -16,9 +17,9 @@ class AppreciationVisibilityStep extends GetView<AppreciationController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Visibility Option', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.appreciateVisibilityHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Choose how you want to share', style: AppTextStyles.bodySmall),
+          Text(AppStrings.appreciateVisibilitySubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 24),
           Obx(() => Column(
                 children: SubmissionVisibility.values.map((v) {
@@ -57,7 +58,7 @@ class AppreciationVisibilityStep extends GetView<AppreciationController> {
                 }).toList(),
               )),
           const SizedBox(height: 32),
-          PrimaryButton(text: 'Next: Review →', onPressed: controller.nextStep, backgroundColor: AppColors.appreciateGreen),
+          PrimaryButton(text: AppStrings.appreciateNextReview, onPressed: controller.nextStep, backgroundColor: AppColors.appreciateGreen),
           const SizedBox(height: 20),
         ],
       ),

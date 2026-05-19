@@ -229,16 +229,16 @@ class SMl extends S {
   String get mlaActivity => 'MLA പ്രവർത്തനങ്ങൾ';
 
   @override
-  String get viewAll => 'എല്ലാം കാണുക';
+  String get viewAll => 'മുഴുവൻ കാണുക';
 
   @override
-  String get hallOfExcellence => 'മികവിന്റെ ഹാൾ';
+  String get hallOfExcellence => 'അഭിമാന നേട്ടങ്ങൾ';
 
   @override
   String get viewDetails => 'വിശദാംശങ്ങൾ കാണുക';
 
   @override
-  String get reportProblem => 'ഒരു പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക';
+  String get reportProblem => 'പരാതി അറിയിക്കുക';
 
   @override
   String get describeIssue => 'പ്രശ്നം വിവരിക്കുക';
@@ -318,7 +318,7 @@ class SMl extends S {
   String get ideaSuccess => 'നിങ്ങളുടെ ആശയം\nവിജയകരമായി സമർപ്പിച്ചു!';
 
   @override
-  String get suggestImprovement => 'ഒരു മെച്ചപ്പെടുത്തൽ നിർദ്ദേശിക്കുക';
+  String get suggestImprovement => 'മെച്ചപ്പെടുത്താൻ സഹായിക്കൂ';
 
   @override
   String get suggestionDetails => 'നിർദ്ദേശ വിശദാംശങ്ങൾ';
@@ -502,7 +502,7 @@ class SMl extends S {
   String get statusTimeline => 'സ്റ്റാറ്റസ് ടൈംലൈൻ';
 
   @override
-  String get featureReportLabel => 'പ്രശ്നം റിപ്പോർട്ട്';
+  String get featureReportLabel => 'പരാതി അറിയിക്കുക';
 
   @override
   String get featureReportSubtitle =>
@@ -516,7 +516,7 @@ class SMl extends S {
       'നമ്മുടെ മണ്ഡലത്തിന്റെ ഭാവിക്കായുള്ള മികച്ച ആശയങ്ങൾ';
 
   @override
-  String get featureImproveLabel => 'മെച്ചപ്പെടുത്തൽ നിർദ്ദേശിക്കുക';
+  String get featureImproveLabel => 'മെച്ചപ്പെടുത്താൻ സഹായിക്കൂ';
 
   @override
   String get featureImproveSubtitle =>
@@ -783,13 +783,13 @@ class SMl extends S {
   String get activityTabSaved => 'സേവ് ചെയ്തത്';
 
   @override
-  String get activityFabReport => 'പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക';
+  String get activityFabReport => 'പരാതി അറിയിക്കുക';
 
   @override
   String get activityFabIdea => 'ആശയം പങ്കിടുക';
 
   @override
-  String get activityFabImprovement => 'മെച്ചപ്പെടുത്തൽ നിർദ്ദേശിക്കുക';
+  String get activityFabImprovement => 'മെച്ചപ്പെടുത്താൻ സഹായിക്കൂ';
 
   @override
   String get activityFabAppreciation => 'അഭിനന്ദനം അയയ്ക്കുക';
@@ -868,4 +868,435 @@ class SMl extends S {
 
   @override
   String get navProfile => 'പ്രൊഫൈൽ';
+
+  @override
+  String get reportDescribeProblem => 'പ്രശ്നം വിവരിക്കുക';
+
+  @override
+  String get reportDescribeSubtitle =>
+      'ദയവായി പ്രശ്നത്തിന്റെ വിശദാംശങ്ങൾ നൽകുക';
+
+  @override
+  String get reportCategoryLabel => 'വിഭാഗം *';
+
+  @override
+  String get reportCategoryHint => 'പ്രശ്ന വിഭാഗം തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get reportDescriptionLabel => 'പ്രശ്ന വിവരണം *';
+
+  @override
+  String get reportDescriptionHint => 'പ്രശ്നം വിശദമായി വിവരിക്കുക...';
+
+  @override
+  String get reportDetailsLocationHint =>
+      'പ്രശ്നത്തിന്റെ കൃത്യമായ സ്ഥാനം വിവരിക്കുക';
+
+  @override
+  String get reportNextReview => 'അടുത്തത്: അവലോകനം →';
+
+  @override
+  String get reportLocationSubtitle =>
+      'പ്രശ്നത്തിന്റെ കൃത്യമായ സ്ഥാനം കണ്ടെത്താൻ സഹായിക്കുക';
+
+  @override
+  String get reportPanchayatLabel => 'പഞ്ചായത്ത്';
+
+  @override
+  String get reportWardLabel => 'വാർഡ് *';
+
+  @override
+  String get reportLandmarkAreaLabel => 'ലാൻഡ്മാർക്ക് / പ്രദേശം (ഓപ്ഷണൽ)';
+
+  @override
+  String get reportLocationDescLabel => 'സ്ഥാന വിവരണം *';
+
+  @override
+  String get reportLocationDescHint => 'സ്ഥാനം വിവരിക്കുക';
+
+  @override
+  String get reportGpsNote => 'GPS ഉപയോഗിക്കാൻ ലൊക്കേഷൻ ഐക്കൺ ടാപ്പ് ചെയ്യുക';
+
+  @override
+  String get reportMapPin => 'മാപ്പിൽ പിൻ ചെയ്യാൻ ടാപ്പ് ചെയ്യുക';
+
+  @override
+  String get reportContactLabel => 'ബന്ധപ്പെടാനുള്ള നമ്പർ (ഓപ്ഷണൽ)';
+
+  @override
+  String get reportVisibilitySubtitle =>
+      'ഈ റിപ്പോർട്ട് ആർക്ക് കാണാൻ കഴിയുമെന്ന് തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get reportVisibilityFieldLabel => 'ദൃശ്യത ഓപ്ഷൻ *';
+
+  @override
+  String get reportReviewHeading => 'റിപ്പോർട്ട് പരിശോധിക്കുക';
+
+  @override
+  String get reportReviewSubtitle =>
+      'സമർപ്പിക്കുന്നതിന് മുൻപ് റിപ്പോർട്ട് പരിശോധിക്കുക';
+
+  @override
+  String get reportReviewSectionDetails => 'പ്രശ്ന വിശദാംശങ്ങൾ';
+
+  @override
+  String get reportReviewRowCategory => 'വിഭാഗം';
+
+  @override
+  String get reportReviewRowTitle => 'തലക്കെട്ട്';
+
+  @override
+  String get reportReviewRowDescription => 'വിവരണം';
+
+  @override
+  String get reportReviewRowVisibility => 'ദൃശ്യത';
+
+  @override
+  String get reportReviewRowLandmark => 'ലാൻഡ്മാർക്ക്';
+
+  @override
+  String get reportReviewRowContact => 'ബന്ധപ്പെടുക';
+
+  @override
+  String get categoryRoadDamage => 'റോഡ് കേടുപാടുകൾ';
+
+  @override
+  String get categoryStreetlight => 'തെരുവ് വിളക്ക്';
+
+  @override
+  String get categoryDrainage => 'ഡ്രെയിനേജ്';
+
+  @override
+  String get categoryWasteManagement => 'മാലിന്യ നിർമ്മാർജ്ജനം';
+
+  @override
+  String get categoryPublicSafety => 'പൊതു സുരക്ഷ';
+
+  @override
+  String get appreciateWhoHeading => 'നിങ്ങൾ ആരെ അഭിനന്ദിക്കുന്നു?';
+
+  @override
+  String get appreciateWhoSubtitle =>
+      'നിങ്ങളുടെ MLA അല്ലെങ്കിൽ നേരിട്ടുള്ള ജീവനക്കാരനെ തിരഞ്ഞെടുക്കുക.';
+
+  @override
+  String get appreciateRecipientLabel => 'സ്വീകർത്താവ് *';
+
+  @override
+  String get appreciateNoRecipients => 'ഇതുവരെ സ്വീകർത്താക്കൾ ലഭ്യമല്ല.';
+
+  @override
+  String get appreciateMlaBadge => 'MLA';
+
+  @override
+  String get appreciateRelatedWorkLabel => 'ബന്ധപ്പെട്ട ജോലി / പദ്ധതി (ഓപ്ഷണൽ)';
+
+  @override
+  String get appreciateRelatedWorkHint =>
+      'ഉദാ. കുറ്റിക്കാട്ടൂർ റോഡ് അറ്റകുറ്റപ്പണി';
+
+  @override
+  String get appreciateNextMessage => 'അടുത്തത്: നിങ്ങളുടെ സന്ദേശം →';
+
+  @override
+  String get appreciateMessageHeading => 'നിങ്ങളുടെ അഭിനന്ദനം';
+
+  @override
+  String get appreciateMessageSubtitle => 'നിങ്ങളുടെ അഭിനന്ദന സന്ദേശം എഴുതുക';
+
+  @override
+  String get appreciateMessageHint =>
+      'ടീം സ്വീകരിച്ച ദ്രുതഗതിയിലുള്ള നടപടി ഞാൻ അഭിനന്ദിക്കുന്നു...';
+
+  @override
+  String get appreciateAddPhotoLabel => 'ഫോട്ടോ / വീഡിയോ ചേർക്കുക (ഓപ്ഷണൽ)';
+
+  @override
+  String get appreciateNextVisibility => 'അടുത്തത്: ദൃശ്യത →';
+
+  @override
+  String get appreciateVisibilityHeading => 'ദൃശ്യത ഓപ്ഷൻ';
+
+  @override
+  String get appreciateVisibilitySubtitle =>
+      'നിങ്ങൾ എങ്ങനെ പങ്കിടണമെന്ന് തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get appreciateNextReview => 'അടുത്തത്: അവലോകനം →';
+
+  @override
+  String get appreciateReviewHeading => 'നിങ്ങളുടെ അഭിനന്ദനം അവലോകനം ചെയ്യുക';
+
+  @override
+  String get appreciateReviewSubtitle =>
+      'സമർപ്പിക്കുന്നതിന് മുൻപ് പരിശോധിക്കുക';
+
+  @override
+  String get appreciateCardRecipient => 'സ്വീകർത്താവ്';
+
+  @override
+  String get appreciateCardMessage => 'നിങ്ങളുടെ സന്ദേശം';
+
+  @override
+  String get appreciateCardVisibility => 'ദൃശ്യത';
+
+  @override
+  String get appreciateRowStaff => 'ജീവനക്കാരൻ';
+
+  @override
+  String get appreciateRowRelatedWork => 'ബന്ധപ്പെട്ട ജോലി';
+
+  @override
+  String get appreciateRowAnonymous => 'അജ്ഞാതം';
+
+  @override
+  String get appreciateSubmitBtn => 'അഭിനന്ദനം സമർപ്പിക്കുക';
+
+  @override
+  String get appreciateSuccessMotivation =>
+      'നിങ്ങളുടെ നല്ല വാക്കുകൾ അവരെ കൂടുതൽ മികച്ചതായി പ്രവർത്തിക്കാൻ പ്രേരിപ്പിക്കും.';
+
+  @override
+  String get appreciateSendAnother => 'മറ്റൊരു അഭിനന്ദനം അയക്കുക';
+
+  @override
+  String get ideaDetailsHeading => 'ആശയ വിശദാംശങ്ങൾ';
+
+  @override
+  String get ideaDetailsSubtitle => 'നിങ്ങളുടെ ആശയം പറയൂ';
+
+  @override
+  String get ideaTopicLabel =>
+      'നിങ്ങളുടെ ആശയം ഏത് വിഷയത്തെക്കുറിച്ചാണ്? (വിഷയം) *';
+
+  @override
+  String get ideaCustomTopicLabel => 'ഇഷ്‌ടാനുസൃത വിഷയം *';
+
+  @override
+  String get ideaCustomTopicHint => 'നിങ്ങളുടെ വിഷയം നൽകുക';
+
+  @override
+  String get ideaTitleLabel => 'ആശയത്തിന്റെ തലക്കെട്ട് *';
+
+  @override
+  String get ideaTitleHint =>
+      'ഉദാ. നിങ്ങളുടെ പ്രദേശത്തിന് ഒരു സ്മാർട്ട് ഡ്രെയിനേജ് സിസ്റ്റം';
+
+  @override
+  String get ideaDescLabel => 'നിങ്ങളുടെ ആശയം വിശദമായി വിവരിക്കുക';
+
+  @override
+  String get ideaDescHint =>
+      'എന്റെ ആശയം ഒരു സ്മാർട്ട് ഡ്രെയിനേജ് സിസ്റ്റം നിർമ്മിക്കുകയാണ്...';
+
+  @override
+  String get ideaNextImpact => 'അടുത്തത്: ആഘാതവും നേട്ടങ്ങളും →';
+
+  @override
+  String get ideaImpactHeading => 'പ്രധാന നേട്ടങ്ങളും പ്രതീക്ഷിക്കുന്ന ആഘാതവും';
+
+  @override
+  String get ideaImpactSubtitle => 'സാധ്യമായ ആഘാതം മനസ്സിലാക്കാൻ സഹായിക്കുക';
+
+  @override
+  String get ideaBenefitsLabel =>
+      'മണ്ഡലത്തിനുള്ള 2–3 പ്രധാന ഗുണങ്ങൾ പട്ടികപ്പെടുത്തുക *';
+
+  @override
+  String get ideaBenefitsHint =>
+      '• താഴ്ന്ന പ്രദേശങ്ങളിൽ വെള്ളപ്പൊക്കം കുറയ്ക്കുന്നു\n• പൊതുജനാരോഗ്യം സംരക്ഷിക്കുന്നു...';
+
+  @override
+  String get ideaBeneficiariesLabel =>
+      'ഈ ആശയത്തിൽ നിന്ന് ആർക്ക് പ്രയോജനം ലഭിക്കും? *';
+
+  @override
+  String get ideaResourcesLabel => 'ആവശ്യമായ വിഭവങ്ങൾ (ഓപ്ഷണൽ)';
+
+  @override
+  String get ideaResourcesHint => 'ശ്രേണി തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get ideaNextVisibility => 'അടുത്തത്: ദൃശ്യത →';
+
+  @override
+  String get ideaVisibilityHeading => 'ദൃശ്യതയും സഹകരണവും';
+
+  @override
+  String get ideaVisibilitySubtitle =>
+      'നിങ്ങളുടെ ആശയം എങ്ങനെ പങ്കിടണമെന്ന് തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get ideaVisibilityFieldLabel => 'ദൃശ്യത ഓപ്ഷൻ *';
+
+  @override
+  String get ideaDiscussionLabel => 'സമൂഹ ചർച്ച അനുവദിക്കുക';
+
+  @override
+  String get ideaDiscussionSubtitle =>
+      'ആളുകൾക്ക് അഭിപ്രായം പറയാനും മെച്ചപ്പെടുത്തലുകൾ നിർദ്ദേശിക്കാനും കഴിയും';
+
+  @override
+  String get ideaContactLabel => 'MLA ഓഫീസ് എന്നെ ബന്ധപ്പെടുന്നത് അനുവദിക്കുക';
+
+  @override
+  String get ideaContactSubtitle =>
+      'MLA ഓഫീസിന് കൂടുതൽ വിവരങ്ങൾക്ക് ബന്ധപ്പെടാൻ കഴിയും';
+
+  @override
+  String get ideaNextReview => 'അടുത്തത്: ആശയം അവലോകനം ചെയ്യുക →';
+
+  @override
+  String get ideaReviewHeading => 'സമർപ്പിക്കുന്നതിന് മുൻപ് ആശയം പരിശോധിക്കുക';
+
+  @override
+  String get ideaCardDetails => 'ആശയ വിശദാംശങ്ങൾ';
+
+  @override
+  String get ideaCardImpact => 'ആഘാതവും നേട്ടങ്ങളും';
+
+  @override
+  String get ideaCardVisibility => 'ദൃശ്യത';
+
+  @override
+  String get ideaRowTopic => 'വിഷയം';
+
+  @override
+  String get ideaRowBenefits => 'നേട്ടങ്ങൾ';
+
+  @override
+  String get ideaRowBeneficiaries => 'ഗുണഭോക്താക്കൾ';
+
+  @override
+  String get ideaRowResources => 'വിഭവങ്ങൾ';
+
+  @override
+  String get ideaRowDiscussion => 'സമൂഹ ചർച്ച';
+
+  @override
+  String get ideaRowContact => 'MLA ബന്ധം';
+
+  @override
+  String get ideaEnabled => 'പ്രവർത്തനക്ഷമം';
+
+  @override
+  String get ideaDisabled => 'നിഷ്‌ക്രിയം';
+
+  @override
+  String get ideaSubmitBtn => 'ആശയം സമർപ്പിക്കുക 🚀';
+
+  @override
+  String get improveHeading => 'നിർദ്ദേശ വിശദാംശങ്ങൾ';
+
+  @override
+  String get improveSubtitle => 'നിങ്ങളുടെ മെച്ചപ്പെടുത്തൽ നിർദ്ദേശം പങ്കിടുക';
+
+  @override
+  String get improveDeptLabel => 'ലക്ഷ്യ വകുപ്പ് (ഓപ്ഷണൽ)';
+
+  @override
+  String get improveDeptHint => 'വകുപ്പ് തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get improveSuggestionLabel => 'നിങ്ങളുടെ നിർദ്ദേശം *';
+
+  @override
+  String get improveSuggestionHint =>
+      'നിങ്ങളുടെ മെച്ചപ്പെടുത്തൽ നിർദ്ദേശം വിശദമായി വിവരിക്കുക...';
+
+  @override
+  String get improveNextLocation => 'അടുത്തത്: സ്ഥലം →';
+
+  @override
+  String get improveLocationHeading => 'സ്ഥലം (ഓപ്ഷണൽ)';
+
+  @override
+  String get improveLocationSubtitle =>
+      'ഈ മെച്ചപ്പെടുത്തൽ എവിടെ നടപ്പിലാക്കണം?';
+
+  @override
+  String get improveLocationLabel => 'സ്ഥലം / പ്രദേശം';
+
+  @override
+  String get improveLocationHint => 'ഉദാ. പ്രധാന ചന്തയ്ക്ക് സമീപം';
+
+  @override
+  String get improveLandmarkLabel => 'ലാൻഡ്മാർക്ക് (ഓപ്ഷണൽ)';
+
+  @override
+  String get improveLandmarkHint => 'സമീപത്തുള്ള ലാൻഡ്മാർക്ക്';
+
+  @override
+  String get improveNextReview => 'അടുത്തത്: അവലോകനം →';
+
+  @override
+  String get improveReviewHeading => 'നിങ്ങളുടെ നിർദ്ദേശം അവലോകനം ചെയ്യുക';
+
+  @override
+  String get improveReviewSubtitle => 'സമർപ്പിക്കുന്നതിന് മുൻപ് പരിശോധിക്കുക';
+
+  @override
+  String get improveCardDetails => 'നിർദ്ദേശ വിശദാംശങ്ങൾ';
+
+  @override
+  String get improveRowDept => 'വകുപ്പ്';
+
+  @override
+  String get improveRowSuggestion => 'നിർദ്ദേശം';
+
+  @override
+  String get improveRowLocation => 'സ്ഥലം';
+
+  @override
+  String get improveRowLandmark => 'ലാൻഡ്മാർക്ക്';
+
+  @override
+  String get improveSubmitBtn => 'നിർദ്ദേശം സമർപ്പിക്കുക';
+
+  @override
+  String get improveSuccessMsg =>
+      'ഞങ്ങളുടെ ടീം നിങ്ങളുടെ നിർദ്ദേശം അവലോകനം ചെയ്ത് ഉചിതമായ നടപടി സ്വീകരിക്കും.';
+
+  @override
+  String get improveGoHome => 'ഹോമിലേക്ക് പോകുക';
+
+  @override
+  String get yesLabel => 'അതെ';
+
+  @override
+  String get noLabel => 'ഇല്ല';
+
+  @override
+  String get maximumReached => 'പരമാവധി എത്തി';
+
+  @override
+  String get maximumFilesMsg => 'പരമാവധി 10 ഫയലുകൾ അനുവദനീയം';
+
+  @override
+  String get stepDetails => 'വിശദാംശങ്ങൾ';
+
+  @override
+  String get stepVisibility => 'ദൃശ്യത';
+
+  @override
+  String get stepReview => 'അവലോകനം';
+
+  @override
+  String get stepDone => 'പൂർത്തിയായി';
+
+  @override
+  String get stepImpact => 'ആഘാതം';
+
+  @override
+  String get stepRecipient => 'സ്വീകർത്താവ്';
+
+  @override
+  String get stepMessage => 'സന്ദേശം';
+
+  @override
+  String get stepSuggestion => 'നിർദ്ദേശം';
+
+  @override
+  String get stepLocation => 'സ്ഥലം';
 }

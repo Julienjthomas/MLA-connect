@@ -1,16 +1,13 @@
-## MODIFIED Requirements
+## ADDED Requirements
 
-### Requirement: Required idea inputs
-The Details step SHALL require: topic (or custom topic text when "Other" is selected), title, description. The Impact step SHALL require: benefits and at least one beneficiary group.
+### Requirement: Confirmation copy honors idea visibility
+The idea submission success step SHALL display visibility-aware confirmation copy. Private ideas SHALL NOT show any text stating the idea is visible to the community.
 
-#### Scenario: Missing benefits
-- **WHEN** the user leaves Benefits blank on the Impact step
-- **THEN** advance is blocked
+#### Scenario: Public idea success
+- **WHEN** the user submits an idea with visibility set to public
+- **THEN** the success step SHALL display copy clarifying that public ideas will be visible to the community (e.g. "Your public ideas will be visible to the community.")
 
-#### Scenario: Other topic requires custom input
-- **WHEN** the user selects "Other" as the topic
-- **THEN** a text input field appears and the user SHALL enter a custom topic before advancing
-
-#### Scenario: Custom topic validation
-- **WHEN** "Other" is selected and the custom topic field is empty
-- **THEN** advance is blocked with a validation message
+#### Scenario: Private idea success
+- **WHEN** the user submits an idea with visibility set to private
+- **THEN** the success step SHALL NOT claim the idea is visible to the community
+- **THEN** the success step SHALL display private-appropriate copy (e.g. "Your idea has been sent privately to the MLA office.")

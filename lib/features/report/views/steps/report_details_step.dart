@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/geo_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -20,13 +21,13 @@ class ReportDetailsStep extends GetView<ReportController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Describe the Problem', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.reportDescribeProblem, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          const Text('Please provide details about the issue', style: AppTextStyles.bodySmall),
+          Text(AppStrings.reportDescribeSubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
 
           // Category chips
-          const Text('Category *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportCategoryLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
           Obx(() => Wrap(
                 spacing: 8,
@@ -72,12 +73,12 @@ class ReportDetailsStep extends GetView<ReportController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 14),
-                const Text('Custom Category *', style: AppTextStyles.titleSmall),
+                Text(AppStrings.reportCategoryLabel, style: AppTextStyles.titleSmall),
                 const SizedBox(height: 8),
                 TextField(
                   controller: controller.customCategoryController,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter the problem category',
+                  decoration: InputDecoration(
+                    hintText: AppStrings.reportCategoryHint,
                   ),
                 ),
               ],
@@ -87,11 +88,11 @@ class ReportDetailsStep extends GetView<ReportController> {
           const SizedBox(height: 20),
 
           // Title
-          const Text('Problem Title *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportDescriptionLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
             controller: controller.titleController,
-            decoration: const InputDecoration(hintText: 'Brief title of the problem'),
+            decoration: InputDecoration(hintText: AppStrings.reportCategoryHint),
           ),
 
           const SizedBox(height: 14),
@@ -99,8 +100,8 @@ class ReportDetailsStep extends GetView<ReportController> {
           // Description — long form + expand + voice (mic on right)
           Row(
             children: [
-              const Expanded(
-                child: Text('Problem Description *', style: AppTextStyles.titleSmall),
+              Expanded(
+                child: Text(AppStrings.reportDescriptionLabel, style: AppTextStyles.titleSmall),
               ),
               IconButton(
                 tooltip: 'Expand editor',
@@ -111,31 +112,20 @@ class ReportDetailsStep extends GetView<ReportController> {
             ],
           ),
           const SizedBox(height: 8),
-          Stack(
-            children: [
-              TextField(
-                controller: controller.descriptionController,
-                minLines: 8,
-                maxLines: 16,
-                maxLength: 1500,
-                decoration: const InputDecoration(
-                  hintText: 'Describe the problem in detail...',
-                  contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 56),
-                ),
-              ),
-              // Corner mic shortcut: triggers voice attachment recording,
-              // does NOT inject transcription into the description field.
-              VoiceInputWidget(
-                overlayInField: true,
-                onRecorded: (path) => controller.voiceRecordingPath.value = path,
-              ),
-            ],
+          TextField(
+            controller: controller.descriptionController,
+            minLines: 8,
+            maxLines: 16,
+            maxLength: 1500,
+            decoration: InputDecoration(
+              hintText: AppStrings.reportDescriptionHint,
+            ),
           ),
 
           const SizedBox(height: 20),
 
           // Voice message attachment — parallel to image upload above.
-          const Text('Insert Voice Message', style: AppTextStyles.titleSmall),
+          Text(AppStrings.addVoiceNote, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           VoiceInputWidget(
             onRecorded: (path) => controller.voiceRecordingPath.value = path,
@@ -144,14 +134,14 @@ class ReportDetailsStep extends GetView<ReportController> {
           const SizedBox(height: 20),
 
           // Panchayath dropdown
-          const Text('Panchayath *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportPanchayatLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           Obx(() {
             final panchayath = controller.selectedPanchayath.value;
             return DropdownButtonFormField<String>(
               key: ValueKey(panchayath),
               value: panchayath.isEmpty ? null : panchayath,
-              decoration: const InputDecoration(hintText: 'Select Panchayath'),
+              decoration: InputDecoration(hintText: AppStrings.selectPanchayat),
               items: GeoConstants.panchayaths
                   .map((p) => DropdownMenuItem(value: p, child: Text(p)))
                   .toList(),
@@ -165,7 +155,7 @@ class ReportDetailsStep extends GetView<ReportController> {
           const SizedBox(height: 14),
 
           // Ward dropdown
-          const Text('Ward *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportWardLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           Obx(() {
             final panchayath = controller.selectedPanchayath.value;
@@ -174,7 +164,7 @@ class ReportDetailsStep extends GetView<ReportController> {
             return DropdownButtonFormField<String>(
               key: ValueKey('ward_$panchayath'),
               value: ward.isEmpty ? null : ward,
-              decoration: const InputDecoration(hintText: 'Select Ward'),
+              decoration: InputDecoration(hintText: AppStrings.searchWard),
               items: wards.map((w) => DropdownMenuItem(value: w, child: Text(w))).toList(),
               onChanged: wards.isEmpty ? null : (v) => controller.selectedWard.value = v ?? '',
             );
@@ -183,12 +173,12 @@ class ReportDetailsStep extends GetView<ReportController> {
           const SizedBox(height: 14),
 
           // Location description — no GPS icon
-          const Text('Location Description', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportLocationDescLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
             controller: controller.locationController,
-            decoration: const InputDecoration(
-              hintText: 'Describe the exact location of the problem',
+            decoration: InputDecoration(
+              hintText: AppStrings.reportDetailsLocationHint,
             ),
           ),
 
@@ -200,7 +190,7 @@ class ReportDetailsStep extends GetView<ReportController> {
                 maxFiles: 10,
                 onChanged: (files) {
                   if (files.length > 10) {
-                    Get.snackbar('Maximum reached', 'Maximum 10 files allowed',
+                    Get.snackbar(AppStrings.maximumReached, AppStrings.maximumFilesMsg,
                         snackPosition: SnackPosition.BOTTOM);
                     controller.selectedImages.value = files.take(10).toList();
                     return;
@@ -212,7 +202,7 @@ class ReportDetailsStep extends GetView<ReportController> {
           const SizedBox(height: 32),
 
           PrimaryButton(
-            text: 'Next: Review →',
+            text: AppStrings.reportNextReview,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.reportOrange,
           ),

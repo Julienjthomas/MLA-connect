@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/constants/app_enums.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../data/models/appreciation_model.dart';
 import '../../../data/services/appreciation_service.dart';
 import '../../../data/services/mla_service.dart';
@@ -52,7 +53,7 @@ class AppreciationController extends GetxController {
   final RxString submittedId = ''.obs;
   late PageController pageController;
 
-  final List<String> steps = ['Recipient', 'Message', 'Visibility', 'Review', 'Done'];
+  List<String> get steps => [AppStrings.stepRecipient, AppStrings.stepMessage, AppStrings.stepVisibility, AppStrings.stepReview, AppStrings.stepDone];
 
   final List<String> recipientCategories = [
     'Government Staff', 'PWD Department', 'Health Department',

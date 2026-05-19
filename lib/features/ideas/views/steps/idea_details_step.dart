@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -17,11 +18,11 @@ class IdeaDetailsStep extends GetView<IdeaController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Idea Details', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.ideaDetailsHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Tell us about your idea', style: AppTextStyles.bodySmall),
+          Text(AppStrings.ideaDetailsSubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
-          Text('What is your idea about? (Topic) *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.ideaTopicLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
           Obx(() => Wrap(
                 spacing: 8, runSpacing: 8,
@@ -47,21 +48,21 @@ class IdeaDetailsStep extends GetView<IdeaController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 14),
-                Text('Custom Topic *', style: AppTextStyles.titleSmall),
+                Text(AppStrings.ideaCustomTopicLabel, style: AppTextStyles.titleSmall),
                 const SizedBox(height: 8),
                 TextField(
                   controller: controller.customTopicController,
-                  decoration: const InputDecoration(hintText: 'Enter your topic'),
+                  decoration: InputDecoration(hintText: AppStrings.ideaCustomTopicHint),
                 ),
               ],
             );
           }),
           const SizedBox(height: 20),
-          Text('Idea Title *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.ideaTitleLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
-          TextField(controller: controller.titleController, decoration: const InputDecoration(hintText: 'e.g. Smart drainage system for your area')),
+          TextField(controller: controller.titleController, decoration: InputDecoration(hintText: AppStrings.ideaTitleHint)),
           const SizedBox(height: 14),
-          Text('Describe your idea in detail', style: AppTextStyles.titleSmall),
+          Text(AppStrings.ideaDescLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           Stack(
             children: [
@@ -69,9 +70,9 @@ class IdeaDetailsStep extends GetView<IdeaController> {
                 controller: controller.descriptionController,
                 maxLines: 5,
                 maxLength: 1000,
-                decoration: const InputDecoration(
-                  hintText: 'My idea is to build a smart drainage system...',
-                  contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 56),
+                decoration: InputDecoration(
+                  hintText: AppStrings.ideaDescHint,
+                  contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 56),
                 ),
               ),
               VoiceInputWidget(
@@ -94,7 +95,7 @@ class IdeaDetailsStep extends GetView<IdeaController> {
                 maxFiles: 10,
                 onChanged: (files) {
                   if (files.length > 10) {
-                    Get.snackbar('Maximum reached', 'Maximum 10 files allowed',
+                    Get.snackbar(AppStrings.maximumReached, AppStrings.maximumFilesMsg,
                         snackPosition: SnackPosition.BOTTOM);
                     controller.selectedImages.value = files.take(10).toList();
                     return;
@@ -103,7 +104,7 @@ class IdeaDetailsStep extends GetView<IdeaController> {
                 },
               )),
           const SizedBox(height: 32),
-          PrimaryButton(text: 'Next: Impact & Benefits →', onPressed: controller.nextStep, backgroundColor: AppColors.ideaPurple),
+          PrimaryButton(text: AppStrings.ideaNextImpact, onPressed: controller.nextStep, backgroundColor: AppColors.ideaPurple),
           const SizedBox(height: 20),
         ],
       ),

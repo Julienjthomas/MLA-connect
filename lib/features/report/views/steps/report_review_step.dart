@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -17,31 +18,31 @@ class ReportReviewStep extends GetView<ReportController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Review Report', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.reportReviewHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Please review your report before submitting', style: AppTextStyles.bodySmall),
+          Text(AppStrings.reportReviewSubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
 
-          _section('Problem Details', [
+          _section(AppStrings.reportReviewSectionDetails, [
             _row(
-              'Category',
+              AppStrings.reportReviewRowCategory,
               controller.selectedCategory.value == ReportCategory.other
                   ? (controller.customCategoryController.text.trim().isEmpty
                       ? controller.selectedCategory.value?.label ?? '–'
                       : controller.customCategoryController.text.trim())
                   : controller.selectedCategory.value?.label ?? '–',
             ),
-            _row('Title', controller.titleController.text),
-            _row('Description', controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
-            _row('Visibility', controller.visibility.value.label),
+            _row(AppStrings.reportReviewRowTitle, controller.titleController.text),
+            _row(AppStrings.reportReviewRowDescription, controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
+            _row(AppStrings.reportReviewRowVisibility, controller.visibility.value.label),
           ]),
 
           const SizedBox(height: 16),
 
-          _section('Location', [
-            _row('Location', controller.locationController.text.isEmpty ? '–' : controller.locationController.text),
-            _row('Landmark', controller.landmarkController.text.isEmpty ? '–' : controller.landmarkController.text),
-            _row('Contact', controller.contactController.text.isEmpty ? '–' : controller.contactController.text),
+          _section(AppStrings.location, [
+            _row(AppStrings.location, controller.locationController.text.isEmpty ? '–' : controller.locationController.text),
+            _row(AppStrings.reportReviewRowLandmark, controller.landmarkController.text.isEmpty ? '–' : controller.landmarkController.text),
+            _row(AppStrings.reportReviewRowContact, controller.contactController.text.isEmpty ? '–' : controller.contactController.text),
           ]),
 
           const SizedBox(height: 16),
@@ -52,7 +53,7 @@ class ReportReviewStep extends GetView<ReportController> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Media (${controller.selectedImages.length})', style: AppTextStyles.titleSmall),
+                Text('${AppStrings.photos} (${controller.selectedImages.length})', style: AppTextStyles.titleSmall),
                 const SizedBox(height: 8),
                 SizedBox(
                   height: 70,
@@ -78,7 +79,7 @@ class ReportReviewStep extends GetView<ReportController> {
           }),
 
           Obx(() => PrimaryButton(
-                text: 'Submit Report',
+                text: AppStrings.submitReport,
                 onPressed: controller.submit,
                 isLoading: controller.isSubmitting.value,
                 backgroundColor: AppColors.reportOrange,

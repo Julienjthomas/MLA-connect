@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -18,24 +19,24 @@ class IdeaReviewStep extends GetView<IdeaController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Please review your idea before submitting', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.ideaReviewHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 20),
-          _card('Idea Details', [
-            _row('Topic', controller.topic.value),
-            _row('Title', controller.titleController.text),
-            _row('Description', controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
+          _card(AppStrings.ideaCardDetails, [
+            _row(AppStrings.ideaRowTopic, controller.topic.value),
+            _row(AppStrings.reportReviewRowTitle, controller.titleController.text),
+            _row(AppStrings.reportReviewRowDescription, controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
           ]),
           const SizedBox(height: 12),
-          _card('Impact & Benefits', [
-            _row('Benefits', controller.benefitsController.text.isEmpty ? '–' : controller.benefitsController.text),
-            _row('Beneficiaries', controller.beneficiaries.isEmpty ? '–' : controller.beneficiaries.join(', ')),
-            _row('Resources', controller.estimatedResources.value.isEmpty ? '–' : controller.estimatedResources.value),
+          _card(AppStrings.ideaCardImpact, [
+            _row(AppStrings.ideaRowBenefits, controller.benefitsController.text.isEmpty ? '–' : controller.benefitsController.text),
+            _row(AppStrings.ideaRowBeneficiaries, controller.beneficiaries.isEmpty ? '–' : controller.beneficiaries.join(', ')),
+            _row(AppStrings.ideaRowResources, controller.estimatedResources.value.isEmpty ? '–' : controller.estimatedResources.value),
           ]),
           const SizedBox(height: 12),
-          _card('Visibility', [
-            _row('Visibility', controller.visibility.value.label),
-            _row('Community Discussion', controller.allowDiscussion.value ? 'Enabled' : 'Disabled'),
-            _row('MLA Contact', controller.allowContact.value ? 'Yes' : 'No'),
+          _card(AppStrings.ideaCardVisibility, [
+            _row(AppStrings.reportReviewRowVisibility, controller.visibility.value.label),
+            _row(AppStrings.ideaRowDiscussion, controller.allowDiscussion.value ? AppStrings.ideaEnabled : AppStrings.ideaDisabled),
+            _row(AppStrings.ideaRowContact, controller.allowContact.value ? AppStrings.yesLabel : AppStrings.noLabel),
           ]),
           Obx(() {
             if (controller.selectedImages.isEmpty) return const SizedBox();
@@ -43,7 +44,7 @@ class IdeaReviewStep extends GetView<IdeaController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
-                Text('Media (${controller.selectedImages.length})', style: AppTextStyles.titleSmall),
+                Text('${AppStrings.photos} (${controller.selectedImages.length})', style: AppTextStyles.titleSmall),
                 const SizedBox(height: 8),
                 SizedBox(
                   height: 70,
@@ -69,7 +70,7 @@ class IdeaReviewStep extends GetView<IdeaController> {
           }),
           const SizedBox(height: 32),
           Obx(() => PrimaryButton(
-                text: 'Submit Idea 🚀',
+                text: AppStrings.ideaSubmitBtn,
                 onPressed: controller.submit,
                 isLoading: controller.isSubmitting.value,
                 backgroundColor: AppColors.ideaPurple,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -16,12 +17,12 @@ class RecipientStep extends GetView<AppreciationController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Who are you appreciating?', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.appreciateWhoHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 6),
-          Text('Choose your MLA or a direct staff member.',
+          Text(AppStrings.appreciateWhoSubtitle,
               style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary)),
           const SizedBox(height: 20),
-          Text('Recipient *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.appreciateRecipientLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
           Obx(() {
             if (controller.loadingRecipients.value && controller.recipients.isEmpty) {
@@ -33,7 +34,7 @@ class RecipientStep extends GetView<AppreciationController> {
             if (controller.recipients.isEmpty) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Text('No recipients available yet.',
+                child: Text(AppStrings.appreciateNoRecipients,
                     style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary)),
               );
             }
@@ -77,7 +78,7 @@ class RecipientStep extends GetView<AppreciationController> {
                               color: AppColors.appreciateGreen.withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Text('MLA',
+                            child: Text(AppStrings.appreciateMlaBadge,
                                 style: AppTextStyles.labelSmall
                                     .copyWith(color: AppColors.appreciateGreen)),
                           ),
@@ -106,15 +107,15 @@ class RecipientStep extends GetView<AppreciationController> {
             );
           }),
           const SizedBox(height: 14),
-          Text('Related Work / Project (Optional)', style: AppTextStyles.titleSmall),
+          Text(AppStrings.appreciateRelatedWorkLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
               controller: controller.relatedWorkController,
-              decoration: const InputDecoration(
-                  hintText: 'e.g. Road repair at Kuttikattoor')),
+              decoration: InputDecoration(
+                  hintText: AppStrings.appreciateRelatedWorkHint)),
           const SizedBox(height: 32),
           PrimaryButton(
-              text: 'Next: Your Message →',
+              text: AppStrings.appreciateNextMessage,
               onPressed: controller.nextStep,
               backgroundColor: AppColors.appreciateGreen),
           const SizedBox(height: 20),

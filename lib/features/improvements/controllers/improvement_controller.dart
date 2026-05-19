@@ -2,6 +2,7 @@ import 'dart:async' show unawaited;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../core/constants/app_strings.dart';
 import '../../../data/models/improvement_model.dart';
 import '../../../data/services/improvement_service.dart';
 import '../../activity/controllers/activity_controller.dart';
@@ -21,7 +22,7 @@ class ImprovementController extends GetxController {
   final RxString submittedId = ''.obs;
   late PageController pageController;
 
-  final List<String> steps = ['Suggestion', 'Location', 'Review', 'Done'];
+  List<String> get steps => [AppStrings.stepSuggestion, AppStrings.stepLocation, AppStrings.stepReview, AppStrings.stepDone];
   final List<String> departments = [
     'Roads & Infrastructure', 'Water Supply', 'Electricity', 'Health',
     'Education', 'Waste Management', 'Agriculture', 'Panchayat Office', 'Other',

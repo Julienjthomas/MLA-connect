@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -15,16 +16,16 @@ class IdeaImpactStep extends GetView<IdeaController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Key Benefits & Expected Impact', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.ideaImpactHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          Text('Help us understand the potential impact', style: AppTextStyles.bodySmall),
+          Text(AppStrings.ideaImpactSubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
-          Text('List 2–3 major advantages for the constituency *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.ideaBenefitsLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(controller: controller.benefitsController, maxLines: 4, maxLength: 500,
-              decoration: const InputDecoration(hintText: '• Reduces flooding in low-lying areas\n• Protects public health...')),
+              decoration: InputDecoration(hintText: AppStrings.ideaBenefitsHint)),
           const SizedBox(height: 16),
-          Text('Who will benefit from this idea? *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.ideaBeneficiariesLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
           Obx(() => Wrap(
                 spacing: 8, runSpacing: 8,
@@ -45,16 +46,16 @@ class IdeaImpactStep extends GetView<IdeaController> {
                 }).toList(),
               )),
           const SizedBox(height: 16),
-          Text('Estimated Resources (Optional)', style: AppTextStyles.titleSmall),
+          Text(AppStrings.ideaResourcesLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           Obx(() => DropdownButtonFormField<String>(
                 value: controller.estimatedResources.value.isEmpty ? null : controller.estimatedResources.value,
-                decoration: const InputDecoration(hintText: 'Select Range'),
+                decoration: InputDecoration(hintText: AppStrings.ideaResourcesHint),
                 items: controller.resourceRanges.map((r) => DropdownMenuItem(value: r, child: Text(r))).toList(),
                 onChanged: (v) => controller.estimatedResources.value = v ?? '',
               )),
           const SizedBox(height: 32),
-          PrimaryButton(text: 'Next: Visibility →', onPressed: controller.nextStep, backgroundColor: AppColors.ideaPurple),
+          PrimaryButton(text: AppStrings.ideaNextVisibility, onPressed: controller.nextStep, backgroundColor: AppColors.ideaPurple),
           const SizedBox(height: 20),
         ],
       ),

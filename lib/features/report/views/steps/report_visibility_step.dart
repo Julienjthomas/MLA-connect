@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
@@ -16,11 +17,11 @@ class ReportVisibilityStep extends GetView<ReportController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Visibility', style: AppTextStyles.headlineSmall),
+          Text(AppStrings.location, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
-          const Text('Choose who can see this report', style: AppTextStyles.bodySmall),
+          Text(AppStrings.reportVisibilitySubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 24),
-          const Text('Visibility Option *', style: AppTextStyles.titleSmall),
+          Text(AppStrings.reportVisibilityFieldLabel, style: AppTextStyles.titleSmall),
           const SizedBox(height: 10),
           Obx(
             () => Column(
@@ -73,7 +74,7 @@ class ReportVisibilityStep extends GetView<ReportController> {
           ),
           const SizedBox(height: 32),
           PrimaryButton(
-            text: 'Next: Review →',
+            text: AppStrings.reportNextReview,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.reportOrange,
           ),

@@ -300,4 +300,183 @@ class AppStrings {
         (question: _s.helpFaqQ6, answer: _s.helpFaqA6),
         (question: _s.helpFaqQ7, answer: _s.helpFaqA7),
       ];
+
+  // Report flow — details step
+  static String get reportDescribeProblem => _s.reportDescribeProblem;
+  static String get reportDescribeSubtitle => _s.reportDescribeSubtitle;
+  static String get reportCategoryLabel => _s.reportCategoryLabel;
+  static String get reportCategoryHint => _s.reportCategoryHint;
+  static String get reportDescriptionLabel => _s.reportDescriptionLabel;
+  static String get reportDescriptionHint => _s.reportDescriptionHint;
+  static String get reportDetailsLocationHint => _s.reportDetailsLocationHint;
+  static String get reportNextReview => _s.reportNextReview;
+
+  // Report flow — location step
+  static String get reportLocationSubtitle => _s.reportLocationSubtitle;
+  static String get reportPanchayatLabel => _s.reportPanchayatLabel;
+  static String get reportWardLabel => _s.reportWardLabel;
+  static String get reportLandmarkAreaLabel => _s.reportLandmarkAreaLabel;
+  static String get reportLocationDescLabel => _s.reportLocationDescLabel;
+  static String get reportLocationDescHint => _s.reportLocationDescHint;
+  static String get reportGpsNote => _s.reportGpsNote;
+  static String get reportMapPin => _s.reportMapPin;
+  static String get reportContactLabel => _s.reportContactLabel;
+
+  // Report flow — visibility step
+  static String get reportVisibilitySubtitle => _s.reportVisibilitySubtitle;
+  static String get reportVisibilityFieldLabel => _s.reportVisibilityFieldLabel;
+
+  // Report flow — review step
+  static String get reportReviewHeading => _s.reportReviewHeading;
+  static String get reportReviewSubtitle => _s.reportReviewSubtitle;
+  static String get reportReviewSectionDetails => _s.reportReviewSectionDetails;
+  static String get reportReviewRowCategory => _s.reportReviewRowCategory;
+  static String get reportReviewRowTitle => _s.reportReviewRowTitle;
+  static String get reportReviewRowDescription => _s.reportReviewRowDescription;
+  static String get reportReviewRowVisibility => _s.reportReviewRowVisibility;
+  static String get reportReviewRowLandmark => _s.reportReviewRowLandmark;
+  static String get reportReviewRowContact => _s.reportReviewRowContact;
+
+  // Report categories
+  static String get categoryRoadDamage => _s.categoryRoadDamage;
+  static String get categoryWater => _s.categoryWater;
+  static String get categoryElectricity => _s.categoryElectricity;
+  static String get categoryStreetlight => _s.categoryStreetlight;
+  static String get categoryDrainage => _s.categoryDrainage;
+  static String get categoryWasteManagement => _s.categoryWasteManagement;
+  static String get categoryPublicSafety => _s.categoryPublicSafety;
+  static String get categoryOther => _s.categoryOther;
+
+  // Appreciation flow — recipient step
+  static String get appreciateWhoHeading => _s.appreciateWhoHeading;
+  static String get appreciateWhoSubtitle => _s.appreciateWhoSubtitle;
+  static String get appreciateRecipientLabel => _s.appreciateRecipientLabel;
+  static String get appreciateNoRecipients => _s.appreciateNoRecipients;
+  static String get appreciateMlaBadge => _s.appreciateMlaBadge;
+  static String get appreciateRelatedWorkLabel => _s.appreciateRelatedWorkLabel;
+  static String get appreciateRelatedWorkHint => _s.appreciateRelatedWorkHint;
+  static String get appreciateNextMessage => _s.appreciateNextMessage;
+
+  // Appreciation flow — message step
+  static String get appreciateMessageHeading => _s.appreciateMessageHeading;
+  static String get appreciateMessageSubtitle => _s.appreciateMessageSubtitle;
+  static String get appreciateMessageHint => _s.appreciateMessageHint;
+  static String get appreciateAddPhotoLabel => _s.appreciateAddPhotoLabel;
+  static String get appreciateNextVisibility => _s.appreciateNextVisibility;
+
+  // Appreciation flow — visibility step
+  static String get appreciateVisibilityHeading => _s.appreciateVisibilityHeading;
+  static String get appreciateVisibilitySubtitle => _s.appreciateVisibilitySubtitle;
+  static String get appreciateNextReview => _s.appreciateNextReview;
+
+  // Appreciation flow — review step
+  static String get appreciateReviewHeading => _s.appreciateReviewHeading;
+  static String get appreciateReviewSubtitle => _s.appreciateReviewSubtitle;
+  static String get appreciateCardRecipient => _s.appreciateCardRecipient;
+  static String get appreciateCardMessage => _s.appreciateCardMessage;
+  static String get appreciateCardVisibility => _s.appreciateCardVisibility;
+  static String get appreciateRowStaff => _s.appreciateRowStaff;
+  static String get appreciateRowRelatedWork => _s.appreciateRowRelatedWork;
+  static String get appreciateRowAnonymous => _s.appreciateRowAnonymous;
+  static String get appreciateSubmitBtn => _s.appreciateSubmitBtn;
+
+  // Appreciation flow — success step
+  static String get appreciateSuccessMotivation => _s.appreciateSuccessMotivation;
+  static String get appreciateSendAnother => _s.appreciateSendAnother;
+
+  // Idea flow — details step
+  static String get ideaDetailsHeading => _s.ideaDetailsHeading;
+  static String get ideaDetailsSubtitle => _s.ideaDetailsSubtitle;
+  static String get ideaTopicLabel => _s.ideaTopicLabel;
+  static String get ideaCustomTopicLabel => _s.ideaCustomTopicLabel;
+  static String get ideaCustomTopicHint => _s.ideaCustomTopicHint;
+  static String get ideaTitleLabel => _s.ideaTitleLabel;
+  static String get ideaTitleHint => _s.ideaTitleHint;
+  static String get ideaDescLabel => _s.ideaDescLabel;
+  static String get ideaDescHint => _s.ideaDescHint;
+  static String get ideaNextImpact => _s.ideaNextImpact;
+
+  // Idea flow — impact step
+  static String get ideaImpactHeading => _s.ideaImpactHeading;
+  static String get ideaImpactSubtitle => _s.ideaImpactSubtitle;
+  static String get ideaBenefitsLabel => _s.ideaBenefitsLabel;
+  static String get ideaBenefitsHint => _s.ideaBenefitsHint;
+  static String get ideaBeneficiariesLabel => _s.ideaBeneficiariesLabel;
+  static String get ideaResourcesLabel => _s.ideaResourcesLabel;
+  static String get ideaResourcesHint => _s.ideaResourcesHint;
+  static String get ideaNextVisibility => _s.ideaNextVisibility;
+
+  // Idea flow — visibility step
+  static String get ideaVisibilityHeading => _s.ideaVisibilityHeading;
+  static String get ideaVisibilitySubtitle => _s.ideaVisibilitySubtitle;
+  static String get ideaVisibilityFieldLabel => _s.ideaVisibilityFieldLabel;
+  static String get ideaDiscussionLabel => _s.ideaDiscussionLabel;
+  static String get ideaDiscussionSubtitle => _s.ideaDiscussionSubtitle;
+  static String get ideaContactLabel => _s.ideaContactLabel;
+  static String get ideaContactSubtitle => _s.ideaContactSubtitle;
+  static String get ideaNextReview => _s.ideaNextReview;
+
+  // Idea flow — review step
+  static String get ideaReviewHeading => _s.ideaReviewHeading;
+  static String get ideaCardDetails => _s.ideaCardDetails;
+  static String get ideaCardImpact => _s.ideaCardImpact;
+  static String get ideaCardVisibility => _s.ideaCardVisibility;
+  static String get ideaRowTopic => _s.ideaRowTopic;
+  static String get ideaRowBenefits => _s.ideaRowBenefits;
+  static String get ideaRowBeneficiaries => _s.ideaRowBeneficiaries;
+  static String get ideaRowResources => _s.ideaRowResources;
+  static String get ideaRowDiscussion => _s.ideaRowDiscussion;
+  static String get ideaRowContact => _s.ideaRowContact;
+  static String get ideaEnabled => _s.ideaEnabled;
+  static String get ideaDisabled => _s.ideaDisabled;
+  static String get ideaSubmitBtn => _s.ideaSubmitBtn;
+
+  // Improvement flow — suggestion step
+  static String get improveHeading => _s.improveHeading;
+  static String get improveSubtitle => _s.improveSubtitle;
+  static String get improveDeptLabel => _s.improveDeptLabel;
+  static String get improveDeptHint => _s.improveDeptHint;
+  static String get improveSuggestionLabel => _s.improveSuggestionLabel;
+  static String get improveSuggestionHint => _s.improveSuggestionHint;
+  static String get improveNextLocation => _s.improveNextLocation;
+
+  // Improvement flow — location step
+  static String get improveLocationHeading => _s.improveLocationHeading;
+  static String get improveLocationSubtitle => _s.improveLocationSubtitle;
+  static String get improveLocationLabel => _s.improveLocationLabel;
+  static String get improveLocationHint => _s.improveLocationHint;
+  static String get improveLandmarkLabel => _s.improveLandmarkLabel;
+  static String get improveLandmarkHint => _s.improveLandmarkHint;
+  static String get improveNextReview => _s.improveNextReview;
+
+  // Improvement flow — review step
+  static String get improveReviewHeading => _s.improveReviewHeading;
+  static String get improveReviewSubtitle => _s.improveReviewSubtitle;
+  static String get improveCardDetails => _s.improveCardDetails;
+  static String get improveRowDept => _s.improveRowDept;
+  static String get improveRowSuggestion => _s.improveRowSuggestion;
+  static String get improveRowLocation => _s.improveRowLocation;
+  static String get improveRowLandmark => _s.improveRowLandmark;
+  static String get improveSubmitBtn => _s.improveSubmitBtn;
+
+  // Improvement flow — success step
+  static String get improveSuccessMsg => _s.improveSuccessMsg;
+  static String get improveGoHome => _s.improveGoHome;
+
+  // Shared
+  static String get yesLabel => _s.yesLabel;
+  static String get noLabel => _s.noLabel;
+  static String get maximumReached => _s.maximumReached;
+  static String get maximumFilesMsg => _s.maximumFilesMsg;
+
+  // Stepper step names
+  static String get stepDetails => _s.stepDetails;
+  static String get stepVisibility => _s.stepVisibility;
+  static String get stepReview => _s.stepReview;
+  static String get stepDone => _s.stepDone;
+  static String get stepImpact => _s.stepImpact;
+  static String get stepRecipient => _s.stepRecipient;
+  static String get stepMessage => _s.stepMessage;
+  static String get stepSuggestion => _s.stepSuggestion;
+  static String get stepLocation => _s.stepLocation;
 }
