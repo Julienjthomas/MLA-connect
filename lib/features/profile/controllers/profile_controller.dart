@@ -26,26 +26,29 @@ class ProfileController extends GetxController {
     await showModalBottomSheet<void>(
       context: context,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 36,
-                height: 4,
-                decoration: BoxDecoration(color: AppColors.grey300, borderRadius: BorderRadius.circular(2)),
+      builder: (ctx) => SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 36,
+                  height: 4,
+                  decoration: BoxDecoration(color: AppColors.grey300, borderRadius: BorderRadius.circular(2)),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            const Text('Language', style: AppTextStyles.titleMedium),
-            const SizedBox(height: 16),
-            _langTile(ctx, 'en', 'English', current),
-            const SizedBox(height: 10),
-            _langTile(ctx, 'ml', 'മലയാളം (Malayalam)', current),
-          ],
+              const SizedBox(height: 20),
+              const Text('Language', style: AppTextStyles.titleMedium),
+              const SizedBox(height: 16),
+              _langTile(ctx, 'en', 'English', current),
+              const SizedBox(height: 10),
+              _langTile(ctx, 'ml', 'മലയാളം (Malayalam)', current),
+            ],
+          ),
         ),
       ),
     );
