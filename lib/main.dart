@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'core/services/app_icon_service.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/app_locale.dart';
 import 'data/supabase/supabase_config.dart';
@@ -41,22 +40,6 @@ class SuperBalusseryApp extends StatefulWidget {
 }
 
 class _SuperBalusseryAppState extends State<SuperBalusseryApp> {
-  late final AppLifecycleListener _lifecycleListener;
-
-  @override
-  void initState() {
-    super.initState();
-    _lifecycleListener = AppLifecycleListener(
-      onPause: AppIconService.applyPendingAndroid,
-    );
-  }
-
-  @override
-  void dispose() {
-    _lifecycleListener.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Obx(

@@ -66,39 +66,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleIcons</key>
-	<dict>
-		<key>CFBundleAlternateIcons</key>
-		<dict>
-			<key>balussery</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>AlternateIcons/balussery</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>koduvalli</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>AlternateIcons/koduvalli</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>perambra</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>AlternateIcons/perambra</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-		</dict>
-	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>

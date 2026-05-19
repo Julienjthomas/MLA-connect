@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../core/constants/constituency_seed.dart';
-import '../../../core/services/app_icon_service.dart';
 import '../../../core/utils/app_locale.dart';
 import '../../../core/utils/constituency_prefs.dart';
 import '../../../core/utils/constituency_db_id.dart';
@@ -51,14 +49,11 @@ class AuthController extends GetxController {
       if (profile != null && !await AppLocale.hasStoredPreference()) {
         AppLocale.change(profile.language);
       }
-      final slug = ConstituencySeed.slugForConstituencyName(profile?.constituencyName);
-      await AppIconService.setForConstituency(slug);
     } catch (_) {}
   }
 
   Future<void> _clearLocalSessionContext() async {
     await ConstituencyPrefs.clear();
-    await AppIconService.clearToDefault();
     if (Get.isRegistered<OnboardingController>()) {
       Get.find<OnboardingController>().clearLocalConstituencyState();
     }
@@ -74,8 +69,6 @@ class AuthController extends GetxController {
       if (profile != null && !await AppLocale.hasStoredPreference()) {
         AppLocale.change(profile.language);
       }
-      final slug = ConstituencySeed.slugForConstituencyName(profile?.constituencyName);
-      await AppIconService.setForConstituency(slug);
     } catch (_) {}
   }
 
