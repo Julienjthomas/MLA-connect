@@ -53,7 +53,7 @@ class AppreciationController extends GetxController {
   final RxString submittedId = ''.obs;
   late PageController pageController;
 
-  List<String> get steps => [AppStrings.stepRecipient, AppStrings.stepMessage, AppStrings.stepVisibility, AppStrings.stepReview, AppStrings.stepDone];
+  List<String> get steps => [AppStrings.stepRecipient, AppStrings.stepReview, AppStrings.stepDone];
 
   final List<String> recipientCategories = [
     'Government Staff', 'PWD Department', 'Health Department',
@@ -111,22 +111,11 @@ class AppreciationController extends GetxController {
   }
 
   bool validateCurrentStep() {
-    switch (currentStep.value) {
-      case 0:
-        if (selectedRecipient.value == null) {
-          Get.snackbar('Required', 'Please select a recipient', snackPosition: SnackPosition.BOTTOM);
-          return false;
-        }
-        return true;
-      case 1:
-        if (messageController.text.trim().length < 10) {
-          Get.snackbar('Required', 'Please write an appreciation message (at least 10 characters)', snackPosition: SnackPosition.BOTTOM);
-          return false;
-        }
-        return true;
-      default:
-        return true;
+    if (currentStep.value == 0 && recipientCategory.value.isEmpty) {
+      Get.snackbar('Required', 'Please select a category', snackPosition: SnackPosition.BOTTOM);
+      return false;
     }
+    return true;
   }
 
   void nextStep() {
@@ -182,12 +171,11 @@ class AppreciationController extends GetxController {
           userId: uid,
         );
       }
-      final recipient = selectedRecipient.value;
       final data = AppreciationFormData(
-        recipientCategory: recipient?.type == 'mla' ? 'MLA' : (recipient?.designation ?? 'MLA Staff'),
-        staffName: recipient?.name ?? '',
-        department: departmentController.text.trim(),
-        relatedWork: relatedWorkController.text.trim(),
+        recipientCategory: recipientCategory.value,
+        staffName: '',
+        department: '',
+        relatedWork: '',
         message: messageController.text.trim(),
         visibility: visibility.value,
         anonymous: anonymous.value,

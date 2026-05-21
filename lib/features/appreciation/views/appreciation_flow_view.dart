@@ -6,8 +6,6 @@ import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/stepper_header.dart';
 import '../controllers/appreciation_controller.dart';
 import 'steps/recipient_step.dart';
-import 'steps/message_step.dart';
-import 'steps/visibility_step.dart';
 import 'steps/appreciation_review_step.dart';
 import 'steps/appreciation_success_step.dart';
 
@@ -40,8 +38,9 @@ class AppreciationFlowView extends GetView<AppreciationController> {
                   controller: controller.pageController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: const [
-                    RecipientStep(), MessageStep(), AppreciationVisibilityStep(),
-                    AppreciationReviewStep(), AppreciationSuccessStep(),
+                    RecipientStep(),
+                    AppreciationReviewStep(),
+                    AppreciationSuccessStep(),
                   ],
                 ),
               ),

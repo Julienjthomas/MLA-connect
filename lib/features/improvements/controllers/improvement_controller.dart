@@ -13,6 +13,9 @@ class ImprovementController extends GetxController {
 
   final suggestionController = TextEditingController();
   final RxString department = ''.obs;
+  final RxString voiceRecordingPath = ''.obs;
+  final RxString selectedPanchayath = ''.obs;
+  final RxString selectedWard = ''.obs;
   final locationController = TextEditingController();
   final landmarkController = TextEditingController();
   final RxBool isLoadingLocation = false.obs;

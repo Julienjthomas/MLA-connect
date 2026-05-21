@@ -21,7 +21,7 @@ class AppreciationSuccessStep extends StatelessWidget {
               width: 100,
               height: 100,
               decoration: const BoxDecoration(color: AppColors.appreciateGreen, shape: BoxShape.circle),
-              child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 56),
+              child: const Icon(Icons.check_rounded, color: Colors.white, size: 56),
             ),
             const SizedBox(height: 24),
             Text(

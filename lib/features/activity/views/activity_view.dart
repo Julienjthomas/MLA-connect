@@ -113,11 +113,10 @@ class _ActivityShellState extends State<_ActivityShell> {
                 ActivityTab.saved => true,
               };
               if (isEmpty) return const SizedBox.shrink();
-              return FloatingActionButton.extended(
+              return FloatingActionButton(
                 onPressed: () => _openAddFlow(tab),
                 backgroundColor: addFeature.color,
-                icon: Icon(addFeature.icon, color: Colors.white),
-                label: Text(addLabel, style: const TextStyle(color: Colors.white)),
+                child: const Icon(Icons.add_rounded, color: Colors.white),
               );
             }),
       body: Column(
@@ -142,7 +141,11 @@ class _ActivityShellState extends State<_ActivityShell> {
               labelColor: AppColors.primary,
               unselectedLabelColor: AppColors.grey500,
               labelStyle: AppTextStyles.labelMedium,
-              tabs: _tabs.map((t) => Tab(text: t.label)).toList(),
+              tabs: _tabs.map((t) => Tab(
+                icon: t.addFeature != null ? Icon(t.addFeature!.icon, size: 16) : null,
+                iconMargin: const EdgeInsets.only(bottom: 2),
+                text: t.label,
+              )).toList(),
             ),
           ),
           Expanded(
@@ -194,7 +197,7 @@ class _ContributionBanner extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.emoji_events_rounded, color: AppColors.primary, size: 20),
+                    const Icon(Icons.waving_hand_rounded, color: AppColors.primary, size: 20),
                     const SizedBox(width: 6),
                     Text(
                       firstName.isNotEmpty
@@ -373,6 +376,9 @@ class _ReportsTab extends StatelessWidget {
             status: r.status,
             timeAgo: r.timeAgo,
             imageUrl: r.mediaUrls.isNotEmpty ? r.mediaUrls.first : null,
+            accentColor: AppColors.reportOrange,
+            accentColorLight: AppColors.reportOrangeLight,
+            placeholderIcon: Icons.report_rounded,
             onTap: () => Get.toNamed(Routes.reportDetail, arguments: r.id),
           );
         },
@@ -440,7 +446,7 @@ class _ImprovementsTab extends StatelessWidget {
             imageUrl: imp.mediaUrls.isNotEmpty ? imp.mediaUrls.first : null,
             accentColor: AppColors.improveBlue,
             accentColorLight: AppColors.improveBlue.withValues(alpha: 0.12),
-            placeholderIcon: Icons.tips_and_updates_outlined,
+            placeholderIcon: Icons.build_rounded,
             statusWidget: imp.department != null && imp.department!.isNotEmpty
                 ? CategoryChip(label: imp.department!, color: AppColors.improveBlue)
                 : null,

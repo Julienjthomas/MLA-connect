@@ -356,15 +356,10 @@ class _UpdateCard extends StatelessWidget {
                       final liked = ctrl.likedIds.contains(update.id);
                       final current = ctrl.updates.firstWhereOrNull((u) => u.id == update.id);
                       final likes = current?.likes ?? update.likes;
-                      final views = current?.views ?? update.views;
                       return Row(
                         children: [
                           Text(update.timeAgo, style: AppTextStyles.caption),
                           const Spacer(),
-                          const Icon(Icons.visibility_outlined, size: 13, color: AppColors.grey500),
-                          const SizedBox(width: 3),
-                          Text('$views', style: AppTextStyles.caption),
-                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: () => ctrl.toggleLike(update.id),
                             child: Row(

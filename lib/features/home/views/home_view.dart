@@ -230,7 +230,7 @@ class HomeView extends GetView<HomeController> {
         builder: (context, constraints) {
           final tileWidth = ((constraints.maxWidth - 32) / 2.2).clamp(150.0, 220.0);
           return SizedBox(
-            height: 210,
+            height: 190,
             child: Obx(() {
               if (controller.loading.value) {
                 return ListView.builder(
@@ -277,10 +277,7 @@ class HomeView extends GetView<HomeController> {
               Container(
                 width: 48,
                 height: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.ideaPurpleLight,
-                  borderRadius: BorderRadius.circular(14),
-                ),
+                decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(14)),
                 child: const Icon(Icons.bar_chart_rounded, color: AppColors.primary, size: 26),
               ),
               const SizedBox(width: 12),
@@ -302,11 +299,26 @@ class HomeView extends GetView<HomeController> {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _impactStat(Icons.list_alt_rounded, AppColors.primary, '${controller.impactReports.value}', 'Issues\nRaised'),
+                    _impactStat(
+                      Icons.list_alt_rounded,
+                      AppColors.primary,
+                      '${controller.impactReports.value}',
+                      'Issues\nRaised',
+                    ),
                     const SizedBox(width: 16),
-                    _impactStat(Icons.check_circle_outline_rounded, AppColors.appreciateGreen, '${controller.impactIdeas.value}', 'Issues\nResolved'),
+                    _impactStat(
+                      Icons.check_circle_outline_rounded,
+                      AppColors.appreciateGreen,
+                      '${controller.impactIdeas.value}',
+                      'Issues\nResolved',
+                    ),
                     const SizedBox(width: 16),
-                    _impactStat(Icons.groups_rounded, AppColors.reportOrange, '${controller.impactAppreciations.value}', 'Active\nProjects'),
+                    _impactStat(
+                      Icons.groups_rounded,
+                      AppColors.reportOrange,
+                      '${controller.impactAppreciations.value}',
+                      'Active\nProjects',
+                    ),
                   ],
                 );
               }),
@@ -327,8 +339,15 @@ class HomeView extends GetView<HomeController> {
           child: Icon(icon, color: color, size: 20),
         ),
         const SizedBox(height: 4),
-        Text(value, style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700, color: color)),
-        Text(label, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 9, height: 1.2), textAlign: TextAlign.center),
+        Text(
+          value,
+          style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700, color: color),
+        ),
+        Text(
+          label,
+          style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 9, height: 1.2),
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }
@@ -360,11 +379,12 @@ class HomeView extends GetView<HomeController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Stay informed, stay connected!',
-                        style: AppTextStyles.titleSmall.copyWith(color: Colors.white, fontSize: 13)),
+                    Text(
+                      'Stay informed, stay connected!',
+                      style: AppTextStyles.titleSmall.copyWith(color: Colors.white, fontSize: 13),
+                    ),
                     const SizedBox(height: 2),
-                    Text('Get the latest announcements.',
-                        style: AppTextStyles.caption.copyWith(color: Colors.white70)),
+                    Text('Get the latest announcements.', style: AppTextStyles.caption.copyWith(color: Colors.white70)),
                   ],
                 ),
               ),
@@ -431,19 +451,28 @@ class HomeView extends GetView<HomeController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(e['title']!, style: AppTextStyles.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
-                                  Text('${e['date']} • ${e['venue']}',
-                                      style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis),
+                                  Text(
+                                    e['title']!,
+                                    style: AppTextStyles.titleSmall,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    '${e['date']} • ${e['venue']}',
+                                    style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ],
                               ),
                             ),
                             const SizedBox(width: 8),
                             GestureDetector(
                               onTap: () => Get.toNamed(Routes.eventsList),
-                              child: Text(AppStrings.viewDetails,
-                                  style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
+                              child: Text(
+                                AppStrings.viewDetails,
+                                style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary),
+                              ),
                             ),
                           ],
                         ),
@@ -506,9 +535,10 @@ class HomeView extends GetView<HomeController> {
                   ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8, 6, 8, 6),
+            padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   item.localTitle,
@@ -519,32 +549,16 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.remove_red_eye_outlined, size: 10, color: AppColors.textTertiary),
-                    const SizedBox(width: 3),
-                    Text(
-                      '${item.views}',
-                      style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
-                    ),
-                    const SizedBox(width: 10),
                     const Icon(Icons.favorite_outline, size: 10, color: AppColors.textTertiary),
                     const SizedBox(width: 3),
                     Text(
                       '${item.likes}',
                       style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 3),
-                Row(
-                  children: [
-                    const Icon(Icons.calendar_today_outlined, size: 10, color: AppColors.textTertiary),
-                    const SizedBox(width: 3),
-                    Expanded(
-                      child: Text(
-                        DateFormatter.display(item.createdAt),
-                        style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                    const Spacer(),
+                    Text(
+                      DateFormatter.timeAgo(item.createdAt),
+                      style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
                     ),
                   ],
                 ),

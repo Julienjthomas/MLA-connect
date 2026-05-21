@@ -27,6 +27,7 @@ class IdeaController extends GetxController {
   final RxBool allowDiscussion = true.obs;
   final RxBool allowContact = true.obs;
   final RxList<XFile> selectedImages = <XFile>[].obs;
+  final RxString voiceRecordingPath = ''.obs;
 
   // Flow state
   final RxInt currentStep = 0.obs;

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -6,6 +5,66 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../controllers/appreciation_controller.dart';
+
+class _AppreciationCategory {
+  final String key;
+  final String label;
+  final String description;
+  final IconData icon;
+  final Color color;
+  const _AppreciationCategory({
+    required this.key,
+    required this.label,
+    required this.description,
+    required this.icon,
+    required this.color,
+  });
+}
+
+const _categories = [
+  _AppreciationCategory(
+    key: 'public_works',
+    label: 'Public Works',
+    description: 'Roads, drainage, streetlights, water supply, cleanliness, etc.',
+    icon: Icons.landscape_rounded,
+    color: Color(0xFF4CAF50),
+  ),
+  _AppreciationCategory(
+    key: 'quick_response',
+    label: 'Quick Response',
+    description: 'Fast action taken on an issue or complaint.',
+    icon: Icons.bolt_rounded,
+    color: Color(0xFFFFC107),
+  ),
+  _AppreciationCategory(
+    key: 'helpful_support',
+    label: 'Helpful Support',
+    description: 'Friendly, respectful, or supportive interaction from the team.',
+    icon: Icons.handshake_rounded,
+    color: Color(0xFF26A69A),
+  ),
+  _AppreciationCategory(
+    key: 'community_initiative',
+    label: 'Community Initiative',
+    description: 'Events, awareness programs, welfare activities, or local development.',
+    icon: Icons.campaign_rounded,
+    color: Color(0xFF7E57C2),
+  ),
+  _AppreciationCategory(
+    key: 'good_leadership',
+    label: 'Good Leadership',
+    description: 'Transparency, communication, or effective leadership.',
+    icon: Icons.person_rounded,
+    color: Color(0xFF42A5F5),
+  ),
+  _AppreciationCategory(
+    key: 'other',
+    label: 'Other',
+    description: 'Something else worth appreciating.',
+    icon: Icons.favorite_rounded,
+    color: Color(0xFFEF5350),
+  ),
+];
 
 class RecipientStep extends GetView<AppreciationController> {
   const RecipientStep({super.key});
@@ -19,85 +78,79 @@ class RecipientStep extends GetView<AppreciationController> {
         children: [
           Text(AppStrings.appreciateWhoHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 6),
-          Text(AppStrings.appreciateWhoSubtitle,
-              style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary)),
+          Text(
+            AppStrings.appreciateWhoSubtitle,
+            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),
+          ),
           const SizedBox(height: 20),
-          Text(AppStrings.appreciateRecipientLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 10),
           Obx(() {
-            if (controller.loadingRecipients.value && controller.recipients.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(vertical: 24),
-                child: Center(child: CircularProgressIndicator()),
-              );
-            }
-            if (controller.recipients.isEmpty) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Text(AppStrings.appreciateNoRecipients,
-                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary)),
-              );
-            }
-            return Column(
-              children: controller.recipients.map((r) {
-                final isSelected = controller.selectedRecipient.value?.id == r.id &&
-                    controller.selectedRecipient.value?.type == r.type;
+            final selected = controller.recipientCategory.value;
+            return GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 1.15,
+              children: _categories.map((cat) {
+                final isSelected = selected == cat.key;
                 return GestureDetector(
-                  onTap: () => controller.selectedRecipient.value = r,
+                  onTap: () => controller.recipientCategory.value = cat.key,
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.appreciateGreenLight : AppColors.surface,
-                      borderRadius: BorderRadius.circular(12),
+                      color: isSelected ? cat.color.withValues(alpha: 0.08) : AppColors.surface,
+                      borderRadius: BorderRadius.circular(14),
                       border: Border.all(
-                          color: isSelected ? AppColors.appreciateGreen : AppColors.grey200,
-                          width: isSelected ? 2 : 1),
+                        color: isSelected ? cat.color : AppColors.grey200,
+                        width: isSelected ? 2 : 1,
+                      ),
                     ),
-                    child: Row(
+                    child: Stack(
                       children: [
-                        _avatar(r.photoUrl, r.name),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(r.name, style: AppTextStyles.titleSmall),
-                              if ((r.designation ?? '').isNotEmpty)
-                                Text(r.designation!,
-                                    style: AppTextStyles.caption
-                                        .copyWith(color: AppColors.textTertiary)),
-                            ],
-                          ),
-                        ),
-                        if (r.type == 'mla')
-                          Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                            decoration: BoxDecoration(
-                              color: AppColors.appreciateGreen.withValues(alpha: 0.12),
-                              borderRadius: BorderRadius.circular(20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: cat.color.withValues(alpha: 0.15),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(cat.icon, size: 18, color: cat.color),
                             ),
-                            child: Text(AppStrings.appreciateMlaBadge,
-                                style: AppTextStyles.labelSmall
-                                    .copyWith(color: AppColors.appreciateGreen)),
+                            const SizedBox(height: 8),
+                            Text(cat.label, style: AppTextStyles.titleSmall.copyWith(fontSize: 13)),
+                            const SizedBox(height: 2),
+                            Expanded(
+                              child: Text(
+                                cat.description,
+                                style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 11),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            width: 18,
+                            height: 18,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: isSelected ? cat.color : Colors.transparent,
+                              border: Border.all(
+                                color: isSelected ? cat.color : AppColors.grey400,
+                                width: 2,
+                              ),
+                            ),
+                            child: isSelected
+                                ? const Icon(Icons.check, color: Colors.white, size: 11)
+                                : null,
                           ),
-                        const SizedBox(width: 6),
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: isSelected ? AppColors.appreciateGreen : Colors.transparent,
-                            border: Border.all(
-                                color: isSelected
-                                    ? AppColors.appreciateGreen
-                                    : AppColors.grey400,
-                                width: 2),
-                          ),
-                          child: isSelected
-                              ? const Icon(Icons.check, color: Colors.white, size: 12)
-                              : null,
                         ),
                       ],
                     ),
@@ -106,46 +159,25 @@ class RecipientStep extends GetView<AppreciationController> {
               }).toList(),
             );
           }),
-          const SizedBox(height: 14),
-          Text(AppStrings.appreciateRelatedWorkLabel, style: AppTextStyles.titleSmall),
+          const SizedBox(height: 20),
+          Text(AppStrings.appreciateTellUsMore, style: AppTextStyles.titleSmall),
           const SizedBox(height: 8),
           TextField(
-              controller: controller.relatedWorkController,
-              decoration: InputDecoration(
-                  hintText: AppStrings.appreciateRelatedWorkHint)),
+            controller: controller.messageController,
+            maxLines: 4,
+            maxLength: 1500,
+            decoration: InputDecoration(hintText: AppStrings.appreciateTellUsMoreHint),
+          ),
           const SizedBox(height: 32),
           PrimaryButton(
-              text: AppStrings.appreciateNextMessage,
-              onPressed: controller.nextStep,
-              backgroundColor: AppColors.appreciateGreen),
+            text: AppStrings.continueBtn,
+            onPressed: controller.nextStep,
+            backgroundColor: AppColors.appreciateGreen,
+            icon: const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18),
+          ),
           const SizedBox(height: 20),
         ],
       ),
     );
   }
-
-  Widget _avatar(String? url, String name) {
-    final initial = name.isNotEmpty ? name.trim()[0].toUpperCase() : '?';
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: AppColors.appreciateGreenLight,
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: (url != null && url.isNotEmpty)
-          ? CachedNetworkImage(
-              imageUrl: url,
-              fit: BoxFit.cover,
-              errorWidget: (_, __, ___) => _initial(initial),
-            )
-          : _initial(initial),
-    );
-  }
-
-  Widget _initial(String s) => Center(
-        child: Text(s,
-            style: AppTextStyles.titleSmall.copyWith(color: AppColors.appreciateGreen)),
-      );
 }

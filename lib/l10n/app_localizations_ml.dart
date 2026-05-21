@@ -245,7 +245,7 @@ class SMl extends S {
   String get describeIssue => 'പ്രശ്നം വിവരിക്കുക';
 
   @override
-  String get addPhotos => 'ഫോട്ടോ / വീഡിയോ ചേർക്കുക (ഓപ്ഷണൽ)';
+  String get addPhotos => 'ഫോട്ടോ ചേർക്കുക';
 
   @override
   String get selectCategory => 'വിഭാഗം';
@@ -254,7 +254,7 @@ class SMl extends S {
   String get location => 'സ്ഥലം';
 
   @override
-  String get landmark => 'ലാൻഡ്മാർക്ക് / പ്രദേശം (ഓപ്ഷണൽ)';
+  String get landmark => 'ലാൻഡ്മാർക്ക് / പ്രദേശം';
 
   @override
   String get contactNumber => 'ബന്ധപ്പെടാനുള്ള നമ്പർ';
@@ -267,7 +267,7 @@ class SMl extends S {
 
   @override
   String get reportSuccessMsg =>
-      'നിങ്ങളുടെ പരാതി സ്വീകരിച്ചിരിക്കുന്നു. ഞങ്ങളുടെ ടീം ഉടൻ നടപടിയെടുക്കും';
+      'നിങ്ങളുടെ പ്രശ്നം ഞങ്ങൾക്ക് ലഭിച്ചിട്ടുണ്ട്. ഞങ്ങളുടെ ടീം ഉടൻ തന്നെ ഇത് പരിശോധിക്കും.';
 
   @override
   String get trackInActivity => 'My Activity ൽ പിന്തുടരുക';
@@ -937,10 +937,13 @@ class SMl extends S {
       'ദയവായി പ്രശ്നത്തിന്റെ വിശദാംശങ്ങൾ നൽകുക';
 
   @override
+  String get reportTitleLabel => 'തലക്കെട്ട് *';
+
+  @override
   String get reportCategoryLabel => 'വിഭാഗം *';
 
   @override
-  String get reportCategoryHint => 'പ്രശ്ന വിഭാഗം തിരഞ്ഞെടുക്കുക';
+  String get reportCategoryHint => 'പ്രശ്നത്തിന്റെ ഒരു ചെറു സംഗ്രഹം';
 
   @override
   String get reportDescriptionLabel => 'പ്രശ്ന വിവരണം *';
@@ -949,8 +952,7 @@ class SMl extends S {
   String get reportDescriptionHint => 'പ്രശ്നം വിശദമായി വിവരിക്കുക...';
 
   @override
-  String get reportDetailsLocationHint =>
-      'പ്രശ്നത്തിന്റെ കൃത്യമായ സ്ഥാനം വിവരിക്കുക';
+  String get reportDetailsLocationHint => 'കൃത്യമായ പ്രശ്ന സ്ഥാനം വിവരിക്കുക';
 
   @override
   String get reportNextReview => 'അടുത്തത്: അവലോകനം →';
@@ -969,7 +971,7 @@ class SMl extends S {
   String get reportLandmarkAreaLabel => 'ലാൻഡ്മാർക്ക് / പ്രദേശം (ഓപ്ഷണൽ)';
 
   @override
-  String get reportLocationDescLabel => 'സ്ഥാന വിവരണം *';
+  String get reportLocationDescLabel => 'സ്ഥാനം';
 
   @override
   String get reportLocationDescHint => 'സ്ഥാനം വിവരിക്കുക';
@@ -1034,11 +1036,11 @@ class SMl extends S {
   String get categoryPublicSafety => 'പൊതു സുരക്ഷ';
 
   @override
-  String get appreciateWhoHeading => 'നിങ്ങൾ ആരെ അഭിനന്ദിക്കുന്നു?';
+  String get appreciateWhoHeading => 'നിങ്ങൾക്ക് എന്ത് അഭിനന്ദിക്കണം?';
 
   @override
   String get appreciateWhoSubtitle =>
-      'നിങ്ങളുടെ MLA അല്ലെങ്കിൽ നേരിട്ടുള്ള ജീവനക്കാരനെ തിരഞ്ഞെടുക്കുക.';
+      'നിങ്ങൾ അനുഭവിച്ച പ്രവർത്തനം, പിന്തുണ, അല്ലെങ്കിൽ നല്ല സ്വാധീനം വിവരിക്കാൻ ഞങ്ങളെ സഹായിക്കുക.';
 
   @override
   String get appreciateRecipientLabel => 'സ്വീകർത്താവ് *';
@@ -1060,6 +1062,13 @@ class SMl extends S {
   String get appreciateNextMessage => 'അടുത്തത്: നിങ്ങളുടെ സന്ദേശം →';
 
   @override
+  String get appreciateTellUsMore => 'കൂടുതൽ പറയൂ (ഐച്ഛികം)';
+
+  @override
+  String get appreciateTellUsMoreHint =>
+      'ഉദാ: റോഡ് നന്നാക്കൽ പ്രവൃത്തി വേഗത്തിൽ പൂർത്തിയാക്കി, നാട്ടുകാർക്ക് വളരെ ഉപകാരമായി.';
+
+  @override
   String get appreciateMessageHeading => 'നിങ്ങളുടെ അഭിനന്ദനം';
 
   @override
@@ -1070,7 +1079,7 @@ class SMl extends S {
       'ടീം സ്വീകരിച്ച ദ്രുതഗതിയിലുള്ള നടപടി ഞാൻ അഭിനന്ദിക്കുന്നു...';
 
   @override
-  String get appreciateAddPhotoLabel => 'ഫോട്ടോ / വീഡിയോ ചേർക്കുക (ഓപ്ഷണൽ)';
+  String get appreciateAddPhotoLabel => 'ഫോട്ടോ ചേർക്കുക';
 
   @override
   String get appreciateNextVisibility => 'അടുത്തത്: ദൃശ്യത →';
@@ -1115,7 +1124,7 @@ class SMl extends S {
 
   @override
   String get appreciateSuccessMotivation =>
-      'നിങ്ങളുടെ നല്ല വാക്കുകൾ അവരെ കൂടുതൽ മികച്ചതായി പ്രവർത്തിക്കാൻ പ്രേരിപ്പിക്കും.';
+      'നിങ്ങളുടെ പ്രോത്സാഹന വാക്കുകൾ ഞങ്ങളെ കൂടുതൽ മികച്ച രീതിയിൽ പ്രവർത്തിക്കാൻ പ്രേരിപ്പിക്കും.';
 
   @override
   String get appreciateSendAnother => 'മറ്റൊരു അഭിനന്ദനം അയക്കുക';
@@ -1140,15 +1149,13 @@ class SMl extends S {
   String get ideaTitleLabel => 'ആശയത്തിന്റെ തലക്കെട്ട് *';
 
   @override
-  String get ideaTitleHint =>
-      'ഉദാ. നിങ്ങളുടെ പ്രദേശത്തിന് ഒരു സ്മാർട്ട് ഡ്രെയിനേജ് സിസ്റ്റം';
+  String get ideaTitleHint => 'നിങ്ങളുടെ ആശയത്തിന്റെ ചുരുക്ക വിവരണം';
 
   @override
-  String get ideaDescLabel => 'നിങ്ങളുടെ ആശയം വിശദമായി വിവരിക്കുക';
+  String get ideaDescLabel => 'ആശയ വിവരണം';
 
   @override
-  String get ideaDescHint =>
-      'എന്റെ ആശയം ഒരു സ്മാർട്ട് ഡ്രെയിനേജ് സിസ്റ്റം നിർമ്മിക്കുകയാണ്...';
+  String get ideaDescHint => 'നിങ്ങളുടെ ആശയം വിശദമായി വിവരിക്കുക';
 
   @override
   String get ideaNextImpact => 'അടുത്തത്: ആഘാതവും നേട്ടങ്ങളും →';
@@ -1161,18 +1168,18 @@ class SMl extends S {
 
   @override
   String get ideaBenefitsLabel =>
-      'മണ്ഡലത്തിനുള്ള 2–3 പ്രധാന ഗുണങ്ങൾ പട്ടികപ്പെടുത്തുക *';
+      'ഈ ആശയം മണ്ഡലത്തിന് നൽകുന്ന 2–3 പ്രധാന ഗുണങ്ങൾ രേഖപ്പെടുത്തുക';
 
   @override
   String get ideaBenefitsHint =>
-      '• താഴ്ന്ന പ്രദേശങ്ങളിൽ വെള്ളപ്പൊക്കം കുറയ്ക്കുന്നു\n• പൊതുജനാരോഗ്യം സംരക്ഷിക്കുന്നു...';
+      'മെച്ചപ്പെട്ട റോഡുകൾ, മികച്ച മാലിന്യ സംസ്കരണം, കൂടുതൽ പൊതുസുരക്ഷ...';
 
   @override
   String get ideaBeneficiariesLabel =>
       'ഈ ആശയത്തിൽ നിന്ന് ആർക്ക് പ്രയോജനം ലഭിക്കും? *';
 
   @override
-  String get ideaResourcesLabel => 'ആവശ്യമായ വിഭവങ്ങൾ (ഓപ്ഷണൽ)';
+  String get ideaResourcesLabel => 'ഏകദേശ ചെലവ്';
 
   @override
   String get ideaResourcesHint => 'ശ്രേണി തിരഞ്ഞെടുക്കുക';
@@ -1181,7 +1188,7 @@ class SMl extends S {
   String get ideaNextVisibility => 'അടുത്തത്: ദൃശ്യത →';
 
   @override
-  String get ideaVisibilityHeading => 'ദൃശ്യതയും സഹകരണവും';
+  String get ideaVisibilityHeading => 'ദൃശ്യത';
 
   @override
   String get ideaVisibilitySubtitle =>
@@ -1226,7 +1233,7 @@ class SMl extends S {
   String get ideaRowBeneficiaries => 'ഗുണഭോക്താക്കൾ';
 
   @override
-  String get ideaRowResources => 'വിഭവങ്ങൾ';
+  String get ideaRowResources => 'ചെലവ്';
 
   @override
   String get ideaRowDiscussion => 'സമൂഹ ചർച്ച';
@@ -1241,7 +1248,7 @@ class SMl extends S {
   String get ideaDisabled => 'നിഷ്‌ക്രിയം';
 
   @override
-  String get ideaSubmitBtn => 'ആശയം സമർപ്പിക്കുക 🚀';
+  String get ideaSubmitBtn => '🚀 ആശയം സമർപ്പിക്കുക';
 
   @override
   String get improveHeading => 'നിർദ്ദേശ വിശദാംശങ്ങൾ';
@@ -1250,7 +1257,7 @@ class SMl extends S {
   String get improveSubtitle => 'നിങ്ങളുടെ മെച്ചപ്പെടുത്തൽ നിർദ്ദേശം പങ്കിടുക';
 
   @override
-  String get improveDeptLabel => 'ലക്ഷ്യ വകുപ്പ് (ഓപ്ഷണൽ)';
+  String get improveDeptLabel => 'വകുപ്പ്';
 
   @override
   String get improveDeptHint => 'വകുപ്പ് തിരഞ്ഞെടുക്കുക';
@@ -1291,7 +1298,8 @@ class SMl extends S {
   String get improveReviewHeading => 'നിങ്ങളുടെ നിർദ്ദേശം അവലോകനം ചെയ്യുക';
 
   @override
-  String get improveReviewSubtitle => 'സമർപ്പിക്കുന്നതിന് മുൻപ് പരിശോധിക്കുക';
+  String get improveReviewSubtitle =>
+      'സമർപ്പിക്കുന്നതിന് മുൻപ് നിർദ്ദേശം പരിശോധിക്കുക';
 
   @override
   String get improveCardDetails => 'നിർദ്ദേശ വിശദാംശങ്ങൾ';

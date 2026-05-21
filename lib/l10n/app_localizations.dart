@@ -550,7 +550,7 @@ abstract class S {
   /// No description provided for @addPhotos.
   ///
   /// In en, this message translates to:
-  /// **'Add Photos / Videos (Optional)'**
+  /// **'Add Photos'**
   String get addPhotos;
 
   /// No description provided for @selectCategory.
@@ -568,7 +568,7 @@ abstract class S {
   /// No description provided for @landmark.
   ///
   /// In en, this message translates to:
-  /// **'Landmark / Area (Optional)'**
+  /// **'Landmark / Area'**
   String get landmark;
 
   /// No description provided for @contactNumber.
@@ -592,7 +592,7 @@ abstract class S {
   /// No description provided for @reportSuccessMsg.
   ///
   /// In en, this message translates to:
-  /// **'We received your issue and our team will take action soon.'**
+  /// **'We\'ve received your issue, and our team will look into it shortly.'**
   String get reportSuccessMsg;
 
   /// No description provided for @trackInActivity.
@@ -1825,6 +1825,12 @@ abstract class S {
   /// **'Please provide details about the issue'**
   String get reportDescribeSubtitle;
 
+  /// No description provided for @reportTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title *'**
+  String get reportTitleLabel;
+
   /// No description provided for @reportCategoryLabel.
   ///
   /// In en, this message translates to:
@@ -1834,7 +1840,7 @@ abstract class S {
   /// No description provided for @reportCategoryHint.
   ///
   /// In en, this message translates to:
-  /// **'Enter the problem category'**
+  /// **'Short summary of the issue'**
   String get reportCategoryHint;
 
   /// No description provided for @reportDescriptionLabel.
@@ -1852,7 +1858,7 @@ abstract class S {
   /// No description provided for @reportDetailsLocationHint.
   ///
   /// In en, this message translates to:
-  /// **'Describe the exact location of the issue'**
+  /// **'Describe the exact issue location'**
   String get reportDetailsLocationHint;
 
   /// No description provided for @reportNextReview.
@@ -1888,7 +1894,7 @@ abstract class S {
   /// No description provided for @reportLocationDescLabel.
   ///
   /// In en, this message translates to:
-  /// **'Location Description *'**
+  /// **'Location'**
   String get reportLocationDescLabel;
 
   /// No description provided for @reportLocationDescHint.
@@ -1936,7 +1942,7 @@ abstract class S {
   /// No description provided for @reportReviewSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Please review your issue before submitting'**
+  /// **'Please review your issue before submission'**
   String get reportReviewSubtitle;
 
   /// No description provided for @reportReviewSectionDetails.
@@ -2014,13 +2020,13 @@ abstract class S {
   /// No description provided for @appreciateWhoHeading.
   ///
   /// In en, this message translates to:
-  /// **'Who are you appreciating?'**
+  /// **'What would you like to appreciate?'**
   String get appreciateWhoHeading;
 
   /// No description provided for @appreciateWhoSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose your MLA or a direct staff member.'**
+  /// **'Help us understand the work, support, or positive impact you experienced.'**
   String get appreciateWhoSubtitle;
 
   /// No description provided for @appreciateRecipientLabel.
@@ -2059,6 +2065,18 @@ abstract class S {
   /// **'Next: Your Message →'**
   String get appreciateNextMessage;
 
+  /// No description provided for @appreciateTellUsMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us more (Optional)'**
+  String get appreciateTellUsMore;
+
+  /// No description provided for @appreciateTellUsMoreHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. The road repair work was completed quickly and helped the local community.'**
+  String get appreciateTellUsMoreHint;
+
   /// No description provided for @appreciateMessageHeading.
   ///
   /// In en, this message translates to:
@@ -2080,7 +2098,7 @@ abstract class S {
   /// No description provided for @appreciateAddPhotoLabel.
   ///
   /// In en, this message translates to:
-  /// **'Add Photo / Video (Optional)'**
+  /// **'Add Photo'**
   String get appreciateAddPhotoLabel;
 
   /// No description provided for @appreciateNextVisibility.
@@ -2164,7 +2182,7 @@ abstract class S {
   /// No description provided for @appreciateSuccessMotivation.
   ///
   /// In en, this message translates to:
-  /// **'Your kind words will motivate them to do even better.'**
+  /// **'Your kind words will motivate us to do even better.'**
   String get appreciateSuccessMotivation;
 
   /// No description provided for @appreciateSendAnother.
@@ -2212,19 +2230,19 @@ abstract class S {
   /// No description provided for @ideaTitleHint.
   ///
   /// In en, this message translates to:
-  /// **'e.g. Smart drainage system for your area'**
+  /// **'Short summary of your idea'**
   String get ideaTitleHint;
 
   /// No description provided for @ideaDescLabel.
   ///
   /// In en, this message translates to:
-  /// **'Describe your idea in detail'**
+  /// **'Idea Description'**
   String get ideaDescLabel;
 
   /// No description provided for @ideaDescHint.
   ///
   /// In en, this message translates to:
-  /// **'My idea is to build a smart drainage system...'**
+  /// **'Describe your idea in detail'**
   String get ideaDescHint;
 
   /// No description provided for @ideaNextImpact.
@@ -2248,13 +2266,13 @@ abstract class S {
   /// No description provided for @ideaBenefitsLabel.
   ///
   /// In en, this message translates to:
-  /// **'List 2–3 major advantages for the constituency *'**
+  /// **'List 2–3 key advantages of this idea for the constituency'**
   String get ideaBenefitsLabel;
 
   /// No description provided for @ideaBenefitsHint.
   ///
   /// In en, this message translates to:
-  /// **'• Reduces flooding in low-lying areas\n• Protects public health...'**
+  /// **'Improved roads, better waste management, increased public safety...'**
   String get ideaBenefitsHint;
 
   /// No description provided for @ideaBeneficiariesLabel.
@@ -2266,7 +2284,7 @@ abstract class S {
   /// No description provided for @ideaResourcesLabel.
   ///
   /// In en, this message translates to:
-  /// **'Estimated Resources (Optional)'**
+  /// **'Approximate Cost'**
   String get ideaResourcesLabel;
 
   /// No description provided for @ideaResourcesHint.
@@ -2284,7 +2302,7 @@ abstract class S {
   /// No description provided for @ideaVisibilityHeading.
   ///
   /// In en, this message translates to:
-  /// **'Visibility & Collaboration'**
+  /// **'Visibility'**
   String get ideaVisibilityHeading;
 
   /// No description provided for @ideaVisibilitySubtitle.
@@ -2368,7 +2386,7 @@ abstract class S {
   /// No description provided for @ideaRowResources.
   ///
   /// In en, this message translates to:
-  /// **'Resources'**
+  /// **'Cost'**
   String get ideaRowResources;
 
   /// No description provided for @ideaRowDiscussion.
@@ -2398,7 +2416,7 @@ abstract class S {
   /// No description provided for @ideaSubmitBtn.
   ///
   /// In en, this message translates to:
-  /// **'Submit Idea 🚀'**
+  /// **'🚀 Submit Idea'**
   String get ideaSubmitBtn;
 
   /// No description provided for @improveHeading.
@@ -2416,7 +2434,7 @@ abstract class S {
   /// No description provided for @improveDeptLabel.
   ///
   /// In en, this message translates to:
-  /// **'Target Department (Optional)'**
+  /// **'Department'**
   String get improveDeptLabel;
 
   /// No description provided for @improveDeptHint.
@@ -2494,7 +2512,7 @@ abstract class S {
   /// No description provided for @improveReviewSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Please review before submitting'**
+  /// **'Please review your suggestion before submission'**
   String get improveReviewSubtitle;
 
   /// No description provided for @improveCardDetails.

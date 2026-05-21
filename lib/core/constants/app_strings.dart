@@ -324,6 +324,7 @@ class AppStrings {
   static String get reportDescribeSubtitle => _s.reportDescribeSubtitle;
   static String get reportCategoryLabel => _s.reportCategoryLabel;
   static String get reportCategoryHint => _s.reportCategoryHint;
+  static String get reportTitleLabel => _s.reportTitleLabel;
   static String get reportDescriptionLabel => _s.reportDescriptionLabel;
   static String get reportDescriptionHint => _s.reportDescriptionHint;
   static String get reportDetailsLocationHint => _s.reportDetailsLocationHint;
@@ -374,6 +375,8 @@ class AppStrings {
   static String get appreciateRelatedWorkLabel => _s.appreciateRelatedWorkLabel;
   static String get appreciateRelatedWorkHint => _s.appreciateRelatedWorkHint;
   static String get appreciateNextMessage => _s.appreciateNextMessage;
+  static String get appreciateTellUsMore => _s.appreciateTellUsMore;
+  static String get appreciateTellUsMoreHint => _s.appreciateTellUsMoreHint;
 
   // Appreciation flow — message step
   static String get appreciateMessageHeading => _s.appreciateMessageHeading;

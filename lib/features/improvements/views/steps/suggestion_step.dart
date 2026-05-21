@@ -45,35 +45,17 @@ class SuggestionStep extends GetView<ImprovementController> {
             ],
           ),
           const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: controller.suggestionController,
-                  minLines: 8,
-                  maxLines: 16,
-                  maxLength: 1500,
-                  decoration: InputDecoration(
-                    hintText: AppStrings.improveSuggestionHint,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-              VoiceInputWidget(
-                alignTrailing: true,
-                onTranscript: (t) {
-                  final c = controller.suggestionController;
-                  final cur = c.text.trim();
-                  if (cur.isEmpty) {
-                    c.text = t;
-                  } else {
-                    c.text = '$cur\n$t';
-                  }
-                },
-              ),
-            ],
+          TextField(
+            controller: controller.suggestionController,
+            minLines: 8,
+            maxLines: 16,
+            maxLength: 1500,
+            decoration: InputDecoration(hintText: AppStrings.improveSuggestionHint),
           ),
+          const SizedBox(height: 20),
+          Text(AppStrings.addVoiceNote, style: AppTextStyles.titleSmall),
+          const SizedBox(height: 8),
+          VoiceInputWidget(onRecorded: (path) => controller.voiceRecordingPath.value = path),
           const SizedBox(height: 32),
           PrimaryButton(text: AppStrings.improveNextLocation, onPressed: controller.nextStep, backgroundColor: AppColors.improveBlue),
           const SizedBox(height: 20),

@@ -9,8 +9,11 @@ class DateFormatter {
     if (diff.inMinutes < 60) return '${diff.inMinutes} minutes ago';
     if (diff.inHours < 24) return '${diff.inHours} hours ago';
     if (diff.inDays == 1) return 'Yesterday';
-    if (diff.inDays < 7) return '${diff.inDays} days ago';
-    return DateFormat('MMM d, yyyy').format(dt);
+    if (diff.inDays < 30) return '${diff.inDays} days ago';
+    final months = (diff.inDays / 30).floor();
+    if (months < 12) return '$months ${months == 1 ? 'month' : 'months'} ago';
+    final years = (diff.inDays / 365).floor();
+    return '$years ${years == 1 ? 'year' : 'years'} ago';
   }
 
   static String display(DateTime dt) => DateFormat('MMM d, yyyy').format(dt);

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../core/constants/app_enums.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../controllers/appreciation_controller.dart';
+
+const _categoryLabels = {
+  'public_works': 'Public Works',
+  'quick_response': 'Quick Response',
+  'helpful_support': 'Helpful Support',
+  'community_initiative': 'Community Initiative',
+  'good_leadership': 'Good Leadership',
+  'other': 'Other',
+};
 
 class AppreciationReviewStep extends GetView<AppreciationController> {
   const AppreciationReviewStep({super.key});
@@ -21,23 +29,19 @@ class AppreciationReviewStep extends GetView<AppreciationController> {
           const SizedBox(height: 4),
           Text(AppStrings.appreciateReviewSubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
-          _card(AppStrings.appreciateCardRecipient, [
-            _row(AppStrings.recipientCategory, controller.recipientCategory.value),
-            _row(AppStrings.appreciateRowStaff, controller.staffController.text.isEmpty ? '–' : controller.staffController.text),
-            _row(AppStrings.appreciateRowRelatedWork, controller.relatedWorkController.text.isEmpty ? '–' : controller.relatedWorkController.text),
-          ]),
-          const SizedBox(height: 12),
-          _card(AppStrings.appreciateCardMessage, [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Text(controller.messageController.text, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textPrimary)),
-            ),
-          ]),
-          const SizedBox(height: 12),
-          _card(AppStrings.appreciateCardVisibility, [
-            _row(AppStrings.reportReviewRowVisibility, controller.visibility.value.label),
-            _row(AppStrings.appreciateRowAnonymous, controller.anonymous.value ? AppStrings.yesLabel : AppStrings.noLabel),
-          ]),
+          Obx(() {
+            final category = controller.recipientCategory.value;
+            final message = controller.messageController.text.trim();
+            return Column(
+              children: [
+                _card('Appreciation Details', [
+                  _row('Category', _categoryLabels[category] ?? category),
+                  if (message.isNotEmpty)
+                    _row('Message', message),
+                ]),
+              ],
+            );
+          }),
           const SizedBox(height: 32),
           Obx(() => PrimaryButton(
                 text: AppStrings.appreciateSubmitBtn,
@@ -53,7 +57,6 @@ class AppreciationReviewStep extends GetView<AppreciationController> {
   }
 
   Widget _card(String title, List<Widget> rows) => Container(
-        margin: const EdgeInsets.only(bottom: 0),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.grey200)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

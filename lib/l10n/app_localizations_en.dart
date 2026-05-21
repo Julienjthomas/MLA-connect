@@ -238,7 +238,7 @@ class SEn extends S {
   String get describeIssue => 'Describe the Issue';
 
   @override
-  String get addPhotos => 'Add Photos / Videos (Optional)';
+  String get addPhotos => 'Add Photos';
 
   @override
   String get selectCategory => 'Category';
@@ -247,7 +247,7 @@ class SEn extends S {
   String get location => 'Location';
 
   @override
-  String get landmark => 'Landmark / Area (Optional)';
+  String get landmark => 'Landmark / Area';
 
   @override
   String get contactNumber => 'Contact Number';
@@ -260,7 +260,7 @@ class SEn extends S {
 
   @override
   String get reportSuccessMsg =>
-      'We received your issue and our team will take action soon.';
+      'We\'ve received your issue, and our team will look into it shortly.';
 
   @override
   String get trackInActivity => 'Track in My Activity';
@@ -921,10 +921,13 @@ class SEn extends S {
   String get reportDescribeSubtitle => 'Please provide details about the issue';
 
   @override
+  String get reportTitleLabel => 'Title *';
+
+  @override
   String get reportCategoryLabel => 'Category *';
 
   @override
-  String get reportCategoryHint => 'Enter the problem category';
+  String get reportCategoryHint => 'Short summary of the issue';
 
   @override
   String get reportDescriptionLabel => 'Issue Description *';
@@ -933,8 +936,7 @@ class SEn extends S {
   String get reportDescriptionHint => 'Describe the issue in detail...';
 
   @override
-  String get reportDetailsLocationHint =>
-      'Describe the exact location of the issue';
+  String get reportDetailsLocationHint => 'Describe the exact issue location';
 
   @override
   String get reportNextReview => 'Next: Review →';
@@ -953,7 +955,7 @@ class SEn extends S {
   String get reportLandmarkAreaLabel => 'Landmark / Area (Optional)';
 
   @override
-  String get reportLocationDescLabel => 'Location Description *';
+  String get reportLocationDescLabel => 'Location';
 
   @override
   String get reportLocationDescHint => 'Describe the location';
@@ -978,7 +980,7 @@ class SEn extends S {
 
   @override
   String get reportReviewSubtitle =>
-      'Please review your issue before submitting';
+      'Please review your issue before submission';
 
   @override
   String get reportReviewSectionDetails => 'Issue Details';
@@ -1017,11 +1019,11 @@ class SEn extends S {
   String get categoryPublicSafety => 'Public Safety';
 
   @override
-  String get appreciateWhoHeading => 'Who are you appreciating?';
+  String get appreciateWhoHeading => 'What would you like to appreciate?';
 
   @override
   String get appreciateWhoSubtitle =>
-      'Choose your MLA or a direct staff member.';
+      'Help us understand the work, support, or positive impact you experienced.';
 
   @override
   String get appreciateRecipientLabel => 'Recipient *';
@@ -1042,6 +1044,13 @@ class SEn extends S {
   String get appreciateNextMessage => 'Next: Your Message →';
 
   @override
+  String get appreciateTellUsMore => 'Tell us more (Optional)';
+
+  @override
+  String get appreciateTellUsMoreHint =>
+      'e.g. The road repair work was completed quickly and helped the local community.';
+
+  @override
   String get appreciateMessageHeading => 'Your Appreciation';
 
   @override
@@ -1052,7 +1061,7 @@ class SEn extends S {
       'I appreciate the quick action taken by the team...';
 
   @override
-  String get appreciateAddPhotoLabel => 'Add Photo / Video (Optional)';
+  String get appreciateAddPhotoLabel => 'Add Photo';
 
   @override
   String get appreciateNextVisibility => 'Next: Visibility →';
@@ -1095,7 +1104,7 @@ class SEn extends S {
 
   @override
   String get appreciateSuccessMotivation =>
-      'Your kind words will motivate them to do even better.';
+      'Your kind words will motivate us to do even better.';
 
   @override
   String get appreciateSendAnother => 'Send Another Appreciation';
@@ -1119,13 +1128,13 @@ class SEn extends S {
   String get ideaTitleLabel => 'Idea Title *';
 
   @override
-  String get ideaTitleHint => 'e.g. Smart drainage system for your area';
+  String get ideaTitleHint => 'Short summary of your idea';
 
   @override
-  String get ideaDescLabel => 'Describe your idea in detail';
+  String get ideaDescLabel => 'Idea Description';
 
   @override
-  String get ideaDescHint => 'My idea is to build a smart drainage system...';
+  String get ideaDescHint => 'Describe your idea in detail';
 
   @override
   String get ideaNextImpact => 'Next: Impact & Benefits →';
@@ -1138,17 +1147,17 @@ class SEn extends S {
 
   @override
   String get ideaBenefitsLabel =>
-      'List 2–3 major advantages for the constituency *';
+      'List 2–3 key advantages of this idea for the constituency';
 
   @override
   String get ideaBenefitsHint =>
-      '• Reduces flooding in low-lying areas\n• Protects public health...';
+      'Improved roads, better waste management, increased public safety...';
 
   @override
   String get ideaBeneficiariesLabel => 'Who will benefit from this idea? *';
 
   @override
-  String get ideaResourcesLabel => 'Estimated Resources (Optional)';
+  String get ideaResourcesLabel => 'Approximate Cost';
 
   @override
   String get ideaResourcesHint => 'Select Range';
@@ -1157,7 +1166,7 @@ class SEn extends S {
   String get ideaNextVisibility => 'Next: Visibility →';
 
   @override
-  String get ideaVisibilityHeading => 'Visibility & Collaboration';
+  String get ideaVisibilityHeading => 'Visibility';
 
   @override
   String get ideaVisibilitySubtitle => 'Choose how you want to share your idea';
@@ -1200,7 +1209,7 @@ class SEn extends S {
   String get ideaRowBeneficiaries => 'Beneficiaries';
 
   @override
-  String get ideaRowResources => 'Resources';
+  String get ideaRowResources => 'Cost';
 
   @override
   String get ideaRowDiscussion => 'Community Discussion';
@@ -1215,7 +1224,7 @@ class SEn extends S {
   String get ideaDisabled => 'Disabled';
 
   @override
-  String get ideaSubmitBtn => 'Submit Idea 🚀';
+  String get ideaSubmitBtn => '🚀 Submit Idea';
 
   @override
   String get improveHeading => 'Suggestion Details';
@@ -1224,7 +1233,7 @@ class SEn extends S {
   String get improveSubtitle => 'Share your improvement suggestion';
 
   @override
-  String get improveDeptLabel => 'Target Department (Optional)';
+  String get improveDeptLabel => 'Department';
 
   @override
   String get improveDeptHint => 'Select Department';
@@ -1265,7 +1274,8 @@ class SEn extends S {
   String get improveReviewHeading => 'Review your suggestion';
 
   @override
-  String get improveReviewSubtitle => 'Please review before submitting';
+  String get improveReviewSubtitle =>
+      'Please review your suggestion before submission';
 
   @override
   String get improveCardDetails => 'Suggestion Details';

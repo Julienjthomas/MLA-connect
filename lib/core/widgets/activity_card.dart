@@ -74,22 +74,10 @@ class ActivityCard extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      Text(
-                        'ID: $id',
-                        style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
-                      ),
-                      if (status != null || statusWidget != null) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 6),
-                          child: Text('•', style: AppTextStyles.caption.copyWith(color: AppColors.grey400)),
-                        ),
-                        statusWidget ?? StatusChip(status: status!),
-                      ],
-                    ],
-                  ),
+                  if (status != null || statusWidget != null) ...[
+                    const SizedBox(height: 6),
+                    statusWidget ?? StatusChip(status: status!),
+                  ],
                   const SizedBox(height: 6),
                   Row(
                     children: [

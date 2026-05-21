@@ -65,8 +65,7 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
 
     final mic = await Permission.microphone.request();
     if (!mic.isGranted) {
-      Get.snackbar('Permission Required', 'Microphone permission required',
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Permission Required', 'Microphone permission required', snackPosition: SnackPosition.BOTTOM);
       return;
     }
 
@@ -75,8 +74,7 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
       onStatus: (s) => debugPrint('stt status $s'),
     );
     if (!ok) {
-      Get.snackbar('Voice', 'Speech recognition is not available on this device.',
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Voice', 'Speech recognition is not available on this device.', snackPosition: SnackPosition.BOTTOM);
       return;
     }
 
@@ -89,23 +87,18 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
           setState(() {});
         }
       },
-      listenOptions: stt.SpeechListenOptions(
-        cancelOnError: true,
-        partialResults: true,
-      ),
+      listenOptions: stt.SpeechListenOptions(cancelOnError: true, partialResults: true),
     );
   }
 
   Future<void> _startRecording() async {
     final status = await Permission.microphone.request();
     if (!status.isGranted) {
-      Get.snackbar('Permission Required', 'Microphone permission required',
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar('Permission Required', 'Microphone permission required', snackPosition: SnackPosition.BOTTOM);
       return;
     }
 
-    final path =
-        '${Directory.systemTemp.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
+    final path = '${Directory.systemTemp.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
 
     await _recorder.start(const RecordConfig(encoder: AudioEncoder.aacLc), path: path);
 
@@ -137,13 +130,11 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
     setState(() => _isPlaying = true);
     await _player.setFilePath(_recordedPath!);
     await _player.play();
-    await _player.playerStateStream.firstWhere(
-        (s) => s.processingState == ProcessingState.completed);
+    await _player.playerStateStream.firstWhere((s) => s.processingState == ProcessingState.completed);
     setState(() => _isPlaying = false);
   }
 
-  String _formatSeconds(int s) =>
-      '${(s ~/ 60).toString().padLeft(2, '0')}:${(s % 60).toString().padLeft(2, '0')}';
+  String _formatSeconds(int s) => '${(s ~/ 60).toString().padLeft(2, '0')}:${(s % 60).toString().padLeft(2, '0')}';
 
   Widget _buildMicButton({
     required VoidCallback onTap,
@@ -158,11 +149,7 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onTap,
-        child: SizedBox(
-          width: 40,
-          height: 40,
-          child: Icon(icon, color: Colors.white, size: 20),
-        ),
+        child: SizedBox(width: 40, height: 40, child: Icon(icon, color: Colors.white, size: 20)),
       ),
     );
   }
@@ -181,18 +168,12 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
               if (_isListening)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 6),
-                  child: Text(
-                    'Listening…',
-                    style: AppTextStyles.caption.copyWith(color: AppColors.reportOrange),
-                  ),
+                  child: Text('Listening…', style: AppTextStyles.caption.copyWith(color: AppColors.reportOrange)),
                 ),
               if (_recordedPath != null && widget.onRecorded != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 6),
-                  child: Text(
-                    'Voice saved',
-                    style: AppTextStyles.caption.copyWith(color: AppColors.appreciateGreen),
-                  ),
+                  child: Text('Voice saved', style: AppTextStyles.caption.copyWith(color: AppColors.appreciateGreen)),
                 ),
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -232,20 +213,13 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
               child: SizedBox(
                 width: 48,
                 height: 48,
-                child: Icon(
-                  _isListening ? Icons.stop_rounded : Icons.mic_rounded,
-                  color: Colors.white,
-                  size: 24,
-                ),
+                child: Icon(_isListening ? Icons.stop_rounded : Icons.mic_rounded, color: Colors.white, size: 24),
               ),
             ),
           ),
           if (_isListening) ...[
             const SizedBox(height: 4),
-            Text(
-              'Listening…',
-              style: AppTextStyles.caption.copyWith(color: AppColors.reportOrange),
-            ),
+            Text('Listening…', style: AppTextStyles.caption.copyWith(color: AppColors.reportOrange)),
           ],
         ],
       );
@@ -254,13 +228,9 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: _isRecording || _isListening
-            ? AppColors.reportOrange.withValues(alpha: 0.08)
-            : AppColors.grey100,
+        color: _isRecording || _isListening ? AppColors.reportOrange.withValues(alpha: 0.08) : AppColors.grey100,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: _isRecording || _isListening ? AppColors.reportOrange : AppColors.grey300,
-        ),
+        border: Border.all(color: _isRecording || _isListening ? AppColors.reportOrange : AppColors.grey300),
       ),
       child: Row(
         children: [
@@ -274,11 +244,7 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
                   color: _isListening ? AppColors.reportOrange : AppColors.primary,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  _isListening ? Icons.stop_rounded : Icons.mic_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
+                child: Icon(_isListening ? Icons.stop_rounded : Icons.mic_rounded, color: Colors.white, size: 20),
               ),
             )
           else
@@ -291,11 +257,7 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
                   color: _isRecording ? AppColors.reportOrange : AppColors.primary,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  _isRecording ? Icons.stop_rounded : Icons.mic_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
+                child: Icon(_isRecording ? Icons.stop_rounded : Icons.mic_rounded, color: Colors.white, size: 20),
               ),
             ),
           const SizedBox(width: 12),
@@ -307,33 +269,26 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> {
                     maxLines: 3,
                   )
                 : _isRecording
-                    ? Text(
-                        'Recording… ${_formatSeconds(_elapsedSeconds)}',
-                        style: AppTextStyles.bodySmall
-                            .copyWith(color: AppColors.reportOrange),
-                      )
-                    : _recordedPath != null
-                        ? Text('Recording saved',
-                            style: AppTextStyles.bodySmall
-                                .copyWith(color: AppColors.appreciateGreen))
-                        : Text(
-                            widget.onTranscript != null ? 'Voice to text' : 'Add Voice Message',
-                            style: AppTextStyles.bodySmall,
-                          ),
+                ? Text(
+                    'Recording… ${_formatSeconds(_elapsedSeconds)}',
+                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.reportOrange),
+                  )
+                : _recordedPath != null
+                ? Text('Recording saved', style: AppTextStyles.bodySmall.copyWith(color: AppColors.appreciateGreen))
+                : Text(
+                    widget.onTranscript != null ? 'Voice to text' : 'Record a voice message...',
+                    style: AppTextStyles.bodySmall,
+                  ),
           ),
           if (_recordedPath != null && !_isRecording && widget.onTranscript == null)
             GestureDetector(
               onTap: _isPlaying ? null : _playRecording,
               child: Icon(
-                _isPlaying
-                    ? Icons.pause_circle_outline
-                    : Icons.play_circle_outline,
+                _isPlaying ? Icons.pause_circle_outline : Icons.play_circle_outline,
                 color: AppColors.primary,
                 size: 28,
               ),
             ),
-          if (!_isRecording && _recordedPath == null && widget.onTranscript == null)
-            const Text('Optional'),
         ],
       ),
     );

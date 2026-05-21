@@ -35,8 +35,6 @@ class IdeaReviewStep extends GetView<IdeaController> {
           const SizedBox(height: 12),
           _card(AppStrings.ideaCardVisibility, [
             _row(AppStrings.reportReviewRowVisibility, controller.visibility.value.label),
-            _row(AppStrings.ideaRowDiscussion, controller.allowDiscussion.value ? AppStrings.ideaEnabled : AppStrings.ideaDisabled),
-            _row(AppStrings.ideaRowContact, controller.allowContact.value ? AppStrings.yesLabel : AppStrings.noLabel),
           ]),
           Obx(() {
             if (controller.selectedImages.isEmpty) return const SizedBox();

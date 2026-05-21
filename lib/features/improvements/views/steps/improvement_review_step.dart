@@ -20,30 +20,43 @@ class ImprovementReviewStep extends GetView<ImprovementController> {
           const SizedBox(height: 4),
           Text(AppStrings.improveReviewSubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.grey200)),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(AppStrings.improveCardDetails, style: AppTextStyles.titleSmall.copyWith(color: AppColors.improveBlue)),
-              const SizedBox(height: 10),
-              _row(AppStrings.improveRowDept, controller.department.value.isEmpty ? '–' : controller.department.value),
-              _row(AppStrings.improveRowSuggestion, controller.suggestionController.text),
-              _row(AppStrings.improveRowLocation, controller.locationController.text.isEmpty ? '–' : controller.locationController.text),
-              _row(AppStrings.improveRowLandmark, controller.landmarkController.text.isEmpty ? '–' : controller.landmarkController.text),
-            ]),
-          ),
+          _section(AppStrings.improveCardDetails, [
+            _row(AppStrings.improveRowDept, controller.department.value.isEmpty ? '–' : controller.department.value),
+            _row(AppStrings.improveRowSuggestion, controller.suggestionController.text.isEmpty ? '–' : controller.suggestionController.text),
+          ]),
+          const SizedBox(height: 16),
+          Obx(() => _section(AppStrings.location, [
+            _row(AppStrings.reportPanchayatLabel, controller.selectedPanchayath.value.isEmpty ? '–' : controller.selectedPanchayath.value),
+            _row(AppStrings.reportWardLabel, controller.selectedWard.value.isEmpty ? '–' : controller.selectedWard.value),
+            _row(AppStrings.landmark, controller.landmarkController.text.isEmpty ? '–' : controller.landmarkController.text),
+          ])),
           const SizedBox(height: 32),
           Obx(() => PrimaryButton(
                 text: AppStrings.improveSubmitBtn,
                 onPressed: controller.submit,
                 isLoading: controller.isSubmitting.value,
                 backgroundColor: AppColors.improveBlue,
+                icon: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
               )),
           const SizedBox(height: 20),
         ],
       ),
     );
   }
+
+  Widget _section(String title, List<Widget> rows) => Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.grey200),
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title, style: AppTextStyles.titleSmall.copyWith(color: AppColors.improveBlue)),
+          const SizedBox(height: 10),
+          ...rows,
+        ]),
+      );
 
   Widget _row(String label, String value) => Padding(
         padding: const EdgeInsets.only(bottom: 8),

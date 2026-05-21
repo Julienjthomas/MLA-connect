@@ -15,7 +15,7 @@ class UploadWidget extends StatelessWidget {
     super.key,
     required this.files,
     required this.onChanged,
-    this.label = 'Add Photos / Videos (Optional)',
+    this.label = 'Add Photos',
     this.maxFiles = 5,
   });
 

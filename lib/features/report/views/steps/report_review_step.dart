@@ -37,7 +37,6 @@ class ReportReviewStep extends GetView<ReportController> {
               AppStrings.reportReviewRowDescription,
               controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text,
             ),
-            _row(AppStrings.reportReviewRowVisibility, controller.visibility.value.label),
           ]),
 
           const SizedBox(height: 16),
@@ -52,6 +51,18 @@ class ReportReviewStep extends GetView<ReportController> {
                 AppStrings.reportWardLabel,
                 controller.selectedWard.value.isEmpty ? '–' : controller.selectedWard.value,
               ),
+              _row(
+                AppStrings.landmark,
+                controller.locationController.text.trim().isEmpty ? '–' : controller.locationController.text.trim(),
+              ),
+            ]),
+          ),
+
+          const SizedBox(height: 16),
+
+          Obx(
+            () => _section(AppStrings.reportReviewRowVisibility, [
+              _row(controller.visibility.value.label, controller.visibility.value.description),
             ]),
           ),
 
