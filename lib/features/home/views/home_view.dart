@@ -68,7 +68,7 @@ class HomeView extends GetView<HomeController> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.asset('assets/images/app_logo.png', width: 32, height: 32, fit: BoxFit.cover),
+              child: Image.asset('assets/images/nameless_logo.png', width: 32, height: 32, fit: BoxFit.cover),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -307,17 +307,17 @@ class HomeView extends GetView<HomeController> {
                     ),
                     const SizedBox(width: 16),
                     _impactStat(
-                      Icons.check_circle_outline_rounded,
+                      Icons.folder_open_rounded,
                       AppColors.appreciateGreen,
                       '${controller.impactIdeas.value}',
-                      'Issues\nResolved',
+                      'Active\nProjects',
                     ),
                     const SizedBox(width: 16),
                     _impactStat(
-                      Icons.groups_rounded,
+                      Icons.people_alt_rounded,
                       AppColors.reportOrange,
                       '${controller.impactAppreciations.value}',
-                      'Active\nProjects',
+                      'Citizens',
                     ),
                   ],
                 );

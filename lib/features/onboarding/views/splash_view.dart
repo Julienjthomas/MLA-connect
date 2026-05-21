@@ -36,7 +36,7 @@ class SplashView extends GetView<SplashController> {
                     ),
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(24),
-                        child: Image.asset('assets/images/app_logo.png', width: 96, height: 96, fit: BoxFit.cover),
+                        child: Image.asset('assets/images/nameless_logo.png', width: 96, height: 96, fit: BoxFit.cover),
                       ),
                   ),
                   const SizedBox(height: 24),

@@ -106,18 +106,6 @@ class UpdateDetailView extends GetView<UpdatesController> {
                             ],
                           ),
                         ),
-                        const Spacer(),
-                        OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.share, size: 16),
-                          label: const Text('Share'),
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                            minimumSize: Size.zero,
-                            side: const BorderSide(color: AppColors.grey300),
-                            foregroundColor: AppColors.textSecondary,
-                          ),
-                        ),
                       ],
                     );
                   }),

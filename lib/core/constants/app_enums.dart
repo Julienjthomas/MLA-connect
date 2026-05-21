@@ -170,7 +170,7 @@ extension SubmissionVisibilityX on SubmissionVisibility {
       };
 }
 
-enum UpdateCategory { all, development, events, resolved, announcements }
+enum UpdateCategory { all, development, events, resolved, announcements, publicBoard }
 
 extension UpdateCategoryX on UpdateCategory {
   String get label => switch (this) {
@@ -179,6 +179,7 @@ extension UpdateCategoryX on UpdateCategory {
         UpdateCategory.events => 'Events',
         UpdateCategory.resolved => 'Resolved Issues',
         UpdateCategory.announcements => 'Announcements',
+        UpdateCategory.publicBoard => 'Public Board',
       };
 
   Color get color => switch (this) {
@@ -186,6 +187,7 @@ extension UpdateCategoryX on UpdateCategory {
         UpdateCategory.events => AppColors.ideaPurple,
         UpdateCategory.resolved => AppColors.appreciateGreen,
         UpdateCategory.announcements => AppColors.reportOrange,
+        UpdateCategory.publicBoard => AppColors.primary,
         _ => AppColors.grey500,
       };
 
@@ -194,6 +196,7 @@ extension UpdateCategoryX on UpdateCategory {
         'events' || 'event' => UpdateCategory.events,
         'resolved' => UpdateCategory.resolved,
         'announcements' || 'announcement' || 'alert' || 'achievement' || 'general' || 'emergency' || 'education' || 'water' || 'health' => UpdateCategory.announcements,
+        'public_board' || 'publicboard' || 'board' || 'notice' => UpdateCategory.publicBoard,
         _ => UpdateCategory.all,
       };
 }

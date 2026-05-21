@@ -12,14 +12,6 @@ import '../../../routes/app_routes.dart';
 import '../../../data/models/update_model.dart';
 import '../controllers/updates_controller.dart';
 
-// Categories shown in filter row (resolved & others excluded)
-const _filterCategories = [
-  UpdateCategory.all,
-  UpdateCategory.development,
-  UpdateCategory.events,
-  UpdateCategory.announcements,
-];
-
 class UpdatesView extends GetView<UpdatesController> {
   const UpdatesView({super.key});
 
@@ -40,70 +32,91 @@ class UpdatesView extends GetView<UpdatesController> {
             Text(AppStrings.stayUpdated, style: AppTextStyles.caption),
           ],
         ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(height: 1, color: AppColors.divider),
+        bottom: TabBar(
+          controller: controller.tabController,
+          labelColor: AppColors.primary,
+          unselectedLabelColor: AppColors.textSecondary,
+          indicatorColor: AppColors.primary,
+          indicatorSize: TabBarIndicatorSize.tab,
+          labelStyle: AppTextStyles.labelSmall.copyWith(fontWeight: FontWeight.w600),
+          unselectedLabelStyle: AppTextStyles.labelSmall,
+          tabs: const [
+            Tab(text: 'MLA Feeds'),
+            Tab(text: 'Events & Announcements'),
+            Tab(text: 'Public Boards'),
+          ],
         ),
       ),
-      body: Obx(() {
-        if (controller.loading.value) {
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: 4,
-            itemBuilder: (_, __) => const ShimmerCard(),
-          );
-        }
-        if (controller.error.isNotEmpty) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    controller.error.value,
-                    style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  TextButton(onPressed: controller.loadUpdates, child: const Text('Retry')),
-                ],
-              ),
-            ),
-          );
-        }
+      body: TabBarView(
+        controller: controller.tabController,
+        children: const [
+          _TabContent(tab: UpdatesTab.feeds),
+          _TabContent(tab: UpdatesTab.eventsAnnouncements),
+          _TabContent(tab: UpdatesTab.publicBoards),
+        ],
+      ),
+    );
+  }
+}
 
-        final featured = controller.featuredUpdates;
-        final items = controller.filteredUpdates;
+class _TabContent extends GetView<UpdatesController> {
+  final UpdatesTab tab;
+  const _TabContent({required this.tab});
 
-        return RefreshIndicator(
-          onRefresh: controller.loadUpdates,
-          child: CustomScrollView(
-            slivers: [
-              // Featured carousel
-              if (featured.isNotEmpty) SliverToBoxAdapter(child: _FeaturedCarousel(items: featured)),
-
-              // Filter chips
-              SliverToBoxAdapter(child: _FilterRow()),
-
-              // Feed
-              if (items.isEmpty)
-                const SliverFillRemaining(
-                  child: EmptyState(title: 'No updates', message: 'No updates for this category yet.'),
-                )
-              else
-                SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  sliver: SliverList.builder(
-                    itemCount: items.length,
-                    itemBuilder: (_, i) => _UpdateCard(update: items[i]),
-                  ),
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (controller.loading.value) {
+        return ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: 4,
+          itemBuilder: (_, __) => const ShimmerCard(),
+        );
+      }
+      if (controller.error.isNotEmpty) {
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  controller.error.value,
+                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+                  textAlign: TextAlign.center,
                 ),
-            ],
+                const SizedBox(height: 16),
+                TextButton(onPressed: controller.loadUpdates, child: const Text('Retry')),
+              ],
+            ),
           ),
         );
-      }),
-    );
+      }
+
+      final featured = tab == UpdatesTab.feeds ? controller.featuredUpdates : <UpdateModel>[];
+      final items = controller.filteredUpdates;
+
+      return RefreshIndicator(
+        onRefresh: controller.loadUpdates,
+        child: CustomScrollView(
+          slivers: [
+            if (featured.isNotEmpty) SliverToBoxAdapter(child: _FeaturedCarousel(items: featured)),
+            if (items.isEmpty)
+              const SliverFillRemaining(
+                child: EmptyState(title: 'No updates', message: 'No updates for this category yet.'),
+              )
+            else
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                sliver: SliverList.builder(
+                  itemCount: items.length,
+                  itemBuilder: (_, i) => _UpdateCard(update: items[i]),
+                ),
+              ),
+          ],
+        ),
+      );
+    });
   }
 }
 
@@ -253,47 +266,6 @@ class _FeaturedCard extends StatelessWidget {
   }
 }
 
-// ── Filter Row ───────────────────────────────────────────────────────────────
-
-class _FilterRow extends GetView<UpdatesController> {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: Obx(
-        () => ListView(
-          controller: controller.filterScrollController,
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          children: _filterCategories.map((cat) {
-            final isSelected = controller.selectedCategory.value == cat;
-            return GestureDetector(
-              onTap: () => controller.selectCategory(cat),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                margin: const EdgeInsets.only(right: 8),
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(
-                  color: isSelected ? AppColors.primary : AppColors.surface,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: isSelected ? AppColors.primary : AppColors.grey300),
-                ),
-                child: Text(
-                  cat.label,
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: isSelected ? Colors.white : AppColors.textSecondary,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-}
-
 // ── Update Card ──────────────────────────────────────────────────────────────
 
 class _UpdateCard extends StatelessWidget {
@@ -341,13 +313,6 @@ class _UpdateCard extends StatelessWidget {
                     Text(
                       update.localTitle,
                       style: AppTextStyles.titleMedium,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      update.shortBody,
-                      style: AppTextStyles.bodySmall,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

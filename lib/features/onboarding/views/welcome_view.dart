@@ -28,7 +28,7 @@ class WelcomeView extends GetView<OnboardingController> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.asset('assets/images/app_logo.png', width: 44, height: 44, fit: BoxFit.cover),
+                    child: Image.asset('assets/images/nameless_logo.png', width: 44, height: 44, fit: BoxFit.cover),
                   ),
                   const SizedBox(width: 10),
                   Obx(() {

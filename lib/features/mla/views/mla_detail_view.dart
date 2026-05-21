@@ -175,20 +175,12 @@ class MlaDetailView extends GetView<MlaController> {
   }
 }
 
-class _ExpandableAbout extends StatefulWidget {
+class _ExpandableAbout extends StatelessWidget {
   final MlaModel mla;
   const _ExpandableAbout({required this.mla});
 
   @override
-  State<_ExpandableAbout> createState() => _ExpandableAboutState();
-}
-
-class _ExpandableAboutState extends State<_ExpandableAbout> {
-  bool _expanded = false;
-
-  @override
   Widget build(BuildContext context) {
-    final mla = widget.mla;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -196,63 +188,27 @@ class _ExpandableAboutState extends State<_ExpandableAbout> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey200),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () => setState(() => _expanded = !_expanded),
-            borderRadius: BorderRadius.circular(16),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Text('About MLA', style: AppTextStyles.headlineSmall),
-                  const Spacer(),
-                  AnimatedRotation(
-                    turns: _expanded ? 0.5 : 0,
-                    duration: const Duration(milliseconds: 200),
-                    child: const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.grey500),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          AnimatedCrossFade(
-            duration: const Duration(milliseconds: 250),
-            crossFadeState: _expanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-            firstChild: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Text(
-                _aboutText(mla),
-                style: AppTextStyles.bodyMedium,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            secondChild: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Column(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('About MLA', style: AppTextStyles.headlineSmall),
+            const SizedBox(height: 12),
+            Text(_aboutText(mla), style: AppTextStyles.bodyMedium),
+            if (mla.education != null) ...[
+              const SizedBox(height: 12),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(_aboutText(mla), style: AppTextStyles.bodyMedium),
-                  if (mla.education != null) ...[
-                    const SizedBox(height: 12),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.school_outlined, size: 16, color: AppColors.grey500),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(mla.education!, style: AppTextStyles.bodySmall),
-                        ),
-                      ],
-                    ),
-                  ],
+                  const Icon(Icons.school_outlined, size: 16, color: AppColors.grey500),
+                  const SizedBox(width: 6),
+                  Expanded(child: Text(mla.education!, style: AppTextStyles.bodySmall)),
                 ],
               ),
-            ),
-          ),
-        ],
+            ],
+          ],
+        ),
       ),
     );
   }

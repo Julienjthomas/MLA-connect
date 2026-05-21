@@ -6,7 +6,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/shimmer_loader.dart';
-import '../../../core/widgets/status_chip.dart';
 import '../../../core/widgets/submission_media_image.dart';
 import '../../../data/models/improvement_model.dart';
 import '../../../routes/app_routes.dart';
@@ -53,14 +52,7 @@ class _ImprovementDetailBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: Text(title, style: AppTextStyles.headlineSmall)),
-                    const SizedBox(width: 8),
-                    StatusChip(status: improvement.status),
-                  ],
-                ),
+                Text(title, style: AppTextStyles.headlineSmall),
                 const SizedBox(height: 12),
                 const Divider(height: 1),
                 const SizedBox(height: 12),
@@ -145,7 +137,7 @@ class _StatusBanner extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(color: status.color.withValues(alpha: 0.15), shape: BoxShape.circle),
-            child: const Icon(Icons.tips_and_updates_outlined, color: AppColors.primary, size: 22),
+            child: const Icon(Icons.build_rounded, color: AppColors.primary, size: 22),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -159,8 +151,6 @@ class _StatusBanner extends StatelessWidget {
                   const SizedBox(width: 6),
                   Text(status.label, style: AppTextStyles.titleSmall.copyWith(color: status.color)),
                 ]),
-                const SizedBox(height: 4),
-                Text(status.statusDescription, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
               ],
             ),
           ),
