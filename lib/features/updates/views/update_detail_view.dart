@@ -16,6 +16,10 @@ class UpdateDetailView extends GetView<UpdatesController> {
     final update = controller.updates.firstWhereOrNull((u) => u.id == id);
     if (update == null) return const Scaffold(body: Center(child: Text('Not found')));
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (id != null) controller.incrementView(id);
+    });
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [

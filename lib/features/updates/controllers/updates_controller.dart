@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../data/models/update_model.dart';
 import '../../../data/services/updates_service.dart';
@@ -15,8 +16,11 @@ class UpdatesController extends GetxController {
   final RxSet<String> likedIds = <String>{}.obs;
   final ScrollController filterScrollController = ScrollController();
 
+  RealtimeChannel? _postsChannel;
+
   @override
   void onClose() {
+    _postsChannel?.unsubscribe();
     filterScrollController.dispose();
     super.onClose();
   }
@@ -30,6 +34,31 @@ class UpdatesController extends GetxController {
   void onInit() {
     super.onInit();
     loadUpdates();
+    _subscribeRealtime();
+  }
+
+  void _subscribeRealtime() {
+    _postsChannel = Supabase.instance.client
+        .channel('public:posts')
+        .onPostgresChanges(
+          event: PostgresChangeEvent.insert,
+          schema: 'public',
+          table: 'posts',
+          callback: (_) => loadUpdates(),
+        )
+        .onPostgresChanges(
+          event: PostgresChangeEvent.update,
+          schema: 'public',
+          table: 'posts',
+          callback: (_) => loadUpdates(),
+        )
+        .onPostgresChanges(
+          event: PostgresChangeEvent.delete,
+          schema: 'public',
+          table: 'posts',
+          callback: (_) => loadUpdates(),
+        )
+        .subscribe();
   }
 
   Future<void> loadUpdates() async {
@@ -50,10 +79,16 @@ class UpdatesController extends GetxController {
     }
   }
 
+  static const _filterCategories = [
+    UpdateCategory.all,
+    UpdateCategory.development,
+    UpdateCategory.events,
+    UpdateCategory.announcements,
+  ];
+
   void selectCategory(UpdateCategory cat) {
     selectedCategory.value = cat;
-    // Scroll filter row so selected chip is visible. Each chip ~90px wide + 8px margin.
-    final idx = UpdateCategory.values.indexOf(cat);
+    final idx = _filterCategories.indexOf(cat);
     final offset = (idx * 98.0).clamp(0.0, double.infinity);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (filterScrollController.hasClients) {
@@ -98,7 +133,7 @@ class UpdatesController extends GetxController {
     }
   }
 
-  UpdateModel _copyUpdate(UpdateModel u, {required int likes}) => UpdateModel(
+  UpdateModel _copyUpdate(UpdateModel u, {required int likes, int? views}) => UpdateModel(
         id: u.id,
         title: u.title,
         body: u.body,
@@ -108,8 +143,20 @@ class UpdatesController extends GetxController {
         imageUrl: u.imageUrl,
         mediaUrls: u.mediaUrls,
         likes: likes,
-        views: u.views,
+        views: views ?? u.views,
+        isFeatured: u.isFeatured,
         createdAt: u.createdAt,
       );
+
+  List<UpdateModel> get featuredUpdates => updates.where((u) => u.isFeatured).toList();
+
+  Future<void> incrementView(String id) async {
+    final idx = updates.indexWhere((u) => u.id == id);
+    if (idx != -1) {
+      final u = updates[idx];
+      updates[idx] = _copyUpdate(u, likes: u.likes, views: u.views + 1);
+    }
+    await _service.incrementViewCount(id);
+  }
 
 }

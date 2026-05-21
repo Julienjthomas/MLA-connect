@@ -25,7 +25,7 @@ class SMl extends S {
 
   @override
   String get welcomeSubtitle =>
-      'ഒരു മികച്ച മണ്ഡലം കെട്ടിപ്പടുക്കാൻ ബന്ധിപ്പിക്കാനും സംഭാവന ചെയ്യാനുമുള്ള പ്ലാറ്റ്ഫോം.';
+      'ഒന്നിക്കാം, പങ്കുചേരാം, മികച്ച മണ്ഡലം സൃഷ്ടിക്കാം';
 
   @override
   String get continueWithPhone => 'ഫോൺ നമ്പർ ഉപയോഗിച്ച് തുടരുക';
@@ -76,7 +76,7 @@ class SMl extends S {
 
   @override
   String get panchayatHelp =>
-      'പ്രശ്നങ്ങൾ ശരിയായി റൂട്ട് ചെയ്യാൻ ഇത് ഞങ്ങളെ സഹായിക്കുന്നു.';
+      'പ്രശ്നങ്ങളും അപ്‌ഡേറ്റുകളും ശരിയായി കൈകാര്യം ചെയ്യാൻ ഇത് ഞങ്ങളെ സഹായിക്കുന്നു';
 
   @override
   String get searchPanchayat => 'പഞ്ചായത്ത് തിരയുക';
@@ -85,17 +85,17 @@ class SMl extends S {
   String get selectWard => 'വാർഡ് തിരഞ്ഞെടുക്കുക';
 
   @override
-  String get chooseWard =>
-      'ബാലുശ്ശേരി പഞ്ചായത്തിലെ നിങ്ങളുടെ വാർഡ് തിരഞ്ഞെടുക്കുക';
+  String get chooseWard => 'നിങ്ങളുടെ പഞ്ചായത്തിലെ വാർഡ് തിരഞ്ഞെടുക്കുക';
 
   @override
   String get searchWard => 'വാർഡ് തിരയുക';
 
   @override
-  String get basicProfile => 'അടിസ്ഥാന പ്രൊഫൈൽ';
+  String get basicProfile => 'അടിസ്ഥാന വിവരങ്ങൾ';
 
   @override
-  String get basicProfileSubtitle => 'നിങ്ങളെക്കുറിച്ച് കുറച്ച് പറയൂ';
+  String get basicProfileSubtitle =>
+      'താങ്കളെ കുറിച്ച് കുറച്ച് വിവരങ്ങൾ പങ്കുവെക്കൂ';
 
   @override
   String get fullName => 'പൂർണ്ണ പേര്';
@@ -108,13 +108,13 @@ class SMl extends S {
 
   @override
   String get notificationSubtitle =>
-      'നിങ്ങൾക്ക് ലഭിക്കാൻ ആഗ്രഹിക്കുന്നത് തിരഞ്ഞെടുക്കുക';
+      'ലഭിക്കാനാഗ്രഹിക്കുന്ന വിവരങ്ങൾ തിരഞ്ഞെടുക്കുക';
 
   @override
-  String get issueUpdates => 'പ്രശ്ന അപ്ഡേറ്റുകൾ';
+  String get issueUpdates => 'പരാതി അപ്‌ഡേറ്റുകൾ';
 
   @override
-  String get issueUpdatesDesc => 'റിപ്പോർട്ട് ചെയ്ത പ്രശ്നങ്ങളിലെ അപ്ഡേറ്റുകൾ';
+  String get issueUpdatesDesc => 'സമർപ്പിച്ച പ്രശ്നങ്ങളിലെ അപ്‌ഡേറ്റുകൾ';
 
   @override
   String get mlaAnnouncements => 'MLA അറിയിപ്പുകൾ';
@@ -123,34 +123,34 @@ class SMl extends S {
   String get mlaAnnouncementsDesc => 'പ്രധാനപ്പെട്ട അറിയിപ്പുകൾ';
 
   @override
-  String get emergencyAlerts => 'അടിയന്തര അലേർട്ടുകൾ';
+  String get emergencyAlerts => 'അടിയന്തര അറിയിപ്പുകൾ';
 
   @override
-  String get emergencyAlertsDesc => 'അടിയന്തര സാഹചര്യങ്ങളിലെ അലേർട്ടുകൾ';
+  String get emergencyAlertsDesc => 'അടിയന്തര സാഹചര്യങ്ങളിലെ അറിയിപ്പുകൾ';
 
   @override
-  String get eventReminders => 'ഇവന്റ് റിമൈൻഡറുകൾ';
+  String get eventReminders => 'പരിപാടി ഓർമ്മപ്പെടുത്തലുകൾ';
 
   @override
-  String get eventRemindersDesc => 'വരാനിരിക്കുന്ന ഇവന്റുകളും പ്രോഗ്രാമുകളും';
+  String get eventRemindersDesc => 'വരാനിരിക്കുന്ന പരിപാടികളും പദ്ധതികളും';
 
   @override
   String get allSet => 'എല്ലാം തയ്യാർ!';
 
   @override
-  String get allSetSubtitle => 'സൂപ്പർ ബാലുശ്ശേരിയിലേക്ക് സ്വാഗതം';
+  String get allSetSubtitle => 'MLA Connect ലേക്ക് സ്വാഗതം';
 
   @override
-  String get goToHome => 'ഹോമിലേക്ക് പോകുക';
+  String get goToHome => 'ഹോം പേജിലേക്ക് പോകുക';
 
   @override
   String get whatWouldYouLike => 'നിങ്ങൾ എന്ത് ചെയ്യാൻ ആഗ്രഹിക്കുന്നു?';
 
   @override
-  String get quickActions => 'ത്വരിത പ്രവർത്തനങ്ങൾ';
+  String get quickActions => 'ദ്രുത പ്രവർത്തനങ്ങൾ';
 
   @override
-  String get quickActionIssue => 'പ്രശ്നം റിപ്പോർട്ട്';
+  String get quickActionIssue => 'പരാതി സമർപ്പിക്കുക';
 
   @override
   String get quickActionIssueSubtitle => 'റോഡ്, വെള്ളം, സുരക്ഷ & കൂടുതൽ';
@@ -166,33 +166,34 @@ class SMl extends S {
 
   @override
   String get quickActionSuggestSubtitle =>
-      'സഹായം തേടുക അല്ലെങ്കിൽ പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക';
+      'സഹായം തേടുക അല്ലെങ്കിൽ ഒരു പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക';
 
   @override
-  String get quickActionAppreciate => 'പ്രവൃത്തി അഭിനന്ദിക്കുക';
+  String get quickActionAppreciate => 'പ്രവർത്തനം അഭിനന്ദിക്കുക';
 
   @override
   String get quickActionAppreciateSubtitle =>
-      'ആളുകളെ അല്ലെങ്കിൽ പദ്ധതികളെ നന്ദി പറയുക';
+      'വ്യക്തികളെയും പദ്ധതികളെയും അഭിനന്ദിക്കുക';
 
   @override
   String get yourMlaLabel => 'നിങ്ങളുടെ MLA';
 
   @override
-  String get contactOffice => 'ഓഫീസ് ബന്ധപ്പെടുക';
+  String get contactOffice => 'ഓഫീസുമായി ബന്ധപ്പെടുക';
 
   @override
-  String get messageMla => 'MLA-ക്ക് സന്ദേശം';
+  String get messageMla => 'MLA-ക്ക് സന്ദേശം അയയ്ക്കുക';
 
   @override
   String get meetMla => 'MLA-യെ കാണുക';
 
   @override
-  String get communityBannerHeadline => 'നാം ഒരുമിച്ച് നാളെ കെട്ടിപ്പടുക്കാം.';
+  String get communityBannerHeadline =>
+      'നല്ലൊരു നാളെ നമുക്ക് ഒരുമിച്ച് സൃഷ്ടിക്കാം';
 
   @override
   String get communityBannerSubtext =>
-      'പ്രശ്നങ്ങൾ, ആശയങ്ങൾ പങ്കിടുക, നല്ല പ്രവൃത്തി അഭിനന്ദിക്കുക.';
+      'പ്രശ്നങ്ങളും ആശയങ്ങളും പങ്കുവെക്കൂ, നല്ല പ്രവർത്തനങ്ങളെ അഭിനന്ദിക്കൂ';
 
   @override
   String get activeIssues => 'സജീവ പ്രശ്നങ്ങൾ';
@@ -204,7 +205,7 @@ class SMl extends S {
   String get issuesResolvedLabel => 'പരിഹരിച്ചു';
 
   @override
-  String get communityImpactHeader => 'കമ്മ്യൂണിറ്റി ഇംപാക്ട്';
+  String get communityImpactHeader => 'സാമൂഹിക സ്വാധീനം';
 
   @override
   String get communityImpactTagline =>
@@ -266,10 +267,10 @@ class SMl extends S {
 
   @override
   String get reportSuccessMsg =>
-      'ഞങ്ങൾ നിങ്ങളുടെ റിപ്പോർട്ട് ലഭിച്ചു, ഞങ്ങളുടെ ടീം ഉടൻ നടപടിയെടുക്കും.';
+      'നിങ്ങളുടെ പരാതി സ്വീകരിച്ചിരിക്കുന്നു. ഞങ്ങളുടെ ടീം ഉടൻ നടപടിയെടുക്കും';
 
   @override
-  String get trackInActivity => 'എന്റെ പ്രവർത്തനത്തിൽ ട്രാക്ക് ചെയ്യുക';
+  String get trackInActivity => 'My Activity ൽ പിന്തുടരുക';
 
   @override
   String get reportAnother => 'മറ്റൊരു പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക';
@@ -278,7 +279,7 @@ class SMl extends S {
   String get appreciateTitle => 'അഭിനന്ദനം സമർപ്പിക്കുക';
 
   @override
-  String get recipientCategory => 'സ്വീകർത്താവ് വിഭാഗം';
+  String get recipientCategory => 'സ്വീകർത്തൃ വിഭാഗം';
 
   @override
   String get staffName => 'ജീവനക്കാരന്റെ പേര് / ID (ഓപ്ഷണൽ)';
@@ -318,7 +319,7 @@ class SMl extends S {
   String get ideaSuccess => 'നിങ്ങളുടെ ആശയം\nവിജയകരമായി സമർപ്പിച്ചു!';
 
   @override
-  String get suggestImprovement => 'മെച്ചപ്പെടുത്താൻ സഹായിക്കൂ';
+  String get suggestImprovement => 'നിർദേശങ്ങൾ പങ്കുവെക്കുക';
 
   @override
   String get suggestionDetails => 'നിർദ്ദേശ വിശദാംശങ്ങൾ';
@@ -335,19 +336,20 @@ class SMl extends S {
 
   @override
   String get trackContributions =>
-      'നിങ്ങളുടെ എല്ലാ സംഭാവനകളും അപ്ഡേറ്റുകളും ട്രാക്ക് ചെയ്യുക';
+      'നിങ്ങളുടെ എല്ലാ പങ്കാളിത്തങ്ങളും അപ്‌ഡേറ്റുകളും പിന്തുടരുക';
 
   @override
-  String get seeYourImpact => 'See your impact and stay involved';
+  String get seeYourImpact =>
+      'നിങ്ങളുടെ പങ്കാളിത്തത്തിന്റെ സ്വാധീനം കാണൂ, സജീവമായി തുടരൂ';
 
   @override
-  String get yourImpact => 'Your impact';
+  String get yourImpact => 'നിങ്ങളുടെ സ്വാധീനം';
 
   @override
-  String get keepItUp => 'Keep it up!';
+  String get keepItUp => 'നല്ല പ്രവർത്തനം തുടരൂ';
 
   @override
-  String get chooseOptionToStart => 'Choose an option to get started.';
+  String get chooseOptionToStart => 'തുടങ്ങാൻ ഒരു ഓപ്ഷൻ തിരഞ്ഞെടുക്കുക';
 
   @override
   String get updates => 'അപ്ഡേറ്റുകൾ';
@@ -382,7 +384,7 @@ class SMl extends S {
       'MLA ഓഫീസിലേക്ക് നേരിട്ട് സന്ദേശം അയയ്ക്കുക';
 
   @override
-  String get aboutApp => 'സൂപ്പർ ബാലുശ്ശേരിയെ കുറിച്ച്';
+  String get aboutApp => 'MLA Connect സംബന്ധിച്ച്';
 
   @override
   String get termsConditions => 'നിബന്ധനകളും വ്യവസ്ഥകളും';
@@ -437,39 +439,40 @@ class SMl extends S {
 
   @override
   String get statusDescSubmitted =>
-      'Your report has been received and will be reviewed soon.';
+      'നിങ്ങളുടെ റിപ്പോർട്ട് സ്വീകരിച്ചിരിക്കുന്നു. ഉടൻ പരിശോധിക്കും';
 
   @override
   String get statusDescUnderReview =>
-      'Our team is currently reviewing your report.';
+      'ഞങ്ങളുടെ ടീം നിലവിൽ നിങ്ങളുടെ റിപ്പോർട്ട് പരിശോധിച്ചുകൊണ്ടിരിക്കുന്നു';
 
   @override
   String get statusDescAssigned =>
-      'Your report has been assigned to the relevant department.';
+      'നിങ്ങളുടെ റിപ്പോർട്ട് ബന്ധപ്പെട്ട വിഭാഗത്തിന് കൈമാറിയിരിക്കുന്നു';
 
   @override
-  String get statusDescInProgress => 'Action is being taken on your report.';
+  String get statusDescInProgress =>
+      'നിങ്ങളുടെ റിപ്പോർട്ടിൽ നടപടി സ്വീകരിച്ചുകൊണ്ടിരിക്കുന്നു';
 
   @override
   String get statusDescResolved =>
-      'Your report has been resolved successfully.';
+      'നിങ്ങളുടെ റിപ്പോർട്ട് വിജയകരമായി പരിഹരിച്ചിരിക്കുന്നു';
 
   @override
   String get statusDescRejected =>
-      'Your report could not be processed at this time.';
+      'താൽക്കാലികമായി നിങ്ങളുടെ റിപ്പോർട്ട് കൈകാര്യം ചെയ്യാൻ സാധിക്കുന്നില്ല';
 
   @override
-  String get needHelp => 'Need help?';
+  String get needHelp => 'സഹായം ആവശ്യമുണ്ടോ?';
 
   @override
   String get needHelpSubtitle =>
-      'Contact support for any queries regarding your report.';
+      'നിങ്ങളുടെ റിപ്പോർട്ടുമായി ബന്ധപ്പെട്ട സംശയങ്ങൾക്ക് പിന്തുണ ടീമിനെ ബന്ധപ്പെടുക';
 
   @override
-  String get addUpdateComment => 'Add an Update / Comment';
+  String get addUpdateComment => 'പുതിയ വിവരം അല്ലെങ്കിൽ അഭിപ്രായം ചേർക്കുക';
 
   @override
-  String get description => 'Description';
+  String get description => 'വിവരണം';
 
   @override
   String get categoryRoad => 'റോഡും അടിസ്ഥാന സൗകര്യങ്ങളും';
@@ -496,7 +499,7 @@ class SMl extends S {
   String get categoryOther => 'മറ്റുള്ളവ';
 
   @override
-  String get discardChanges => 'മാറ്റങ്ങൾ ഉപേക്ഷിക്കണോ?';
+  String get discardChanges => 'മാറ്റങ്ങൾ ഒഴിവാക്കുക';
 
   @override
   String get discardConfirm =>
@@ -509,20 +512,20 @@ class SMl extends S {
   String get keepEditing => 'എഡിറ്റ് തുടരുക';
 
   @override
-  String get noReports => 'റിപ്പോർട്ടുകൾ ഇല്ല';
+  String get noReports => 'ഇതുവരെ റിപ്പോർട്ടുകളൊന്നുമില്ല';
 
   @override
   String get noReportsMsg =>
       'നിങ്ങൾ റിപ്പോർട്ട് ചെയ്ത പ്രശ്നങ്ങൾ ഇവിടെ കാണിക്കും.';
 
   @override
-  String get noIdeas => 'ആശയങ്ങൾ ഇല്ല';
+  String get noIdeas => 'ഇതുവരെ ആശയങ്ങളൊന്നുമില്ല';
 
   @override
   String get noIdeasMsg => 'നിങ്ങൾ പങ്കുവെക്കുന്ന ആശയങ്ങൾ ഇവിടെ കാണിക്കും.';
 
   @override
-  String get noAppreciations => 'അഭിനന്ദനങ്ങൾ ഇല്ല';
+  String get noAppreciations => 'ഇതുവരെ അഭിനന്ദനങ്ങളൊന്നുമില്ല';
 
   @override
   String get noAppreciationsMsg => 'നിങ്ങൾ അയച്ച അഭിനന്ദനങ്ങൾ ഇവിടെ കാണിക്കും.';
@@ -534,7 +537,7 @@ class SMl extends S {
   String get noUpdatesMsg => 'ഈ വിഭാഗത്തിൽ ഇതുവരെ അപ്ഡേറ്റുകൾ ഇല്ല.';
 
   @override
-  String get savedEmptyTitle => 'ഇതുവരെ സേവ് ചെയ്തത് ഒന്നുമില്ല';
+  String get savedEmptyTitle => 'ഇതുവരെ ഒന്നും സേവ് ചെയ്തിട്ടില്ല';
 
   @override
   String get savedEmptyMsg =>
@@ -567,8 +570,7 @@ class SMl extends S {
   String get featureImproveLabel => 'മെച്ചപ്പെടുത്താൻ സഹായിക്കൂ';
 
   @override
-  String get featureImproveSubtitle =>
-      'മികച്ച ഭാവിക്കായി പ്രായോഗിക മെച്ചപ്പെടുത്തലുകൾ';
+  String get featureImproveSubtitle => 'നല്ല നാളേക്കായി പ്രായോഗിക നിർദേശങ്ങൾ';
 
   @override
   String get featureAppreciateLabel => 'അഭിനന്ദിക്കുക';
@@ -602,7 +604,7 @@ class SMl extends S {
   String get helpFaq => 'സഹായം & പതിവ് ചോദ്യങ്ങൾ';
 
   @override
-  String get general => 'പൊതുവായവ';
+  String get general => 'പൊതുവായത്';
 
   @override
   String get account => 'അക്കൗണ്ട്';
@@ -656,11 +658,11 @@ class SMl extends S {
 
   @override
   String get ideaSuccessMsg =>
-      'മികച്ച മണ്ഡലത്തിന് സംഭാവന നൽകിയതിന് നന്ദി. ഞങ്ങളുടെ ടീം നിങ്ങളുടെ ആശയം പരിശോധിച്ച് അറിയിക്കും.';
+      'മികച്ച മണ്ഡലത്തിനായി നൽകിയ നിങ്ങളുടെ സംഭാവനയ്ക്ക് നന്ദി. നിങ്ങളുടെ ആശയം ഞങ്ങളുടെ ടീം പരിശോധിച്ച് തുടർന്ന് നിങ്ങളെ അറിയിക്കും';
 
   @override
   String get ideaSuccessPublicVisible =>
-      'നിങ്ങളുടെ പൊതു ആശയങ്ങൾ സമൂഹത്തിന് ദൃശ്യമാകും.';
+      'നിങ്ങൾ പങ്കുവെക്കുന്ന പൊതുവായ ആശയങ്ങൾ സമൂഹത്തിലെ എല്ലാവർക്കും കാണാനാകും';
 
   @override
   String get ideaSuccessPublicUpvote =>
@@ -679,7 +681,7 @@ class SMl extends S {
       'ഞങ്ങളുടെ ടീം പരിശോധിച്ച് കൂടുതൽ വിവരങ്ങൾക്കായി നിങ്ങളെ ബന്ധപ്പെടാം.';
 
   @override
-  String get goToMyActivity => 'എന്റെ പ്രവർത്തനത്തിലേക്ക്';
+  String get goToMyActivity => 'My Activity ലേക്ക് പോകുക';
 
   @override
   String get submitAnotherIdea => 'മറ്റൊരു ആശയം സമർപ്പിക്കുക';
@@ -697,7 +699,7 @@ class SMl extends S {
   String get unableToOpen => 'തുറക്കാൻ കഴിയില്ല';
 
   @override
-  String get publicGrievanceHearing => 'പൊതു പരാതി ശ്രവണം';
+  String get publicGrievanceHearing => 'ജനങ്ങളുടെ പരാതി പരിഹാര യോഗം';
 
   @override
   String get addVoiceMessage => 'വോയിസ് സന്ദേശം ചേർക്കുക';
@@ -816,7 +818,7 @@ class SMl extends S {
   String get noImprovementsMsg => 'നിങ്ങൾ പങ്കിടുന്ന നിർദ്ദേശങ്ങൾ ഇവിടെ കാണാം.';
 
   @override
-  String get activityTabReports => 'റിപ്പോർട്ടുകൾ';
+  String get activityTabReports => 'പ്രശ്നങ്ങൾ';
 
   @override
   String get activityTabIdeas => 'ആശയങ്ങൾ';
@@ -831,7 +833,7 @@ class SMl extends S {
   String get activityTabSaved => 'സേവ് ചെയ്തത്';
 
   @override
-  String get activityFabReport => 'പരാതി അറിയിക്കുക';
+  String get activityFabReport => 'പ്രശ്നം ഉന്നയിക്കുക';
 
   @override
   String get activityFabIdea => 'ആശയം പങ്കിടുക';
@@ -843,11 +845,11 @@ class SMl extends S {
   String get activityFabAppreciation => 'അഭിനന്ദനം അയയ്ക്കുക';
 
   @override
-  String get activityGreatGoing => 'ശ്രേഷ്ഠം!';
+  String get activityGreatGoing => 'വളരെ നന്നായി';
 
   @override
   String activityGreatGoingNamed(String name) {
-    return 'ശ്രേഷ്ഠം, $name!';
+    return 'വളരെ നന്നായി, $name!';
   }
 
   @override
@@ -869,7 +871,8 @@ class SMl extends S {
   String get activityNoMatches => 'പൊരുത്തങ്ങളില്ല';
 
   @override
-  String get activityNoReportsWithStatus => 'ഈ നിലയിലുള്ള റിപ്പോർട്ടുകളില്ല.';
+  String get activityNoReportsWithStatus =>
+      'ഈ നിലയിലുള്ള പ്രശ്നങ്ങളൊന്നുമില്ല.';
 
   @override
   String get activityEmptyHeadline =>
@@ -877,7 +880,7 @@ class SMl extends S {
 
   @override
   String get activityEmptyMessage =>
-      'പ്രശ്നങ്ങൾ റിപ്പോർട്ട് ചെയ്യുക, ആശയങ്ങൾ പങ്കിടുക, മണ്ഡല അപ്ഡേറ്റുകൾ ട്രാക്ക് ചെയ്യുക.';
+      'പ്രശ്നങ്ങൾ ഉന്നയിക്കുക, ആശയങ്ങൾ പങ്കിടുക, മണ്ഡല അപ്ഡേറ്റുകൾ ട്രാക്ക് ചെയ്യുക.';
 
   @override
   String activityIdWard(String id, String ward) {
@@ -888,16 +891,16 @@ class SMl extends S {
   String get reportDetail => 'റിപ്പോർട്ട് വിശദാംശം';
 
   @override
-  String get ideaDetail => 'Idea Detail';
+  String get ideaDetail => 'ആശയത്തിന്റെ വിശദാംശങ്ങൾ';
 
   @override
-  String get improvementDetail => 'Improvement Detail';
+  String get improvementDetail => 'മെച്ചപ്പെടുത്തലിന്റെ വിശദാംശങ്ങൾ';
 
   @override
-  String get appreciationDetail => 'Appreciation Detail';
+  String get appreciationDetail => 'അഭിനന്ദനത്തിന്റെ വിശദാംശങ്ങൾ';
 
   @override
-  String get visibilityPublic => 'പൊതു മതിൽ';
+  String get visibilityPublic => 'പൊതു ഫീഡ്';
 
   @override
   String get visibilityMlaOnly => 'എംഎൽഎ ഓഫീസ് മാത്രം';

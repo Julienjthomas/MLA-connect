@@ -190,10 +190,10 @@ extension UpdateCategoryX on UpdateCategory {
       };
 
   static UpdateCategory fromString(String s) => switch (s) {
-        'development' => UpdateCategory.development,
-        'events' => UpdateCategory.events,
+        'development' || 'work_update' => UpdateCategory.development,
+        'events' || 'event' => UpdateCategory.events,
         'resolved' => UpdateCategory.resolved,
-        'announcements' => UpdateCategory.announcements,
+        'announcements' || 'announcement' || 'alert' || 'achievement' || 'general' || 'emergency' || 'education' || 'water' || 'health' => UpdateCategory.announcements,
         _ => UpdateCategory.all,
       };
 }

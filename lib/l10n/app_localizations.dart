@@ -1054,7 +1054,7 @@ abstract class S {
   /// No description provided for @noReports.
   ///
   /// In en, this message translates to:
-  /// **'No Reports Yet'**
+  /// **'No Issues Yet'**
   String get noReports;
 
   /// No description provided for @noReportsMsg.
@@ -1192,7 +1192,7 @@ abstract class S {
   /// No description provided for @communityImpactReports.
   ///
   /// In en, this message translates to:
-  /// **'Reports'**
+  /// **'Issues'**
   String get communityImpactReports;
 
   /// No description provided for @communityImpactIdeas.
@@ -1612,7 +1612,7 @@ abstract class S {
   /// No description provided for @activityTabReports.
   ///
   /// In en, this message translates to:
-  /// **'Reports'**
+  /// **'Issues'**
   String get activityTabReports;
 
   /// No description provided for @activityTabIdeas.
@@ -1642,7 +1642,7 @@ abstract class S {
   /// No description provided for @activityFabReport.
   ///
   /// In en, this message translates to:
-  /// **'Report a Problem'**
+  /// **'Report an Issue'**
   String get activityFabReport;
 
   /// No description provided for @activityFabIdea.
@@ -1708,7 +1708,7 @@ abstract class S {
   /// No description provided for @activityNoReportsWithStatus.
   ///
   /// In en, this message translates to:
-  /// **'No reports with this status.'**
+  /// **'No issues with this status.'**
   String get activityNoReportsWithStatus;
 
   /// No description provided for @activityEmptyHeadline.
@@ -1732,7 +1732,7 @@ abstract class S {
   /// No description provided for @reportDetail.
   ///
   /// In en, this message translates to:
-  /// **'Report Detail'**
+  /// **'Issue Detail'**
   String get reportDetail;
 
   /// No description provided for @ideaDetail.

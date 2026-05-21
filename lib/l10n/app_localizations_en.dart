@@ -500,7 +500,7 @@ class SEn extends S {
   String get keepEditing => 'Keep Editing';
 
   @override
-  String get noReports => 'No Reports Yet';
+  String get noReports => 'No Issues Yet';
 
   @override
   String get noReportsMsg => 'Your reported issues will appear here.';
@@ -575,7 +575,7 @@ class SEn extends S {
   String get communityImpactSubtitle => 'This month in your constituency';
 
   @override
-  String get communityImpactReports => 'Reports';
+  String get communityImpactReports => 'Issues';
 
   @override
   String get communityImpactIdeas => 'Ideas';
@@ -806,7 +806,7 @@ class SEn extends S {
   String get noImprovementsMsg => 'Suggestions you share will appear here.';
 
   @override
-  String get activityTabReports => 'Reports';
+  String get activityTabReports => 'Issues';
 
   @override
   String get activityTabIdeas => 'Ideas';
@@ -821,7 +821,7 @@ class SEn extends S {
   String get activityTabSaved => 'Saved';
 
   @override
-  String get activityFabReport => 'Report a Problem';
+  String get activityFabReport => 'Report an Issue';
 
   @override
   String get activityFabIdea => 'Share an Idea';
@@ -859,7 +859,7 @@ class SEn extends S {
   String get activityNoMatches => 'No matches';
 
   @override
-  String get activityNoReportsWithStatus => 'No reports with this status.';
+  String get activityNoReportsWithStatus => 'No issues with this status.';
 
   @override
   String get activityEmptyHeadline => 'Start contributing to your community';
@@ -874,7 +874,7 @@ class SEn extends S {
   }
 
   @override
-  String get reportDetail => 'Report Detail';
+  String get reportDetail => 'Issue Detail';
 
   @override
   String get ideaDetail => 'Idea Detail';

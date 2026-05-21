@@ -179,7 +179,7 @@
   "discard": "Discard",
   "keepEditing": "Keep Editing",
 
-  "noReports": "No Reports Yet",
+  "noReports": "No Issues Yet",
   "noReportsMsg": "Your reported issues will appear here.",
   "noIdeas": "No Ideas Yet",
   "noIdeasMsg": "Ideas you share will appear here.",
@@ -205,7 +205,7 @@
 
   "communityImpactTitle": "Community Impact",
   "communityImpactSubtitle": "This month in your constituency",
-  "communityImpactReports": "Reports",
+  "communityImpactReports": "Issues",
   "communityImpactIdeas": "Ideas",
   "communityImpactThanks": "Thanks",
 
@@ -287,13 +287,13 @@
   "noImprovements": "No Improvements Yet",
   "noImprovementsMsg": "Suggestions you share will appear here.",
 
-  "activityTabReports": "Reports",
+  "activityTabReports": "Issues",
   "activityTabIdeas": "Ideas",
   "activityTabImprovements": "Improvements",
   "activityTabAppreciations": "Appreciations",
   "activityTabSaved": "Saved",
 
-  "activityFabReport": "Report a Problem",
+  "activityFabReport": "Report an Issue",
   "activityFabIdea": "Share an Idea",
   "activityFabImprovement": "Suggest Improvement",
   "activityFabAppreciation": "Send Appreciation",
@@ -316,7 +316,7 @@
   "filterAll": "All",
   "filterActive": "Active",
   "activityNoMatches": "No matches",
-  "activityNoReportsWithStatus": "No reports with this status.",
+  "activityNoReportsWithStatus": "No issues with this status.",
 
   "activityEmptyHeadline": "Start contributing to your community",
   "activityEmptyMessage": "Report issues, share ideas and track updates from your constituency.",
@@ -329,7 +329,7 @@
     }
   },
 
-  "reportDetail": "Report Detail",
+  "reportDetail": "Issue Detail",
   "ideaDetail": "Idea Detail",
   "improvementDetail": "Improvement Detail",
   "appreciationDetail": "Appreciation Detail",

@@ -13,7 +13,11 @@ class UpdatesService {
       Get.isRegistered<AuthController>() ? Get.find<AuthController>().user.value?.citizenRowId : null;
 
   Future<List<UpdateModel>> getUpdates({UpdateCategory? category}) async {
-    final res = await _db.from('posts').select().order('published_at', ascending: false);
+    final res = await _db
+        .from('posts')
+        .select()
+        .isFilter('deleted_at', null)
+        .order('published_at', ascending: false);
     final rows = (res as List).map((j) => Map<String, dynamic>.from(j as Map)).toList();
 
     if (rows.isNotEmpty) {
@@ -29,8 +33,19 @@ class UpdatesService {
     return all.where((u) => u.category == category).toList();
   }
 
+  Future<void> incrementViewCount(String id) async {
+    try {
+      await _db.rpc('increment_post_view', params: {'post_id': int.tryParse(id) ?? 0});
+    } catch (_) {}
+  }
+
   Future<UpdateModel?> getUpdate(String id) async {
-    final res = await _db.from('posts').select().eq('id', id).maybeSingle();
+    final res = await _db
+        .from('posts')
+        .select()
+        .eq('id', id)
+        .isFilter('deleted_at', null)
+        .maybeSingle();
     if (res == null) return null;
     final row = Map<String, dynamic>.from(res);
     await Future.wait([
@@ -136,8 +151,11 @@ class UpdatesService {
   Future<void> likeUpdate(String id) async {
     final cid = _citizenRowId;
     if (cid == null || cid.isEmpty) return;
+    final cidInt = int.tryParse(cid);
+    final tidInt = int.tryParse(id);
+    if (cidInt == null || tidInt == null) return;
     await _db.from('likes').upsert(
-      {'user_id': cid, 'target_type': 'post', 'target_id': id},
+      {'user_id': cidInt, 'target_type': 'post', 'target_id': tidInt},
       onConflict: 'user_id,target_type,target_id',
     );
   }
@@ -145,24 +163,30 @@ class UpdatesService {
   Future<void> unlikeUpdate(String id) async {
     final cid = _citizenRowId;
     if (cid == null || cid.isEmpty) return;
+    final cidInt = int.tryParse(cid);
+    final tidInt = int.tryParse(id);
+    if (cidInt == null || tidInt == null) return;
     await _db
         .from('likes')
         .delete()
-        .eq('user_id', cid)
+        .eq('user_id', cidInt)
         .eq('target_type', 'post')
-        .eq('target_id', id);
+        .eq('target_id', tidInt);
   }
 
   Future<Set<String>> getLikedPostIds(Iterable<String> postIds) async {
     final cid = _citizenRowId;
     if (cid == null || cid.isEmpty || postIds.isEmpty) return {};
-    final ids = postIds.toList();
+    final cidInt = int.tryParse(cid);
+    if (cidInt == null) return {};
+    final intIds = postIds.map((id) => int.tryParse(id)).whereType<int>().toList();
+    if (intIds.isEmpty) return {};
     final res = await _db
         .from('likes')
         .select('target_id')
-        .eq('user_id', cid)
+        .eq('user_id', cidInt)
         .eq('target_type', 'post')
-        .inFilter('target_id', ids);
+        .inFilter('target_id', intIds);
     return (res as List)
         .map((row) => row['target_id']?.toString() ?? '')
         .where((id) => id.isNotEmpty)

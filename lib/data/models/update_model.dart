@@ -14,6 +14,7 @@ class UpdateModel {
   final List<String> mediaUrls;
   final int likes;
   final int views;
+  final bool isFeatured;
   final DateTime createdAt;
 
   const UpdateModel({
@@ -27,6 +28,7 @@ class UpdateModel {
     this.mediaUrls = const [],
     this.likes = 0,
     this.views = 0,
+    this.isFeatured = false,
     required this.createdAt,
   });
 
@@ -59,6 +61,7 @@ class UpdateModel {
       mediaUrls: List<String>.from(attachments),
       likes: json['like_count'] as int? ?? 0,
       views: json['view_count'] as int? ?? 0,
+      isFeatured: json['is_pinned'] as bool? ?? false,
       createdAt: DateTime.parse(
         json['published_at'] as String? ?? json['created_at'] as String,
       ),
