@@ -146,7 +146,7 @@ class SEn extends S {
   String get quickActions => 'Quick actions';
 
   @override
-  String get quickActionIssue => 'Report Issue';
+  String get quickActionIssue => 'Raise an Issue';
 
   @override
   String get quickActionIssueSubtitle => 'Roads, water, safety & more';
@@ -161,7 +161,7 @@ class SEn extends S {
   String get quickActionSuggest => 'Request Help';
 
   @override
-  String get quickActionSuggestSubtitle => 'Seek help or report a problem';
+  String get quickActionSuggestSubtitle => 'Seek help or raise an issue';
 
   @override
   String get quickActionAppreciate => 'Appreciate Work';
@@ -232,10 +232,10 @@ class SEn extends S {
   String get viewDetails => 'View Details';
 
   @override
-  String get reportProblem => 'Report a Problem';
+  String get reportProblem => 'Raise an Issue';
 
   @override
-  String get describeIssue => 'Describe the Problem';
+  String get describeIssue => 'Describe the Issue';
 
   @override
   String get addPhotos => 'Add Photos / Videos (Optional)';
@@ -253,14 +253,14 @@ class SEn extends S {
   String get contactNumber => 'Contact Number';
 
   @override
-  String get submitReport => 'Submit Report';
+  String get submitReport => 'Submit Issue';
 
   @override
-  String get reportSuccess => 'Your Report has been\nSubmitted Successfully!';
+  String get reportSuccess => 'Your Issue has been\nSubmitted Successfully!';
 
   @override
   String get reportSuccessMsg =>
-      'We received your report and our team will take action soon.';
+      'We received your issue and our team will take action soon.';
 
   @override
   String get trackInActivity => 'Track in My Activity';
@@ -428,33 +428,32 @@ class SEn extends S {
 
   @override
   String get statusDescSubmitted =>
-      'Your report has been received and will be reviewed soon.';
+      'Your issue has been received and will be reviewed soon.';
 
   @override
   String get statusDescUnderReview =>
-      'Our team is currently reviewing your report.';
+      'Our team is currently reviewing your issue.';
 
   @override
   String get statusDescAssigned =>
-      'Your report has been assigned to the relevant department.';
+      'Your issue has been assigned to the relevant department.';
 
   @override
-  String get statusDescInProgress => 'Action is being taken on your report.';
+  String get statusDescInProgress => 'Action is being taken on your issue.';
 
   @override
-  String get statusDescResolved =>
-      'Your report has been resolved successfully.';
+  String get statusDescResolved => 'Your issue has been resolved successfully.';
 
   @override
   String get statusDescRejected =>
-      'Your report could not be processed at this time.';
+      'Your issue could not be processed at this time.';
 
   @override
   String get needHelp => 'Need help?';
 
   @override
   String get needHelpSubtitle =>
-      'Contact support for any queries regarding your report.';
+      'Contact support for any queries regarding your issue.';
 
   @override
   String get addUpdateComment => 'Add an Update / Comment';
@@ -532,7 +531,7 @@ class SEn extends S {
       'Save Updates posts and publicly shared ideas here to find them later.';
 
   @override
-  String get reportNotFound => 'Report not found';
+  String get reportNotFound => 'Issue not found';
 
   @override
   String get photos => 'Photos';
@@ -541,7 +540,7 @@ class SEn extends S {
   String get statusTimeline => 'Status Timeline';
 
   @override
-  String get featureReportLabel => 'Report Problem';
+  String get featureReportLabel => 'Raise an Issue';
 
   @override
   String get featureReportSubtitle =>
@@ -755,11 +754,11 @@ class SEn extends S {
       'MLA Connect is your direct line to your MLA and their office. Report issues, share ideas, suggest improvements, and appreciate good work in your constituency — all in one app.';
 
   @override
-  String get helpFaqQ2 => 'Who can see my report?';
+  String get helpFaqQ2 => 'Who can see my issue?';
 
   @override
   String get helpFaqA2 =>
-      'Reports are shared with the MLA office and the relevant department. You choose the visibility — public (visible to the community), MLA office only, or anonymous.';
+      'Issues are shared with the MLA office and the relevant department. You choose the visibility — public (visible to the community), MLA office only, or anonymous.';
 
   @override
   String get helpFaqQ3 => 'How do I track a submission?';
@@ -780,7 +779,7 @@ class SEn extends S {
 
   @override
   String get helpFaqA5 =>
-      'Submitted reports cannot be edited, but you can add comments or attach further information from the submission detail screen.';
+      'Submitted issues cannot be edited, but you can add comments or attach further information from the submission detail screen.';
 
   @override
   String get helpFaqQ6 => 'How do I change my constituency?';
@@ -916,7 +915,7 @@ class SEn extends S {
   String get navProfile => 'Profile';
 
   @override
-  String get reportDescribeProblem => 'Describe the Problem';
+  String get reportDescribeProblem => 'Describe the Issue';
 
   @override
   String get reportDescribeSubtitle => 'Please provide details about the issue';
@@ -928,14 +927,14 @@ class SEn extends S {
   String get reportCategoryHint => 'Enter the problem category';
 
   @override
-  String get reportDescriptionLabel => 'Problem Description *';
+  String get reportDescriptionLabel => 'Issue Description *';
 
   @override
-  String get reportDescriptionHint => 'Describe the problem in detail...';
+  String get reportDescriptionHint => 'Describe the issue in detail...';
 
   @override
   String get reportDetailsLocationHint =>
-      'Describe the exact location of the problem';
+      'Describe the exact location of the issue';
 
   @override
   String get reportNextReview => 'Next: Review →';
@@ -969,20 +968,20 @@ class SEn extends S {
   String get reportContactLabel => 'Contact Number (Optional)';
 
   @override
-  String get reportVisibilitySubtitle => 'Choose who can see this report';
+  String get reportVisibilityHeading => 'Visibility Option';
 
   @override
-  String get reportVisibilityFieldLabel => 'Visibility Option *';
+  String get reportVisibilitySubtitle => 'Choose who can see this issue';
 
   @override
-  String get reportReviewHeading => 'Review Report';
+  String get reportReviewHeading => 'Review Issue';
 
   @override
   String get reportReviewSubtitle =>
-      'Please review your report before submitting';
+      'Please review your issue before submitting';
 
   @override
-  String get reportReviewSectionDetails => 'Problem Details';
+  String get reportReviewSectionDetails => 'Issue Details';
 
   @override
   String get reportReviewRowCategory => 'Category';
@@ -1164,9 +1163,6 @@ class SEn extends S {
   String get ideaVisibilitySubtitle => 'Choose how you want to share your idea';
 
   @override
-  String get ideaVisibilityFieldLabel => 'Visibility Option *';
-
-  @override
   String get ideaDiscussionLabel => 'Allow Community Discussion';
 
   @override
@@ -1295,6 +1291,9 @@ class SEn extends S {
 
   @override
   String get improveGoHome => 'Go to Home';
+
+  @override
+  String get improveSubmitAnother => 'Submit Another Suggestion';
 
   @override
   String get yesLabel => 'Yes';

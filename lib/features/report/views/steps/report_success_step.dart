@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -22,54 +21,26 @@ class ReportSuccessStep extends GetView<ReportController> {
             Container(
               width: 100,
               height: 100,
-              decoration: const BoxDecoration(color: AppColors.appreciateGreen, shape: BoxShape.circle),
+              decoration: const BoxDecoration(color: AppColors.reportOrange, shape: BoxShape.circle),
               child: const Icon(Icons.check_rounded, color: Colors.white, size: 60),
             ),
             const SizedBox(height: 24),
             Text(
               AppStrings.reportSuccess,
-              style: const TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+                height: 1.3,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
-            Text(
-              AppStrings.reportSuccessMsg,
-              style: AppTextStyles.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            Obx(() {
-              final refText = controller.submittedId.value;
-              if (refText.isEmpty) return const SizedBox.shrink();
-              return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(children: [
-                  Text(AppStrings.yourReferenceId, style: AppTextStyles.caption),
-                  const SizedBox(height: 4),
-                  SelectableText(
-                    refText,
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.titleSmall.copyWith(color: AppColors.primary, fontFamily: 'Poppins'),
-                  ),
-                  const SizedBox(height: 6),
-                  TextButton.icon(
-                    onPressed: () async {
-                      await Clipboard.setData(ClipboardData(text: refText));
-                      Get.snackbar(AppStrings.copied, AppStrings.referenceIdCopied,
-                          snackPosition: SnackPosition.BOTTOM);
-                    },
-                    icon: const Icon(Icons.copy_rounded, size: 16),
-                    label: Text(AppStrings.copy, style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary)),
-                  ),
-                ]),
-              );
-            }),
+            Text(AppStrings.reportSuccessMsg, style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const Spacer(),
             PrimaryButton(
+              backgroundColor: AppColors.reportOrange,
               text: AppStrings.trackInActivity,
               onPressed: () {
                 Get.until((r) => r.settings.name == '/home');
@@ -83,11 +54,6 @@ class ReportSuccessStep extends GetView<ReportController> {
                 Get.toNamed('/report/flow');
               },
               color: AppColors.reportOrange,
-            ),
-            const SizedBox(height: 12),
-            TextButton(
-              onPressed: () => Get.until((r) => r.settings.name == '/home'),
-              child: Text(AppStrings.goToHome, style: AppTextStyles.labelMedium.copyWith(color: AppColors.textTertiary)),
             ),
           ],
         ),

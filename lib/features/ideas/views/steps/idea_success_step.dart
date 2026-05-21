@@ -23,9 +23,11 @@ class IdeaSuccessStep extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: Image.asset('assets/images/app_logo.png', width: 100, height: 100, fit: BoxFit.cover),
+            Container(
+              width: 100,
+              height: 100,
+              decoration: const BoxDecoration(color: AppColors.ideaPurple, shape: BoxShape.circle),
+              child: const Icon(Icons.check_rounded, color: Colors.white, size: 60),
             ),
             const SizedBox(height: 24),
             Text(AppStrings.ideaSuccess,
@@ -50,9 +52,10 @@ class IdeaSuccessStep extends StatelessWidget {
             const Spacer(),
             PrimaryButton(text: AppStrings.goToMyActivity, onPressed: () => Get.until((r) => r.settings.name == '/home'), backgroundColor: AppColors.ideaPurple),
             const SizedBox(height: 12),
-            TextButton(
+            SecondaryButton(
+              text: AppStrings.submitAnotherIdea,
               onPressed: () { Get.back(); Get.toNamed('/ideas/flow'); },
-              child: Text(AppStrings.submitAnotherIdea, style: AppTextStyles.labelMedium.copyWith(color: AppColors.ideaPurple)),
+              color: AppColors.ideaPurple,
             ),
             const SizedBox(height: 8),
           ],

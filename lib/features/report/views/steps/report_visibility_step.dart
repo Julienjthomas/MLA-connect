@@ -17,12 +17,10 @@ class ReportVisibilityStep extends GetView<ReportController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AppStrings.location, style: AppTextStyles.headlineSmall),
+          Text(AppStrings.reportVisibilityHeading, style: AppTextStyles.headlineSmall),
           const SizedBox(height: 4),
           Text(AppStrings.reportVisibilitySubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 24),
-          Text(AppStrings.reportVisibilityFieldLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 10),
           Obx(
             () => Column(
               children: SubmissionVisibility.values.map((v) {

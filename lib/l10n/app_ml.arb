@@ -53,7 +53,7 @@
 
   "whatWouldYouLike": "നിങ്ങൾ എന്ത് ചെയ്യാൻ ആഗ്രഹിക്കുന്നു?",
   "quickActions": "ദ്രുത പ്രവർത്തനങ്ങൾ",
-  "quickActionIssue": "പരാതി സമർപ്പിക്കുക",
+  "quickActionIssue": "ഒരു പ്രശ്നം ഉന്നയിക്കുക",
   "quickActionIssueSubtitle": "റോഡ്, വെള്ളം, സുരക്ഷ & കൂടുതൽ",
   "quickActionIdea": "ആശയം പങ്കിടുക",
   "quickActionIdeaSubtitle": "മികച്ച ഭാവിക്കുള്ള ആശയങ്ങൾ",
@@ -82,15 +82,15 @@
   "hallOfExcellence": "അഭിമാന നേട്ടങ്ങൾ",
   "viewDetails": "വിശദാംശങ്ങൾ കാണുക",
 
-  "reportProblem": "പരാതി അറിയിക്കുക",
+  "reportProblem": "ഒരു പ്രശ്നം ഉന്നയിക്കുക",
   "describeIssue": "പ്രശ്നം വിവരിക്കുക",
   "addPhotos": "ഫോട്ടോ / വീഡിയോ ചേർക്കുക (ഓപ്ഷണൽ)",
   "selectCategory": "വിഭാഗം",
   "location": "സ്ഥലം",
   "landmark": "ലാൻഡ്മാർക്ക് / പ്രദേശം (ഓപ്ഷണൽ)",
   "contactNumber": "ബന്ധപ്പെടാനുള്ള നമ്പർ",
-  "submitReport": "റിപ്പോർട്ട് സമർപ്പിക്കുക",
-  "reportSuccess": "നിങ്ങളുടെ റിപ്പോർട്ട്\nവിജയകരമായി സമർപ്പിച്ചു!",
+  "submitReport": "പ്രശ്നം സമർപ്പിക്കുക",
+  "reportSuccess": "നിങ്ങളുടെ പ്രശ്നം\nവിജയകരമായി സമർപ്പിച്ചു!",
   "reportSuccessMsg": "നിങ്ങളുടെ പരാതി സ്വീകരിച്ചിരിക്കുന്നു. ഞങ്ങളുടെ ടീം ഉടൻ നടപടിയെടുക്കും",
   "trackInActivity": "My Activity ൽ പിന്തുടരുക",
   "reportAnother": "മറ്റൊരു പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക",
@@ -192,11 +192,11 @@
   "savedEmptyTitle": "ഇതുവരെ ഒന്നും സേവ് ചെയ്തിട്ടില്ല",
   "savedEmptyMsg": "പിന്നീട് എളുപ്പത്തിൽ കണ്ടെത്താൻ അപ്ഡേറ്റുകളും പൊതുവായി പങ്കിട്ട ആശയങ്ങളും ഇവിടെ സേവ് ചെയ്യുക.",
 
-  "reportNotFound": "റിപ്പോർട്ട് കണ്ടെത്തിയില്ല",
+  "reportNotFound": "പ്രശ്നം കണ്ടെത്തിയില്ല",
   "photos": "ഫോട്ടോകൾ",
   "statusTimeline": "സ്റ്റാറ്റസ് ടൈംലൈൻ",
 
-  "featureReportLabel": "പരാതി അറിയിക്കുക",
+  "featureReportLabel": "ഒരു പ്രശ്നം ഉന്നയിക്കുക",
   "featureReportSubtitle": "റോഡുകൾ, വെള്ളം, മാലിന്യം, സുരക്ഷ, പൊതു പ്രശ്നങ്ങൾ",
   "featureIdeaLabel": "ആശയം പങ്കിടുക",
   "featureIdeaSubtitle": "നമ്മുടെ മണ്ഡലത്തിന്റെ ഭാവിക്കായുള്ള മികച്ച ആശയങ്ങൾ",
@@ -350,11 +350,11 @@
   "reportMapPin": "മാപ്പിൽ പിൻ ചെയ്യാൻ ടാപ്പ് ചെയ്യുക",
   "reportContactLabel": "ബന്ധപ്പെടാനുള്ള നമ്പർ (ഓപ്ഷണൽ)",
 
-  "reportVisibilitySubtitle": "ഈ റിപ്പോർട്ട് ആർക്ക് കാണാൻ കഴിയുമെന്ന് തിരഞ്ഞെടുക്കുക",
-  "reportVisibilityFieldLabel": "ദൃശ്യത ഓപ്ഷൻ *",
+  "reportVisibilityHeading": "ദൃശ്യത ഓപ്ഷൻ",
+  "reportVisibilitySubtitle": "ഈ പ്രശ്നം ആർക്ക് കാണാൻ കഴിയുമെന്ന് തിരഞ്ഞെടുക്കുക",
 
-  "reportReviewHeading": "റിപ്പോർട്ട് പരിശോധിക്കുക",
-  "reportReviewSubtitle": "സമർപ്പിക്കുന്നതിന് മുൻപ് റിപ്പോർട്ട് പരിശോധിക്കുക",
+  "reportReviewHeading": "പ്രശ്നം പരിശോധിക്കുക",
+  "reportReviewSubtitle": "സമർപ്പിക്കുന്നതിന് മുൻപ് പ്രശ്നം പരിശോധിക്കുക",
   "reportReviewSectionDetails": "പ്രശ്ന വിശദാംശങ്ങൾ",
   "reportReviewRowCategory": "വിഭാഗം",
   "reportReviewRowTitle": "തലക്കെട്ട്",
@@ -423,7 +423,6 @@
 
   "ideaVisibilityHeading": "ദൃശ്യതയും സഹകരണവും",
   "ideaVisibilitySubtitle": "നിങ്ങളുടെ ആശയം എങ്ങനെ പങ്കിടണമെന്ന് തിരഞ്ഞെടുക്കുക",
-  "ideaVisibilityFieldLabel": "ദൃശ്യത ഓപ്ഷൻ *",
   "ideaDiscussionLabel": "സമൂഹ ചർച്ച അനുവദിക്കുക",
   "ideaDiscussionSubtitle": "ആളുകൾക്ക് അഭിപ്രായം പറയാനും മെച്ചപ്പെടുത്തലുകൾ നിർദ്ദേശിക്കാനും കഴിയും",
   "ideaContactLabel": "MLA ഓഫീസ് എന്നെ ബന്ധപ്പെടുന്നത് അനുവദിക്കുക",
@@ -471,6 +470,7 @@
 
   "improveSuccessMsg": "ഞങ്ങളുടെ ടീം നിങ്ങളുടെ നിർദ്ദേശം അവലോകനം ചെയ്ത് ഉചിതമായ നടപടി സ്വീകരിക്കും.",
   "improveGoHome": "ഹോമിലേക്ക് പോകുക",
+  "improveSubmitAnother": "മറ്റൊരു നിർദ്ദേശം സമർപ്പിക്കുക",
 
   "yesLabel": "അതെ",
   "noLabel": "ഇല്ല",

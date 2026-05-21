@@ -18,19 +18,34 @@ class ImprovementSuccessStep extends StatelessWidget {
           children: [
             const Spacer(),
             Container(
-              width: 100, height: 100,
+              width: 100,
+              height: 100,
               decoration: const BoxDecoration(color: AppColors.improveBlue, shape: BoxShape.circle),
-              child: const Icon(Icons.check_circle_outline, color: Colors.white, size: 56),
+              child: const Icon(Icons.check_rounded, color: Colors.white, size: 60),
             ),
             const SizedBox(height: 24),
-            Text(AppStrings.improvementSuccess,
-                style: const TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
-                textAlign: TextAlign.center),
+            Text(
+              AppStrings.improvementSuccess,
+              style: const TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 12),
-            Text(AppStrings.improveSuccessMsg,
-                style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
+            Text(AppStrings.improveSuccessMsg, style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const Spacer(),
-            PrimaryButton(text: AppStrings.improveGoHome, onPressed: () => Get.until((r) => r.settings.name == '/home'), backgroundColor: AppColors.improveBlue),
+            PrimaryButton(
+              text: AppStrings.improveGoHome,
+              onPressed: () => Get.until((r) => r.settings.name == '/home'),
+              backgroundColor: AppColors.improveBlue,
+            ),
+            const SizedBox(height: 12),
+            SecondaryButton(
+              text: AppStrings.improveSubmitAnother,
+              onPressed: () {
+                Get.back();
+                Get.toNamed('/improvements/flow');
+              },
+              color: AppColors.improveBlue,
+            ),
             const SizedBox(height: 8),
           ],
         ),

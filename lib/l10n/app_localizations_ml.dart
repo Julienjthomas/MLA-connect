@@ -150,7 +150,7 @@ class SMl extends S {
   String get quickActions => 'ദ്രുത പ്രവർത്തനങ്ങൾ';
 
   @override
-  String get quickActionIssue => 'പരാതി സമർപ്പിക്കുക';
+  String get quickActionIssue => 'ഒരു പ്രശ്നം ഉന്നയിക്കുക';
 
   @override
   String get quickActionIssueSubtitle => 'റോഡ്, വെള്ളം, സുരക്ഷ & കൂടുതൽ';
@@ -239,7 +239,7 @@ class SMl extends S {
   String get viewDetails => 'വിശദാംശങ്ങൾ കാണുക';
 
   @override
-  String get reportProblem => 'പരാതി അറിയിക്കുക';
+  String get reportProblem => 'ഒരു പ്രശ്നം ഉന്നയിക്കുക';
 
   @override
   String get describeIssue => 'പ്രശ്നം വിവരിക്കുക';
@@ -260,10 +260,10 @@ class SMl extends S {
   String get contactNumber => 'ബന്ധപ്പെടാനുള്ള നമ്പർ';
 
   @override
-  String get submitReport => 'റിപ്പോർട്ട് സമർപ്പിക്കുക';
+  String get submitReport => 'പ്രശ്നം സമർപ്പിക്കുക';
 
   @override
-  String get reportSuccess => 'നിങ്ങളുടെ റിപ്പോർട്ട്\nവിജയകരമായി സമർപ്പിച്ചു!';
+  String get reportSuccess => 'നിങ്ങളുടെ പ്രശ്നം\nവിജയകരമായി സമർപ്പിച്ചു!';
 
   @override
   String get reportSuccessMsg =>
@@ -544,7 +544,7 @@ class SMl extends S {
       'പിന്നീട് എളുപ്പത്തിൽ കണ്ടെത്താൻ അപ്ഡേറ്റുകളും പൊതുവായി പങ്കിട്ട ആശയങ്ങളും ഇവിടെ സേവ് ചെയ്യുക.';
 
   @override
-  String get reportNotFound => 'റിപ്പോർട്ട് കണ്ടെത്തിയില്ല';
+  String get reportNotFound => 'പ്രശ്നം കണ്ടെത്തിയില്ല';
 
   @override
   String get photos => 'ഫോട്ടോകൾ';
@@ -553,7 +553,7 @@ class SMl extends S {
   String get statusTimeline => 'സ്റ്റാറ്റസ് ടൈംലൈൻ';
 
   @override
-  String get featureReportLabel => 'പരാതി അറിയിക്കുക';
+  String get featureReportLabel => 'ഒരു പ്രശ്നം ഉന്നയിക്കുക';
 
   @override
   String get featureReportSubtitle =>
@@ -984,18 +984,18 @@ class SMl extends S {
   String get reportContactLabel => 'ബന്ധപ്പെടാനുള്ള നമ്പർ (ഓപ്ഷണൽ)';
 
   @override
+  String get reportVisibilityHeading => 'ദൃശ്യത ഓപ്ഷൻ';
+
+  @override
   String get reportVisibilitySubtitle =>
-      'ഈ റിപ്പോർട്ട് ആർക്ക് കാണാൻ കഴിയുമെന്ന് തിരഞ്ഞെടുക്കുക';
+      'ഈ പ്രശ്നം ആർക്ക് കാണാൻ കഴിയുമെന്ന് തിരഞ്ഞെടുക്കുക';
 
   @override
-  String get reportVisibilityFieldLabel => 'ദൃശ്യത ഓപ്ഷൻ *';
-
-  @override
-  String get reportReviewHeading => 'റിപ്പോർട്ട് പരിശോധിക്കുക';
+  String get reportReviewHeading => 'പ്രശ്നം പരിശോധിക്കുക';
 
   @override
   String get reportReviewSubtitle =>
-      'സമർപ്പിക്കുന്നതിന് മുൻപ് റിപ്പോർട്ട് പരിശോധിക്കുക';
+      'സമർപ്പിക്കുന്നതിന് മുൻപ് പ്രശ്നം പരിശോധിക്കുക';
 
   @override
   String get reportReviewSectionDetails => 'പ്രശ്ന വിശദാംശങ്ങൾ';
@@ -1188,9 +1188,6 @@ class SMl extends S {
       'നിങ്ങളുടെ ആശയം എങ്ങനെ പങ്കിടണമെന്ന് തിരഞ്ഞെടുക്കുക';
 
   @override
-  String get ideaVisibilityFieldLabel => 'ദൃശ്യത ഓപ്ഷൻ *';
-
-  @override
   String get ideaDiscussionLabel => 'സമൂഹ ചർച്ച അനുവദിക്കുക';
 
   @override
@@ -1320,6 +1317,9 @@ class SMl extends S {
 
   @override
   String get improveGoHome => 'ഹോമിലേക്ക് പോകുക';
+
+  @override
+  String get improveSubmitAnother => 'മറ്റൊരു നിർദ്ദേശം സമർപ്പിക്കുക';
 
   @override
   String get yesLabel => 'അതെ';

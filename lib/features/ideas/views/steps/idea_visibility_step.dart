@@ -21,8 +21,6 @@ class IdeaVisibilityStep extends GetView<IdeaController> {
           const SizedBox(height: 4),
           Text(AppStrings.ideaVisibilitySubtitle, style: AppTextStyles.bodySmall),
           const SizedBox(height: 24),
-          Text(AppStrings.ideaVisibilityFieldLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 10),
           Obx(() => Column(
                 children: SubmissionVisibility.values.map((v) {
                   final isSelected = controller.visibility.value == v;

@@ -370,7 +370,7 @@ abstract class S {
   /// No description provided for @quickActionIssue.
   ///
   /// In en, this message translates to:
-  /// **'Report Issue'**
+  /// **'Raise an Issue'**
   String get quickActionIssue;
 
   /// No description provided for @quickActionIssueSubtitle.
@@ -400,7 +400,7 @@ abstract class S {
   /// No description provided for @quickActionSuggestSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Seek help or report a problem'**
+  /// **'Seek help or raise an issue'**
   String get quickActionSuggestSubtitle;
 
   /// No description provided for @quickActionAppreciate.
@@ -538,13 +538,13 @@ abstract class S {
   /// No description provided for @reportProblem.
   ///
   /// In en, this message translates to:
-  /// **'Report a Problem'**
+  /// **'Raise an Issue'**
   String get reportProblem;
 
   /// No description provided for @describeIssue.
   ///
   /// In en, this message translates to:
-  /// **'Describe the Problem'**
+  /// **'Describe the Issue'**
   String get describeIssue;
 
   /// No description provided for @addPhotos.
@@ -580,19 +580,19 @@ abstract class S {
   /// No description provided for @submitReport.
   ///
   /// In en, this message translates to:
-  /// **'Submit Report'**
+  /// **'Submit Issue'**
   String get submitReport;
 
   /// No description provided for @reportSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Your Report has been\nSubmitted Successfully!'**
+  /// **'Your Issue has been\nSubmitted Successfully!'**
   String get reportSuccess;
 
   /// No description provided for @reportSuccessMsg.
   ///
   /// In en, this message translates to:
-  /// **'We received your report and our team will take action soon.'**
+  /// **'We received your issue and our team will take action soon.'**
   String get reportSuccessMsg;
 
   /// No description provided for @trackInActivity.
@@ -922,37 +922,37 @@ abstract class S {
   /// No description provided for @statusDescSubmitted.
   ///
   /// In en, this message translates to:
-  /// **'Your report has been received and will be reviewed soon.'**
+  /// **'Your issue has been received and will be reviewed soon.'**
   String get statusDescSubmitted;
 
   /// No description provided for @statusDescUnderReview.
   ///
   /// In en, this message translates to:
-  /// **'Our team is currently reviewing your report.'**
+  /// **'Our team is currently reviewing your issue.'**
   String get statusDescUnderReview;
 
   /// No description provided for @statusDescAssigned.
   ///
   /// In en, this message translates to:
-  /// **'Your report has been assigned to the relevant department.'**
+  /// **'Your issue has been assigned to the relevant department.'**
   String get statusDescAssigned;
 
   /// No description provided for @statusDescInProgress.
   ///
   /// In en, this message translates to:
-  /// **'Action is being taken on your report.'**
+  /// **'Action is being taken on your issue.'**
   String get statusDescInProgress;
 
   /// No description provided for @statusDescResolved.
   ///
   /// In en, this message translates to:
-  /// **'Your report has been resolved successfully.'**
+  /// **'Your issue has been resolved successfully.'**
   String get statusDescResolved;
 
   /// No description provided for @statusDescRejected.
   ///
   /// In en, this message translates to:
-  /// **'Your report could not be processed at this time.'**
+  /// **'Your issue could not be processed at this time.'**
   String get statusDescRejected;
 
   /// No description provided for @needHelp.
@@ -964,7 +964,7 @@ abstract class S {
   /// No description provided for @needHelpSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Contact support for any queries regarding your report.'**
+  /// **'Contact support for any queries regarding your issue.'**
   String get needHelpSubtitle;
 
   /// No description provided for @addUpdateComment.
@@ -1114,7 +1114,7 @@ abstract class S {
   /// No description provided for @reportNotFound.
   ///
   /// In en, this message translates to:
-  /// **'Report not found'**
+  /// **'Issue not found'**
   String get reportNotFound;
 
   /// No description provided for @photos.
@@ -1132,7 +1132,7 @@ abstract class S {
   /// No description provided for @featureReportLabel.
   ///
   /// In en, this message translates to:
-  /// **'Report Problem'**
+  /// **'Raise an Issue'**
   String get featureReportLabel;
 
   /// No description provided for @featureReportSubtitle.
@@ -1522,13 +1522,13 @@ abstract class S {
   /// No description provided for @helpFaqQ2.
   ///
   /// In en, this message translates to:
-  /// **'Who can see my report?'**
+  /// **'Who can see my issue?'**
   String get helpFaqQ2;
 
   /// No description provided for @helpFaqA2.
   ///
   /// In en, this message translates to:
-  /// **'Reports are shared with the MLA office and the relevant department. You choose the visibility — public (visible to the community), MLA office only, or anonymous.'**
+  /// **'Issues are shared with the MLA office and the relevant department. You choose the visibility — public (visible to the community), MLA office only, or anonymous.'**
   String get helpFaqA2;
 
   /// No description provided for @helpFaqQ3.
@@ -1564,7 +1564,7 @@ abstract class S {
   /// No description provided for @helpFaqA5.
   ///
   /// In en, this message translates to:
-  /// **'Submitted reports cannot be edited, but you can add comments or attach further information from the submission detail screen.'**
+  /// **'Submitted issues cannot be edited, but you can add comments or attach further information from the submission detail screen.'**
   String get helpFaqA5;
 
   /// No description provided for @helpFaqQ6.
@@ -1816,7 +1816,7 @@ abstract class S {
   /// No description provided for @reportDescribeProblem.
   ///
   /// In en, this message translates to:
-  /// **'Describe the Problem'**
+  /// **'Describe the Issue'**
   String get reportDescribeProblem;
 
   /// No description provided for @reportDescribeSubtitle.
@@ -1840,19 +1840,19 @@ abstract class S {
   /// No description provided for @reportDescriptionLabel.
   ///
   /// In en, this message translates to:
-  /// **'Problem Description *'**
+  /// **'Issue Description *'**
   String get reportDescriptionLabel;
 
   /// No description provided for @reportDescriptionHint.
   ///
   /// In en, this message translates to:
-  /// **'Describe the problem in detail...'**
+  /// **'Describe the issue in detail...'**
   String get reportDescriptionHint;
 
   /// No description provided for @reportDetailsLocationHint.
   ///
   /// In en, this message translates to:
-  /// **'Describe the exact location of the problem'**
+  /// **'Describe the exact location of the issue'**
   String get reportDetailsLocationHint;
 
   /// No description provided for @reportNextReview.
@@ -1915,34 +1915,34 @@ abstract class S {
   /// **'Contact Number (Optional)'**
   String get reportContactLabel;
 
+  /// No description provided for @reportVisibilityHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility Option'**
+  String get reportVisibilityHeading;
+
   /// No description provided for @reportVisibilitySubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose who can see this report'**
+  /// **'Choose who can see this issue'**
   String get reportVisibilitySubtitle;
-
-  /// No description provided for @reportVisibilityFieldLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Visibility Option *'**
-  String get reportVisibilityFieldLabel;
 
   /// No description provided for @reportReviewHeading.
   ///
   /// In en, this message translates to:
-  /// **'Review Report'**
+  /// **'Review Issue'**
   String get reportReviewHeading;
 
   /// No description provided for @reportReviewSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Please review your report before submitting'**
+  /// **'Please review your issue before submitting'**
   String get reportReviewSubtitle;
 
   /// No description provided for @reportReviewSectionDetails.
   ///
   /// In en, this message translates to:
-  /// **'Problem Details'**
+  /// **'Issue Details'**
   String get reportReviewSectionDetails;
 
   /// No description provided for @reportReviewRowCategory.
@@ -2293,12 +2293,6 @@ abstract class S {
   /// **'Choose how you want to share your idea'**
   String get ideaVisibilitySubtitle;
 
-  /// No description provided for @ideaVisibilityFieldLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Visibility Option *'**
-  String get ideaVisibilityFieldLabel;
-
   /// No description provided for @ideaDiscussionLabel.
   ///
   /// In en, this message translates to:
@@ -2550,6 +2544,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Go to Home'**
   String get improveGoHome;
+
+  /// No description provided for @improveSubmitAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Another Suggestion'**
+  String get improveSubmitAnother;
 
   /// No description provided for @yesLabel.
   ///

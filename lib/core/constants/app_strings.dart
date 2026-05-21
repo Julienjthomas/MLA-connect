@@ -341,8 +341,8 @@ class AppStrings {
   static String get reportContactLabel => _s.reportContactLabel;
 
   // Report flow — visibility step
+  static String get reportVisibilityHeading => _s.reportVisibilityHeading;
   static String get reportVisibilitySubtitle => _s.reportVisibilitySubtitle;
-  static String get reportVisibilityFieldLabel => _s.reportVisibilityFieldLabel;
 
   // Report flow — review step
   static String get reportReviewHeading => _s.reportReviewHeading;
@@ -427,7 +427,6 @@ class AppStrings {
   // Idea flow — visibility step
   static String get ideaVisibilityHeading => _s.ideaVisibilityHeading;
   static String get ideaVisibilitySubtitle => _s.ideaVisibilitySubtitle;
-  static String get ideaVisibilityFieldLabel => _s.ideaVisibilityFieldLabel;
   static String get ideaDiscussionLabel => _s.ideaDiscussionLabel;
   static String get ideaDiscussionSubtitle => _s.ideaDiscussionSubtitle;
   static String get ideaContactLabel => _s.ideaContactLabel;
@@ -480,6 +479,7 @@ class AppStrings {
   // Improvement flow — success step
   static String get improveSuccessMsg => _s.improveSuccessMsg;
   static String get improveGoHome => _s.improveGoHome;
+  static String get improveSubmitAnother => _s.improveSubmitAnother;
 
   // Shared
   static String get yesLabel => _s.yesLabel;

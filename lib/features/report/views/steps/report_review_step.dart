@@ -28,22 +28,32 @@ class ReportReviewStep extends GetView<ReportController> {
               AppStrings.reportReviewRowCategory,
               controller.selectedCategory.value == ReportCategory.other
                   ? (controller.customCategoryController.text.trim().isEmpty
-                      ? controller.selectedCategory.value?.label ?? '–'
-                      : controller.customCategoryController.text.trim())
+                        ? controller.selectedCategory.value?.label ?? '–'
+                        : controller.customCategoryController.text.trim())
                   : controller.selectedCategory.value?.label ?? '–',
             ),
             _row(AppStrings.reportReviewRowTitle, controller.titleController.text),
-            _row(AppStrings.reportReviewRowDescription, controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
+            _row(
+              AppStrings.reportReviewRowDescription,
+              controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text,
+            ),
             _row(AppStrings.reportReviewRowVisibility, controller.visibility.value.label),
           ]),
 
           const SizedBox(height: 16),
 
-          _section(AppStrings.location, [
-            _row(AppStrings.location, controller.locationController.text.isEmpty ? '–' : controller.locationController.text),
-            _row(AppStrings.reportReviewRowLandmark, controller.landmarkController.text.isEmpty ? '–' : controller.landmarkController.text),
-            _row(AppStrings.reportReviewRowContact, controller.contactController.text.isEmpty ? '–' : controller.contactController.text),
-          ]),
+          Obx(
+            () => _section(AppStrings.location, [
+              _row(
+                AppStrings.reportPanchayatLabel,
+                controller.selectedPanchayath.value.isEmpty ? '–' : controller.selectedPanchayath.value,
+              ),
+              _row(
+                AppStrings.reportWardLabel,
+                controller.selectedWard.value.isEmpty ? '–' : controller.selectedWard.value,
+              ),
+            ]),
+          ),
 
           const SizedBox(height: 16),
 
@@ -61,7 +71,8 @@ class ReportReviewStep extends GetView<ReportController> {
                     scrollDirection: Axis.horizontal,
                     itemCount: controller.selectedImages.length,
                     itemBuilder: (_, i) => Container(
-                      width: 70, height: 70,
+                      width: 70,
+                      height: 70,
                       margin: const EdgeInsets.only(right: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
@@ -78,13 +89,15 @@ class ReportReviewStep extends GetView<ReportController> {
             );
           }),
 
-          Obx(() => PrimaryButton(
-                text: AppStrings.submitReport,
-                onPressed: controller.submit,
-                isLoading: controller.isSubmitting.value,
-                backgroundColor: AppColors.reportOrange,
-                icon: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
-              )),
+          Obx(
+            () => PrimaryButton(
+              text: AppStrings.submitReport,
+              onPressed: controller.submit,
+              isLoading: controller.isSubmitting.value,
+              backgroundColor: AppColors.reportOrange,
+              icon: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
+            ),
+          ),
           const SizedBox(height: 20),
         ],
       ),
@@ -116,12 +129,12 @@ class ReportReviewStep extends GetView<ReportController> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 100,
-            child: Text(label, style: AppTextStyles.caption),
-          ),
+          SizedBox(width: 100, child: Text(label, style: AppTextStyles.caption)),
           Expanded(
-            child: Text(value, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w500)),
+            child: Text(
+              value,
+              style: AppTextStyles.bodySmall.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w500),
+            ),
           ),
         ],
       ),

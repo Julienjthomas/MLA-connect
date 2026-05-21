@@ -18,17 +18,19 @@ class AppreciationSuccessStep extends StatelessWidget {
           children: [
             const Spacer(),
             Container(
-              width: 100, height: 100,
+              width: 100,
+              height: 100,
               decoration: const BoxDecoration(color: AppColors.appreciateGreen, shape: BoxShape.circle),
               child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 56),
             ),
             const SizedBox(height: 24),
-            Text(AppStrings.appreciationSuccess,
-                style: const TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
-                textAlign: TextAlign.center),
+            Text(
+              AppStrings.appreciationSuccess,
+              style: const TextStyle(fontFamily: 'Poppins', fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 12),
-            Text(AppStrings.appreciateSuccessMotivation,
-                style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
+            Text(AppStrings.appreciateSuccessMotivation, style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const Spacer(),
             PrimaryButton(
               text: AppStrings.goToMyActivity,
@@ -36,12 +38,13 @@ class AppreciationSuccessStep extends StatelessWidget {
               backgroundColor: AppColors.appreciateGreen,
             ),
             const SizedBox(height: 12),
-            TextButton(
+            SecondaryButton(
+              text: AppStrings.appreciateSendAnother,
               onPressed: () {
                 Get.back();
                 Get.toNamed('/appreciation/flow');
               },
-              child: Text(AppStrings.appreciateSendAnother, style: AppTextStyles.labelMedium.copyWith(color: AppColors.appreciateGreen)),
+              color: AppColors.appreciateGreen,
             ),
             const SizedBox(height: 8),
           ],
