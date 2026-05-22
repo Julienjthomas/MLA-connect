@@ -105,14 +105,14 @@ class _ActivityShellState extends State<_ActivityShell> {
       floatingActionButton: addFeature == null || addLabel == null
           ? null
           : Obx(() {
-              final isEmpty = switch (tab) {
-                ActivityTab.reports => widget.controller.reports.isEmpty,
-                ActivityTab.ideas => widget.controller.ideas.isEmpty,
-                ActivityTab.improvements => widget.controller.improvements.isEmpty,
-                ActivityTab.appreciations => widget.controller.appreciations.isEmpty,
-                ActivityTab.saved => true,
+              final hasItems = switch (tab) {
+                ActivityTab.reports => widget.controller.reports.isNotEmpty,
+                ActivityTab.ideas => widget.controller.ideas.isNotEmpty,
+                ActivityTab.improvements => widget.controller.improvements.isNotEmpty,
+                ActivityTab.appreciations => widget.controller.appreciations.isNotEmpty,
+                ActivityTab.saved => false,
               };
-              if (isEmpty) return const SizedBox.shrink();
+              if (!hasItems) return const SizedBox.shrink();
               return FloatingActionButton(
                 onPressed: () => _openAddFlow(tab),
                 backgroundColor: addFeature.color,
@@ -244,15 +244,9 @@ class _ContributionBanner extends StatelessWidget {
   }
 }
 
-class _EmptyActivitySection extends StatelessWidget {
-  const _EmptyActivitySection();
-
-  static const _allTabs = [
-    ActivityTab.reports,
-    ActivityTab.ideas,
-    ActivityTab.improvements,
-    ActivityTab.appreciations,
-  ];
+class _TabEmptyState extends StatelessWidget {
+  final ActivityTab tab;
+  const _TabEmptyState({required this.tab});
 
   static String _routeFor(ActivityTab t) => switch (t) {
         ActivityTab.reports => Routes.reportFlow,
@@ -262,95 +256,64 @@ class _EmptyActivitySection extends StatelessWidget {
         ActivityTab.saved => '',
       };
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(AppStrings.whatWouldYouLike, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
-          Text(
-            AppStrings.chooseOptionToStart,
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),
-          ),
-          const SizedBox(height: 16),
-          ..._allTabs.map((tab) {
-            final feature = tab.addFeature!;
-            return _ActionListTile(
-              icon: feature.icon,
-              title: feature.label,
-              subtitle: feature.subtitle,
-              accentColor: feature.color,
-              accentColorLight: feature.lightColor,
-              onTap: () => Get.toNamed(_routeFor(tab)),
-            );
-          }),
-        ],
-      ),
-    );
-  }
-}
-
-class _ActionListTile extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final Color accentColor;
-  final Color accentColorLight;
-  final VoidCallback onTap;
-
-  const _ActionListTile({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.accentColor,
-    required this.accentColorLight,
-    required this.onTap,
-  });
+  static (String, String) _copy(ActivityTab t) => switch (t) {
+        ActivityTab.reports => ('No issues raised yet', 'Be the first to report a problem in your community.'),
+        ActivityTab.ideas => ('No ideas shared yet', 'Share your ideas to improve your constituency.'),
+        ActivityTab.improvements => ('No improvements requested yet', 'Suggest improvements that matter to your community.'),
+        ActivityTab.appreciations => ('No appreciations sent yet', 'Recognise the good work being done around you.'),
+        ActivityTab.saved => ('Nothing saved yet', ''),
+      };
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.grey200),
-        ),
-        child: Row(
+    final feature = tab.addFeature!;
+    final route = _routeFor(tab);
+    final (title, message) = _copy(tab);
+    final accentColor = feature.color;
+    final accentColorLight = feature.lightColor;
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 48,
-              height: 48,
+              width: 80,
+              height: 80,
               decoration: BoxDecoration(color: accentColorLight, shape: BoxShape.circle),
-              child: Icon(icon, color: accentColor, size: 24),
+              child: Icon(feature.icon, color: accentColor, size: 36),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: AppTextStyles.titleSmall),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
-                  ),
-                ],
+            const SizedBox(height: 20),
+            Text(title, style: AppTextStyles.headlineSmall, textAlign: TextAlign.center),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 28),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => Get.toNamed(route),
+                icon: const Icon(Icons.add_rounded, color: Colors.white),
+                label: Text(tab.addActionLabel!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: accentColor,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  elevation: 0,
+                ),
               ),
             ),
-            const Icon(Icons.chevron_right_rounded, color: AppColors.primary, size: 22),
           ],
         ),
       ),
     );
   }
 }
+
 
 class _ReportsTab extends StatelessWidget {
   final ActivityController controller;
@@ -362,7 +325,7 @@ class _ReportsTab extends StatelessWidget {
     return Obx(() {
       final reports = controller.reports;
       if (reports.isEmpty) {
-        return const SingleChildScrollView(child: _EmptyActivitySection());
+        return const _TabEmptyState(tab: ActivityTab.reports);
       }
       return ListView.builder(
         padding: listPadding,
@@ -397,7 +360,7 @@ class _IdeasTab extends StatelessWidget {
     return Obx(() {
       final ideas = controller.ideas;
       if (ideas.isEmpty) {
-        return const SingleChildScrollView(child: _EmptyActivitySection());
+        return const _TabEmptyState(tab: ActivityTab.ideas);
       }
       return ListView.builder(
         padding: listPadding,
@@ -431,7 +394,7 @@ class _ImprovementsTab extends StatelessWidget {
     return Obx(() {
       final improvements = controller.improvements;
       if (improvements.isEmpty) {
-        return const SingleChildScrollView(child: _EmptyActivitySection());
+        return const _TabEmptyState(tab: ActivityTab.improvements);
       }
       return ListView.builder(
         padding: listPadding,
@@ -468,7 +431,7 @@ class _AppreciationsTab extends StatelessWidget {
     return Obx(() {
       final appreciations = controller.appreciations;
       if (appreciations.isEmpty) {
-        return const SingleChildScrollView(child: _EmptyActivitySection());
+        return const _TabEmptyState(tab: ActivityTab.appreciations);
       }
       return ListView.builder(
         padding: listPadding,

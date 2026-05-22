@@ -5,7 +5,6 @@ import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/widgets/status_chip.dart';
 import '../../../routes/app_routes.dart';
@@ -102,8 +101,8 @@ class _TabContent extends GetView<UpdatesController> {
           slivers: [
             if (featured.isNotEmpty) SliverToBoxAdapter(child: _FeaturedCarousel(items: featured)),
             if (items.isEmpty)
-              const SliverFillRemaining(
-                child: EmptyState(title: 'No updates', message: 'No updates for this category yet.'),
+              SliverFillRemaining(
+                child: _UpdatesEmptyState(tab: tab),
               )
             else
               SliverPadding(
@@ -347,6 +346,65 @@ class _UpdateCard extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Updates Empty State ──────────────────────────────────────────────────────
+
+class _UpdatesEmptyState extends StatelessWidget {
+  final UpdatesTab tab;
+  const _UpdatesEmptyState({required this.tab});
+
+  (IconData, Color, String, String) get _config => switch (tab) {
+        UpdatesTab.feeds => (
+            Icons.newspaper_rounded,
+            AppColors.primary,
+            'No MLA updates yet',
+            'MLA posts and announcements will appear here.',
+          ),
+        UpdatesTab.eventsAnnouncements => (
+            Icons.event_rounded,
+            AppColors.ideaPurple,
+            'No events or announcements',
+            'Upcoming events and community announcements will show up here.',
+          ),
+        UpdatesTab.publicBoards => (
+            Icons.campaign_rounded,
+            AppColors.reportOrange,
+            'No public board posts',
+            'Public notices and board updates will appear here.',
+          ),
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    final (icon, color, title, message) = _config;
+    final lightColor = color.withValues(alpha: 0.12);
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(color: lightColor, shape: BoxShape.circle),
+              child: Icon(icon, color: color, size: 36),
+            ),
+            const SizedBox(height: 20),
+            Text(title, style: AppTextStyles.headlineSmall, textAlign: TextAlign.center),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

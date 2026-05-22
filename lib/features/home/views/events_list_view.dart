@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/widgets/empty_state.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
 
@@ -22,7 +23,10 @@ class EventsListView extends StatelessWidget {
       body: Obx(() {
         final events = controller.upcomingEvents;
         if (events.isEmpty) {
-          return const Center(child: Text('No upcoming events.'));
+          return const EmptyState(
+            title: 'No upcoming events',
+            message: 'Events and programmes will appear here when scheduled.',
+          );
         }
         return ListView.separated(
           padding: const EdgeInsets.all(16),
