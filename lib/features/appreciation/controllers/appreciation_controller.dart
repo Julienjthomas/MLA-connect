@@ -46,6 +46,7 @@ class AppreciationController extends GetxController {
   final Rx<SubmissionVisibility> visibility = SubmissionVisibility.public.obs;
   final RxBool anonymous = false.obs;
   final RxList<XFile> selectedImages = <XFile>[].obs;
+  final RxnString voiceRecordingPath = RxnString();
 
   // Flow state
   final RxInt currentStep = 0.obs;

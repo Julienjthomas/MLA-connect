@@ -19,7 +19,13 @@ class IdeaFlowView extends GetView<IdeaController> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) controller.previousStep();
+        if (!didPop) {
+          if (controller.currentStep.value == controller.steps.length - 1) {
+            Get.until((r) => r.settings.name == '/home');
+          } else {
+            controller.previousStep();
+          }
+        }
       },
       child: Scaffold(
         backgroundColor: AppColors.background,

@@ -16,7 +16,15 @@ class AppreciationFlowView extends GetView<AppreciationController> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, _) { if (!didPop) controller.previousStep(); },
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) {
+          if (controller.currentStep.value == controller.steps.length - 1) {
+            Get.until((r) => r.settings.name == '/home');
+          } else {
+            controller.previousStep();
+          }
+        }
+      },
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         behavior: HitTestBehavior.opaque,

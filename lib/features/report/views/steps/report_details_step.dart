@@ -95,7 +95,7 @@ class ReportDetailsStep extends GetView<ReportController> {
 
           const SizedBox(height: 14),
 
-          // Description — long form + expand + voice (mic on right)
+          // Description — long form + expand
           Row(
             children: [
               Expanded(child: Text(AppStrings.reportDescriptionLabel, style: AppTextStyles.titleSmall)),
@@ -107,24 +107,20 @@ class ReportDetailsStep extends GetView<ReportController> {
             ],
           ),
           const SizedBox(height: 8),
-          Stack(
-            children: [
-              TextField(
-                controller: controller.descriptionController,
-                minLines: 8,
-                maxLines: 16,
-                maxLength: 1500,
-                decoration: InputDecoration(
-                  hintText: AppStrings.reportDescriptionHint,
-                  contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 56),
-                ),
-              ),
-              VoiceInputWidget(
-                overlayInField: true,
-                onRecorded: (path) => controller.voiceRecordingPath.value = path,
-              ),
-            ],
+          TextField(
+            controller: controller.descriptionController,
+            minLines: 8,
+            maxLines: 16,
+            maxLength: 1500,
+            decoration: InputDecoration(hintText: AppStrings.reportDescriptionHint),
           ),
+
+          const SizedBox(height: 20),
+
+          // Voice note — separate section
+          Text(AppStrings.addVoiceNote, style: AppTextStyles.titleSmall),
+          const SizedBox(height: 8),
+          VoiceInputWidget(onRecorded: (path) => controller.voiceRecordingPath.value = path),
 
           const SizedBox(height: 20),
 
