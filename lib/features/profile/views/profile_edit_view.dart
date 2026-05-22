@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../auth/controllers/auth_controller.dart';
 import '../controllers/profile_edit_controller.dart';
 
 class ProfileEditView extends GetView<ProfileEditController> {
@@ -27,7 +28,10 @@ class ProfileEditView extends GetView<ProfileEditController> {
               onPressed: controller.loading.value ? null : controller.save,
               child: controller.loading.value
                   ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Text('Save', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                  : const Text(
+                      'Save',
+                      style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
+                    ),
             ),
           ),
         ],
@@ -68,6 +72,50 @@ class ProfileEditView extends GetView<ProfileEditController> {
                   return ok ? null : 'Enter a valid email address';
                 },
               ),
+              const SizedBox(height: 16),
+              Obx(() {
+                final user = Get.find<AuthController>().user.value;
+                final phone = user?.phone;
+                final localBody = user?.localBodyName;
+                final ward = user?.wardName;
+                return Column(
+                  children: [
+                    if (phone != null && phone.isNotEmpty) ...[
+                      TextFormField(
+                        initialValue: phone.startsWith('+') ? phone : '+91 $phone',
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Phone Number',
+                          prefixIcon: Icon(Icons.phone_outlined),
+                        ),
+                        style: const TextStyle(color: AppColors.textSecondary),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    if (localBody != null) ...[
+                      TextFormField(
+                        initialValue: localBody,
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Panchayat / Local Body',
+                          prefixIcon: Icon(Icons.location_city_outlined),
+                        ),
+                        style: const TextStyle(color: AppColors.textSecondary),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                    if (ward != null) ...[
+                      TextFormField(
+                        initialValue: ward,
+                        readOnly: true,
+                        decoration: const InputDecoration(labelText: 'Ward', prefixIcon: Icon(Icons.map_outlined)),
+                        style: const TextStyle(color: AppColors.textSecondary),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ],
+                );
+              }),
               const SizedBox(height: 32),
             ],
           ),
@@ -120,10 +168,7 @@ class _AvatarPicker extends StatelessWidget {
               Container(
                 width: 96,
                 height: 96,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black.withValues(alpha: 0.4),
-                ),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black.withValues(alpha: 0.4)),
                 child: const Center(child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)),
               ),
             if (!uploading)
@@ -133,10 +178,7 @@ class _AvatarPicker extends StatelessWidget {
                 child: Container(
                   width: 28,
                   height: 28,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primary,
-                  ),
+                  decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary),
                   child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 16),
                 ),
               ),

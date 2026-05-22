@@ -217,13 +217,11 @@ class _UserCard extends StatelessWidget {
                   if (controller.userPhone != null) ...[
                     const SizedBox(height: 2),
                     Text(
-                      controller.userPhone!,
+                      controller.userPhone!.startsWith('+') ? controller.userPhone! : '+91 ${controller.userPhone!}',
                       style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
                     ),
                   ],
-                  if (controller.constituencyName != null ||
-                      controller.wardName != null ||
-                      controller.localBodyName != null) ...[
+                  if (controller.wardName != null || controller.localBodyName != null) ...[
                     const SizedBox(height: 4),
                     Row(
                       children: [
@@ -232,7 +230,6 @@ class _UserCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             [
-                              if (controller.constituencyName != null) controller.constituencyName!,
                               if (controller.localBodyName != null) controller.localBodyName!,
                               if (controller.wardName != null) controller.wardName!,
                             ].join(' · '),

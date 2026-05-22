@@ -49,6 +49,16 @@ class ConstituencyPrefs {
     return prefs.getString(_wardIdKey);
   }
 
+  static Future<String?> getWardName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_wardNameKey);
+  }
+
+  static Future<String?> getLocalBodyName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_localBodyNameKey);
+  }
+
   static Future<void> savePendingReturnRoute(String route) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_pendingReturnRouteKey, route);

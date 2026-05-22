@@ -44,7 +44,14 @@ class AuthController extends GetxController {
     try {
       final uid = userId;
       if (uid == null) return;
-      final profile = await _userService.getProfile(uid);
+      var profile = await _userService.getProfile(uid);
+      if (profile != null && (profile.wardName == null || profile.localBodyName == null)) {
+        final wardName = profile.wardName ?? await ConstituencyPrefs.getWardName();
+        final localBodyName = profile.localBodyName ?? await ConstituencyPrefs.getLocalBodyName();
+        if (wardName != null || localBodyName != null) {
+          profile = profile.copyWith(wardName: wardName, localBodyName: localBodyName);
+        }
+      }
       user.value = profile;
       if (profile != null && !await AppLocale.hasStoredPreference()) {
         AppLocale.change(profile.language);
@@ -64,7 +71,14 @@ class AuthController extends GetxController {
     final uid = userId;
     if (uid == null) return;
     try {
-      final profile = await _userService.getProfile(uid);
+      var profile = await _userService.getProfile(uid);
+      if (profile != null && (profile.wardName == null || profile.localBodyName == null)) {
+        final wardName = profile.wardName ?? await ConstituencyPrefs.getWardName();
+        final localBodyName = profile.localBodyName ?? await ConstituencyPrefs.getLocalBodyName();
+        if (wardName != null || localBodyName != null) {
+          profile = profile.copyWith(wardName: wardName, localBodyName: localBodyName);
+        }
+      }
       user.value = profile;
       if (profile != null && !await AppLocale.hasStoredPreference()) {
         AppLocale.change(profile.language);
