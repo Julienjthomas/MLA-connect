@@ -47,13 +47,13 @@ class MlaService {
         final dbCid = await ConstituencyDbId.resolve(_db, constituencyId) ??
             (ConstituencyDbId.isNumericId(constituencyId) ? constituencyId : null);
         if (dbCid != null) {
-          final r = await _db
+          final rows = await _db
               .from('mlas')
               .select('*, constituencies(name)')
               .eq('is_current', true)
               .eq('constituency_id', dbCid)
-              .maybeSingle();
-          if (r != null) mlaRow = Map<String, dynamic>.from(r);
+              .limit(1);
+          if ((rows as List).isNotEmpty) mlaRow = Map<String, dynamic>.from(rows.first as Map);
         }
       }
       mlaRow ??= await _fetchAnyCurrentMla();
@@ -82,9 +82,9 @@ class MlaService {
   }
 
   Future<Map<String, dynamic>?> _fetchAnyCurrentMla() async {
-    final r = await _db.from('mlas').select('*, constituencies(name)').eq('is_current', true).limit(1).maybeSingle();
-    if (r == null) return null;
-    return Map<String, dynamic>.from(r);
+    final rows = await _db.from('mlas').select('*, constituencies(name)').eq('is_current', true).limit(1);
+    if ((rows as List).isEmpty) return null;
+    return Map<String, dynamic>.from(rows.first as Map);
   }
 
   Future<List<MlaStaffModel>> getPublicStaff() async {

@@ -119,9 +119,10 @@ class HomeView extends GetView<HomeController> {
     return SliverToBoxAdapter(
       child: Obx(() {
         final mla = controller.mla.value;
-        if (mla == null) {
+        if (mla == null && controller.mlaLoading.value) {
           return const SizedBox(height: 130, child: Center(child: CircularProgressIndicator()));
         }
+        if (mla == null) return const SizedBox.shrink();
         return MlaHeroBanner(mla: mla);
       }),
     );

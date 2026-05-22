@@ -14,6 +14,7 @@ class HomeController extends GetxController {
   final Rx<MlaModel?> mla = Rx(null);
   final RxList<UpdateModel> recentActivity = <UpdateModel>[].obs;
   final RxBool loading = false.obs;
+  final RxBool mlaLoading = true.obs;
 
   // Community Impact stats — current month, constituency-scoped
   final RxInt impactReports = 0.obs;
@@ -46,8 +47,13 @@ class HomeController extends GetxController {
   }
 
   Future<void> _loadMla() async {
-    final cid = Get.find<AuthController>().user.value?.constituencyId;
-    mla.value = await _mlaService.getMlaProfile(constituencyId: cid);
+    mlaLoading.value = true;
+    try {
+      final cid = Get.find<AuthController>().user.value?.constituencyId;
+      mla.value = await _mlaService.getMlaProfile(constituencyId: cid);
+    } finally {
+      mlaLoading.value = false;
+    }
   }
 
   Future<void> _loadImpact() async {

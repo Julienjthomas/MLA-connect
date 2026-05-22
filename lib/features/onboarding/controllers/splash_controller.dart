@@ -20,13 +20,27 @@ class SplashController extends GetxController with GetSingleTickerProviderStateM
       end: 1,
     ).animate(CurvedAnimation(parent: animController, curve: Curves.easeOut));
     animController.forward();
+    _loadCachedConstituencyName();
     _navigate();
+  }
+
+  Future<void> _loadCachedConstituencyName() async {
+    final savedName = await ConstituencyPrefs.getName();
+    if (savedName != null && savedName.isNotEmpty) {
+      constituencyName.value = savedName;
+    }
   }
 
   Future<void> _loadConstituencyName(AuthController auth) async {
     final profileName = auth.user.value?.constituencyName;
     if (profileName != null && profileName.isNotEmpty) {
       constituencyName.value = profileName;
+      // Keep prefs in sync so future cold starts show name immediately.
+      final cached = await ConstituencyPrefs.getName();
+      if (cached != profileName) {
+        final existingId = await ConstituencyPrefs.getId() ?? '';
+        await ConstituencyPrefs.save(id: existingId, name: profileName);
+      }
       return;
     }
     final savedName = await ConstituencyPrefs.getName();

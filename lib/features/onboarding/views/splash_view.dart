@@ -42,25 +42,30 @@ class SplashView extends GetView<SplashController> {
                   const SizedBox(height: 24),
                   Obx(() {
                     final name = controller.constituencyName.value;
-                    return Text(
-                      name.isNotEmpty ? name : 'MLA Connect',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 32,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          name.isNotEmpty ? name : 'MLA Connect',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                        if (name.isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            'MLA Connect',
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
+                          ),
+                        ],
+                      ],
                     );
                   }),
-                  if (controller.constituencyName.value.isNotEmpty) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      'MLA Connect',
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.bodyMedium.copyWith(color: Colors.white70),
-                    ),
-                  ],
                 ],
               ),
             ),
