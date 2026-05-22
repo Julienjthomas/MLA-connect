@@ -196,6 +196,7 @@ class _FeaturedCard extends StatelessWidget {
             if (update.imageUrl != null)
               CachedNetworkImage(
                 imageUrl: update.imageUrl!,
+                cacheKey: update.imageCacheKey,
                 fit: BoxFit.cover,
                 errorWidget: (_, __, ___) => Container(color: AppColors.primaryDark),
               ),
@@ -295,6 +296,7 @@ class _UpdateCard extends StatelessWidget {
                 borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: update.imageUrl!,
+                  cacheKey: update.imageCacheKey,
                   width: 110,
                   height: 120,
                   fit: BoxFit.cover,

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/constants/app_enums.dart';
 import '../../../data/models/mla_model.dart';
 import '../../../data/models/update_model.dart';
 import '../../../data/services/mla_service.dart';
@@ -26,11 +27,8 @@ class HomeController extends GetxController {
     {'name': 'Arya Krishnan', 'school': 'GHSS Kodanchery', 'grade': 'A+', 'achievement': 'SSLC Full A+'},
   ];
 
-  final grievanceEvents = [
-    {'title': 'Public Grievance Hearing', 'date': 'May 25, 2024 • 10:00 AM', 'venue': 'Town Hall'},
-    {'title': 'Constituency Meet & Greet', 'date': 'Jun 1, 2024 • 9:00 AM', 'venue': 'Community Centre'},
-    {'title': 'Ward Development Review', 'date': 'Jun 8, 2024 • 11:00 AM', 'venue': 'Municipal Office'},
-  ];
+  final RxList<UpdateModel> announcements = <UpdateModel>[].obs;
+  final RxList<UpdateModel> upcomingEvents = <UpdateModel>[].obs;
 
   @override
   void onInit() {
@@ -41,7 +39,7 @@ class HomeController extends GetxController {
   Future<void> loadData() async {
     loading.value = true;
     try {
-      await Future.wait([_loadMla(), _loadActivity(), _loadImpact()]);
+      await Future.wait([_loadMla(), _loadActivity(), _loadImpact(), _loadAnnouncements(), _loadUpcomingEvents()]);
     } finally {
       loading.value = false;
     }
@@ -89,8 +87,20 @@ class HomeController extends GetxController {
       if (updates.isNotEmpty) {
         recentActivity.value = updates.take(5).toList();
       }
-    } catch (_) {
-      // leave recentActivity empty — section hides gracefully
-    }
+    } catch (_) {}
+  }
+
+  Future<void> _loadAnnouncements() async {
+    try {
+      final updates = await _updatesService.getUpdates(category: UpdateCategory.announcements);
+      announcements.value = updates.take(5).toList();
+    } catch (_) {}
+  }
+
+  Future<void> _loadUpcomingEvents() async {
+    try {
+      final updates = await _updatesService.getUpdates(category: UpdateCategory.events);
+      upcomingEvents.value = updates.where((u) => u.imageUrl != null).take(10).toList();
+    } catch (_) {}
   }
 }

@@ -11,6 +11,7 @@ class UpdateModel {
   final String? bodyMl;
   final UpdateCategory category;
   final String? imageUrl;
+  final String? imageCacheKey;
   final List<String> mediaUrls;
   final int likes;
   final int views;
@@ -25,6 +26,7 @@ class UpdateModel {
     this.bodyMl,
     required this.category,
     this.imageUrl,
+    this.imageCacheKey,
     this.mediaUrls = const [],
     this.likes = 0,
     this.views = 0,
@@ -34,6 +36,7 @@ class UpdateModel {
 
   factory UpdateModel.fromJson(Map<String, dynamic> json) {
     final coverUrl = json['cover_image_url'] as String?;
+    final coverCacheKey = json['_cover_cache_key'] as String?;
     final attachments = (json['media_attachments'] as List?)
             ?.map((raw) {
               final m = Map<String, dynamic>.from(raw as Map);
@@ -58,6 +61,7 @@ class UpdateModel {
       bodyMl: json['body_ml'] as String?,
       category: UpdateCategoryX.fromString(json['category'] as String? ?? ''),
       imageUrl: coverUrl,
+      imageCacheKey: coverCacheKey,
       mediaUrls: List<String>.from(attachments),
       likes: json['like_count'] as int? ?? 0,
       views: json['view_count'] as int? ?? 0,

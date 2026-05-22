@@ -96,6 +96,7 @@ class UpdatesService {
       final url = rows[i]['cover_image_url'] as String?;
       final parsed = parseSupabasePublicObjectUrl(url);
       if (parsed == null) continue;
+      rows[i]['_cover_cache_key'] = '${parsed.bucket}/${parsed.objectPath}';
       byBucket.putIfAbsent(parsed.bucket, () => []).add((idx: i, path: parsed.objectPath));
     }
 

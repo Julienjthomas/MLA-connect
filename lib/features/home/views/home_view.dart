@@ -45,8 +45,11 @@ class HomeView extends GetView<HomeController> {
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
               _buildStayConnected(),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              _buildAnnouncementsHeader(),
+              const SliverToBoxAdapter(child: SizedBox(height: 12)),
               _buildGrievanceBanner(),
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
+              _buildUpcomingEventsSection(),
             ],
           ),
         ),
@@ -410,98 +413,239 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+  SliverToBoxAdapter _buildAnnouncementsHeader() {
+    return SliverToBoxAdapter(
+      child: Obx(() {
+        if (controller.announcements.isEmpty) return const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SectionHeader(
+            title: 'Announcements',
+            actionLabel: AppStrings.viewAll,
+            onAction: () {
+              try {
+                Get.find<ShellController>().goTo(2);
+                Get.find<UpdatesController>().tabController.animateTo(1);
+              } catch (_) {}
+            },
+          ),
+        );
+      }),
+    );
+  }
+
   SliverToBoxAdapter _buildGrievanceBanner() {
-    final events = controller.grievanceEvents;
     final pageIndex = ValueNotifier<int>(0);
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: ValueListenableBuilder<int>(
-          valueListenable: pageIndex,
-          builder: (context, current, _) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 90,
-                  child: PageView.builder(
-                    itemCount: events.length,
-                    onPageChanged: (i) => pageIndex.value = i,
-                    itemBuilder: (_, i) {
-                      final e = events[i];
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 1),
-                        padding: const EdgeInsets.all(16),
+        child: Obx(() {
+          final items = controller.announcements;
+          if (items.isEmpty) return const SizedBox.shrink();
+          return ValueListenableBuilder<int>(
+            valueListenable: pageIndex,
+            builder: (context, current, _) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 90,
+                    child: PageView.builder(
+                      itemCount: items.length,
+                      onPageChanged: (i) => pageIndex.value = i,
+                      itemBuilder: (_, i) {
+                        final item = items[i];
+                        return GestureDetector(
+                          onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 1),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.surface,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: AppColors.grey200),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 44,
+                                  height: 44,
+                                  decoration: const BoxDecoration(color: AppColors.ideaPurpleLight, shape: BoxShape.circle),
+                                  child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        item.localTitle,
+                                        style: AppTextStyles.titleSmall,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        item.timeAgo,
+                                        style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  AppStrings.viewDetails,
+                                  style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(items.length, (i) {
+                      final active = i == current;
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        margin: const EdgeInsets.symmetric(horizontal: 3),
+                        width: active ? 16 : 6,
+                        height: 6,
                         decoration: BoxDecoration(
-                          color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppColors.grey200),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 44,
-                              height: 44,
-                              decoration: const BoxDecoration(color: AppColors.ideaPurpleLight, shape: BoxShape.circle),
-                              child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    e['title']!,
-                                    style: AppTextStyles.titleSmall,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    '${e['date']} • ${e['venue']}',
-                                    style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            GestureDetector(
-                              onTap: () => Get.toNamed(Routes.eventsList),
-                              child: Text(
-                                AppStrings.viewDetails,
-                                style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary),
-                              ),
-                            ),
-                          ],
+                          color: active ? AppColors.primary : AppColors.grey200,
+                          borderRadius: BorderRadius.circular(3),
                         ),
                       );
-                    },
+                    }),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(events.length, (i) {
-                    final active = i == current;
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      margin: const EdgeInsets.symmetric(horizontal: 3),
-                      width: active ? 16 : 6,
-                      height: 6,
-                      decoration: BoxDecoration(
-                        color: active ? AppColors.primary : AppColors.grey200,
-                        borderRadius: BorderRadius.circular(3),
+                ],
+              );
+            },
+          );
+        }),
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildUpcomingEventsSection() {
+    return SliverToBoxAdapter(
+      child: Obx(() {
+        final events = controller.upcomingEvents.take(5).toList();
+        if (events.isEmpty) return const SizedBox.shrink();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SectionHeader(
+                title: 'Upcoming Events',
+                actionLabel: AppStrings.viewAll,
+                onAction: () {
+                  try {
+                    Get.find<ShellController>().goTo(2);
+                    Get.find<UpdatesController>().tabController.animateTo(1);
+                  } catch (_) {}
+                },
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 190,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: events.length,
+                itemBuilder: (_, i) => _eventCard(events[i]),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+        );
+      }),
+    );
+  }
+
+  Widget _eventCard(UpdateModel item) {
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
+      child: Container(
+        width: 200,
+        margin: const EdgeInsets.only(right: 12),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image
+            item.imageUrl != null
+                ? CachedNetworkImage(
+                    imageUrl: item.imageUrl!,
+                    cacheKey: item.imageCacheKey,
+                    height: 110,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorWidget: (_, __, ___) => _eventCardPlaceholder(),
+                  )
+                : _eventCardPlaceholder(),
+            // Text
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.localTitle,
+                    style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600, fontSize: 12),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Icon(Icons.calendar_today_outlined, size: 10, color: AppColors.textTertiary),
+                      const SizedBox(width: 3),
+                      Expanded(
+                        child: Text(
+                          item.timeAgo,
+                          style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    );
-                  }),
-                ),
-              ],
-            );
-          },
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _eventCardPlaceholder() {
+    return Container(
+      height: 110,
+      color: AppColors.ideaPurpleLight,
+      child: const Center(child: Icon(Icons.event_rounded, color: AppColors.primary, size: 32)),
+    );
+  }
+
+  Widget _activityCardPlaceholder(UpdateModel item) {
+    final color = item.category.color;
+    return Container(
+      height: 110,
+      width: double.infinity,
+      color: color.withValues(alpha: 0.12),
+      child: Icon(Icons.campaign_rounded, color: color, size: 36),
     );
   }
 
@@ -523,16 +667,13 @@ class HomeView extends GetView<HomeController> {
             child: item.imageUrl != null
                 ? CachedNetworkImage(
                     imageUrl: item.imageUrl!,
+                    cacheKey: item.imageCacheKey,
                     height: 110,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    errorWidget: (_, __, ___) => Container(height: 110, color: AppColors.grey200),
+                    errorWidget: (_, __, ___) => _activityCardPlaceholder(item),
                   )
-                : Container(
-                    height: 110,
-                    color: AppColors.grey200,
-                    child: const Icon(Icons.image_outlined, color: AppColors.grey400),
-                  ),
+                : _activityCardPlaceholder(item),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),

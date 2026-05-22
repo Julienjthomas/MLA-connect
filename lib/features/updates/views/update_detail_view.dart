@@ -49,7 +49,7 @@ class UpdateDetailView extends GetView<UpdatesController> {
                     background: Stack(
                       fit: StackFit.expand,
                       children: [
-                        CachedNetworkImage(imageUrl: update.imageUrl!, fit: BoxFit.cover),
+                        CachedNetworkImage(imageUrl: update.imageUrl!, cacheKey: update.imageCacheKey, fit: BoxFit.cover),
                         // Top gradient ensures back chip + status icons readable on dark images.
                         const DecoratedBox(
                           decoration: BoxDecoration(
