@@ -44,10 +44,6 @@ class HomeView extends GetView<HomeController> {
               _buildCommunityImpact(),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
               _buildStayConnected(),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              _buildAnnouncementsHeader(),
-              const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              _buildGrievanceBanner(),
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
               _buildUpcomingEventsSection(),
             ],
@@ -277,6 +273,7 @@ class HomeView extends GetView<HomeController> {
             border: Border.all(color: AppColors.grey200),
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Left — icon + title/subtitle
               Container(
@@ -303,6 +300,7 @@ class HomeView extends GetView<HomeController> {
               Obx(() {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _impactStat(
                       Icons.list_alt_rounded,
@@ -336,6 +334,8 @@ class HomeView extends GetView<HomeController> {
 
   Widget _impactStat(IconData icon, Color color, String value, String label) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           width: 40,
@@ -415,128 +415,6 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  SliverToBoxAdapter _buildAnnouncementsHeader() {
-    return SliverToBoxAdapter(
-      child: Obx(() {
-        if (controller.announcements.isEmpty) return const SizedBox.shrink();
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: SectionHeader(
-            title: 'Announcements',
-            actionLabel: AppStrings.viewAll,
-            onAction: () {
-              try {
-                Get.find<ShellController>().goTo(2);
-                Get.find<UpdatesController>().tabController.animateTo(1);
-              } catch (_) {}
-            },
-          ),
-        );
-      }),
-    );
-  }
-
-  SliverToBoxAdapter _buildGrievanceBanner() {
-    final pageIndex = ValueNotifier<int>(0);
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Obx(() {
-          final items = controller.announcements;
-          if (items.isEmpty) return const SizedBox.shrink();
-          return ValueListenableBuilder<int>(
-            valueListenable: pageIndex,
-            builder: (context, current, _) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: 90,
-                    child: PageView.builder(
-                      itemCount: items.length,
-                      onPageChanged: (i) => pageIndex.value = i,
-                      itemBuilder: (_, i) {
-                        final item = items[i];
-                        return GestureDetector(
-                          onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 1),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: AppColors.surface,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: AppColors.grey200),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 44,
-                                  height: 44,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.ideaPurpleLight,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        item.localTitle,
-                                        style: AppTextStyles.titleSmall,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Text(
-                                        item.timeAgo,
-                                        style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  AppStrings.viewDetails,
-                                  style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(items.length, (i) {
-                      final active = i == current;
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 250),
-                        margin: const EdgeInsets.symmetric(horizontal: 3),
-                        width: active ? 16 : 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: active ? AppColors.primary : AppColors.grey200,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      );
-                    }),
-                  ),
-                ],
-              );
-            },
-          );
-        }),
-      ),
-    );
-  }
-
   SliverToBoxAdapter _buildUpcomingEventsSection() {
     return SliverToBoxAdapter(
       child: Obx(() {
@@ -559,18 +437,21 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             const SizedBox(height: 12),
-            Builder(builder: (context) {
-              final cardHeight = (190 * MediaQuery.textScalerOf(context).scale(1.0)).clamp(190.0, 260.0);
-              return SizedBox(
-                height: cardHeight,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: events.length,
-                  itemBuilder: (_, i) => _eventCard(events[i]),
-                ),
-              );
-            }),
+
+            Builder(
+              builder: (context) {
+                final cardHeight = (190 * MediaQuery.textScalerOf(context).scale(1.0)).clamp(190.0, 260.0);
+                return SizedBox(
+                  height: cardHeight,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: events.length,
+                    itemBuilder: (_, i) => _eventCard(events[i]),
+                  ),
+                );
+              },
+            ),
             const SizedBox(height: 24),
           ],
         );
