@@ -71,7 +71,7 @@ class HomeView extends GetView<HomeController> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.asset('assets/images/nameless_logo.png', width: 32, height: 32, fit: BoxFit.cover),
+              child: Image.asset('assets/images/nameless_logo.png', width: 49, height: 49, fit: BoxFit.cover),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -471,7 +471,10 @@ class HomeView extends GetView<HomeController> {
                                 Container(
                                   width: 44,
                                   height: 44,
-                                  decoration: const BoxDecoration(color: AppColors.ideaPurpleLight, shape: BoxShape.circle),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.ideaPurpleLight,
+                                    shape: BoxShape.circle,
+                                  ),
                                   child: const Icon(Icons.campaign_rounded, color: AppColors.primary, size: 22),
                                 ),
                                 const SizedBox(width: 12),
@@ -580,7 +583,9 @@ class HomeView extends GetView<HomeController> {
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(14),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2)),
+          ],
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
