@@ -437,22 +437,26 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             const SizedBox(height: 12),
-
-            Builder(
-              builder: (context) {
-                final cardHeight = (190 * MediaQuery.textScalerOf(context).scale(1.0)).clamp(190.0, 260.0);
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final scale = MediaQuery.textScalerOf(context).scale(1.0);
+                final cardHeight = (160 * scale).clamp(160.0, 240.0);
+                final cardWidth = (constraints.maxWidth - 40).clamp(280.0, 400.0);
                 return SizedBox(
                   height: cardHeight,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: events.length,
-                    itemBuilder: (_, i) => _eventCard(events[i]),
+                    itemBuilder: (_, i) => SizedBox(
+                      width: cardWidth,
+                      child: Padding(padding: const EdgeInsets.only(right: 12), child: _eventCard(events[i])),
+                    ),
                   ),
                 );
               },
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
           ],
         );
       }),
@@ -460,74 +464,192 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _eventCard(UpdateModel item) {
+    final date = item.createdAt;
+    final day = date.day.toString();
+    final month = _shortMonth(date.month);
+    final weekday = _shortWeekday(date.weekday);
+
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
       child: Container(
-        width: 200,
-        margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
-            BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2)),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2)),
           ],
         ),
         clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image
-            item.imageUrl != null
-                ? CachedNetworkImage(
-                    imageUrl: item.imageUrl!,
-                    cacheKey: item.imageCacheKey,
-                    height: 110,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorWidget: (_, __, ___) => _eventCardPlaceholder(),
-                  )
-                : _eventCardPlaceholder(),
-            // Text
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.localTitle,
-                    style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600, fontSize: 12),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(Icons.calendar_today_outlined, size: 10, color: AppColors.textTertiary),
-                      const SizedBox(width: 3),
-                      Expanded(
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Date badge — month bar on top, day + weekday vertically centered
+              SizedBox(
+                width: 72,
+                child: Stack(
+                  children: [
+                    // Full-height background
+                    const Positioned.fill(child: ColoredBox(color: AppColors.ideaPurpleLight)),
+                    // Month header pinned to top
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        color: AppColors.primary,
+                        alignment: Alignment.center,
                         child: Text(
-                          item.timeAgo,
-                          style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
-                          overflow: TextOverflow.ellipsis,
+                          month,
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            letterSpacing: 0.5,
+                          ),
                         ),
+                      ),
+                    ),
+                    // Day + weekday centered in remaining space
+                    Positioned.fill(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 26),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              day,
+                              style: const TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 28,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primary,
+                                height: 1,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                weekday,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Vertical divider
+              Container(width: 1, color: AppColors.grey200),
+              // Title + time + divider + venue
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        item.localTitle,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                          height: 1.3,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.access_time_rounded, size: 13, color: AppColors.textTertiary),
+                          const SizedBox(width: 6),
+                          Text(
+                            _formatEventTime(date),
+                            style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      const Divider(height: 1, thickness: 1, color: AppColors.grey200),
+                      const SizedBox(height: 6),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.location_on_outlined, size: 13, color: AppColors.textTertiary),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Text(
+                              item.shortBody.isNotEmpty ? item.shortBody : 'Venue TBA',
+                              style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+              // Right image panel — fills full card height, icon centered, link btn top-right
+              SizedBox(
+                width: 110,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    const ColoredBox(color: AppColors.ideaPurpleLight),
+                    const Center(child: Icon(Icons.calendar_month_rounded, color: AppColors.primary, size: 44)),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: const BoxDecoration(color: AppColors.surface, shape: BoxShape.circle),
+                        child: const Icon(Icons.open_in_new_rounded, color: AppColors.primary, size: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _eventCardPlaceholder() {
-    return Container(
-      height: 110,
-      color: AppColors.ideaPurpleLight,
-      child: const Center(child: Icon(Icons.event_rounded, color: AppColors.primary, size: 32)),
-    );
+  String _shortMonth(int month) {
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    return months[(month - 1).clamp(0, 11)];
+  }
+
+  String _shortWeekday(int weekday) {
+    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+    return days[(weekday - 1).clamp(0, 6)];
+  }
+
+  String _formatEventTime(DateTime dt) {
+    final h = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
+    final m = dt.minute.toString().padLeft(2, '0');
+    final period = dt.hour < 12 ? 'AM' : 'PM';
+    return '$h:$m $period';
   }
 
   Widget _activityCardPlaceholder(UpdateModel item) {
