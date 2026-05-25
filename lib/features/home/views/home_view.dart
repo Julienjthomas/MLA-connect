@@ -418,238 +418,19 @@ class HomeView extends GetView<HomeController> {
   SliverToBoxAdapter _buildUpcomingEventsSection() {
     return SliverToBoxAdapter(
       child: Obx(() {
-        final events = controller.upcomingEvents.take(5).toList();
+        final events = controller.upcomingEvents.toList();
         if (events.isEmpty) return const SizedBox.shrink();
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SectionHeader(
-                title: 'Upcoming Events',
-                actionLabel: AppStrings.viewAll,
-                onAction: () {
-                  try {
-                    Get.find<ShellController>().goTo(2);
-                    Get.find<UpdatesController>().tabController.animateTo(1);
-                  } catch (_) {}
-                },
-              ),
-            ),
-            const SizedBox(height: 12),
-            LayoutBuilder(
-              builder: (context, constraints) {
-                final scale = MediaQuery.textScalerOf(context).scale(1.0);
-                final cardHeight = (160 * scale).clamp(160.0, 240.0);
-                final cardWidth = (constraints.maxWidth - 40).clamp(280.0, 400.0);
-                return SizedBox(
-                  height: cardHeight,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: events.length,
-                    itemBuilder: (_, i) => SizedBox(
-                      width: cardWidth,
-                      child: Padding(padding: const EdgeInsets.only(right: 12), child: _eventCard(events[i])),
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 12),
-          ],
+        return _EventsCarousel(
+          events: events,
+          onViewAll: () {
+            try {
+              Get.find<ShellController>().goTo(2);
+              Get.find<UpdatesController>().tabController.animateTo(1);
+            } catch (_) {}
+          },
         );
       }),
     );
-  }
-
-  Widget _eventCard(UpdateModel item) {
-    final date = item.createdAt;
-    final day = date.day.toString();
-    final month = _shortMonth(date.month);
-    final weekday = _shortWeekday(date.weekday);
-
-    return GestureDetector(
-      onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2)),
-          ],
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Date badge — month bar on top, day + weekday vertically centered
-              SizedBox(
-                width: 72,
-                child: Stack(
-                  children: [
-                    // Full-height background
-                    const Positioned.fill(child: ColoredBox(color: AppColors.ideaPurpleLight)),
-                    // Month header pinned to top
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        color: AppColors.primary,
-                        alignment: Alignment.center,
-                        child: Text(
-                          month,
-                          style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // Day + weekday centered in remaining space
-                    Positioned.fill(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 26),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              day,
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 28,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primary,
-                                height: 1,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Text(
-                                weekday,
-                                style: const TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // Vertical divider
-              Container(width: 1, color: AppColors.grey200),
-              // Title + time + divider + venue
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        item.localTitle,
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                          height: 1.3,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const Icon(Icons.access_time_rounded, size: 13, color: AppColors.textTertiary),
-                          const SizedBox(width: 6),
-                          Text(
-                            _formatEventTime(date),
-                            style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      const Divider(height: 1, thickness: 1, color: AppColors.grey200),
-                      const SizedBox(height: 6),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.location_on_outlined, size: 13, color: AppColors.textTertiary),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              item.shortBody.isNotEmpty ? item.shortBody : 'Venue TBA',
-                              style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Right image panel — fills full card height, icon centered, link btn top-right
-              SizedBox(
-                width: 110,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    const ColoredBox(color: AppColors.ideaPurpleLight),
-                    const Center(child: Icon(Icons.calendar_month_rounded, color: AppColors.primary, size: 44)),
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: const BoxDecoration(color: AppColors.surface, shape: BoxShape.circle),
-                        child: const Icon(Icons.open_in_new_rounded, color: AppColors.primary, size: 16),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  String _shortMonth(int month) {
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    return months[(month - 1).clamp(0, 11)];
-  }
-
-  String _shortWeekday(int weekday) {
-    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-    return days[(weekday - 1).clamp(0, 6)];
-  }
-
-  String _formatEventTime(DateTime dt) {
-    final h = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
-    final m = dt.minute.toString().padLeft(2, '0');
-    final period = dt.hour < 12 ? 'AM' : 'PM';
-    return '$h:$m $period';
   }
 
   Widget _activityCardPlaceholder(UpdateModel item) {
@@ -722,5 +503,210 @@ class HomeView extends GetView<HomeController> {
         ],
       ),
     );
+  }
+}
+
+// ── Events carousel with page indicator ─────────────────────────────────────
+
+class _EventsCarousel extends StatefulWidget {
+  const _EventsCarousel({required this.events, required this.onViewAll});
+  final List<UpdateModel> events;
+  final VoidCallback onViewAll;
+
+  @override
+  State<_EventsCarousel> createState() => _EventsCarouselState();
+}
+
+class _EventsCarouselState extends State<_EventsCarousel> {
+  final _controller = PageController(viewportFraction: 0.92);
+  int _current = 0;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SectionHeader(title: 'Upcoming Events', actionLabel: AppStrings.viewAll, onAction: widget.onViewAll),
+        ),
+        const SizedBox(height: 12),
+        SizedBox(
+          height: 110,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: widget.events.length,
+            onPageChanged: (i) => setState(() => _current = i),
+            itemBuilder: (_, i) =>
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 6), child: _eventCard(widget.events[i])),
+          ),
+        ),
+        if (widget.events.length > 1) ...[
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(widget.events.length, (i) {
+              final active = i == _current;
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                margin: const EdgeInsets.symmetric(horizontal: 3),
+                width: active ? 16 : 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  color: active ? AppColors.primary : AppColors.primary.withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              );
+            }),
+          ),
+        ],
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+
+  Widget _eventCard(UpdateModel item) {
+    final date = item.createdAt;
+    final day = date.day.toString();
+    final month = _shortMonth(date.month);
+    final weekday = _shortWeekday(date.weekday);
+
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2)),
+          ],
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: 72,
+                decoration: const BoxDecoration(
+                  color: AppColors.ideaPurpleLight,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      month,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      day,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.primary,
+                        height: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      weekday,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(width: 1, color: AppColors.grey200),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        item.localTitle,
+                        style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                          height: 1.3,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
+                          const SizedBox(width: 5),
+                          Text(
+                            _formatEventTime(date),
+                            style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            width: 1,
+                            height: 12,
+                            color: AppColors.grey200,
+                          ),
+                          Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Text(
+                              item.shortBody.isNotEmpty ? item.shortBody : 'Venue TBA',
+                              style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _shortMonth(int month) {
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    return months[(month - 1).clamp(0, 11)];
+  }
+
+  String _shortWeekday(int weekday) {
+    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+    return days[(weekday - 1).clamp(0, 6)];
+  }
+
+  String _formatEventTime(DateTime dt) {
+    final h = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
+    final m = dt.minute.toString().padLeft(2, '0');
+    final period = dt.hour < 12 ? 'AM' : 'PM';
+    return '$h:$m $period';
   }
 }

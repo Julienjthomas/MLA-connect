@@ -106,7 +106,7 @@ class HomeController extends GetxController {
   Future<void> _loadUpcomingEvents() async {
     try {
       final updates = await _updatesService.getUpdates(category: UpdateCategory.events);
-      upcomingEvents.value = updates.where((u) => u.imageUrl != null).take(10).toList();
+      upcomingEvents.value = updates.take(5).toList();
     } catch (_) {}
   }
 }
