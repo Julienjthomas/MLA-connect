@@ -56,7 +56,7 @@ class EventsListView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(e.localTitle, style: AppTextStyles.titleSmall),
+                          Text(e.title, style: AppTextStyles.titleSmall),
                           const SizedBox(height: 2),
                           Text(e.timeAgo, style: AppTextStyles.caption),
                         ],

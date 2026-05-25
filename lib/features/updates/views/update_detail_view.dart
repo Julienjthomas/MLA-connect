@@ -24,7 +24,7 @@ class UpdateDetailView extends GetView<UpdatesController> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: update.imageUrl != null ? 280 : kToolbarHeight,
+            expandedHeight: 280,
             pinned: true,
             backgroundColor: AppColors.background,
             foregroundColor: AppColors.textPrimary,
@@ -44,27 +44,38 @@ class UpdateDetailView extends GetView<UpdatesController> {
                 ),
               ),
             ),
-            flexibleSpace: update.imageUrl != null
-                ? FlexibleSpaceBar(
-                    background: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        CachedNetworkImage(imageUrl: update.imageUrl!, cacheKey: update.imageCacheKey, fit: BoxFit.cover),
-                        // Top gradient ensures back chip + status icons readable on dark images.
-                        const DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [Color(0x66000000), Color(0x00000000)],
-                              stops: [0.0, 0.45],
-                            ),
-                          ),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: update.imageUrl!,
+                    cacheKey: update.imageCacheKey,
+                    fit: BoxFit.cover,
+                    errorWidget: (_, __, ___) => Container(
+                      color: AppColors.ideaPurpleLight,
+                      child: Center(
+                        child: Icon(
+                          Icons.campaign_rounded,
+                          size: 64,
+                          color: update.category.color.withValues(alpha: 0.5),
                         ),
-                      ],
+                      ),
                     ),
-                  )
-                : null,
+                  ),
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0x66000000), Color(0x00000000)],
+                        stops: [0.0, 0.45],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             actions: const [],
           ),
           SliverToBoxAdapter(
@@ -88,10 +99,6 @@ class UpdateDetailView extends GetView<UpdatesController> {
                     final likes = current?.likes ?? update.likes;
                     return Row(
                       children: [
-                        const Icon(Icons.visibility_outlined, size: 16, color: AppColors.grey500),
-                        const SizedBox(width: 4),
-                        Text('${update.views} views', style: AppTextStyles.caption),
-                        const SizedBox(width: 16),
                         GestureDetector(
                           onTap: () => controller.toggleLike(update.id),
                           child: Row(

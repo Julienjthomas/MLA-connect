@@ -105,7 +105,7 @@ class HomeController extends GetxController {
 
   Future<void> _loadUpcomingEvents() async {
     try {
-      final updates = await _updatesService.getUpdates(category: UpdateCategory.events);
+      final updates = await _updatesService.getUpdates();
       upcomingEvents.value = updates.take(5).toList();
     } catch (_) {}
   }

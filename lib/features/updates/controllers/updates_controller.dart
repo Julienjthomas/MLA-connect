@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/constants/app_enums.dart';
+import '../../../data/models/event_model.dart';
+import '../../../data/models/public_board_item.dart';
 import '../../../data/models/update_model.dart';
+import '../../../data/services/event_service.dart';
+import '../../../data/services/public_board_service.dart';
 import '../../../data/services/updates_service.dart';
+import '../../auth/controllers/auth_controller.dart';
 
-enum UpdatesTab { feeds, eventsAnnouncements, publicBoards }
+enum UpdatesTab { feeds, publicBoards, events }
 
 class UpdatesController extends GetxController with GetSingleTickerProviderStateMixin {
   final _service = UpdatesService();
+  final _publicBoardService = PublicBoardService();
+  final _eventService = EventService();
 
   final RxList<UpdateModel> updates = <UpdateModel>[].obs;
+  final RxList<PublicBoardItem> publicBoardItems = <PublicBoardItem>[].obs;
+  final RxList<EventModel> events = <EventModel>[].obs;
   final Rx<UpdateCategory> selectedCategory = UpdateCategory.all.obs;
   final RxBool loading = false.obs;
   final RxString error = ''.obs;
@@ -32,10 +41,8 @@ class UpdatesController extends GetxController with GetSingleTickerProviderState
     final tab = UpdatesTab.values[tabController.index];
     return switch (tab) {
       UpdatesTab.feeds => updates.toList(),
-      UpdatesTab.eventsAnnouncements => updates
-          .where((u) => u.category == UpdateCategory.events || u.category == UpdateCategory.announcements)
-          .toList(),
       UpdatesTab.publicBoards => updates.where((u) => u.category == UpdateCategory.publicBoard).toList(),
+      UpdatesTab.events => [],
     };
   }
 
@@ -83,12 +90,31 @@ class UpdatesController extends GetxController with GetSingleTickerProviderState
       likedIds
         ..clear()
         ..addAll(await _service.getLikedPostIds(updates.map((u) => u.id)));
+      await Future.wait([_loadPublicBoard(), _loadEvents()]);
     } catch (_) {
       updates.value = [];
       likedIds.clear();
       error.value = 'Could not load updates. Please try again.';
     } finally {
       loading.value = false;
+    }
+  }
+
+  Future<void> _loadPublicBoard() async {
+    try {
+      final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
+      if (cid.isEmpty) return;
+      publicBoardItems.value = await _publicBoardService.getPublicBoard(constituencyId: cid);
+    } catch (_) {
+      publicBoardItems.value = [];
+    }
+  }
+
+  Future<void> _loadEvents() async {
+    try {
+      events.value = await _eventService.getEvents();
+    } catch (_) {
+      events.value = [];
     }
   }
 

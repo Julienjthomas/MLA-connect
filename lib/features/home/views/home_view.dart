@@ -573,9 +573,15 @@ class _EventsCarouselState extends State<_EventsCarousel> {
 
   Widget _eventCard(UpdateModel item) {
     final date = item.createdAt;
-    final day = date.day.toString();
-    final month = _shortMonth(date.month);
-    final weekday = _shortWeekday(date.weekday);
+    final months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    final days = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+    final month = months[(date.month - 1).clamp(0, 11)];
+    final weekday = days[(date.weekday - 1).clamp(0, 6)];
+    final h = date.hour % 12 == 0 ? 12 : date.hour % 12;
+    final m = date.minute.toString().padLeft(2, '0');
+    final period = date.hour < 12 ? 'AM' : 'PM';
+    final time = '$h:$m $period';
+    final venue = item.shortBody.isNotEmpty ? item.shortBody : '';
 
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
@@ -583,9 +589,7 @@ class _EventsCarouselState extends State<_EventsCarousel> {
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2)),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2))],
         ),
         child: IntrinsicHeight(
           child: Row(
@@ -601,37 +605,11 @@ class _EventsCarouselState extends State<_EventsCarousel> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      month,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primary,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
+                    Text(month, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
                     const SizedBox(height: 2),
-                    Text(
-                      day,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.primary,
-                        height: 1,
-                      ),
-                    ),
+                    Text('${date.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
                     const SizedBox(height: 4),
-                    Text(
-                      weekday,
-                      style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
-                      ),
-                    ),
+                    Text(weekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
                   ],
                 ),
               ),
@@ -643,43 +621,19 @@ class _EventsCarouselState extends State<_EventsCarousel> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        item.localTitle,
-                        style: const TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                          height: 1.3,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      Text(item.localTitle, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
                           const SizedBox(width: 5),
-                          Text(
-                            _formatEventTime(date),
-                            style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            width: 1,
-                            height: 12,
-                            color: AppColors.grey200,
-                          ),
-                          Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
-                          const SizedBox(width: 5),
-                          Expanded(
-                            child: Text(
-                              item.shortBody.isNotEmpty ? item.shortBody : 'Venue TBA',
-                              style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
+                          Text(time, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
+                          if (venue.isNotEmpty) ...[
+                            Container(margin: const EdgeInsets.symmetric(horizontal: 10), width: 1, height: 12, color: AppColors.grey200),
+                            Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
+                            const SizedBox(width: 5),
+                            Expanded(child: Text(venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                          ],
                         ],
                       ),
                     ],
@@ -691,22 +645,5 @@ class _EventsCarouselState extends State<_EventsCarousel> {
         ),
       ),
     );
-  }
-
-  String _shortMonth(int month) {
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    return months[(month - 1).clamp(0, 11)];
-  }
-
-  String _shortWeekday(int weekday) {
-    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-    return days[(weekday - 1).clamp(0, 6)];
-  }
-
-  String _formatEventTime(DateTime dt) {
-    final h = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
-    final m = dt.minute.toString().padLeft(2, '0');
-    final period = dt.hour < 12 ? 'AM' : 'PM';
-    return '$h:$m $period';
   }
 }

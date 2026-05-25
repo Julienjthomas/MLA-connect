@@ -8,6 +8,8 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/widgets/status_chip.dart';
 import '../../../routes/app_routes.dart';
+import '../../../data/models/event_model.dart';
+import '../../../data/models/public_board_item.dart';
 import '../../../data/models/update_model.dart';
 import '../controllers/updates_controller.dart';
 
@@ -41,8 +43,8 @@ class UpdatesView extends GetView<UpdatesController> {
           unselectedLabelStyle: AppTextStyles.labelSmall,
           tabs: const [
             Tab(text: 'MLA Feeds'),
-            Tab(text: 'Events & Announcements'),
-            Tab(text: 'Public Boards'),
+            Tab(text: 'Public Board'),
+            Tab(text: 'Events'),
           ],
         ),
       ),
@@ -50,8 +52,8 @@ class UpdatesView extends GetView<UpdatesController> {
         controller: controller.tabController,
         children: const [
           _TabContent(tab: UpdatesTab.feeds),
-          _TabContent(tab: UpdatesTab.eventsAnnouncements),
           _TabContent(tab: UpdatesTab.publicBoards),
+          _TabContent(tab: UpdatesTab.events),
         ],
       ),
     );
@@ -89,6 +91,34 @@ class _TabContent extends GetView<UpdatesController> {
               ],
             ),
           ),
+        );
+      }
+
+      if (tab == UpdatesTab.publicBoards) {
+        final boardItems = controller.publicBoardItems;
+        return RefreshIndicator(
+          onRefresh: controller.loadUpdates,
+          child: boardItems.isEmpty
+              ? CustomScrollView(slivers: [SliverFillRemaining(child: _UpdatesEmptyState(tab: tab))])
+              : ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  itemCount: boardItems.length,
+                  itemBuilder: (_, i) => _PublicBoardCard(item: boardItems[i]),
+                ),
+        );
+      }
+
+      if (tab == UpdatesTab.events) {
+        final eventItems = controller.events;
+        return RefreshIndicator(
+          onRefresh: controller.loadUpdates,
+          child: eventItems.isEmpty
+              ? CustomScrollView(slivers: [SliverFillRemaining(child: _UpdatesEmptyState(tab: tab))])
+              : ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  itemCount: eventItems.length,
+                  itemBuilder: (_, i) => _EventCard(event: eventItems[i]),
+                ),
         );
       }
 
@@ -290,18 +320,19 @@ class _UpdateCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Thumbnail
-            if (update.imageUrl != null)
-              ClipRRect(
-                borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: update.imageUrl!,
-                  cacheKey: update.imageCacheKey,
-                  width: 110,
-                  height: 120,
-                  fit: BoxFit.cover,
-                  errorWidget: (_, __, ___) => Container(width: 110, height: 120, color: AppColors.grey200),
-                ),
-              ),
+            ClipRRect(
+              borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
+              child: update.imageUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: update.imageUrl!,
+                      cacheKey: update.imageCacheKey,
+                      width: 110,
+                      height: 120,
+                      fit: BoxFit.cover,
+                      errorWidget: (_, __, ___) => _UpdateCardPlaceholder(category: update.category),
+                    )
+                  : _UpdateCardPlaceholder(category: update.category),
+            ),
             // Text content
             Expanded(
               child: Padding(
@@ -367,17 +398,17 @@ class _UpdatesEmptyState extends StatelessWidget {
             'No MLA updates yet',
             'MLA posts and announcements will appear here.',
           ),
-        UpdatesTab.eventsAnnouncements => (
-            Icons.event_rounded,
-            AppColors.ideaPurple,
-            'No events or announcements',
-            'Upcoming events and community announcements will show up here.',
-          ),
         UpdatesTab.publicBoards => (
             Icons.campaign_rounded,
             AppColors.reportOrange,
             'No public board posts',
             'Public notices and board updates will appear here.',
+          ),
+        UpdatesTab.events => (
+            Icons.event_rounded,
+            AppColors.ideaPurple,
+            'No events yet',
+            'Upcoming events will show up here.',
           ),
       };
 
@@ -405,6 +436,175 @@ class _UpdatesEmptyState extends StatelessWidget {
               message,
               style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
               textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PublicBoardCard extends StatelessWidget {
+  const _PublicBoardCard({required this.item});
+  final PublicBoardItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(color: item.kindColorLight, borderRadius: BorderRadius.circular(12)),
+            child: Icon(item.kindIcon, color: item.kindColor, size: 22),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: item.kindColorLight,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        item.kindLabel,
+                        style: AppTextStyles.caption.copyWith(
+                          color: item.kindColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(item.timeAgo, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  item.title,
+                  style: AppTextStyles.titleMedium,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (item.wardName != null) ...[
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on_outlined, size: 12, color: AppColors.textTertiary),
+                      const SizedBox(width: 3),
+                      Text(item.wardName!, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
+                    ],
+                  ),
+                ],
+                const SizedBox(height: 6),
+                StatusChip(status: item.status),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Update card placeholder ──────────────────────────────────────────────────
+
+class _UpdateCardPlaceholder extends StatelessWidget {
+  const _UpdateCardPlaceholder({required this.category});
+  final UpdateCategory category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 110,
+      height: 120,
+      color: category.color.withValues(alpha: 0.12),
+      child: Icon(Icons.article_rounded, color: category.color.withValues(alpha: 0.5), size: 36),
+    );
+  }
+}
+
+// ── Event card ───────────────────────────────────────────────────────────────
+
+class _EventCard extends StatelessWidget {
+  const _EventCard({required this.event});
+  final EventModel event;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Date badge
+            Container(
+              width: 72,
+              decoration: const BoxDecoration(
+                color: AppColors.ideaPurpleLight,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(event.shortMonth, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
+                  const SizedBox(height: 2),
+                  Text('${event.startsAt.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
+                  const SizedBox(height: 4),
+                  Text(event.shortWeekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                ],
+              ),
+            ),
+            Container(width: 1, color: AppColors.grey200),
+            // Content
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(event.title, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
+                        const SizedBox(width: 5),
+                        Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
+                        if (event.venue.isNotEmpty) ...[
+                          Container(margin: const EdgeInsets.symmetric(horizontal: 10), width: 1, height: 12, color: AppColors.grey200),
+                          Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
+                          const SizedBox(width: 5),
+                          Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                        ],
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
