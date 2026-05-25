@@ -36,10 +36,7 @@ class OnboardingSuccessView extends StatelessWidget {
                 final user = auth.user.value;
                 return Container(
                   padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceVariant,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+                  decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(16)),
                   child: Column(
                     children: [
                       _infoRow(Icons.location_on_outlined, 'Local Body', user?.localBodyName ?? '–'),
@@ -49,12 +46,6 @@ class OnboardingSuccessView extends StatelessWidget {
                   ),
                 );
               }),
-              const SizedBox(height: 12),
-              Text(
-                'You can update this information anytime from Profile.',
-                style: AppTextStyles.caption,
-                textAlign: TextAlign.center,
-              ),
               const Spacer(),
               PrimaryButton(
                 text: AppStrings.goToHome,
