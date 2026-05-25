@@ -49,7 +49,7 @@ class UpdateDetailView extends GetView<UpdatesController> {
                 fit: StackFit.expand,
                 children: [
                   CachedNetworkImage(
-                    imageUrl: update.imageUrl!,
+                    imageUrl: update.imageUrl ?? '',
                     cacheKey: update.imageCacheKey,
                     fit: BoxFit.cover,
                     errorWidget: (_, __, ___) => Container(
