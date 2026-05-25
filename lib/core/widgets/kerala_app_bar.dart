@@ -21,7 +21,7 @@ class KeralaAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor ?? AppColors.surface,
+      backgroundColor: backgroundColor ?? AppColors.background,
       elevation: 0,
       scrolledUnderElevation: 1,
       centerTitle: true,

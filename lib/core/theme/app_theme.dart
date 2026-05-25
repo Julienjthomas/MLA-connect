@@ -72,7 +72,7 @@ ThemeData buildAppTheme() {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.surface,
+      backgroundColor: AppColors.background,
       elevation: 0,
       scrolledUnderElevation: 1,
       centerTitle: true,

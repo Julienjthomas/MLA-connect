@@ -12,7 +12,7 @@ class HelpFaqView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.background,
         elevation: 0,
         title: Text(AppStrings.helpFaq, style: AppTextStyles.titleMedium),
       ),

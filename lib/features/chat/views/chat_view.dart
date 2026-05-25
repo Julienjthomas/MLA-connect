@@ -16,7 +16,7 @@ class ChatView extends GetView<ChatController> {
       backgroundColor: AppColors.surfaceVariant,
       appBar: AppBar(
         title: const Text('Chat with MLA office', style: AppTextStyles.titleLarge),
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         actions: const [IconButton(icon: Icon(Icons.info_outline), onPressed: null)],

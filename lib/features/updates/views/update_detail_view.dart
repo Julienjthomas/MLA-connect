@@ -26,7 +26,7 @@ class UpdateDetailView extends GetView<UpdatesController> {
           SliverAppBar(
             expandedHeight: update.imageUrl != null ? 280 : kToolbarHeight,
             pinned: true,
-            backgroundColor: AppColors.surface,
+            backgroundColor: AppColors.background,
             foregroundColor: AppColors.textPrimary,
             leading: Padding(
               padding: const EdgeInsets.all(8),

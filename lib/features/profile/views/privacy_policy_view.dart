@@ -12,7 +12,7 @@ class PrivacyPolicyView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.background,
         elevation: 0,
         title: Text(AppStrings.privacyPolicy, style: AppTextStyles.titleMedium),
       ),

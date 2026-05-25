@@ -89,7 +89,7 @@ class _ActivityShellState extends State<_ActivityShell> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.background,
         leading: const SizedBox.shrink(),
         centerTitle: false,
         leadingWidth: 0,

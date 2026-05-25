@@ -15,7 +15,7 @@ class AchievementsListingView extends GetView<AchievementsController> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.background,
         title: const Text('Hall of Excellence', style: AppTextStyles.titleLarge),
         elevation: 0,
       ),

@@ -16,7 +16,7 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.surface,
+        backgroundColor: AppColors.background,
         automaticallyImplyLeading: false,
         leadingWidth: 0,
         centerTitle: false,
