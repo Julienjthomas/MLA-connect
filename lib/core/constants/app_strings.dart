@@ -262,6 +262,8 @@ class AppStrings {
   static String get general => _s.general;
   static String get account => _s.account;
   static String get logoutConfirm => _s.logoutConfirm;
+  static String get startChat => _s.startChat;
+  static String get deleteAccountData => _s.deleteAccountData;
 
   static String get copy => _s.copy;
   static String get done => _s.done;

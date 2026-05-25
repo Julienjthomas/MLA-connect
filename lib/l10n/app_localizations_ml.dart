@@ -9,7 +9,7 @@ class SMl extends S {
   SMl([String locale = 'ml']) : super(locale);
 
   @override
-  String get appName => 'സൂപ്പർ ബാലുശ്ശേരി';
+  String get appName => 'എം.എൽ.എ കണക്റ്റ്';
 
   @override
   String get tagline => 'നിങ്ങളുടെ ശബ്ദം. ഞങ്ങളുടെ മുൻഗണന.';
@@ -1367,4 +1367,10 @@ class SMl extends S {
 
   @override
   String get stepLocation => 'സ്ഥലം';
+
+  @override
+  String get startChat => 'ചാറ്റ് ആരംഭിക്കുക';
+
+  @override
+  String get deleteAccountData => 'എന്റെ അക്കൗണ്ടും ഡാറ്റയും ഇല്ലാതാക്കുക';
 }

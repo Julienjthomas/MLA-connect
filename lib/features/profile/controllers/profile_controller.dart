@@ -21,7 +21,11 @@ class ProfileController extends GetxController {
 
   Future<void> logout() => _auth.logout();
 
+  bool _pickingLanguage = false;
+
   Future<void> pickLanguage(BuildContext context) async {
+    if (_pickingLanguage) return;
+    _pickingLanguage = true;
     final current = _auth.user.value?.language ?? 'en';
     await showModalBottomSheet<void>(
       context: context,
@@ -52,14 +56,15 @@ class ProfileController extends GetxController {
         ),
       ),
     );
+    _pickingLanguage = false;
   }
 
   Widget _langTile(BuildContext context, String code, String label, String current) {
     final selected = current == code;
     return GestureDetector(
-      onTap: () async {
-        await _auth.updateLanguage(code);
-        if (context.mounted) Navigator.pop(context);
+      onTap: () {
+        Navigator.pop(context);
+        _auth.updateLanguage(code);
       },
       child: Container(
         width: double.infinity,

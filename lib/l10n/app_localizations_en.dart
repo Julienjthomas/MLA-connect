@@ -1343,4 +1343,10 @@ class SEn extends S {
 
   @override
   String get stepLocation => 'Location';
+
+  @override
+  String get startChat => 'Start Chat';
+
+  @override
+  String get deleteAccountData => 'Delete My Account & Data';
 }

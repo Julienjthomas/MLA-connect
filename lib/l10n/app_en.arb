@@ -503,5 +503,8 @@
   "stepRecipient": "Recipient",
   "stepMessage": "Message",
   "stepSuggestion": "Suggestion",
-  "stepLocation": "Location"
+  "stepLocation": "Location",
+
+  "startChat": "Start Chat",
+  "deleteAccountData": "Delete My Account & Data"
 }

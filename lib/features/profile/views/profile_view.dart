@@ -81,7 +81,7 @@ class ProfileView extends GetView<ProfileController> {
           const SizedBox(height: 8),
           _SettingsTile(
             icon: Icons.delete_forever_rounded,
-            title: 'Delete My Account & Data',
+            title: AppStrings.deleteAccountData,
             titleColor: AppColors.statusRejected.withValues(alpha: 0.7),
             iconColor: AppColors.statusRejected.withValues(alpha: 0.7),
             onTap: () {},
@@ -103,16 +103,16 @@ class ProfileView extends GetView<ProfileController> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        title: Text(AppStrings.logout),
+        content: Text(AppStrings.logoutConfirm),
         actions: [
-          TextButton(onPressed: () => Get.back(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Get.back(), child: Text(AppStrings.cancel)),
           TextButton(
             onPressed: () {
               Get.back();
               controller.logout();
             },
-            child: const Text('Logout', style: TextStyle(color: AppColors.statusRejected)),
+            child: Text(AppStrings.logout, style: const TextStyle(color: AppColors.statusRejected)),
           ),
         ],
       ),
@@ -160,7 +160,7 @@ class _ChatWithMlaCard extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: () => Get.toNamed(Routes.chat),
                   icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16),
-                  label: const Text('Start Chat'),
+                  label: Text(AppStrings.startChat),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: const BorderSide(color: AppColors.primary),
@@ -289,29 +289,29 @@ class _NotificationTiles extends StatelessWidget {
           children: [
             _SwitchTile(
               icon: Icons.notifications_active_outlined,
-              title: 'Issue Updates',
-              subtitle: 'Updates on your reported issues',
+              title: AppStrings.issueUpdates,
+              subtitle: AppStrings.issueUpdatesDesc,
               value: controller.notifyIssueUpdates.value,
               onChanged: (v) => controller.notifyIssueUpdates.value = v,
             ),
             _SwitchTile(
               icon: Icons.campaign_outlined,
-              title: 'MLA Announcements',
-              subtitle: 'Important announcements from MLA',
+              title: AppStrings.mlaAnnouncements,
+              subtitle: AppStrings.mlaAnnouncementsDesc,
               value: controller.notifyMlaAnnouncements.value,
               onChanged: (v) => controller.notifyMlaAnnouncements.value = v,
             ),
             _SwitchTile(
               icon: Icons.warning_amber_rounded,
-              title: 'Emergency Alerts',
-              subtitle: 'Alerts on urgent situations',
+              title: AppStrings.emergencyAlerts,
+              subtitle: AppStrings.emergencyAlertsDesc,
               value: controller.notifyEmergencyAlerts.value,
               onChanged: (v) => controller.notifyEmergencyAlerts.value = v,
             ),
             _SwitchTile(
               icon: Icons.event_outlined,
-              title: 'Event Reminders',
-              subtitle: 'Upcoming events & programs',
+              title: AppStrings.eventReminders,
+              subtitle: AppStrings.eventRemindersDesc,
               value: controller.notifyEventReminders.value,
               onChanged: (v) => controller.notifyEventReminders.value = v,
               showDivider: false,

@@ -2646,6 +2646,18 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Location'**
   String get stepLocation;
+
+  /// No description provided for @startChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Chat'**
+  String get startChat;
+
+  /// No description provided for @deleteAccountData.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete My Account & Data'**
+  String get deleteAccountData;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

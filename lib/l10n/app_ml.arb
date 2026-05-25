@@ -1,7 +1,7 @@
 {
   "@@locale": "ml",
 
-  "appName": "സൂപ്പർ ബാലുശ്ശേരി",
+  "appName": "എം.എൽ.എ കണക്റ്റ്",
   "tagline": "നിങ്ങളുടെ ശബ്ദം. ഞങ്ങളുടെ മുൻഗണന.",
   "constituency": "ബാലുശ്ശേരി മണ്ഡലം",
   "poweredFor": "ഇതിനായി പ്രവർത്തിക്കുന്നത്",
@@ -488,5 +488,8 @@
   "stepRecipient": "സ്വീകർത്താവ്",
   "stepMessage": "സന്ദേശം",
   "stepSuggestion": "നിർദ്ദേശം",
-  "stepLocation": "സ്ഥലം"
+  "stepLocation": "സ്ഥലം",
+
+  "startChat": "ചാറ്റ് ആരംഭിക്കുക",
+  "deleteAccountData": "എന്റെ അക്കൗണ്ടും ഡാറ്റയും ഇല്ലാതാക്കുക"
 }
