@@ -233,8 +233,9 @@ class HomeView extends GetView<HomeController> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final tileWidth = ((constraints.maxWidth - 32) / 2.2).clamp(150.0, 220.0);
+          final cardHeight = (190 * MediaQuery.textScalerOf(context).scale(1.0)).clamp(190.0, 260.0);
           return SizedBox(
-            height: 190,
+            height: cardHeight,
             child: Obx(() {
               if (controller.loading.value) {
                 return ListView.builder(
@@ -558,15 +559,18 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             const SizedBox(height: 12),
-            SizedBox(
-              height: 190,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: events.length,
-                itemBuilder: (_, i) => _eventCard(events[i]),
-              ),
-            ),
+            Builder(builder: (context) {
+              final cardHeight = (190 * MediaQuery.textScalerOf(context).scale(1.0)).clamp(190.0, 260.0);
+              return SizedBox(
+                height: cardHeight,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: events.length,
+                  itemBuilder: (_, i) => _eventCard(events[i]),
+                ),
+              );
+            }),
             const SizedBox(height: 24),
           ],
         );
