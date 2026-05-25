@@ -78,6 +78,14 @@ class ProfileView extends GetView<ProfileController> {
             iconColor: AppColors.statusRejected,
             onTap: () => _confirmLogout(context),
           ),
+          const SizedBox(height: 8),
+          _SettingsTile(
+            icon: Icons.delete_forever_rounded,
+            title: 'Delete My Account & Data',
+            titleColor: AppColors.statusRejected.withValues(alpha: 0.7),
+            iconColor: AppColors.statusRejected.withValues(alpha: 0.7),
+            onTap: () {},
+          ),
           const SizedBox(height: 40),
           Center(
             child: Text(
