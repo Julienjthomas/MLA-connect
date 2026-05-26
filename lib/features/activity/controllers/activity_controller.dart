@@ -54,28 +54,26 @@ class ActivityController extends GetxController {
     final userId = auth.userId;
     if (userId == null) return;
 
-    final reporterId = auth.user.value?.citizenRowId?.trim();
-    if (reporterId == null || reporterId.isEmpty) return;
-
     loading.value = true;
     try {
       reports.value = await _loadList(
-        _reportService.getMyReports(reporterId: reporterId),
+        _reportService.getMyReports(),
         label: 'reports',
       );
       ideas.value = await _loadList(
-        _ideaService.getMyIdeas(reporterId: reporterId),
+        _ideaService.getMyIdeas(),
         label: 'ideas',
       );
       improvements.value = await _loadList(
-        _improvementService.getMyImprovements(reporterId: reporterId),
+        _improvementService.getMyImprovements(),
         label: 'improvements',
       );
       appreciations.value = await _loadList(
-        _appreciationService.getMyAppreciations(reporterId: reporterId),
+        _appreciationService.getMyAppreciations(),
         label: 'appreciations',
       );
-      final citizenId = int.tryParse(reporterId);
+      final reporterId = auth.user.value?.citizenRowId?.trim();
+      final citizenId = reporterId != null ? int.tryParse(reporterId) : null;
       final constituencyId = int.tryParse(auth.user.value?.constituencyId ?? '');
       if (citizenId != null && constituencyId != null) {
         officeMessages.value = await _loadList(

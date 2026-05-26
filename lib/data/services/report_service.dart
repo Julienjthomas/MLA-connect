@@ -8,23 +8,30 @@ class ReportService {
   SupabaseClient get _db => Supabase.instance.client;
 
   static const _submissionSelect =
-      '*, wards(name), submission_status_history(*)';
+      '*, wards(name), submission_status_history(*), $kMySubmissionsCitizenEmbed';
 
-  /// [reporterId] is the value stored on `submissions.reporter_id`.
-  /// In the current schema that's `citizens.id` (bigint); use [AuthController.submissionReporterId].
-  Future<List<ReportModel>> getMyReports({required String reporterId}) async {
-    final rid = reporterId.trim();
-    if (rid.isEmpty) return const [];
+  /// All report submissions for the signed-in user (any visibility).
+  Future<List<ReportModel>> getMyReports() async {
+    final uid = SubmissionUtils.currentAuthUserId(_db);
+    if (uid == null) return const [];
     final res = await _db
         .from('submissions')
         .select(_submissionSelect)
         .eq('kind', 'report')
-        .eq('reporter_id', rid)
+        .eq('citizens.user_id', uid)
         .order('created_at', ascending: false);
     final rows =
         (res as List).map((j) => Map<String, dynamic>.from(j as Map<String, dynamic>)).toList();
     await SubmissionMediaMerger.attachForSubmissions(_db, rows);
-    return rows.map(ReportModel.fromJson).toList();
+    final reports = <ReportModel>[];
+    for (final row in rows) {
+      try {
+        reports.add(ReportModel.fromJson(row));
+      } catch (_) {
+        // Skip malformed rows so one bad record does not empty Activity.
+      }
+    }
+    return reports;
   }
 
   Future<ReportModel?> getReport(String id) async {

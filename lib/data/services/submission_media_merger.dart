@@ -21,13 +21,20 @@ class SubmissionMediaMerger {
     }
     if (ids.isEmpty) return;
 
-    final res = await db
-        .from('media_attachments')
-        .select()
-        .eq('attachable_type', 'submission')
-        .inFilter('attachable_id', ids);
-
-    final list = res as List<dynamic>? ?? const [];
+    List<dynamic> list;
+    try {
+      final res = await db
+          .from('media_attachments')
+          .select()
+          .eq('attachable_type', 'submission')
+          .inFilter('attachable_id', ids);
+      list = res as List<dynamic>? ?? const [];
+    } catch (_) {
+      for (final row in submissionRows) {
+        row['media_attachments'] = <Map<String, dynamic>>[];
+      }
+      return;
+    }
     final bySubmission = <String, List<Map<String, dynamic>>>{};
     for (final raw in list) {
       final m = Map<String, dynamic>.from(raw as Map<String, dynamic>);

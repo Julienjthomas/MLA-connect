@@ -7,16 +7,14 @@ import 'submission_utils.dart';
 class IdeaService {
   SupabaseClient get _db => Supabase.instance.client;
 
-  /// [reporterId] is the value stored on `submissions.reporter_id`.
-  /// In the current schema that's `citizens.id` (bigint); use [AuthController.submissionReporterId].
-  Future<List<IdeaModel>> getMyIdeas({required String reporterId}) async {
-    final rid = reporterId.trim();
-    if (rid.isEmpty) return const [];
+  Future<List<IdeaModel>> getMyIdeas() async {
+    final uid = SubmissionUtils.currentAuthUserId(_db);
+    if (uid == null) return const [];
     final res = await _db
         .from('submissions')
-        .select('*')
+        .select('*, $kMySubmissionsCitizenEmbed')
         .eq('kind', 'idea')
-        .eq('reporter_id', rid)
+        .eq('citizens.user_id', uid)
         .order('created_at', ascending: false);
     final rows =
         (res as List).map((j) => Map<String, dynamic>.from(j as Map<String, dynamic>)).toList();

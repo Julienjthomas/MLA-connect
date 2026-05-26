@@ -53,6 +53,7 @@ abstract class ConstituencySeed {
   static const Map<String, List<String>> panchayathsByConstituency = {
     balusserySlug: [
       'Atholi',
+      'Above All',
       'Balussery',
       'Kayanna',
       'Koorachundu',
@@ -93,6 +94,7 @@ abstract class ConstituencySeed {
       'Kakkur',
       'Kuruvattur',
       'Nanmanda',
+      'Purakkattiri',
       'Thalakkulathur',
     ],
     nadapuramSlug: [
@@ -114,6 +116,7 @@ abstract class ConstituencySeed {
     balusserySlug: {
       'Atholi': 18,
       'Balussery': 18,
+      // "Above All" is a custom/local label; ward count unknown.
       'Kayanna': 13,
       'Koorachundu': 15,
       'Kottur': 15,

@@ -928,13 +928,16 @@ create policy "read submissions"
   using (
     auth.uid() is not null
     and (
-      auth.uid() = (select c.user_id from citizens c where c.id = submissions.reporter_id)
+      exists (
+        select 1
+        from citizens c
+        where c.id = submissions.reporter_id
+          and c.user_id = auth.uid()
+          and c.deleted_at is null
+      )
       or (
         deleted_at is null
-        and (
-          visibility = 'public'
-          or (kind = 'report' and is_anonymous = false)
-        )
+        and visibility = 'public'
       )
     )
   );
@@ -1046,13 +1049,16 @@ create policy "read media for submission"
       select 1 from submissions s
       where s.id = media_attachments.attachable_id
         and (
-          auth.uid() = (select c.user_id from citizens c where c.id = s.reporter_id)
+          exists (
+            select 1
+            from citizens c
+            where c.id = s.reporter_id
+              and c.user_id = auth.uid()
+              and c.deleted_at is null
+          )
           or (
             s.deleted_at is null
-            and (
-              s.visibility = 'public'
-              or (s.kind = 'report' and s.is_anonymous = false)
-            )
+            and s.visibility = 'public'
           )
         )
     )
