@@ -7,7 +7,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
-import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/utils/date_formatter.dart';
 import '../../../data/models/update_model.dart';
 import '../../../routes/app_routes.dart';
@@ -36,16 +35,10 @@ class HomeView extends GetView<HomeController> {
               _buildWhatWouldYouLike(),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
               _buildActionGrid(context),
-              const SliverToBoxAdapter(child: SizedBox(height: 24)),
-              _buildUpdatesHeader(),
-              const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              _buildUpdatesFeed(),
-              const SliverToBoxAdapter(child: SizedBox(height: 24)),
+              _buildRecentUpdatesSection(),
               _buildCommunityImpact(),
+              _buildBottomSections(),
               const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              _buildStayConnected(),
-              const SliverToBoxAdapter(child: SizedBox(height: 24)),
-              _buildUpcomingEventsSection(),
             ],
           ),
         ),
@@ -204,67 +197,62 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  SliverToBoxAdapter _buildUpdatesHeader() {
+  SliverToBoxAdapter _buildRecentUpdatesSection() {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SectionHeader(
-          title: AppStrings.recentUpdates,
-          actionLabel: AppStrings.viewAll,
-          onAction: () {
-            // Switch to Updates tab (index 2)
-            try {
-              Get.find<ShellController>().goTo(2);
-            } catch (_) {
-              Get.toNamed(Routes.updateDetail);
-            }
-          },
-        ),
-      ),
-    );
-  }
+      child: Obx(() {
+        final items = controller.recentActivity;
+        if (items.isEmpty) return const SizedBox.shrink();
 
-  SliverToBoxAdapter _buildUpdatesFeed() {
-    return SliverToBoxAdapter(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final tileWidth = ((constraints.maxWidth - 32) / 2.2).clamp(150.0, 220.0);
-          final cardHeight = (190 * MediaQuery.textScalerOf(context).scale(1.0)).clamp(190.0, 260.0);
-          return SizedBox(
-            height: cardHeight,
-            child: Obx(() {
-              if (controller.loading.value) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final tileWidth = ((constraints.maxWidth - 32) / 2.2).clamp(150.0, 220.0);
+            final cardHeight = (190 * MediaQuery.textScalerOf(context).scale(1.0)).clamp(190.0, 260.0);
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 24),
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: 3,
-                  itemBuilder: (_, __) =>
-                      Container(width: tileWidth, margin: const EdgeInsets.only(right: 12), child: const ShimmerCard()),
-                );
-              }
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: controller.recentActivity.length,
-                itemBuilder: (_, i) {
-                  final item = controller.recentActivity[i];
-                  return GestureDetector(
-                    onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
-                    child: _activityCard(item, tileWidth),
-                  );
-                },
-              );
-            }),
-          );
-        },
-      ),
+                  child: SectionHeader(
+                    title: AppStrings.recentUpdates,
+                    actionLabel: AppStrings.viewAll,
+                    onAction: () {
+                      try {
+                        Get.find<ShellController>().goTo(2);
+                      } catch (_) {
+                        Get.toNamed(Routes.updateDetail);
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: cardHeight,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: items.length,
+                    itemBuilder: (_, i) {
+                      final item = items[i];
+                      return GestureDetector(
+                        onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
+                        child: _activityCard(item, tileWidth),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }),
     );
   }
 
   SliverToBoxAdapter _buildCommunityImpact() {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -357,77 +345,83 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  SliverToBoxAdapter _buildStayConnected() {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF5B2EE2), Color(0xFF7B52F0)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 52,
-                height: 52,
-                decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), shape: BoxShape.circle),
-                child: const Icon(Icons.campaign_rounded, color: Colors.white, size: 28),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Stay informed, stay connected!',
-                      style: AppTextStyles.titleSmall.copyWith(color: Colors.white, fontSize: 13),
-                    ),
-                    const SizedBox(height: 2),
-                    Text('Get the latest announcements.', style: AppTextStyles.caption.copyWith(color: Colors.white70)),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              GestureDetector(
-                onTap: () {
-                  try {
-                    Get.find<ShellController>().goTo(2);
-                    Get.find<UpdatesController>().selectCategory(UpdateCategory.announcements);
-                  } catch (_) {}
-                },
-                child: Container(
-                  width: 36,
-                  height: 36,
-                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                  child: const Icon(Icons.arrow_forward_rounded, color: AppColors.primary, size: 18),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  SliverToBoxAdapter _buildUpcomingEventsSection() {
+  SliverToBoxAdapter _buildBottomSections() {
     return SliverToBoxAdapter(
       child: Obx(() {
         final events = controller.upcomingEvents.toList();
-        if (events.isEmpty) return const SizedBox.shrink();
-        return _EventsCarousel(
-          events: events,
-          onViewAll: () {
-            try {
-              Get.find<ShellController>().goTo(2);
-              Get.find<UpdatesController>().tabController.animateTo(1);
-            } catch (_) {}
-          },
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF5B2EE2), Color(0xFF7B52F0)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), shape: BoxShape.circle),
+                      child: const Icon(Icons.campaign_rounded, color: Colors.white, size: 28),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Stay informed, stay connected!',
+                            style: AppTextStyles.titleSmall.copyWith(color: Colors.white, fontSize: 13),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            'Get the latest announcements.',
+                            style: AppTextStyles.caption.copyWith(color: Colors.white70),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    GestureDetector(
+                      onTap: () {
+                        try {
+                          Get.find<ShellController>().goTo(2);
+                          Get.find<UpdatesController>().selectCategory(UpdateCategory.announcements);
+                        } catch (_) {}
+                      },
+                      child: Container(
+                        width: 36,
+                        height: 36,
+                        decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                        child: const Icon(Icons.arrow_forward_rounded, color: AppColors.primary, size: 18),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (events.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _EventsCarousel(
+                events: events,
+                onViewAll: () {
+                  try {
+                    Get.find<ShellController>().goTo(2);
+                    Get.find<UpdatesController>().tabController.animateTo(1);
+                  } catch (_) {}
+                },
+              ),
+            ],
+          ],
         );
       }),
     );
@@ -566,7 +560,6 @@ class _EventsCarouselState extends State<_EventsCarousel> {
             }),
           ),
         ],
-        const SizedBox(height: 12),
       ],
     );
   }

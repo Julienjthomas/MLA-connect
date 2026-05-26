@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../core/utils/constituency_db_id.dart';
 import '../models/public_board_item.dart';
 import 'submission_media_merger.dart';
 
@@ -6,7 +7,8 @@ class PublicBoardService {
   SupabaseClient get _db => Supabase.instance.client;
 
   Future<List<PublicBoardItem>> getPublicBoard({required String constituencyId}) async {
-    final cid = int.tryParse(constituencyId);
+    final resolved = await ConstituencyDbId.resolve(_db, constituencyId) ?? constituencyId;
+    final cid = int.tryParse(resolved);
     if (cid == null) return [];
 
     final res = await _db

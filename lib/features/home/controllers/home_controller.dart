@@ -90,10 +90,10 @@ class HomeController extends GetxController {
   Future<void> _loadActivity() async {
     try {
       final updates = await _updatesService.getUpdates();
-      if (updates.isNotEmpty) {
-        recentActivity.value = updates.take(5).toList();
-      }
-    } catch (_) {}
+      recentActivity.value = updates.take(5).toList();
+    } catch (_) {
+      recentActivity.value = [];
+    }
   }
 
   Future<void> _loadAnnouncements() async {
@@ -107,6 +107,8 @@ class HomeController extends GetxController {
     try {
       final updates = await _updatesService.getUpdates();
       upcomingEvents.value = updates.take(5).toList();
-    } catch (_) {}
+    } catch (_) {
+      upcomingEvents.value = [];
+    }
   }
 }

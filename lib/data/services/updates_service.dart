@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../core/constants/app_enums.dart';
+import '../../core/utils/constituency_db_id.dart';
 import '../../core/utils/json_ids.dart';
 import '../../features/auth/controllers/auth_controller.dart';
 import '../models/update_model.dart';
@@ -12,12 +13,22 @@ class UpdatesService {
   String? get _citizenRowId =>
       Get.isRegistered<AuthController>() ? Get.find<AuthController>().user.value?.citizenRowId : null;
 
-  Future<List<UpdateModel>> getUpdates({UpdateCategory? category}) async {
-    final res = await _db
-        .from('posts')
-        .select()
-        .isFilter('deleted_at', null)
-        .order('published_at', ascending: false);
+  String? get _constituencyId =>
+      Get.isRegistered<AuthController>() ? Get.find<AuthController>().user.value?.constituencyId : null;
+
+  Future<List<UpdateModel>> getUpdates({UpdateCategory? category, String? constituencyId}) async {
+    final rawCid = constituencyId ?? _constituencyId;
+    final dbCid = rawCid == null
+        ? null
+        : await ConstituencyDbId.resolve(_db, rawCid) ??
+            (ConstituencyDbId.isNumericId(rawCid) ? rawCid : null);
+
+    var q = _db.from('posts').select().isFilter('deleted_at', null);
+    if (dbCid != null) {
+      q = q.eq('constituency_id', dbCid);
+    }
+
+    final res = await q.order('published_at', ascending: false);
     final rows = (res as List).map((j) => Map<String, dynamic>.from(j as Map)).toList();
 
     if (rows.isNotEmpty) {
