@@ -4,6 +4,8 @@ abstract class ConstituencySeed {
   static const balusserySlug = 'balussery';
   static const koduvalliSlug = 'koduvalli';
   static const perambraSlug = 'perambra';
+  static const elathurSlug = 'elathur';
+  static const nadapuramSlug = 'nadapuram';
 
   /// Old demo IDs (UUID) → slug, for clients that still hold them in memory.
   static const Map<String, String> legacyUuidToSlug = {
@@ -12,12 +14,20 @@ abstract class ConstituencySeed {
     '00000000-0000-0000-0000-000000000003': perambraSlug,
   };
 
-  static const Set<String> knownSlugs = {balusserySlug, koduvalliSlug, perambraSlug};
+  static const Set<String> knownSlugs = {
+    balusserySlug,
+    koduvalliSlug,
+    perambraSlug,
+    elathurSlug,
+    nadapuramSlug,
+  };
 
   static const Map<String, String> slugToDisplayName = {
     balusserySlug: 'Balussery',
     koduvalliSlug: 'Koduvalli',
     perambraSlug: 'Perambra',
+    elathurSlug: 'Elathur',
+    nadapuramSlug: 'Nadapuram',
   };
 
   static String? displayNameForSlug(String slug) => slugToDisplayName[slug];
@@ -36,6 +46,8 @@ abstract class ConstituencySeed {
     {'id': balusserySlug, 'name': 'Balussery', 'slug': balusserySlug},
     {'id': koduvalliSlug, 'name': 'Koduvalli', 'slug': koduvalliSlug},
     {'id': perambraSlug, 'name': 'Perambra', 'slug': perambraSlug},
+    {'id': elathurSlug, 'name': 'Elathur', 'slug': elathurSlug},
+    {'id': nadapuramSlug, 'name': 'Nadapuram', 'slug': nadapuramSlug},
   ];
 
   static const Map<String, List<String>> panchayathsByConstituency = {
@@ -73,6 +85,27 @@ abstract class ConstituencySeed {
       'Nochad',
       'Perambra',
       'Thurayur',
+    ],
+    elathurSlug: [
+      'Chelannur',
+      'Elathur',
+      'Kakkodi',
+      'Kakkur',
+      'Kuruvattur',
+      'Nanmanda',
+      'Thalakkulathur',
+    ],
+    nadapuramSlug: [
+      'Vanimel',
+      'Edacheri',
+      'Thuneri',
+      'Chekkiad',
+      'Valayam',
+      'Narippatta',
+      'Kayakkodi',
+      'Kavilumpara',
+      'Maruthonkara',
+      'Nadapuram',
     ],
   };
 
