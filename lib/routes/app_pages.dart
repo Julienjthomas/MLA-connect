@@ -41,6 +41,7 @@ import '../features/achievements/views/add_achievement_view.dart';
 import '../features/chat/bindings/chat_binding.dart';
 import '../features/chat/views/chat_view.dart';
 import '../features/updates/bindings/updates_binding.dart';
+import '../features/updates/views/event_detail_view.dart';
 import '../features/updates/views/update_detail_view.dart';
 import '../features/profile/bindings/profile_edit_binding.dart';
 import '../features/profile/views/profile_edit_view.dart';
@@ -159,6 +160,12 @@ class AppPages {
     GetPage(
       name: Routes.updateDetail,
       page: () => const UpdateDetailView(),
+      binding: UpdatesBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.eventDetail,
+      page: () => const EventDetailView(),
       binding: UpdatesBinding(),
       transition: Transition.rightToLeft,
     ),

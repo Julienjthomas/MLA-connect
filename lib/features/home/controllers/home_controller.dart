@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/constants/app_enums.dart';
+import '../../../data/models/event_model.dart';
 import '../../../data/models/mla_model.dart';
 import '../../../data/models/update_model.dart';
+import '../../../data/services/event_service.dart';
 import '../../../data/services/mla_service.dart';
 import '../../../data/services/updates_service.dart';
 import '../../auth/controllers/auth_controller.dart';
@@ -10,6 +12,7 @@ import '../../auth/controllers/auth_controller.dart';
 class HomeController extends GetxController {
   final _mlaService = MlaService();
   final _updatesService = UpdatesService();
+  final _eventService = EventService();
 
   final Rx<MlaModel?> mla = Rx(null);
   final RxList<UpdateModel> recentActivity = <UpdateModel>[].obs;
@@ -29,7 +32,7 @@ class HomeController extends GetxController {
   ];
 
   final RxList<UpdateModel> announcements = <UpdateModel>[].obs;
-  final RxList<UpdateModel> upcomingEvents = <UpdateModel>[].obs;
+  final RxList<EventModel> upcomingEvents = <EventModel>[].obs;
 
   @override
   void onInit() {
@@ -105,8 +108,7 @@ class HomeController extends GetxController {
 
   Future<void> _loadUpcomingEvents() async {
     try {
-      final updates = await _updatesService.getUpdates();
-      upcomingEvents.value = updates.take(5).toList();
+      upcomingEvents.value = await _eventService.getUpcoming(limit: 5);
     } catch (_) {
       upcomingEvents.value = [];
     }

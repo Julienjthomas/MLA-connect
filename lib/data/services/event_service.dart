@@ -28,6 +28,14 @@ class EventService {
         .toList();
   }
 
+  Future<EventModel?> getEvent(String id) async {
+    final intId = int.tryParse(id);
+    if (intId == null) return null;
+    final res = await _db.from('events').select().eq('id', intId).maybeSingle();
+    if (res == null) return null;
+    return EventModel.fromJson(Map<String, dynamic>.from(res));
+  }
+
   Future<List<EventModel>> getUpcoming({int limit = 5, String? constituencyId}) async {
     final now = DateTime.now().toUtc().toIso8601String();
     final rawCid = constituencyId ?? _constituencyId;

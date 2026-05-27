@@ -27,6 +27,7 @@ abstract class Routes {
   static const improvementDetail = '/improvements/detail';
 
   static const updateDetail = '/updates/detail';
+  static const eventDetail = '/events/detail';
 
   static const achievementsListing = '/achievements';
   static const addAchievement = '/achievements/add';

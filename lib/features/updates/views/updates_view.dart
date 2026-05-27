@@ -548,65 +548,66 @@ class _EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
-      ),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Date badge
-            Container(
-              width: 72,
-              decoration: const BoxDecoration(
-                color: AppColors.ideaPurpleLight,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(event.shortMonth, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
-                  const SizedBox(height: 2),
-                  Text('${event.startsAt.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
-                  const SizedBox(height: 4),
-                  Text(event.shortWeekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
-                ],
-              ),
-            ),
-            Container(width: 1, color: AppColors.grey200),
-            // Content
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.eventDetail, arguments: event.id),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: 72,
+                decoration: const BoxDecoration(
+                  color: AppColors.ideaPurpleLight,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(event.title, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
-                        const SizedBox(width: 5),
-                        Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
-                        if (event.venue.isNotEmpty) ...[
-                          Container(margin: const EdgeInsets.symmetric(horizontal: 10), width: 1, height: 12, color: AppColors.grey200),
-                          Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
-                          const SizedBox(width: 5),
-                          Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
-                        ],
-                      ],
-                    ),
+                    Text(event.shortMonth, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
+                    const SizedBox(height: 2),
+                    Text('${event.startsAt.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
+                    const SizedBox(height: 4),
+                    Text(event.shortWeekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
                   ],
                 ),
               ),
-            ),
-          ],
+              Container(width: 1, color: AppColors.grey200),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(event.title, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
+                          const SizedBox(width: 5),
+                          Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
+                          if (event.venue.isNotEmpty) ...[
+                            Container(margin: const EdgeInsets.symmetric(horizontal: 10), width: 1, height: 12, color: AppColors.grey200),
+                            Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
+                            const SizedBox(width: 5),
+                            Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -6,20 +6,49 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/linkable_text.dart';
 import '../../../core/widgets/status_chip.dart';
+import '../../../data/models/event_model.dart';
+import '../../../data/services/event_service.dart';
 import '../controllers/updates_controller.dart';
 
-class UpdateDetailView extends GetView<UpdatesController> {
-  const UpdateDetailView({super.key});
+class EventDetailView extends StatefulWidget {
+  const EventDetailView({super.key});
+
+  @override
+  State<EventDetailView> createState() => _EventDetailViewState();
+}
+
+class _EventDetailViewState extends State<EventDetailView> {
+  final _service = EventService();
+  EventModel? _event;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final id = Get.arguments as String?;
+    EventModel? event;
+    if (id != null && Get.isRegistered<UpdatesController>()) {
+      event = Get.find<UpdatesController>().events.firstWhereOrNull((e) => e.id == id);
+    }
+    event ??= id != null ? await _service.getEvent(id) : null;
+    if (!mounted) return;
+    setState(() {
+      _event = event;
+      _loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final id = Get.arguments as String?;
-    final update = controller.updates.firstWhereOrNull((u) => u.id == id);
-    if (update == null) return const Scaffold(body: Center(child: Text('Not found')));
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (id != null) controller.incrementView(id);
-    });
+    if (_loading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    final event = _event;
+    if (event == null) return const Scaffold(body: Center(child: Text('Not found')));
 
     return Scaffold(
       body: CustomScrollView(
@@ -50,16 +79,15 @@ class UpdateDetailView extends GetView<UpdatesController> {
                 fit: StackFit.expand,
                 children: [
                   CachedNetworkImage(
-                    imageUrl: update.imageUrl ?? '',
-                    cacheKey: update.imageCacheKey,
+                    imageUrl: event.coverImageUrl ?? '',
                     fit: BoxFit.cover,
                     errorWidget: (_, __, ___) => Container(
                       color: AppColors.ideaPurpleLight,
                       child: Center(
                         child: Icon(
-                          Icons.campaign_rounded,
+                          Icons.event_rounded,
                           size: 64,
-                          color: update.category.color.withValues(alpha: 0.5),
+                          color: UpdateCategory.events.color.withValues(alpha: 0.5),
                         ),
                       ),
                     ),
@@ -85,38 +113,34 @@ class UpdateDetailView extends GetView<UpdatesController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CategoryChip(label: update.category.label, color: update.category.color),
+                  CategoryChip(label: UpdateCategory.events.label, color: UpdateCategory.events.color),
                   const SizedBox(height: 12),
-                  Text(update.title, style: AppTextStyles.headlineMedium),
+                  Text(event.title, style: AppTextStyles.headlineMedium),
                   const SizedBox(height: 8),
-                  Text(update.timeAgo, style: AppTextStyles.caption),
-                  const SizedBox(height: 20),
-                  LinkableText(text: update.localBody, style: AppTextStyles.bodyLarge),
-                  const SizedBox(height: 24),
-                  // Engagement row
-                  Obx(() {
-                    final liked = controller.likedIds.contains(update.id);
-                    final current = controller.updates.firstWhereOrNull((u) => u.id == update.id);
-                    final likes = current?.likes ?? update.likes;
-                    return Row(
+                  Text(event.timeAgo, style: AppTextStyles.caption),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Icon(Icons.access_time_rounded, size: 16, color: AppColors.primary.withValues(alpha: 0.8)),
+                      const SizedBox(width: 6),
+                      Text(event.formattedTime, style: AppTextStyles.bodyMedium),
+                    ],
+                  ),
+                  if (event.venue.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        GestureDetector(
-                          onTap: () => controller.toggleLike(update.id),
-                          child: Row(
-                            children: [
-                              Icon(
-                                liked ? Icons.favorite : Icons.favorite_outline,
-                                size: 16,
-                                color: AppColors.statusRejected,
-                              ),
-                              const SizedBox(width: 4),
-                              Text('$likes likes', style: AppTextStyles.caption),
-                            ],
-                          ),
-                        ),
+                        Icon(Icons.location_on_outlined, size: 16, color: AppColors.primary.withValues(alpha: 0.8)),
+                        const SizedBox(width: 6),
+                        Expanded(child: Text(event.venue, style: AppTextStyles.bodyMedium)),
                       ],
-                    );
-                  }),
+                    ),
+                  ],
+                  if (event.description != null && event.description!.isNotEmpty) ...[
+                    const SizedBox(height: 20),
+                    LinkableText(text: event.description!, style: AppTextStyles.bodyLarge),
+                  ],
                 ],
               ),
             ),

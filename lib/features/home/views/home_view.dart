@@ -8,6 +8,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/utils/date_formatter.dart';
+import '../../../data/models/event_model.dart';
 import '../../../data/models/update_model.dart';
 import '../../../routes/app_routes.dart';
 import '../../shell/controllers/shell_controller.dart';
@@ -416,7 +417,7 @@ class HomeView extends GetView<HomeController> {
                 onViewAll: () {
                   try {
                     Get.find<ShellController>().goTo(2);
-                    Get.find<UpdatesController>().tabController.animateTo(1);
+                    Get.find<UpdatesController>().tabController.animateTo(2);
                   } catch (_) {}
                 },
               ),
@@ -504,7 +505,7 @@ class HomeView extends GetView<HomeController> {
 
 class _EventsCarousel extends StatefulWidget {
   const _EventsCarousel({required this.events, required this.onViewAll});
-  final List<UpdateModel> events;
+  final List<EventModel> events;
   final VoidCallback onViewAll;
 
   @override
@@ -564,20 +565,9 @@ class _EventsCarouselState extends State<_EventsCarousel> {
     );
   }
 
-  Widget _eventCard(UpdateModel item) {
-    final date = item.createdAt;
-    final months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-    final days = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
-    final month = months[(date.month - 1).clamp(0, 11)];
-    final weekday = days[(date.weekday - 1).clamp(0, 6)];
-    final h = date.hour % 12 == 0 ? 12 : date.hour % 12;
-    final m = date.minute.toString().padLeft(2, '0');
-    final period = date.hour < 12 ? 'AM' : 'PM';
-    final time = '$h:$m $period';
-    final venue = item.shortBody.isNotEmpty ? item.shortBody : '';
-
+  Widget _eventCard(EventModel event) {
     return GestureDetector(
-      onTap: () => Get.toNamed(Routes.updateDetail, arguments: item.id),
+      onTap: () => Get.toNamed(Routes.eventDetail, arguments: event.id),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
@@ -598,11 +588,11 @@ class _EventsCarouselState extends State<_EventsCarousel> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(month, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
+                    Text(event.shortMonth, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
                     const SizedBox(height: 2),
-                    Text('${date.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
+                    Text('${event.startsAt.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
                     const SizedBox(height: 4),
-                    Text(weekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                    Text(event.shortWeekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
                   ],
                 ),
               ),
@@ -614,18 +604,18 @@ class _EventsCarouselState extends State<_EventsCarousel> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(item.localTitle, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
+                      Text(event.title, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
                           const SizedBox(width: 5),
-                          Text(time, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
-                          if (venue.isNotEmpty) ...[
+                          Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
+                          if (event.venue.isNotEmpty) ...[
                             Container(margin: const EdgeInsets.symmetric(horizontal: 10), width: 1, height: 12, color: AppColors.grey200),
                             Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
                             const SizedBox(width: 5),
-                            Expanded(child: Text(venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                            Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
                           ],
                         ],
                       ),

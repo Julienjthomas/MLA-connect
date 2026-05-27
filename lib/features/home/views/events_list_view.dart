@@ -35,7 +35,7 @@ class EventsListView extends StatelessWidget {
           itemBuilder: (_, i) {
             final e = events[i];
             return GestureDetector(
-              onTap: () => Get.toNamed(Routes.updateDetail, arguments: e.id),
+              onTap: () => Get.toNamed(Routes.eventDetail, arguments: e.id),
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class EventsListView extends StatelessWidget {
                         children: [
                           Text(e.title, style: AppTextStyles.titleSmall),
                           const SizedBox(height: 2),
-                          Text(e.timeAgo, style: AppTextStyles.caption),
+                          Text(e.formattedTime, style: AppTextStyles.caption),
                         ],
                       ),
                     ),
