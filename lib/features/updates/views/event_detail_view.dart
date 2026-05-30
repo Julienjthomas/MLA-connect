@@ -42,6 +42,20 @@ class _EventDetailViewState extends State<EventDetailView> {
     });
   }
 
+  void _openFullImage(String url) {
+    final event = _event;
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        barrierColor: Colors.black,
+        pageBuilder: (_, __, ___) => _FullImageView(
+          url: url,
+          heroTag: event != null ? 'event_cover_${event.id}' : url,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_loading) {
@@ -78,21 +92,30 @@ class _EventDetailViewState extends State<EventDetailView> {
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  CachedNetworkImage(
-                    imageUrl: event.coverImageUrl ?? '',
-                    fit: BoxFit.cover,
-                    errorWidget: (_, __, ___) => Container(
-                      color: AppColors.ideaPurpleLight,
-                      child: Center(
-                        child: Icon(
-                          Icons.event_rounded,
-                          size: 64,
-                          color: UpdateCategory.events.color.withValues(alpha: 0.5),
+                  GestureDetector(
+                    onTap: event.coverImageUrl != null && event.coverImageUrl!.isNotEmpty
+                        ? () => _openFullImage(event.coverImageUrl!)
+                        : null,
+                    child: Hero(
+                      tag: 'event_cover_${event.id}',
+                      child: CachedNetworkImage(
+                        imageUrl: event.coverImageUrl ?? '',
+                        fit: BoxFit.cover,
+                        errorWidget: (_, __, ___) => Container(
+                          color: AppColors.ideaPurpleLight,
+                          child: Center(
+                            child: Icon(
+                              Icons.event_rounded,
+                              size: 64,
+                              color: UpdateCategory.events.color.withValues(alpha: 0.5),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  const DecoratedBox(
+                  const IgnorePointer(
+                    child: DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -100,6 +123,7 @@ class _EventDetailViewState extends State<EventDetailView> {
                         colors: [Color(0x66000000), Color(0x00000000)],
                         stops: [0.0, 0.45],
                       ),
+                    ),
                     ),
                   ),
                 ],
@@ -142,6 +166,64 @@ class _EventDetailViewState extends State<EventDetailView> {
                     LinkableText(text: event.description!, style: AppTextStyles.bodyLarge),
                   ],
                 ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _FullImageView extends StatelessWidget {
+  const _FullImageView({required this.url, required this.heroTag});
+
+  final String url;
+  final String heroTag;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: InteractiveViewer(
+              minScale: 1,
+              maxScale: 4,
+              child: Center(
+                child: Hero(
+                  tag: heroTag,
+                  child: CachedNetworkImage(
+                    imageUrl: url,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    placeholder: (_, __) => const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                    errorWidget: (_, __, ___) => const Center(
+                      child: Icon(Icons.broken_image_outlined, color: Colors.white54, size: 64),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 8,
+            right: 8,
+            child: Material(
+              color: Colors.black54,
+              shape: const CircleBorder(),
+              child: InkWell(
+                customBorder: const CircleBorder(),
+                onTap: () => Navigator.of(context).pop(),
+                child: const SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Icon(Icons.close_rounded, color: Colors.white, size: 22),
+                ),
               ),
             ),
           ),
