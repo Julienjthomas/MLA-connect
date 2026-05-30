@@ -586,6 +586,7 @@ class _EventsCarouselState extends State<_EventsCarousel> {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(event.shortMonth, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
@@ -599,13 +600,14 @@ class _EventsCarouselState extends State<_EventsCarousel> {
               Container(width: 1, color: AppColors.grey200),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
+                  padding: const EdgeInsets.fromLTRB(16, 12, 14, 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(event.title, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
