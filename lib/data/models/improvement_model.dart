@@ -49,6 +49,8 @@ class ImprovementFormData {
   final String? department;
   final String? location;
   final String? landmark;
+  final String? localBodyId;
+  final String? wardId;
   final List<String> mediaUrls;
 
   const ImprovementFormData({
@@ -56,6 +58,8 @@ class ImprovementFormData {
     this.department,
     this.location,
     this.landmark,
+    this.localBodyId,
+    this.wardId,
     this.mediaUrls = const [],
   });
 
@@ -70,6 +74,11 @@ class ImprovementFormData {
       if (department != null && department!.isNotEmpty) 'category': department,
       if (location != null && location!.isNotEmpty) 'pin_address': location,
       if (landmark != null && landmark!.isNotEmpty) 'landmark': landmark,
+      if (localBodyId != null && _isDbId(localBodyId!)) 'local_body_id': localBodyId,
+      if (wardId != null && _isDbId(wardId!)) 'ward_id': wardId,
     };
   }
+
+  // Skip synthetic fallback ids (e.g. 'fallback-lb-…') that aren't real FKs.
+  static bool _isDbId(String id) => !id.startsWith('fallback-');
 }

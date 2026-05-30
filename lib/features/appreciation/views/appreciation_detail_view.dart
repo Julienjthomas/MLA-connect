@@ -36,7 +36,7 @@ class _AppreciationDetailBody extends StatelessWidget {
         : appreciation.id.toUpperCase();
     final title = appreciation.staffName != null && appreciation.staffName!.isNotEmpty
         ? appreciation.staffName!
-        : appreciation.recipientCategory;
+        : appreciation.categoryLabel;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
@@ -72,7 +72,7 @@ class _AppreciationDetailBody extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(AppStrings.recipientCategory, style: AppTextStyles.labelMedium.copyWith(color: AppColors.textTertiary)),
                   const SizedBox(height: 4),
-                  Text(appreciation.recipientCategory, style: AppTextStyles.bodyMedium),
+                  Text(appreciation.categoryLabel, style: AppTextStyles.bodyMedium),
                 ],
                 if (appreciation.department != null && appreciation.department!.isNotEmpty) ...[
                   const SizedBox(height: 12),

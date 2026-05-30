@@ -33,24 +33,32 @@ class AppreciationModel {
   });
 
   factory AppreciationModel.fromJson(Map<String, dynamic> json) => AppreciationModel(
-        id: jsonIdToString(json['id']),
-        userId: jsonIdToString(json['reporter_id']),
-        recipientCategory: json['target_type'] as String? ?? '',
-        staffName: json['recipient_staff_name'] as String?,
-        department: json['recipient_department'] as String?,
-        relatedWork: json['related_project_name'] as String?,
-        message: json['description'] as String? ?? '',
-        visibility: SubmissionVisibility.values.firstWhere(
-          (v) => v.dbValue == json['visibility'],
-          orElse: () => SubmissionVisibility.public,
-        ),
-        anonymous: json['is_anonymous'] as bool? ?? false,
-        status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
-        createdAt: DateTime.parse(json['created_at'] as String),
-        mediaUrls: submissionMediaRefsFromJson(json),
-      );
+    id: jsonIdToString(json['id']),
+    userId: jsonIdToString(json['reporter_id']),
+    recipientCategory: json['target_type'] as String? ?? '',
+    staffName: json['recipient_staff_name'] as String?,
+    department: json['recipient_department'] as String?,
+    relatedWork: json['related_project_name'] as String?,
+    message: json['description'] as String? ?? '',
+    visibility: SubmissionVisibility.values.firstWhere(
+      (v) => v.dbValue == json['visibility'],
+      orElse: () => SubmissionVisibility.public,
+    ),
+    anonymous: json['is_anonymous'] as bool? ?? false,
+    status: SubmissionStatusX.fromString(json['status'] as String? ?? 'submitted'),
+    createdAt: DateTime.parse(json['created_at'] as String),
+    mediaUrls: submissionMediaRefsFromJson(json),
+  );
 
   String get timeAgo => DateFormatter.timeAgo(createdAt);
+
+  /// Human-readable recipient category, e.g. `community_initiative` -> `Community Initiative`.
+  String get categoryLabel => recipientCategory.isEmpty
+      ? ''
+      : recipientCategory
+          .split('_')
+          .map((w) => w.isEmpty ? w : '${w[0].toUpperCase()}${w.substring(1)}')
+          .join(' ');
 }
 
 class AppreciationFormData {
@@ -75,16 +83,16 @@ class AppreciationFormData {
   });
 
   Map<String, dynamic> toJson(String userId, String referenceId) => {
-        'reporter_id': userId,
-        'kind': 'appreciation',
-        'reference_id': referenceId,
-        'target_type': recipientCategory,
-        if (staffName != null && staffName!.isNotEmpty) 'recipient_staff_name': staffName,
-        if (department != null && department!.isNotEmpty) 'recipient_department': department,
-        if (relatedWork != null && relatedWork!.isNotEmpty) 'related_project_name': relatedWork,
-        'description': message,
-        'title': message.length > 80 ? '${message.substring(0, 80)}...' : message,
-        'visibility': visibility.dbValue,
-        'is_anonymous': anonymous,
-      };
+    'reporter_id': userId,
+    'kind': 'appreciation',
+    'reference_id': referenceId,
+    'target_type': recipientCategory,
+    if (staffName != null && staffName!.isNotEmpty) 'recipient_staff_name': staffName,
+    if (department != null && department!.isNotEmpty) 'recipient_department': department,
+    if (relatedWork != null && relatedWork!.isNotEmpty) 'related_project_name': relatedWork,
+    'description': message,
+    'title': message.length > 80 ? '${message.substring(0, 80)}...' : message,
+    'visibility': visibility.dbValue,
+    'is_anonymous': anonymous,
+  };
 }

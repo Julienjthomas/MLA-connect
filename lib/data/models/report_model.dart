@@ -124,11 +124,14 @@ class ReportFormData {
         'description': description,
         'pin_address': location,
         if (landmark != null && landmark!.isNotEmpty) 'landmark': landmark,
-        if (localBodyId != null && localBodyId!.isNotEmpty) 'local_body_id': localBodyId,
-        if (wardId != null && wardId!.isNotEmpty) 'ward_id': wardId,
+        if (localBodyId != null && localBodyId!.isNotEmpty && _isDbId(localBodyId!)) 'local_body_id': localBodyId,
+        if (wardId != null && wardId!.isNotEmpty && _isDbId(wardId!)) 'ward_id': wardId,
         if (contactNumber != null && contactNumber!.isNotEmpty) 'contact_phone': contactNumber,
         if (voiceMessageUrl != null && voiceMessageUrl!.isNotEmpty) 'voice_message_url': voiceMessageUrl,
         'visibility': visibility.submissionDbValue,
         'is_anonymous': visibility == SubmissionVisibility.anonymous,
       };
+
+  // Skip synthetic fallback ids (e.g. 'fallback-lb-…') that aren't real FKs.
+  static bool _isDbId(String id) => !id.startsWith('fallback-');
 }

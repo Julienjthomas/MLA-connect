@@ -440,13 +440,13 @@ class _AppreciationsTab extends StatelessWidget {
           final a = appreciations[i];
           final shortId = a.id.length > 6 ? a.id.substring(a.id.length - 6).toUpperCase() : a.id.toUpperCase();
           return ActivityCard(
-            title: a.message.isNotEmpty ? a.message : a.recipientCategory,
+            title: a.message.isNotEmpty ? a.message : a.categoryLabel,
             id: shortId,
             timeAgo: a.timeAgo,
             accentColor: AppColors.appreciateGreen,
             accentColorLight: AppColors.appreciateGreenLight,
             placeholderIcon: Icons.favorite_rounded,
-            statusWidget: CategoryChip(label: a.recipientCategory, color: AppColors.appreciateGreen),
+            statusWidget: CategoryChip(label: a.categoryLabel, color: AppColors.appreciateGreen),
             onTap: () => Get.toNamed(Routes.appreciationDetail, arguments: a),
           );
         },

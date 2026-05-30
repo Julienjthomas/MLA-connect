@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../data/models/report_model.dart';
+import '../../../data/models/user_model.dart';
 import '../../../data/services/report_service.dart';
 import '../../../data/services/storage_service.dart';
+import '../../../data/services/user_service.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
@@ -14,6 +16,7 @@ import '../../auth/controllers/auth_controller.dart';
 class ReportController extends GetxController {
   final _service = ReportService();
   final _storage = StorageService();
+  final _userService = UserService();
 
   // Form state
   final Rx<ReportCategory?> selectedCategory = Rx(null);
@@ -25,6 +28,14 @@ class ReportController extends GetxController {
   final contactController = TextEditingController();
   final RxString selectedPanchayath = ''.obs;
   final RxString selectedWard = ''.obs;
+
+  // Location synced with DB (like onboarding/improvements)
+  final RxList<LocalBodyModel> localBodies = <LocalBodyModel>[].obs;
+  final RxList<WardModel> wards = <WardModel>[].obs;
+  final Rx<LocalBodyModel?> selectedLocalBody = Rx(null);
+  final Rx<WardModel?> selectedWardModel = Rx(null);
+  final RxBool loadingLocalBodies = false.obs;
+  final RxBool loadingWards = false.obs;
   final RxList<XFile> selectedImages = <XFile>[].obs;
   final RxBool isLoadingLocation = false.obs;
   final Rx<SubmissionVisibility> visibility = SubmissionVisibility.public.obs;
@@ -43,6 +54,51 @@ class ReportController extends GetxController {
   void onInit() {
     super.onInit();
     pageController = PageController();
+    _loadLocationData();
+  }
+
+  Future<void> _loadLocationData() async {
+    final profile = Get.find<AuthController>().user.value;
+    loadingLocalBodies.value = true;
+    try {
+      localBodies.value =
+          await _userService.getLocalBodies(constituencyId: profile?.constituencyId);
+    } catch (_) {
+      localBodies.value = [];
+    } finally {
+      loadingLocalBodies.value = false;
+    }
+    // Preselect user's saved local body if present.
+    final savedId = profile?.localBodyId;
+    if (savedId != null) {
+      final match = localBodies.firstWhereOrNull((e) => e.id == savedId);
+      if (match != null) await selectLocalBody(match);
+    }
+  }
+
+  Future<void> selectLocalBody(LocalBodyModel lb) async {
+    selectedLocalBody.value = lb;
+    selectedPanchayath.value = lb.name;
+    selectedWardModel.value = null;
+    selectedWard.value = '';
+    wards.clear();
+    loadingWards.value = true;
+    try {
+      wards.value = await _userService.getWards(
+        lb.id,
+        constituencyId: Get.find<AuthController>().user.value?.constituencyId,
+        localBodyName: lb.name,
+      );
+    } catch (_) {
+      wards.value = [];
+    } finally {
+      loadingWards.value = false;
+    }
+  }
+
+  void selectWardModel(WardModel w) {
+    selectedWardModel.value = w;
+    selectedWard.value = w.displayName;
   }
 
   @override
@@ -175,8 +231,8 @@ class ReportController extends GetxController {
         description: descriptionController.text.trim(),
         location: locationController.text.trim(),
         landmark: mergedLandmark,
-        localBodyId: profile?.localBodyId,
-        wardId: profile?.wardId,
+        localBodyId: selectedLocalBody.value?.id ?? profile?.localBodyId,
+        wardId: selectedWardModel.value?.id ?? profile?.wardId,
         panchayath: selectedPanchayath.value,
         ward: selectedWard.value,
         contactNumber: contactController.text.trim(),

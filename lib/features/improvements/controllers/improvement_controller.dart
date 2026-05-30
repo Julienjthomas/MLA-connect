@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../data/models/improvement_model.dart';
+import '../../../data/models/user_model.dart';
 import '../../../data/services/improvement_service.dart';
+import '../../../data/services/user_service.dart';
 import '../../activity/controllers/activity_controller.dart';
 import '../../auth/controllers/auth_controller.dart';
 
 class ImprovementController extends GetxController {
   final _service = ImprovementService();
+  final _userService = UserService();
 
   final suggestionController = TextEditingController();
   final RxString department = ''.obs;
@@ -19,6 +22,14 @@ class ImprovementController extends GetxController {
   final locationController = TextEditingController();
   final landmarkController = TextEditingController();
   final RxBool isLoadingLocation = false.obs;
+
+  // Location synced with DB (like onboarding/report)
+  final RxList<LocalBodyModel> localBodies = <LocalBodyModel>[].obs;
+  final RxList<WardModel> wards = <WardModel>[].obs;
+  final Rx<LocalBodyModel?> selectedLocalBody = Rx(null);
+  final Rx<WardModel?> selectedWardModel = Rx(null);
+  final RxBool loadingLocalBodies = false.obs;
+  final RxBool loadingWards = false.obs;
 
   final RxInt currentStep = 0.obs;
   final RxBool isSubmitting = false.obs;
@@ -32,7 +43,54 @@ class ImprovementController extends GetxController {
   ];
 
   @override
-  void onInit() { super.onInit(); pageController = PageController(); }
+  void onInit() {
+    super.onInit();
+    pageController = PageController();
+    _loadLocationData();
+  }
+
+  Future<void> _loadLocationData() async {
+    final profile = Get.find<AuthController>().user.value;
+    loadingLocalBodies.value = true;
+    try {
+      localBodies.value =
+          await _userService.getLocalBodies(constituencyId: profile?.constituencyId);
+    } catch (_) {
+      localBodies.value = [];
+    } finally {
+      loadingLocalBodies.value = false;
+    }
+    final savedId = profile?.localBodyId;
+    if (savedId != null) {
+      final match = localBodies.firstWhereOrNull((e) => e.id == savedId);
+      if (match != null) await selectLocalBody(match);
+    }
+  }
+
+  Future<void> selectLocalBody(LocalBodyModel lb) async {
+    selectedLocalBody.value = lb;
+    selectedPanchayath.value = lb.name;
+    selectedWardModel.value = null;
+    selectedWard.value = '';
+    wards.clear();
+    loadingWards.value = true;
+    try {
+      wards.value = await _userService.getWards(
+        lb.id,
+        constituencyId: Get.find<AuthController>().user.value?.constituencyId,
+        localBodyName: lb.name,
+      );
+    } catch (_) {
+      wards.value = [];
+    } finally {
+      loadingWards.value = false;
+    }
+  }
+
+  void selectWardModel(WardModel w) {
+    selectedWardModel.value = w;
+    selectedWard.value = w.displayName;
+  }
 
   @override
   void onClose() {
@@ -94,11 +152,23 @@ class ImprovementController extends GetxController {
         return;
       }
 
+      final profile = auth.user.value;
+      final landmarkText = landmarkController.text.trim();
+      final geoLabel = [
+        if (selectedPanchayath.value.isNotEmpty) selectedPanchayath.value,
+        if (selectedWard.value.isNotEmpty) selectedWard.value,
+      ].join(' · ');
+      final mergedLandmark = landmarkText.isEmpty
+          ? geoLabel
+          : (geoLabel.isEmpty ? landmarkText : '$landmarkText ($geoLabel)');
+
       final data = ImprovementFormData(
         suggestion: suggestionController.text.trim(),
         department: department.value,
         location: locationController.text.trim(),
-        landmark: landmarkController.text.trim(),
+        landmark: mergedLandmark,
+        localBodyId: selectedLocalBody.value?.id ?? profile?.localBodyId,
+        wardId: selectedWardModel.value?.id ?? profile?.wardId,
       );
       final id = await _service.submit(data, reporterId);
       submittedId.value = id;
