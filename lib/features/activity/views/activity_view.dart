@@ -440,9 +440,7 @@ class _AppreciationsTab extends StatelessWidget {
           final a = appreciations[i];
           final shortId = a.id.length > 6 ? a.id.substring(a.id.length - 6).toUpperCase() : a.id.toUpperCase();
           return ActivityCard(
-            title: a.staffName != null && a.staffName!.isNotEmpty
-                ? a.staffName!
-                : a.recipientCategory,
+            title: a.message.isNotEmpty ? a.message : a.recipientCategory,
             id: shortId,
             timeAgo: a.timeAgo,
             accentColor: AppColors.appreciateGreen,
