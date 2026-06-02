@@ -2,28 +2,136 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "iPhone Simulator",
+      "name": "iPhone · dev",
       "type": "dart",
       "request": "launch",
-      "deviceId": "37C97B2C-E0B4-4F58-8452-E97FE06FA8E1"
+      "deviceId": "37C97B2C-E0B4-4F58-8452-E97FE06FA8E1",
+      "program": "lib/main_dev.dart",
+      "args": [
+        "--flavor",
+        "dev"
+      ]
     },
     {
-      "name": "Android Emulator",
+      "name": "iPhone · stg",
       "type": "dart",
       "request": "launch",
-      "deviceId": "emulator-5554"
+      "deviceId": "37C97B2C-E0B4-4F58-8452-E97FE06FA8E1",
+      "program": "lib/main_stg.dart",
+      "args": [
+        "--flavor",
+        "stg"
+      ]
     },
     {
-      "name": "macOS",
+      "name": "iPhone · prod",
       "type": "dart",
       "request": "launch",
-      "deviceId": "macos"
+      "deviceId": "37C97B2C-E0B4-4F58-8452-E97FE06FA8E1",
+      "program": "lib/main_prod.dart",
+      "args": [
+        "--flavor",
+        "prod"
+      ]
     },
     {
-      "name": "Chrome",
+      "name": "Android · dev",
       "type": "dart",
       "request": "launch",
-      "deviceId": "chrome"
+      "deviceId": "emulator-5554",
+      "program": "lib/main_dev.dart",
+      "args": [
+        "--flavor",
+        "dev"
+      ]
+    },
+    {
+      "name": "Android · stg",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "emulator-5554",
+      "program": "lib/main_stg.dart",
+      "args": [
+        "--flavor",
+        "stg"
+      ]
+    },
+    {
+      "name": "Android · prod",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "emulator-5554",
+      "program": "lib/main_prod.dart",
+      "args": [
+        "--flavor",
+        "prod"
+      ]
+    },
+    {
+      "name": "macOS · dev",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "macos",
+      "program": "lib/main_dev.dart",
+      "args": [
+        "--flavor",
+        "dev"
+      ]
+    },
+    {
+      "name": "macOS · stg",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "macos",
+      "program": "lib/main_stg.dart",
+      "args": [
+        "--flavor",
+        "stg"
+      ]
+    },
+    {
+      "name": "macOS · prod",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "macos",
+      "program": "lib/main_prod.dart",
+      "args": [
+        "--flavor",
+        "prod"
+      ]
+    },
+    {
+      "name": "Chrome · dev",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "chrome",
+      "program": "lib/main_dev.dart",
+      "args": [
+        "--flavor",
+        "dev"
+      ]
+    },
+    {
+      "name": "Chrome · stg",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "chrome",
+      "program": "lib/main_stg.dart",
+      "args": [
+        "--flavor",
+        "stg"
+      ]
+    },
+    {
+      "name": "Chrome · prod",
+      "type": "dart",
+      "request": "launch",
+      "deviceId": "chrome",
+      "program": "lib/main_prod.dart",
+      "args": [
+        "--flavor",
+        "prod"
+      ]
     }
   ]
 }
