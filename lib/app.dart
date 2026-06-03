@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'core/config/app_config.dart';
@@ -18,20 +19,27 @@ class MlaConnectApp extends StatefulWidget {
 class _MlaConnectAppState extends State<MlaConnectApp> {
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => GetMaterialApp(
-        title: AppConfig.appName,
-        debugShowCheckedModeBanner: AppConfig.debugBanner,
-        theme: buildAppTheme(),
-        localizationsDelegates: S.localizationsDelegates,
-        supportedLocales: S.supportedLocales,
-        locale: Locale(AppLocale.languageCode.value),
-        fallbackLocale: const Locale('en'),
-        initialRoute: Routes.splash,
-        getPages: AppPages.pages,
-        defaultTransition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 280),
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return Obx(
+          () => GetMaterialApp(
+            title: AppConfig.appName,
+            debugShowCheckedModeBanner: AppConfig.debugBanner,
+            theme: buildAppTheme(),
+            localizationsDelegates: S.localizationsDelegates,
+            supportedLocales: S.supportedLocales,
+            locale: Locale(AppLocale.languageCode.value),
+            fallbackLocale: const Locale('en'),
+            initialRoute: Routes.splash,
+            getPages: AppPages.pages,
+            defaultTransition: Transition.rightToLeft,
+            transitionDuration: const Duration(milliseconds: 280),
+          ),
+        );
+      },
     );
   }
 }

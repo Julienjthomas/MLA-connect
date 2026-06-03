@@ -1,21 +1,22 @@
 import 'app_flavor.dart';
+import 'env/env.dart';
 
 class AppConfig {
   AppConfig._();
 
   static late AppFlavor flavor;
-  static late String supabaseUrl;
-  static late String supabaseAnonKey;
+  static late String baseUrl;
   static late String appName;
   static late bool debugBanner;
+
+  // TODO: Remove after full Supabase migration
+  static const supabaseUrl = 'https://lebvnbqjhvvfmesrmwal.supabase.co';
+  static const supabaseAnonKey = 'sb_publishable_WjPe8mYSY6eNq9YBTTMSbg_l2Z8cjr5';
 
   static void init(AppFlavor f) {
     flavor = f;
 
-    // All flavors share one Supabase project for now.
-    // Swap per-flavor values here when separate projects exist.
-    supabaseUrl = 'https://lebvnbqjhvvfmesrmwal.supabase.co';
-    supabaseAnonKey = 'sb_publishable_WjPe8mYSY6eNq9YBTTMSbg_l2Z8cjr5';
+    baseUrl = Env.baseUrl;
 
     switch (f) {
       case AppFlavor.dev:

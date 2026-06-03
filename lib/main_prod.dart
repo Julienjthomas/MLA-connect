@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/config/app_config.dart';
 import 'core/config/app_flavor.dart';
+import 'core/network/dio_client.dart';
 import 'core/utils/app_locale.dart';
 import 'features/auth/controllers/auth_controller.dart';
 
@@ -21,6 +23,8 @@ void main() async {
     anonKey: AppConfig.supabaseAnonKey,
     debug: false,
   );
+
+  Get.put<Dio>(DioClient.create(), permanent: true);
 
   Get.put(AuthController(), permanent: true);
 
