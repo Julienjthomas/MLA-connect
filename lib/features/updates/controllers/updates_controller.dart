@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../data/models/event_model.dart';
 import '../../../data/models/public_board_item.dart';
@@ -28,11 +27,8 @@ class UpdatesController extends GetxController with GetSingleTickerProviderState
 
   late final TabController tabController;
 
-  RealtimeChannel? _postsChannel;
-
   @override
   void onClose() {
-    _postsChannel?.unsubscribe();
     tabController.dispose();
     super.onClose();
   }
@@ -54,31 +50,6 @@ class UpdatesController extends GetxController with GetSingleTickerProviderState
       updates.refresh();
     });
     loadUpdates();
-    _subscribeRealtime();
-  }
-
-  void _subscribeRealtime() {
-    _postsChannel = Supabase.instance.client
-        .channel('public:posts')
-        .onPostgresChanges(
-          event: PostgresChangeEvent.insert,
-          schema: 'public',
-          table: 'posts',
-          callback: (_) => loadUpdates(),
-        )
-        .onPostgresChanges(
-          event: PostgresChangeEvent.update,
-          schema: 'public',
-          table: 'posts',
-          callback: (_) => loadUpdates(),
-        )
-        .onPostgresChanges(
-          event: PostgresChangeEvent.delete,
-          schema: 'public',
-          table: 'posts',
-          callback: (_) => loadUpdates(),
-        )
-        .subscribe();
   }
 
   Future<void> loadUpdates() async {

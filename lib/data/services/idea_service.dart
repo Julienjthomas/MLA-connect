@@ -1,52 +1,49 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../core/utils/json_ids.dart';
+import 'package:get/get.dart';
+
+import '../../core/constants/app_enums.dart';
+import '../models/idea/create_idea_request.dart';
 import '../models/idea_model.dart';
-import 'submission_media_merger.dart';
-import 'submission_utils.dart';
+import '../remote/idea_api.dart';
 
 class IdeaService {
-  SupabaseClient get _db => Supabase.instance.client;
+  IdeaApi get _api => Get.find<IdeaApi>();
 
   Future<List<IdeaModel>> getMyIdeas() async {
-    final uid = SubmissionUtils.currentAuthUserId(_db);
-    if (uid == null) return const [];
-    final res = await _db
-        .from('submissions')
-        .select('*, $kMySubmissionsCitizenEmbed')
-        .eq('kind', 'idea')
-        .eq('citizens.user_id', uid)
-        .order('created_at', ascending: false);
-    final rows =
-        (res as List).map((j) => Map<String, dynamic>.from(j as Map<String, dynamic>)).toList();
-    await SubmissionMediaMerger.attachForSubmissions(_db, rows);
-    return rows.map(IdeaModel.fromJson).toList();
+    final ideas = await _api.getMyIdeas();
+    return ideas.map((r) => IdeaModel(
+          id: r.id,
+          userId: r.citizenId,
+          topic: r.topic,
+          title: r.title,
+          description: r.description,
+          benefits: r.benefits,
+          beneficiaries: r.beneficiaries,
+          visibility: SubmissionVisibility.values.firstWhere(
+            (v) => v.dbValue == r.visibility,
+            orElse: () => SubmissionVisibility.public,
+          ),
+          allowDiscussion: r.allowDiscussion,
+          allowContact: r.allowContact,
+          status: SubmissionStatusX.fromString(r.status),
+          createdAt: r.createdAt,
+          mediaUrls: r.mediaUrls,
+        )).toList();
   }
 
   Future<String> submit(IdeaFormData data, String reporterId) async {
-    final referenceId = SubmissionUtils.generateReferenceId('ID');
-    final res = await _db
-        .from('submissions')
-        .insert(data.toJson(reporterId, referenceId))
-        .select()
-        .single();
-    final submissionId = jsonIdToString(res['id']);
-
-    if (data.mediaUrls.isNotEmpty) {
-      await _db.from('media_attachments').insert(
-        data.mediaUrls
-            .map((url) => {
-                  'attachable_type': 'submission',
-                  'attachable_id': submissionId,
-                  'kind': 'image',
-                  'storage_path': url,
-                  'url': url,
-                  'uploaded_by': reporterId,
-                  'uploaded_by_type': 'citizen',
-                })
-            .toList(),
-      );
-    }
-
-    return submissionId;
+    final idea = await _api.createIdea(
+      CreateIdeaRequest(
+        topic: data.topic,
+        title: data.title,
+        description: data.description,
+        benefits: data.benefits,
+        beneficiaries: data.beneficiaries,
+        visibility: data.visibility.dbValue,
+        allowDiscussion: data.allowDiscussion,
+        allowContact: data.allowContact,
+        mediaUrls: data.mediaUrls,
+      ),
+    );
+    return idea.id;
   }
 }

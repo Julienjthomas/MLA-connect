@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../data/models/office_message_model.dart';
-import '../../../data/services/office_messages_service.dart';
-import '../../auth/controllers/auth_controller.dart';
+
+import '../../../data/models/conversation/conversation_message.dart';
+import '../../../data/models/conversation/conversation_thread.dart';
+import '../../../data/services/conversation_service.dart';
 
 class ChatController extends GetxController {
-  final _messages = OfficeMessagesService();
-  final _auth = Get.find<AuthController>();
+  final _service = ConversationService();
 
   final bodyController = TextEditingController();
   final scrollController = ScrollController();
-  final RxList<OfficeMessageModel> items = <OfficeMessageModel>[].obs;
+
+  final RxList<ConversationThread> threads = <ConversationThread>[].obs;
+  final Rx<ConversationThread?> activeThread = Rx(null);
+  final RxList<ConversationMessage> messages = <ConversationMessage>[].obs;
+
   final RxBool loading = false.obs;
   final RxBool sending = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    load();
+    loadThreads();
   }
 
   @override
@@ -27,11 +31,76 @@ class ChatController extends GetxController {
     super.onClose();
   }
 
+  Future<void> loadThreads() async {
+    loading.value = true;
+    try {
+      threads.value = await _service.getThreads();
+      if (threads.isNotEmpty) {
+        await openThread(threads.first);
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  Future<void> openThread(ConversationThread thread) async {
+    activeThread.value = thread;
+    loading.value = true;
+    try {
+      final full = await _service.getThread(thread.id);
+      if (full != null) activeThread.value = full;
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  Future<void> startNewThread() async {
+    loading.value = true;
+    try {
+      final thread = await _service.createThread();
+      if (thread != null) {
+        threads.insert(0, thread);
+        activeThread.value = thread;
+        messages.clear();
+      }
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  Future<void> send() async {
+    final thread = activeThread.value;
+    if (thread == null) {
+      Get.snackbar('No conversation', 'Please start a conversation first.', snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+    if (thread.status == 'closed') {
+      Get.snackbar('Closed', 'This conversation is closed.', snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+    final text = bodyController.text.trim();
+    if (text.isEmpty) return;
+
+    sending.value = true;
+    try {
+      final msg = await _service.sendMessage(thread.id, text);
+      if (msg != null) {
+        messages.add(msg);
+        bodyController.clear();
+        _scrollToBottom();
+      }
+    } catch (_) {
+      Get.snackbar('Error', 'Could not send message. Try again.', snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      sending.value = false;
+    }
+  }
+
   void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
         scrollController.animateTo(
-          0,
+          scrollController.position.maxScrollExtent,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
@@ -39,56 +108,12 @@ class ChatController extends GetxController {
     });
   }
 
-  ({int citizenId, int constituencyId})? get _ids {
-    final user = _auth.user.value;
-    final cid = int.tryParse(user?.citizenRowId ?? '');
-    final consId = int.tryParse(user?.constituencyId ?? '');
-    if (cid == null || consId == null) return null;
-    return (citizenId: cid, constituencyId: consId);
-  }
+  bool get isClosed => activeThread.value?.status == 'closed';
 
-  Future<void> load() async {
-    final ids = _ids;
-    if (ids == null) return;
-    loading.value = true;
-    try {
-      items.value = await _messages.listForThread(
-        citizenId: ids.citizenId,
-        constituencyId: ids.constituencyId,
-      );
-      _scrollToBottom();
-    } catch (_) {
-      items.clear();
-    } finally {
-      loading.value = false;
-    }
-  }
-
-  Future<void> send() async {
-    final ids = _ids;
-    if (ids == null) {
-      Get.snackbar('Profile', 'Please complete your profile before sending a message.',
-          snackPosition: SnackPosition.BOTTOM);
-      return;
-    }
-    final body = bodyController.text.trim();
-    if (body.isEmpty) {
-      Get.snackbar('Message', 'Please enter a message.', snackPosition: SnackPosition.BOTTOM);
-      return;
-    }
-    sending.value = true;
-    try {
-      await _messages.send(
-        citizenId: ids.citizenId,
-        constituencyId: ids.constituencyId,
-        body: body,
-      );
-      bodyController.clear();
-      await load();
-    } catch (_) {
-      Get.snackbar('Error', 'Could not send message. Try again.', snackPosition: SnackPosition.BOTTOM);
-    } finally {
-      sending.value = false;
-    }
+  Future<void> closeActiveThread() async {
+    final thread = activeThread.value;
+    if (thread == null) return;
+    await _service.closeThread(thread.id);
+    await loadThreads();
   }
 }

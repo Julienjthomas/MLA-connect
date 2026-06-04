@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../core/utils/constituency_db_id.dart';
-import '../../core/utils/json_ids.dart';
-import '../models/mla_model.dart';
+import 'package:get/get.dart';
 
+import '../models/mla_model.dart';
+import '../remote/mla_api.dart';
+
+// Keep MlaStaffModel for backwards compat with AppreciationController
 class MlaStaffModel {
   final String id;
   final String fullName;
@@ -24,76 +25,48 @@ class MlaStaffModel {
     this.officeAddress,
     required this.position,
   });
-
-  factory MlaStaffModel.fromJson(Map<String, dynamic> json) => MlaStaffModel(
-        id: jsonIdToString(json['id']),
-        fullName: json['full_name'] as String? ?? '',
-        designation: json['designation'] as String?,
-        photoUrl: json['photo_url'] as String?,
-        phone: json['phone'] as String? ?? '',
-        email: json['email'] as String?,
-        officeAddress: json['office_address'] as String?,
-        position: json['position'] as int? ?? 0,
-      );
 }
 
 class MlaService {
-  SupabaseClient get _db => Supabase.instance.client;
+  MlaApi get _api => Get.find<MlaApi>();
+
+  /// Staff endpoint not in contract — returns empty list until backend adds it.
+  Future<List<MlaStaffModel>> getPublicStaff() async => [];
 
   Future<MlaModel?> getMlaProfile({String? constituencyId}) async {
+    if (constituencyId == null) return null;
     try {
-      Map<String, dynamic>? mlaRow;
-      if (constituencyId != null) {
-        final dbCid = await ConstituencyDbId.resolve(_db, constituencyId) ??
-            (ConstituencyDbId.isNumericId(constituencyId) ? constituencyId : null);
-        if (dbCid != null) {
-          final rows = await _db
-              .from('mlas')
-              .select('*, constituencies(name)')
-              .eq('is_current', true)
-              .eq('constituency_id', dbCid)
-              .limit(1);
-          if ((rows as List).isNotEmpty) mlaRow = Map<String, dynamic>.from(rows.first as Map);
-        }
-      }
-      mlaRow ??= await _fetchAnyCurrentMla();
-
-      if (mlaRow == null) return null;
-
-      final mlaId = jsonIdToString(mlaRow['id']);
-
-      Map<String, dynamic>? statsRow;
-      try {
-        statsRow = await _db.from('v_mla_stats').select().eq('mla_id', mlaId).maybeSingle();
-      } catch (e) {
-        debugPrint('[MlaService] v_mla_stats fetch error: $e');
-      }
-
-      final merged = {
-        ...mlaRow,
-        if (statsRow != null) ...statsRow,
-      };
-
-      return MlaModel.fromJson(merged);
-    } catch (e, st) {
-      debugPrint('[MlaService] getMlaProfile error: $e\n$st');
+      final r = await _api.getMla(constituencyId);
+      return MlaModel(
+        id: r.id,
+        name: r.name,
+        photoUrl: r.photoUrl,
+        coverImageUrl: r.coverImageUrl,
+        bio: r.bio,
+        bioMl: r.bioMl,
+        term: r.term,
+        constituency: r.constituency,
+        education: r.education,
+        galleryUrls: r.galleryUrls,
+        stats: MlaStats(
+          issuesResolved: r.stats?.issuesResolved ?? 0,
+          activeProjects: r.stats?.activeProjects ?? 0,
+          appreciations: r.stats?.appreciations ?? 0,
+          ideasImplemented: r.stats?.ideasImplemented ?? 0,
+        ),
+        contact: MlaContact(
+          phone: r.contact?.phone ?? '',
+          whatsapp: r.contact?.whatsapp,
+          email: r.contact?.email,
+          officeAddress: r.contact?.officeAddress,
+        ),
+        initiatives: r.initiatives
+            .map((i) => MlaInitiative(title: i.title, description: i.description, progress: 0))
+            .toList(),
+      );
+    } catch (e) {
+      debugPrint('[MlaService] getMlaProfile error: $e');
       return null;
     }
-  }
-
-  Future<Map<String, dynamic>?> _fetchAnyCurrentMla() async {
-    final rows = await _db.from('mlas').select('*, constituencies(name)').eq('is_current', true).limit(1);
-    if ((rows as List).isEmpty) return null;
-    return Map<String, dynamic>.from(rows.first as Map);
-  }
-
-  Future<List<MlaStaffModel>> getPublicStaff() async {
-    final res = await _db
-        .from('mla_staff')
-        .select()
-        .eq('is_public', true)
-        .eq('is_active', true)
-        .order('position');
-    return (res as List).map((j) => MlaStaffModel.fromJson(j as Map<String, dynamic>)).toList();
   }
 }

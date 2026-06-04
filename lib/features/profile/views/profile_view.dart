@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/widgets/badges_widget.dart';
 import '../../../routes/app_routes.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../controllers/profile_controller.dart';
@@ -32,6 +33,15 @@ class ProfileView extends GetView<ProfileController> {
           _UserCard(controller: controller),
           const SizedBox(height: 8),
           _ChatWithMlaCard(),
+          const SizedBox(height: 8),
+          _SectionLabel('Achievements'),
+          Obx(() {
+            final count = Get.find<AuthController>().user.value?.contributionCount ?? 0;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: BadgesWidget(contributionCount: count),
+            );
+          }),
           const SizedBox(height: 8),
           _SectionLabel(AppStrings.notifications),
           _NotificationTiles(controller: controller),
@@ -84,7 +94,7 @@ class ProfileView extends GetView<ProfileController> {
             title: AppStrings.deleteAccountData,
             titleColor: AppColors.statusRejected.withValues(alpha: 0.7),
             iconColor: AppColors.statusRejected.withValues(alpha: 0.7),
-            onTap: () {},
+            onTap: () => _confirmDeleteAccount(context),
           ),
           const SizedBox(height: 40),
           Center(
@@ -94,6 +104,36 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ),
           const SizedBox(height: 24),
+        ],
+      ),
+    );
+  }
+
+  void _confirmDeleteAccount(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Delete Account?'),
+        content: const Text(
+          'This will permanently delete your account and all your data. This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(onPressed: Get.back, child: const Text('Cancel')),
+          TextButton(
+            onPressed: () async {
+              Get.back();
+              final auth = Get.find<AuthController>();
+              final ok = await auth.deleteAccount();
+              if (!ok) {
+                Get.snackbar(
+                  'Error',
+                  'Could not delete account. Please try again.',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }
+            },
+            child: const Text('Delete My Account', style: TextStyle(color: AppColors.statusRejected)),
+          ),
         ],
       ),
     );

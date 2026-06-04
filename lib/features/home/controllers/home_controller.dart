@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../data/models/event_model.dart';
 import '../../../data/models/mla_model.dart';
+import '../../../data/models/post/post_response.dart';
 import '../../../data/models/update_model.dart';
 import '../../../data/services/event_service.dart';
 import '../../../data/services/mla_service.dart';
+import '../../../data/services/post_service.dart';
 import '../../../data/services/updates_service.dart';
 import '../../auth/controllers/auth_controller.dart';
 
@@ -13,6 +14,7 @@ class HomeController extends GetxController {
   final _mlaService = MlaService();
   final _updatesService = UpdatesService();
   final _eventService = EventService();
+  final _postService = PostService();
 
   final Rx<MlaModel?> mla = Rx(null);
   final RxList<UpdateModel> recentActivity = <UpdateModel>[].obs;
@@ -33,6 +35,7 @@ class HomeController extends GetxController {
 
   final RxList<UpdateModel> announcements = <UpdateModel>[].obs;
   final RxList<EventModel> upcomingEvents = <EventModel>[].obs;
+  final RxList<PostResponse> recentPosts = <PostResponse>[].obs;
 
   @override
   void onInit() {
@@ -43,7 +46,7 @@ class HomeController extends GetxController {
   Future<void> loadData() async {
     loading.value = true;
     try {
-      await Future.wait([_loadMla(), _loadActivity(), _loadImpact(), _loadAnnouncements(), _loadUpcomingEvents()]);
+      await Future.wait([_loadMla(), _loadActivity(), _loadImpact(), _loadAnnouncements(), _loadUpcomingEvents(), _loadRecentPosts()]);
     } finally {
       loading.value = false;
     }
@@ -60,34 +63,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> _loadImpact() async {
-    try {
-      final cid = Get.find<AuthController>().user.value?.constituencyId;
-      if (cid == null) return;
-      final supabase = Supabase.instance.client;
-      final now = DateTime.now().toUtc();
-      final monthStart = DateTime.utc(now.year, now.month, 1).toIso8601String();
-
-      Future<int> countKind(String kind) async {
-        final rows = await supabase
-            .from('submissions')
-            .select('id, citizens!inner(constituency_id)')
-            .eq('kind', kind)
-            .eq('citizens.constituency_id', cid)
-            .gte('created_at', monthStart);
-        return (rows as List).length;
-      }
-
-      final results = await Future.wait([
-        countKind('report'),
-        countKind('idea'),
-        countKind('appreciation'),
-      ]);
-      impactReports.value = results[0];
-      impactIdeas.value = results[1];
-      impactAppreciations.value = results[2];
-    } catch (_) {
-      // leave zeros — section degrades gracefully
-    }
+    // TODO: Wire to GET /citizens/:citizenId/activity/summary when available
+    // Leaving zeros for now — degrades gracefully
   }
 
   Future<void> _loadActivity() async {
@@ -111,6 +88,14 @@ class HomeController extends GetxController {
       upcomingEvents.value = await _eventService.getUpcoming(limit: 5);
     } catch (_) {
       upcomingEvents.value = [];
+    }
+  }
+
+  Future<void> _loadRecentPosts() async {
+    try {
+      recentPosts.value = await _postService.getRecentPosts();
+    } catch (_) {
+      recentPosts.value = [];
     }
   }
 }

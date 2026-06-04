@@ -17,6 +17,8 @@ class UserModel {
   final String? wardId;
   final String? wardName;
   final DateTime? onboardedAt;
+  final DateTime? wardUpdatedAt;
+  final int contributionCount;
 
   const UserModel({
     required this.id,
@@ -33,6 +35,8 @@ class UserModel {
     this.wardId,
     this.wardName,
     this.onboardedAt,
+    this.wardUpdatedAt,
+    this.contributionCount = 0,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -56,6 +60,10 @@ class UserModel {
         wardId: jsonIdToNullableString(json['ward_id']),
         wardName: json['wards']?['name'] as String?,
         onboardedAt: onboardedAt,
+        wardUpdatedAt: json['ward_updated_at'] is String
+            ? DateTime.tryParse(json['ward_updated_at'] as String)
+            : null,
+        contributionCount: json['contribution_count'] as int? ?? 0,
     );
   }
 
@@ -84,6 +92,7 @@ class UserModel {
     String? wardId,
     String? wardName,
     DateTime? onboardedAt,
+    int? contributionCount,
   }) =>
       UserModel(
         id: id,
@@ -100,6 +109,8 @@ class UserModel {
         wardId: wardId ?? this.wardId,
         wardName: wardName ?? this.wardName,
         onboardedAt: onboardedAt ?? this.onboardedAt,
+        wardUpdatedAt: this.wardUpdatedAt,
+        contributionCount: contributionCount ?? this.contributionCount,
       );
 }
 

@@ -17,6 +17,18 @@ class ProfileEditController extends GetxController {
   final _picker = ImagePicker();
   final _storageService = StorageService();
 
+  /// Days until the citizen can change their ward again (null = no restriction).
+  int? get wardCoolOffDaysRemaining {
+    final user = Get.find<AuthController>().user.value;
+    final wardUpdatedAt = user?.wardUpdatedAt;
+    if (wardUpdatedAt == null) return null;
+    final daysSince = DateTime.now().difference(wardUpdatedAt).inDays;
+    final remaining = 365 - daysSince;
+    return remaining > 0 ? remaining : null;
+  }
+
+  bool get canChangeWard => wardCoolOffDaysRemaining == null;
+
   @override
   void onInit() {
     super.onInit();

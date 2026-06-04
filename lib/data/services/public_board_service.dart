@@ -1,30 +1,61 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../core/utils/constituency_db_id.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+
+import '../../core/constants/app_enums.dart';
 import '../models/public_board_item.dart';
-import 'submission_media_merger.dart';
+import '../remote/appreciation_api.dart';
+import '../remote/concern_api.dart';
+import '../remote/idea_api.dart';
 
 class PublicBoardService {
-  SupabaseClient get _db => Supabase.instance.client;
+  ConcernApi get _concernApi => Get.find<ConcernApi>();
+  IdeaApi get _ideaApi => Get.find<IdeaApi>();
+  AppreciationApi get _appreciationApi => Get.find<AppreciationApi>();
 
   Future<List<PublicBoardItem>> getPublicBoard({required String constituencyId}) async {
-    final resolved = await ConstituencyDbId.resolve(_db, constituencyId) ?? constituencyId;
-    final cid = int.tryParse(resolved);
-    if (cid == null) return [];
+    try {
+      final results = await Future.wait([
+        _concernApi.getConstituencyConcerns(constituencyId).then((list) => list
+            .map((c) => PublicBoardItem(
+                  id: c.id,
+                  kind: 'concern',
+                  title: c.title,
+                  status: SubmissionStatusX.fromString(c.status),
+                  createdAt: c.createdAt,
+                  mediaUrl: c.mediaUrls.isNotEmpty ? c.mediaUrls.first : null,
+                  wardName: c.wardName,
+                ))
+            .toList()),
+        _ideaApi.getConstituencyIdeas(constituencyId).then((list) => list
+            .map((i) => PublicBoardItem(
+                  id: i.id,
+                  kind: 'idea',
+                  title: i.title,
+                  status: SubmissionStatusX.fromString(i.status),
+                  createdAt: i.createdAt,
+                  mediaUrl: i.mediaUrls.isNotEmpty ? i.mediaUrls.first : null,
+                ))
+            .toList()),
+        _appreciationApi.getConstituencyAppreciations(constituencyId).then((list) => list
+            .map((a) => PublicBoardItem(
+                  id: a.id,
+                  kind: 'appreciation',
+                  title: a.message.length > 80
+                      ? '${a.message.substring(0, 80)}...'
+                      : a.message,
+                  status: SubmissionStatusX.fromString(a.status),
+                  createdAt: a.createdAt,
+                  mediaUrl: a.mediaUrls.isNotEmpty ? a.mediaUrls.first : null,
+                ))
+            .toList()),
+      ]);
 
-    final res = await _db
-        .from('submissions')
-        .select('*, wards(name), citizens!inner(constituency_id)')
-        .eq('visibility', 'public')
-        .eq('citizens.constituency_id', cid)
-        .order('created_at', ascending: false)
-        .limit(50);
-
-    final rows = (res as List)
-        .map((j) => Map<String, dynamic>.from(j as Map))
-        .toList();
-
-    await SubmissionMediaMerger.attachForSubmissions(_db, rows);
-
-    return rows.map(PublicBoardItem.fromJson).toList();
+      final all = [...results[0], ...results[1], ...results[2]];
+      all.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      return all.take(50).toList();
+    } catch (e) {
+      debugPrint('[PublicBoardService] getPublicBoard error: $e');
+      return [];
+    }
   }
 }

@@ -7,7 +7,9 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/linkable_text.dart';
 import '../../../core/widgets/status_chip.dart';
 import '../../../data/models/event_model.dart';
+import '../../../data/remote/events_api.dart';
 import '../../../data/services/event_service.dart';
+import '../../../features/auth/controllers/auth_controller.dart';
 import '../controllers/updates_controller.dart';
 
 class EventDetailView extends StatefulWidget {
@@ -21,6 +23,8 @@ class _EventDetailViewState extends State<EventDetailView> {
   final _service = EventService();
   EventModel? _event;
   bool _loading = true;
+  bool _interested = false;
+  bool _showingInterest = false;
 
   @override
   void initState() {
@@ -165,6 +169,21 @@ class _EventDetailViewState extends State<EventDetailView> {
                     const SizedBox(height: 20),
                     LinkableText(text: event.description!, style: AppTextStyles.bodyLarge),
                   ],
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: _showingInterest ? null : _toggleInterest,
+                      icon: Icon(_interested ? Icons.check_circle_rounded : Icons.star_border_rounded),
+                      label: Text(_interested ? 'Interested' : 'Show Interest'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _interested ? AppColors.statusResolved : AppColors.primary,
+                        foregroundColor: Colors.white,
+                        shape: const StadiumBorder(),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -172,6 +191,27 @@ class _EventDetailViewState extends State<EventDetailView> {
         ],
       ),
     );
+  }
+
+  Future<void> _toggleInterest() async {
+    final cid = Get.isRegistered<AuthController>()
+        ? Get.find<AuthController>().user.value?.constituencyId
+        : null;
+    if (cid == null) {
+      Get.snackbar('Sign in required', 'Please sign in to show interest.', snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+    final event = _event;
+    if (event == null) return;
+    setState(() => _showingInterest = true);
+    try {
+      await Get.find<EventsApi>().showInterest(cid, event.id);
+      setState(() => _interested = true);
+    } catch (_) {
+      Get.snackbar('Error', 'Could not register interest. Try again.', snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      if (mounted) setState(() => _showingInterest = false);
+    }
   }
 }
 

@@ -1,86 +1,70 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../core/utils/json_ids.dart';
+import 'package:get/get.dart';
+
+import '../../core/constants/app_enums.dart';
+import '../../core/utils/date_formatter.dart';
+import '../../core/widgets/timeline_widget.dart';
+import '../models/concern/concern_model.dart';
+import '../models/concern/create_concern_request.dart';
 import '../models/report_model.dart';
-import 'submission_media_merger.dart';
-import 'submission_utils.dart';
+import '../remote/concern_api.dart';
 
 class ReportService {
-  SupabaseClient get _db => Supabase.instance.client;
+  ConcernApi get _api => Get.find<ConcernApi>();
 
-  static const _submissionSelect =
-      '*, wards(name), submission_status_history(*), $kMySubmissionsCitizenEmbed';
-
-  /// All report submissions for the signed-in user (any visibility).
   Future<List<ReportModel>> getMyReports() async {
-    final uid = SubmissionUtils.currentAuthUserId(_db);
-    if (uid == null) return const [];
-    final res = await _db
-        .from('submissions')
-        .select(_submissionSelect)
-        .eq('kind', 'report')
-        .eq('citizens.user_id', uid)
-        .order('created_at', ascending: false);
-    final rows =
-        (res as List).map((j) => Map<String, dynamic>.from(j as Map<String, dynamic>)).toList();
-    await SubmissionMediaMerger.attachForSubmissions(_db, rows);
-    final reports = <ReportModel>[];
-    for (final row in rows) {
-      try {
-        reports.add(ReportModel.fromJson(row));
-      } catch (_) {
-        // Skip malformed rows so one bad record does not empty Activity.
-      }
-    }
-    return reports;
+    final concerns = await _api.getMyConcerns();
+    return concerns.where((c) => c.category == 'report' || c.category == 'problem').map(_mapToReport).toList();
   }
 
   Future<ReportModel?> getReport(String id) async {
-    final res = await _db
-        .from('submissions')
-        .select(_submissionSelect)
-        .eq('id', id)
-        .eq('kind', 'report')
-        .maybeSingle();
-    if (res == null) return null;
-    final map = Map<String, dynamic>.from(res);
-    await SubmissionMediaMerger.attachForSubmissions(_db, [map]);
-    return ReportModel.fromJson(map);
-  }
-
-  /// Returns the generated `reference_id` (UUID v4) for the new report row.
-  Future<String> submitReport(ReportFormData data, String userId) async {
-    final referenceId = SubmissionUtils.generateReferenceId();
-    final res = await _db
-        .from('submissions')
-        .insert(data.toJson(userId, referenceId))
-        .select()
-        .single();
-    final submissionId = jsonIdToString(res['id']);
-
-    await _db.from('submission_status_history').insert({
-      'submission_id': submissionId,
-      'to_status': 'submitted',
-      'notes': 'Your report was received. Our team will review it shortly.',
-    });
-
-    if (data.mediaUrls.isNotEmpty) {
-      await _db.from('media_attachments').insert(
-        data.mediaUrls
-            .map((url) => {
-                  'attachable_type': 'submission',
-                  'attachable_id': submissionId,
-                  'kind': 'image',
-                  'storage_path': url,
-                  'url': url,
-                  'uploaded_by': userId,
-                  'uploaded_by_type': 'citizen',
-                })
-            .toList(),
-      );
+    try {
+      final concern = await _api.getConcern(id);
+      return _mapToReport(concern);
+    } catch (_) {
+      return null;
     }
-
-    // Surface the reference_id (UUID v4) to the UI for display & copy.
-    // submissionId is intentionally unused by the caller; the row exists in DB.
-    return referenceId;
   }
+
+  Future<String> submitReport(ReportFormData data, String userId) async {
+    final concern = await _api.createConcern(
+      CreateConcernRequest(
+        category: data.category.name,
+        title: data.title,
+        description: data.description,
+        location: data.location,
+        landmark: data.landmark,
+        voiceNoteUrl: data.voiceMessageUrl,
+        wardId: data.wardId,
+        contactNumber: data.contactNumber,
+        mediaUrls: data.mediaUrls,
+      ),
+    );
+    return concern.id;
+  }
+
+  ReportModel _mapToReport(ConcernModel c) => ReportModel(
+    id: c.id,
+    userId: c.citizenId,
+    category: ReportCategoryX.fromString(c.category),
+    title: c.title,
+    description: c.description,
+    voiceNoteUrl: c.voiceNoteUrl,
+    location: c.location ?? '',
+    landmark: c.landmark,
+    wardId: c.wardId ?? '',
+    wardName: c.wardName ?? '',
+    contactNumber: c.contactNumber,
+    status: SubmissionStatusX.fromString(c.status),
+    createdAt: c.createdAt,
+    mediaUrls: c.mediaUrls,
+    timeline: c.timeline
+        .map(
+          (t) => TimelineEvent(
+            date: DateFormatter.shortDate(t.createdAt),
+            title: SubmissionStatusX.fromString(t.status).label,
+            subtitle: t.notes ?? '',
+          ),
+        )
+        .toList(),
+  );
 }

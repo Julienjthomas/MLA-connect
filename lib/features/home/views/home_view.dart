@@ -9,6 +9,7 @@ import '../../../core/widgets/action_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/utils/date_formatter.dart';
 import '../../../data/models/event_model.dart';
+import '../../../data/models/post/post_response.dart';
 import '../../../data/models/update_model.dart';
 import '../../../routes/app_routes.dart';
 import '../../shell/controllers/shell_controller.dart';
@@ -89,7 +90,10 @@ class HomeView extends GetView<HomeController> {
       actions: [
         Stack(
           children: [
-            IconButton(icon: const Icon(Icons.notifications_outlined), onPressed: () {}),
+            IconButton(
+              icon: const Icon(Icons.notifications_outlined),
+              onPressed: () => Get.toNamed(Routes.notifications),
+            ),
             Positioned(
               right: 10,
               top: 10,
@@ -422,6 +426,34 @@ class HomeView extends GetView<HomeController> {
                 },
               ),
             ],
+            Obx(() {
+              final posts = controller.recentPosts.toList();
+              if (posts.isEmpty) return const SizedBox.shrink();
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: SectionHeader(
+                      title: 'MLA Posts',
+                      actionLabel: AppStrings.viewAll,
+                      onAction: () => Get.toNamed(Routes.postsList),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 130,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemCount: posts.take(5).length,
+                      itemBuilder: (_, i) => _PostMiniCard(post: posts[i]),
+                    ),
+                  ),
+                ],
+              );
+            }),
           ],
         );
       }),
@@ -496,6 +528,52 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ── Post mini card ───────────────────────────────────────────────────────────
+
+class _PostMiniCard extends StatelessWidget {
+  const _PostMiniCard({required this.post});
+  final PostResponse post;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Get.toNamed(Routes.postDetail, arguments: {'id': post.id}),
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 28, height: 28,
+              decoration: const BoxDecoration(color: AppColors.ideaPurpleLight, shape: BoxShape.circle),
+              child: const Icon(Icons.article_rounded, color: AppColors.primary, size: 16),
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: Text(post.title, style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w600), maxLines: 3, overflow: TextOverflow.ellipsis),
+            ),
+            const SizedBox(height: 6),
+            Row(
+              children: [
+                const Icon(Icons.favorite_border_rounded, size: 12, color: AppColors.grey400),
+                const SizedBox(width: 3),
+                Text('${post.likes}', style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -40,4 +40,9 @@ abstract class Routes {
   static const helpFaq = '/profile/help-faq';
   static const privacyPolicy = '/profile/privacy-policy';
   static const contactMlaOffice = '/profile/contact-mla';
+
+  static const notifications = '/notifications';
+  static const postsList = '/posts';
+  static const postDetail = '/posts/detail';
+  static const leaderboard = '/leaderboard';
 }

@@ -4,10 +4,14 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
+import '../../../core/widgets/comments_section.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../core/widgets/submission_media_image.dart';
 import '../../../core/constants/app_enums.dart';
+import '../../../data/models/concern/concern_comment.dart';
+import '../../../data/remote/concern_api.dart';
 import '../../../routes/app_routes.dart';
+import '../../auth/controllers/auth_controller.dart';
 import '../controllers/report_detail_controller.dart';
 
 class ReportDetailView extends GetView<ReportDetailController> {
@@ -17,7 +21,17 @@ class ReportDetailView extends GetView<ReportDetailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: KeralaAppBar(title: AppStrings.reportDetail),
+      appBar: KeralaAppBar(
+        title: AppStrings.reportDetail,
+        actions: [
+          Obx(() => controller.isOwn
+              ? IconButton(
+                  icon: const Icon(Icons.delete_outline_rounded, color: AppColors.statusRejected),
+                  onPressed: controller.deleting.value ? null : () => _showDeleteDialog(context),
+                )
+              : const SizedBox.shrink()),
+        ],
+      ),
       body: Obx(() {
         if (controller.loading.value) {
           return const Padding(
@@ -132,6 +146,34 @@ class ReportDetailView extends GetView<ReportDetailController> {
 
               const SizedBox(height: 16),
 
+              // Comments
+              Container(
+                decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16)),
+                child: CommentsSection(
+                  onLoad: () async {
+                    final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
+                    final concerns = await Get.find<ConcernApi>().getComments(cid, report.id);
+                    return concerns.map((c) => CommentEntry(
+                      id: c.id,
+                      authorId: c.citizenId,
+                      authorName: c.citizenId,
+                      body: c.body,
+                      createdAt: c.createdAt,
+                    )).toList();
+                  },
+                  onPost: (text) async {
+                    final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
+                    await Get.find<ConcernApi>().addComment(cid, report.id, {'body': text});
+                  },
+                  onDelete: (commentId) async {
+                    final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
+                    await Get.find<ConcernApi>().deleteComment(cid, report.id, commentId);
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
               // Need help
               GestureDetector(
                 onTap: () => Get.toNamed(Routes.chat),
@@ -168,6 +210,23 @@ class ReportDetailView extends GetView<ReportDetailController> {
       }),
     );
   }
+}
+
+void _showDeleteDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: const Text('Delete Report?'),
+      content: const Text('This will permanently delete your report.'),
+      actions: [
+        TextButton(onPressed: Get.back, child: const Text('Cancel')),
+        TextButton(
+          onPressed: () { Get.back(); Get.find<ReportDetailController>().deleteReport(); },
+          child: const Text('Delete', style: TextStyle(color: AppColors.statusRejected)),
+        ),
+      ],
+    ),
+  );
 }
 
 class _StatusBanner extends StatelessWidget {

@@ -1,52 +1,47 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../core/utils/json_ids.dart';
+import 'package:get/get.dart';
+
+import '../../core/constants/app_enums.dart';
+import '../models/appreciation/create_appreciation_request.dart';
 import '../models/appreciation_model.dart';
-import 'submission_media_merger.dart';
-import 'submission_utils.dart';
+import '../remote/appreciation_api.dart';
 
 class AppreciationService {
-  SupabaseClient get _db => Supabase.instance.client;
+  AppreciationApi get _api => Get.find<AppreciationApi>();
 
   Future<List<AppreciationModel>> getMyAppreciations() async {
-    final uid = SubmissionUtils.currentAuthUserId(_db);
-    if (uid == null) return const [];
-    final res = await _db
-        .from('submissions')
-        .select('*, $kMySubmissionsCitizenEmbed')
-        .eq('kind', 'appreciation')
-        .eq('citizens.user_id', uid)
-        .order('created_at', ascending: false);
-    final rows =
-        (res as List).map((j) => Map<String, dynamic>.from(j as Map<String, dynamic>)).toList();
-    await SubmissionMediaMerger.attachForSubmissions(_db, rows);
-    return rows.map(AppreciationModel.fromJson).toList();
+    final list = await _api.getMyAppreciations();
+    return list.map((r) => AppreciationModel(
+          id: r.id,
+          userId: r.citizenId,
+          recipientCategory: r.recipientCategory,
+          staffName: r.staffName,
+          department: r.department,
+          relatedWork: r.relatedWork,
+          message: r.message,
+          visibility: SubmissionVisibility.values.firstWhere(
+            (v) => v.dbValue == r.visibility,
+            orElse: () => SubmissionVisibility.public,
+          ),
+          anonymous: r.anonymous,
+          status: SubmissionStatusX.fromString(r.status),
+          createdAt: r.createdAt,
+          mediaUrls: r.mediaUrls,
+        )).toList();
   }
 
   Future<String> submit(AppreciationFormData data, String userId) async {
-    final referenceId = SubmissionUtils.generateReferenceId('AP');
-    final res = await _db
-        .from('submissions')
-        .insert(data.toJson(userId, referenceId))
-        .select()
-        .single();
-    final submissionId = jsonIdToString(res['id']);
-
-    if (data.mediaUrls.isNotEmpty) {
-      await _db.from('media_attachments').insert(
-        data.mediaUrls
-            .map((url) => {
-                  'attachable_type': 'submission',
-                  'attachable_id': submissionId,
-                  'kind': 'image',
-                  'storage_path': url,
-                  'url': url,
-                  'uploaded_by': userId,
-                  'uploaded_by_type': 'citizen',
-                })
-            .toList(),
-      );
-    }
-
-    return submissionId;
+    final appreciation = await _api.createAppreciation(
+      CreateAppreciationRequest(
+        recipientCategory: data.recipientCategory,
+        staffName: data.staffName,
+        department: data.department,
+        relatedWork: data.relatedWork,
+        message: data.message,
+        visibility: data.visibility.dbValue,
+        anonymous: data.anonymous,
+        mediaUrls: data.mediaUrls,
+      ),
+    );
+    return appreciation.id;
   }
 }

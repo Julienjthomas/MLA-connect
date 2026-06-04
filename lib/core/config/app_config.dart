@@ -15,7 +15,6 @@ class AppConfig {
 
   static void init(AppFlavor f) {
     flavor = f;
-
     baseUrl = Env.baseUrl;
 
     switch (f) {

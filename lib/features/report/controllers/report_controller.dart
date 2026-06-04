@@ -1,5 +1,6 @@
 import 'dart:async' show unawaited;
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -54,7 +55,33 @@ class ReportController extends GetxController {
   void onInit() {
     super.onInit();
     pageController = PageController();
+    _checkDailyLimit();
     _loadLocationData();
+  }
+
+  Future<void> _checkDailyLimit() async {
+    try {
+      final dio = Get.find<Dio>();
+      final resp = await dio.get('/citizens/:citizenId/activity/summary');
+      final body = resp.data;
+      if (body is! Map<String, dynamic>) return;
+      final data = (body['data'] ?? body) as Map<String, dynamic>;
+      final totalConcerns = data['total_concerns'] as int? ?? 0;
+      if (totalConcerns >= 2) {
+        Get.dialog(
+          AlertDialog(
+            title: const Text('Daily Limit Reached'),
+            content: const Text(
+              'You\'ve reached the daily limit of 2 issues.\nPlease try again after 24 hours.',
+            ),
+            actions: [TextButton(onPressed: () { Get.back(); Get.back(); }, child: const Text('OK'))],
+          ),
+          barrierDismissible: false,
+        );
+      }
+    } catch (_) {
+      // Limit check is best-effort; proceed if it fails.
+    }
   }
 
   Future<void> _loadLocationData() async {
@@ -243,6 +270,7 @@ class ReportController extends GetxController {
 
       final id = await _service.submitReport(data, reporterId);
       submittedId.value = id;
+      auth.incrementContributionCount();
       if (Get.isRegistered<ActivityController>()) {
         unawaited(Get.find<ActivityController>().loadActivity());
       }

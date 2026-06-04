@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'core/config/app_config.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/app_locale.dart';
+import 'core/widgets/app_config_wrapper.dart';
 import 'l10n/app_localizations.dart';
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';
@@ -37,6 +38,7 @@ class _MlaConnectAppState extends State<MlaConnectApp> {
             getPages: AppPages.pages,
             defaultTransition: Transition.rightToLeft,
             transitionDuration: const Duration(milliseconds: 280),
+            builder: (context, child) => AppConfigWrapper(child: child ?? const SizedBox.shrink()),
           ),
         );
       },

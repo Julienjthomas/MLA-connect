@@ -49,6 +49,13 @@ import '../features/home/views/events_list_view.dart';
 import '../features/profile/views/help_faq_view.dart';
 import '../features/profile/views/privacy_policy_view.dart';
 import '../features/profile/views/contact_mla_office_view.dart';
+import '../features/notifications/bindings/notifications_binding.dart';
+import '../features/notifications/views/notifications_view.dart';
+import '../features/posts/bindings/posts_binding.dart';
+import '../features/posts/views/posts_feed_view.dart';
+import '../features/posts/views/post_detail_view.dart';
+import '../features/leaderboard/bindings/leaderboard_binding.dart';
+import '../features/leaderboard/views/leaderboard_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -214,6 +221,30 @@ class AppPages {
         return LongFormComposerView(textController: c);
       },
       transition: Transition.downToUp,
+    ),
+    GetPage(
+      name: Routes.notifications,
+      page: () => const NotificationsView(),
+      binding: NotificationsBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.postsList,
+      page: () => const PostsFeedView(),
+      binding: PostsBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.postDetail,
+      page: () => const PostDetailView(),
+      binding: PostsBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.leaderboard,
+      page: () => const LeaderboardView(),
+      binding: LeaderboardBinding(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }

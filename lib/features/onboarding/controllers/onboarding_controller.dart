@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../../core/utils/constituency_db_id.dart';
 import '../../../core/utils/constituency_prefs.dart';
 import '../../../data/models/constituency_model.dart';
 import '../../../data/models/user_model.dart';
@@ -165,30 +163,11 @@ class OnboardingController extends GetxController {
       localBodies.clear();
       wards.clear();
       await loadConstituencies();
-      final dbId = await ConstituencyDbId.resolve(Supabase.instance.client, cid) ??
-          (ConstituencyDbId.isNumericId(cid) ? cid : null);
-      final match = constituencies.where((c) => c.id == cid || (dbId != null && c.id == dbId));
+      final match = constituencies.where((c) => c.id == cid);
       if (match.isNotEmpty) {
         await selectConstituency(match.first);
-      } else {
-        final idToFetch = dbId ?? cid;
-        if (idToFetch.isNotEmpty) {
-          await _hydrateConstituencyFromDbId(idToFetch);
-        }
       }
     } catch (_) {}
   }
 
-  Future<void> _hydrateConstituencyFromDbId(String constituencyPk) async {
-    try {
-      final row = await Supabase.instance.client
-          .from('constituencies')
-          .select('id, name')
-          .eq('id', constituencyPk)
-          .maybeSingle();
-      if (row == null) return;
-      final c = ConstituencyModel.fromJson(Map<String, dynamic>.from(row));
-      await selectConstituency(c);
-    } catch (_) {}
-  }
 }

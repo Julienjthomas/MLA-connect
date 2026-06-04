@@ -173,6 +173,7 @@ class IdeaController extends GetxController {
       );
       final id = await _service.submit(data, reporterId);
       submittedId.value = id;
+      Get.find<AuthController>().incrementContributionCount();
       if (Get.isRegistered<ActivityController>()) {
         unawaited(Get.find<ActivityController>().loadActivity());
       }

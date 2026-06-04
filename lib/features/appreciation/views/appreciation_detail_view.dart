@@ -4,10 +4,13 @@ import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/widgets/comments_section.dart';
 import '../../../core/widgets/kerala_app_bar.dart';
 import '../../../core/widgets/shimmer_loader.dart';
 import '../../../data/models/appreciation_model.dart';
+import '../../../data/remote/appreciation_api.dart';
 import '../../../routes/app_routes.dart';
+import '../../auth/controllers/auth_controller.dart';
 
 class AppreciationDetailView extends StatelessWidget {
   const AppreciationDetailView({super.key});
@@ -15,14 +18,51 @@ class AppreciationDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appreciation = Get.arguments as AppreciationModel?;
+    final uid = Get.isRegistered<AuthController>() ? Get.find<AuthController>().userId : null;
+    final isOwn = uid != null && appreciation?.userId == uid;
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: KeralaAppBar(title: AppStrings.appreciationDetail),
+      appBar: KeralaAppBar(
+        title: AppStrings.appreciationDetail,
+        actions: isOwn && appreciation != null
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.delete_outline_rounded, color: AppColors.statusRejected),
+                  onPressed: () => _confirmDeleteAppreciation(context, appreciation),
+                ),
+              ]
+            : null,
+      ),
       body: appreciation == null
           ? const Center(child: ShimmerBox(height: 200))
           : _AppreciationDetailBody(appreciation: appreciation),
     );
   }
+}
+
+void _confirmDeleteAppreciation(BuildContext context, AppreciationModel appreciation) {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: const Text('Delete Appreciation?'),
+      content: const Text('This will permanently delete your appreciation.'),
+      actions: [
+        TextButton(onPressed: Get.back, child: const Text('Cancel')),
+        TextButton(
+          onPressed: () async {
+            Get.back();
+            try {
+              await Get.find<AppreciationApi>().deleteAppreciation(appreciation.id);
+              Get.back(result: true);
+            } catch (_) {
+              Get.snackbar('Error', 'Could not delete. Try again.', snackPosition: SnackPosition.BOTTOM);
+            }
+          },
+          child: const Text('Delete', style: TextStyle(color: AppColors.statusRejected)),
+        ),
+      ],
+    ),
+  );
 }
 
 class _AppreciationDetailBody extends StatelessWidget {
@@ -99,6 +139,27 @@ class _AppreciationDetailBody extends StatelessWidget {
                   Text(appreciation.relatedWork!, style: AppTextStyles.bodyMedium),
                 ],
               ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16)),
+            child: CommentsSection(
+              onLoad: () async {
+                final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
+                final comments = await Get.find<AppreciationApi>().getComments(cid, appreciation.id);
+                return comments.map((c) => CommentEntry(
+                  id: c.id, authorId: c.citizenId, authorName: c.citizenId, body: c.body, createdAt: c.createdAt,
+                )).toList();
+              },
+              onPost: (text) async {
+                final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
+                await Get.find<AppreciationApi>().addComment(cid, appreciation.id, {'body': text});
+              },
+              onDelete: (commentId) async {
+                final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
+                await Get.find<AppreciationApi>().deleteComment(cid, appreciation.id, commentId);
+              },
             ),
           ),
           const SizedBox(height: 16),
