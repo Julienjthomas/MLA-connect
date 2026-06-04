@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../core/theme/app_colors.dart';
@@ -30,17 +31,17 @@ class UpdateDetailView extends GetView<UpdatesController> {
             backgroundColor: AppColors.background,
             foregroundColor: AppColors.textPrimary,
             leading: Padding(
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(8.r),
               child: Material(
                 color: AppColors.surface.withValues(alpha: 0.7),
                 shape: const CircleBorder(),
                 child: InkWell(
                   customBorder: const CircleBorder(),
                   onTap: () => Get.back(),
-                  child: const SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20),
+                  child: SizedBox(
+                    width: 40.r,
+                    height: 40.r,
+                    child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20.r),
                   ),
                 ),
               ),
@@ -58,7 +59,7 @@ class UpdateDetailView extends GetView<UpdatesController> {
                       child: Center(
                         child: Icon(
                           Icons.campaign_rounded,
-                          size: 64,
+                          size: 64.r,
                           color: update.category.color.withValues(alpha: 0.5),
                         ),
                       ),
@@ -81,19 +82,18 @@ class UpdateDetailView extends GetView<UpdatesController> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CategoryChip(label: update.category.label, color: update.category.color),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   Text(update.title, style: AppTextStyles.headlineMedium),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(update.timeAgo, style: AppTextStyles.caption),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   LinkableText(text: update.localBody, style: AppTextStyles.bodyLarge),
-                  const SizedBox(height: 24),
-                  // Engagement row
+                  SizedBox(height: 24.h),
                   Obx(() {
                     final liked = controller.likedIds.contains(update.id);
                     final current = controller.updates.firstWhereOrNull((u) => u.id == update.id);
@@ -106,10 +106,10 @@ class UpdateDetailView extends GetView<UpdatesController> {
                             children: [
                               Icon(
                                 liked ? Icons.favorite : Icons.favorite_outline,
-                                size: 16,
+                                size: 16.r,
                                 color: AppColors.statusRejected,
                               ),
-                              const SizedBox(width: 4),
+                              SizedBox(width: 4.w),
                               Text('$likes likes', style: AppTextStyles.caption),
                             ],
                           ),

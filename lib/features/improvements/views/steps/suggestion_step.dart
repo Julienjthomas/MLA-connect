@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -14,23 +15,23 @@ class SuggestionStep extends GetView<ImprovementController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.improveHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.improveSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(AppStrings.improveDeptLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Obx(() => DropdownButtonFormField<String>(
                 value: controller.department.value.isEmpty ? null : controller.department.value,
                 decoration: InputDecoration(hintText: AppStrings.improveDeptHint),
                 items: controller.departments.map((d) => DropdownMenuItem(value: d, child: Text(d))).toList(),
                 onChanged: (v) => controller.department.value = v ?? '',
               )),
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
           Row(
             children: [
               Expanded(
@@ -38,13 +39,13 @@ class SuggestionStep extends GetView<ImprovementController> {
               ),
               IconButton(
                 tooltip: 'Expand editor',
-                icon: const Icon(Icons.open_in_full_rounded, size: 22),
+                icon: Icon(Icons.open_in_full_rounded, size: 22.r),
                 onPressed: () =>
                     Get.toNamed(Routes.longFormComposer, arguments: controller.suggestionController),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.suggestionController,
             minLines: 8,
@@ -52,13 +53,13 @@ class SuggestionStep extends GetView<ImprovementController> {
             maxLength: 1500,
             decoration: InputDecoration(hintText: AppStrings.improveSuggestionHint),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(AppStrings.addVoiceNote, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           VoiceInputWidget(onRecorded: (path) => controller.voiceRecordingPath.value = path),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           PrimaryButton(text: AppStrings.improveNextLocation, onPressed: controller.nextStep, backgroundColor: AppColors.improveBlue),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
@@ -33,8 +34,6 @@ class _ActivityShell extends StatefulWidget {
 }
 
 class _ActivityShellState extends State<_ActivityShell> {
-  static const _listPadding = EdgeInsets.fromLTRB(16, 16, 16, 88);
-
   TabController? _tabController;
 
   @override
@@ -85,6 +84,8 @@ class _ActivityShellState extends State<_ActivityShell> {
     final tab = _tabs[_tabController?.index ?? 0];
     final addFeature = tab.addFeature;
     final addLabel = tab.addActionLabel;
+
+    final listPadding = EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 88.h);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -142,8 +143,8 @@ class _ActivityShellState extends State<_ActivityShell> {
               unselectedLabelColor: AppColors.grey500,
               labelStyle: AppTextStyles.labelMedium,
               tabs: _tabs.map((t) => Tab(
-                icon: t.addFeature != null ? Icon(t.addFeature!.icon, size: 16) : null,
-                iconMargin: const EdgeInsets.only(bottom: 2),
+                icon: t.addFeature != null ? Icon(t.addFeature!.icon, size: 16.r) : null,
+                iconMargin: EdgeInsets.only(bottom: 2.h),
                 text: t.label,
               )).toList(),
             ),
@@ -152,17 +153,17 @@ class _ActivityShellState extends State<_ActivityShell> {
             child: Obx(() {
               if (widget.controller.loading.value) {
                 return ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.r),
                   itemCount: 5,
                   itemBuilder: (_, __) => const ShimmerCard(),
                 );
               }
               return TabBarView(
                 children: [
-                  _ReportsTab(controller: widget.controller, listPadding: _listPadding),
-                  _IdeasTab(controller: widget.controller, listPadding: _listPadding),
-                  _ImprovementsTab(controller: widget.controller, listPadding: _listPadding),
-                  _AppreciationsTab(controller: widget.controller, listPadding: _listPadding),
+                  _ReportsTab(controller: widget.controller, listPadding: listPadding),
+                  _IdeasTab(controller: widget.controller, listPadding: listPadding),
+                  _ImprovementsTab(controller: widget.controller, listPadding: listPadding),
+                  _AppreciationsTab(controller: widget.controller, listPadding: listPadding),
                 ],
               );
             }),
@@ -182,11 +183,11 @@ class _ContributionBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      padding: const EdgeInsets.fromLTRB(20, 20, 16, 20),
+      margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
+      padding: EdgeInsets.fromLTRB(20.w, 20.h, 16.w, 20.h),
       decoration: BoxDecoration(
         color: AppColors.primary.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
         border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
       ),
       child: Row(
@@ -197,8 +198,8 @@ class _ContributionBanner extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.waving_hand_rounded, color: AppColors.primary, size: 20),
-                    const SizedBox(width: 6),
+                    Icon(Icons.waving_hand_rounded, color: AppColors.primary, size: 20.r),
+                    SizedBox(width: 6.w),
                     Text(
                       firstName.isNotEmpty
                           ? AppStrings.activityGreatGoingNamed(firstName)
@@ -207,12 +208,12 @@ class _ContributionBanner extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 Text(
                   AppStrings.activityContributionsSoFar(total),
                   style: AppTextStyles.headlineLarge.copyWith(color: AppColors.primary, height: 1.2),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 Text(
                   AppStrings.activityCommunityTagline,
                   style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),
@@ -220,13 +221,13 @@ class _ContributionBanner extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16.w),
           GestureDetector(
             onTap: () {},
             child: Column(
               children: [
-                const Icon(Icons.trending_up_rounded, color: AppColors.primary, size: 28),
-                const SizedBox(height: 4),
+                Icon(Icons.trending_up_rounded, color: AppColors.primary, size: 28.r),
+                SizedBox(height: 4.h),
                 Text(
                   AppStrings.yourImpact,
                   style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
@@ -274,25 +275,25 @@ class _TabEmptyState extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: EdgeInsets.symmetric(horizontal: 32.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 80,
-              height: 80,
+              width: 80.r,
+              height: 80.r,
               decoration: BoxDecoration(color: accentColorLight, shape: BoxShape.circle),
-              child: Icon(feature.icon, color: accentColor, size: 36),
+              child: Icon(feature.icon, color: accentColor, size: 36.r),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             Text(title, style: AppTextStyles.headlineSmall, textAlign: TextAlign.center),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               message,
               style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 28),
+            SizedBox(height: 28.h),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -301,8 +302,8 @@ class _TabEmptyState extends StatelessWidget {
                 label: Text(tab.addActionLabel!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: accentColor,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  padding: EdgeInsets.symmetric(vertical: 14.h),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
                   elevation: 0,
                 ),
               ),

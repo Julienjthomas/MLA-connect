@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -72,35 +73,35 @@ class RecipientStep extends GetView<AppreciationController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.appreciateWhoHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           Text(
             AppStrings.appreciateWhoSubtitle,
             style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Obx(() {
             final selected = controller.recipientCategory.value;
             return GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: 12.w,
+              mainAxisSpacing: 12.h,
               childAspectRatio: 1.15,
               children: _categories.map((cat) {
                 final isSelected = selected == cat.key;
                 return GestureDetector(
                   onTap: () => controller.recipientCategory.value = cat.key,
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: EdgeInsets.all(12.r),
                     decoration: BoxDecoration(
                       color: isSelected ? cat.color.withValues(alpha: 0.08) : AppColors.surface,
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14.r),
                       border: Border.all(
                         color: isSelected ? cat.color : AppColors.grey200,
                         width: isSelected ? 2 : 1,
@@ -112,21 +113,21 @@ class RecipientStep extends GetView<AppreciationController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: 36,
-                              height: 36,
+                              width: 36.r,
+                              height: 36.r,
                               decoration: BoxDecoration(
                                 color: cat.color.withValues(alpha: 0.15),
                                 shape: BoxShape.circle,
                               ),
-                              child: Icon(cat.icon, size: 18, color: cat.color),
+                              child: Icon(cat.icon, size: 18.r, color: cat.color),
                             ),
-                            const SizedBox(height: 8),
-                            Text(cat.label, style: AppTextStyles.titleSmall.copyWith(fontSize: 13)),
-                            const SizedBox(height: 2),
+                            SizedBox(height: 8.h),
+                            Text(cat.label, style: AppTextStyles.titleSmall.copyWith(fontSize: 13.sp)),
+                            SizedBox(height: 2.h),
                             Expanded(
                               child: Text(
                                 cat.description,
-                                style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 11),
+                                style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 11.sp),
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -137,8 +138,8 @@ class RecipientStep extends GetView<AppreciationController> {
                           top: 0,
                           right: 0,
                           child: Container(
-                            width: 18,
-                            height: 18,
+                            width: 18.r,
+                            height: 18.r,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: isSelected ? cat.color : Colors.transparent,
@@ -148,7 +149,7 @@ class RecipientStep extends GetView<AppreciationController> {
                               ),
                             ),
                             child: isSelected
-                                ? const Icon(Icons.check, color: Colors.white, size: 11)
+                                ? Icon(Icons.check, color: Colors.white, size: 11.r)
                                 : null,
                           ),
                         ),
@@ -159,23 +160,23 @@ class RecipientStep extends GetView<AppreciationController> {
               }).toList(),
             );
           }),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(AppStrings.appreciateTellUsMore, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.messageController,
             maxLines: 4,
             maxLength: 1500,
             decoration: InputDecoration(hintText: AppStrings.appreciateTellUsMoreHint),
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           PrimaryButton(
             text: AppStrings.continueBtn,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.appreciateGreen,
-            icon: const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18),
+            icon: Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18.r),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );

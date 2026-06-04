@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -17,16 +18,16 @@ class PrivacyPolicyView extends StatelessWidget {
         title: Text(AppStrings.privacyPolicy, style: AppTextStyles.titleMedium),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         children: [
           ...sections.expand((s) => [
                 Text(s.title, style: AppTextStyles.titleSmall),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Text(s.body,
                     style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
               ]),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Text(AppStrings.privacyLastUpdated,
               style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
         ],

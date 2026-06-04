@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -18,17 +19,17 @@ class PhoneView extends GetView<PhoneController> {
       appBar: const KeralaAppBar(title: ''),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Form(
             key: controller.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
                 Text(AppStrings.enterMobile, style: AppTextStyles.headlineLarge),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Text(AppStrings.mobileSubtitle, style: AppTextStyles.bodyMedium),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
                 TextFormField(
                   controller: controller.phoneController,
                   keyboardType: TextInputType.phone,
@@ -36,11 +37,11 @@ class PhoneView extends GetView<PhoneController> {
                   validator: Validators.phone,
                   decoration: InputDecoration(
                     prefixIcon: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                       decoration: BoxDecoration(
                         color: AppColors.grey100,
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(6.r),
                         border: Border.all(color: AppColors.grey300),
                       ),
                       child: const Text('+91', style: AppTextStyles.titleSmall),
@@ -48,11 +49,11 @@ class PhoneView extends GetView<PhoneController> {
                     hintText: 'Enter 10 digit mobile number',
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 Row(
                   children: [
-                    const Icon(Icons.shield_outlined, size: 14, color: AppColors.textTertiary),
-                    const SizedBox(width: 6),
+                    Icon(Icons.shield_outlined, size: 14.r, color: AppColors.textTertiary),
+                    SizedBox(width: 6.w),
                     Text(AppStrings.privacyNote, style: AppTextStyles.caption),
                   ],
                 ),
@@ -64,7 +65,7 @@ class PhoneView extends GetView<PhoneController> {
                     isLoading: controller.loading.value,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Center(
                   child: RichText(
                     textAlign: TextAlign.center,
@@ -83,7 +84,7 @@ class PhoneView extends GetView<PhoneController> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
               ],
             ),
           ),

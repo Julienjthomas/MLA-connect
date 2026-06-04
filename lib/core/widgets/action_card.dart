@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
 
@@ -29,7 +30,7 @@ class ActionCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 10, offset: const Offset(0, 3)),
           ],
@@ -37,13 +38,12 @@ class ActionCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Stack(
           children: [
-            // Background image + gradient in lower portion
             if (backgroundImage != null)
               Positioned(
                 left: 0,
                 right: 0,
                 bottom: 0,
-                height: 110,
+                height: 110.h,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -70,21 +70,19 @@ class ActionCard extends StatelessWidget {
                 ),
               ),
 
-            // Card content
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 12, 12, 48),
+              padding: EdgeInsets.fromLTRB(12.r, 12.r, 12.r, 48.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Circular icon container
                   Container(
-                    width: 44,
-                    height: 44,
+                    width: 44.r,
+                    height: 44.r,
                     decoration: BoxDecoration(color: accentColor.withValues(alpha: 0.15), shape: BoxShape.circle),
-                    child: Icon(icon, color: accentColor, size: 22),
+                    child: Icon(icon, color: accentColor, size: 22.r),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Text(
                     title,
                     style: AppTextStyles.titleLarge.copyWith(
@@ -98,14 +96,13 @@ class ActionCard extends StatelessWidget {
                     softWrap: true,
                     overflow: TextOverflow.visible,
                   ),
-                  const SizedBox(height: 4),
-                  // Accent underline bar
+                  SizedBox(height: 4.h),
                   Container(
-                    width: 24,
-                    height: 3,
-                    decoration: BoxDecoration(color: accentColor, borderRadius: BorderRadius.circular(2)),
+                    width: 24.w,
+                    height: 3.h,
+                    decoration: BoxDecoration(color: accentColor, borderRadius: BorderRadius.circular(2.r)),
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   Text(
                     subtitle,
                     style: AppTextStyles.caption.copyWith(height: 1.2, color: AppColors.textSecondary),
@@ -116,21 +113,20 @@ class ActionCard extends StatelessWidget {
               ),
             ),
 
-            // Circular arrow CTA — bottom right over image zone
             Positioned(
               right: 12,
               bottom: 12,
               child: GestureDetector(
                 onTap: onTap,
                 child: Container(
-                  width: 36,
-                  height: 36,
+                  width: 36.r,
+                  height: 36.r,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 2))],
                   ),
-                  child: Icon(Icons.arrow_forward_rounded, color: accentColor, size: 18),
+                  child: Icon(Icons.arrow_forward_rounded, color: accentColor, size: 18.r),
                 ),
               ),
             ),

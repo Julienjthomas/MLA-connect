@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -22,10 +23,10 @@ class SplashView extends GetView<SplashController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    width: 96,
-                    height: 96,
+                    width: 96.r,
+                    height: 96.r,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(24.r),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.2),
@@ -35,11 +36,11 @@ class SplashView extends GetView<SplashController> {
                       ],
                     ),
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(24),
-                        child: Image.asset('assets/images/nameless_logo.png', width: 96, height: 96, fit: BoxFit.cover),
+                        borderRadius: BorderRadius.circular(24.r),
+                        child: Image.asset('assets/images/nameless_logo.png', width: 96.r, height: 96.r, fit: BoxFit.cover),
                       ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   Obx(() {
                     final name = controller.constituencyName.value;
                     return Column(
@@ -48,15 +49,15 @@ class SplashView extends GetView<SplashController> {
                         Text(
                           name.isNotEmpty ? name : 'MLA Connect',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 32,
+                            fontSize: 32.sp,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
                         ),
                         if (name.isNotEmpty) ...[
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8.h),
                           Text(
                             'MLA Connect',
                             textAlign: TextAlign.center,

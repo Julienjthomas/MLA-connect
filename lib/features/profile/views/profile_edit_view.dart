@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -27,7 +28,7 @@ class ProfileEditView extends GetView<ProfileEditController> {
             () => TextButton(
               onPressed: controller.loading.value ? null : controller.save,
               child: controller.loading.value
-                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                  ? SizedBox(width: 18.r, height: 18.r, child: const CircularProgressIndicator(strokeWidth: 2))
                   : const Text(
                       'Save',
                       style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
@@ -37,15 +38,15 @@ class ProfileEditView extends GetView<ProfileEditController> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24.r),
         child: Form(
           key: controller.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               _AvatarPicker(controller: controller),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               TextFormField(
                 controller: controller.nameController,
                 textCapitalization: TextCapitalization.words,
@@ -58,7 +59,7 @@ class ProfileEditView extends GetView<ProfileEditController> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               TextFormField(
                 controller: controller.emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -72,7 +73,7 @@ class ProfileEditView extends GetView<ProfileEditController> {
                   return ok ? null : 'Enter a valid email address';
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Obx(() {
                 final user = Get.find<AuthController>().user.value;
                 final phone = user?.phone;
@@ -90,7 +91,7 @@ class ProfileEditView extends GetView<ProfileEditController> {
                         ),
                         style: const TextStyle(color: AppColors.textSecondary),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                     ],
                     if (localBody != null) ...[
                       TextFormField(
@@ -102,7 +103,7 @@ class ProfileEditView extends GetView<ProfileEditController> {
                         ),
                         style: const TextStyle(color: AppColors.textSecondary),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                     ],
                     if (ward != null) ...[
                       TextFormField(
@@ -111,12 +112,12 @@ class ProfileEditView extends GetView<ProfileEditController> {
                         decoration: const InputDecoration(labelText: 'Ward', prefixIcon: Icon(Icons.map_outlined)),
                         style: const TextStyle(color: AppColors.textSecondary),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                     ],
                   ],
                 );
               }),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
             ],
           ),
         ),
@@ -155,8 +156,8 @@ class _AvatarPicker extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Container(
-              width: 96,
-              height: 96,
+              width: 96.r,
+              height: 96.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.surfaceVariant,
@@ -166,8 +167,8 @@ class _AvatarPicker extends StatelessWidget {
             ),
             if (uploading)
               Container(
-                width: 96,
-                height: 96,
+                width: 96.r,
+                height: 96.r,
                 decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black.withValues(alpha: 0.4)),
                 child: const Center(child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)),
               ),
@@ -176,10 +177,10 @@ class _AvatarPicker extends StatelessWidget {
                 bottom: 0,
                 right: 0,
                 child: Container(
-                  width: 28,
-                  height: 28,
+                  width: 28.r,
+                  height: 28.r,
                   decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary),
-                  child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 16),
+                  child: Icon(Icons.camera_alt_rounded, color: Colors.white, size: 16.r),
                 ),
               ),
           ],

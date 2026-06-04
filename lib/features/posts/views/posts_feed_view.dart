@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -26,9 +27,9 @@ class PostsFeedView extends GetView<PostsController> {
         return RefreshIndicator(
           onRefresh: controller.loadPosts,
           child: ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             itemCount: controller.posts.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (_, __) => SizedBox(height: 12.h),
             itemBuilder: (_, i) => _PostCard(post: controller.posts[i]),
           ),
         );
@@ -48,7 +49,7 @@ class _PostCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
         ),
         child: Column(
@@ -56,37 +57,37 @@ class _PostCard extends StatelessWidget {
           children: [
             if (post.imageUrl != null && post.imageUrl!.isNotEmpty)
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
                 child: CachedNetworkImage(
                   imageUrl: post.imageUrl!,
-                  height: 180,
+                  height: 180.h,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  errorWidget: (_, __, ___) => Container(height: 180, color: AppColors.surfaceVariant),
+                  errorWidget: (_, __, ___) => Container(height: 180.h, color: AppColors.surfaceVariant),
                 ),
               ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(post.title, style: AppTextStyles.titleMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   Text(
                     post.body,
                     style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Row(
                     children: [
-                      const Icon(Icons.favorite_border_rounded, size: 16, color: AppColors.grey500),
-                      const SizedBox(width: 4),
+                      Icon(Icons.favorite_border_rounded, size: 16.r, color: AppColors.grey500),
+                      SizedBox(width: 4.w),
                       Text('${post.likes}', style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary)),
-                      const SizedBox(width: 16),
-                      const Icon(Icons.visibility_outlined, size: 16, color: AppColors.grey500),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 16.w),
+                      Icon(Icons.visibility_outlined, size: 16.r, color: AppColors.grey500),
+                      SizedBox(width: 4.w),
                       Text('${post.views}', style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary)),
                       const Spacer(),
                       Text(

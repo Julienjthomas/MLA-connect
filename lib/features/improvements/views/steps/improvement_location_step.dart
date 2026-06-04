@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -12,17 +13,17 @@ class ImprovementLocationStep extends GetView<ImprovementController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.improveLocationHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.improveLocationSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
           Text(AppStrings.reportPanchayatLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Obx(() {
             if (controller.loadingLocalBodies.value) return const _LoadingField();
             final items = controller.localBodies;
@@ -45,10 +46,10 @@ class ImprovementLocationStep extends GetView<ImprovementController> {
             );
           }),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
           Text(AppStrings.reportWardLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Obx(() {
             if (controller.loadingWards.value) return const _LoadingField();
             final items = controller.wards;
@@ -73,22 +74,22 @@ class ImprovementLocationStep extends GetView<ImprovementController> {
             );
           }),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
           Text(AppStrings.landmark, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.landmarkController,
             decoration: InputDecoration(hintText: AppStrings.improveLandmarkHint),
           ),
 
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           PrimaryButton(
             text: AppStrings.improveNextReview,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.improveBlue,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );
@@ -100,15 +101,15 @@ class _LoadingField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
       decoration: BoxDecoration(
         color: AppColors.grey100,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.grey200),
       ),
       child: Row(children: [
-        const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)),
-        const SizedBox(width: 10),
+        SizedBox(width: 18.r, height: 18.r, child: const CircularProgressIndicator(strokeWidth: 2)),
+        SizedBox(width: 10.w),
         Text(AppStrings.loading, style: AppTextStyles.caption),
       ]),
     );

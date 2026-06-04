@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -14,25 +15,25 @@ class MessageStep extends GetView<AppreciationController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.appreciateMessageHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.appreciateMessageSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           TextField(
             controller: controller.messageController,
             maxLines: 6,
             maxLength: 500,
             decoration: InputDecoration(hintText: AppStrings.appreciateMessageHint),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(AppStrings.addVoiceNote, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           VoiceInputWidget(onRecorded: (path) => controller.voiceRecordingPath.value = path),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Obx(
             () => UploadWidget(
               files: controller.selectedImages.toList(),
@@ -42,13 +43,13 @@ class MessageStep extends GetView<AppreciationController> {
               label: AppStrings.appreciateAddPhotoLabel,
             ),
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           PrimaryButton(
             text: AppStrings.appreciateNextVisibility,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.appreciateGreen,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );

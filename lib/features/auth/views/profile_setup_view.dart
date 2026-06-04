@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -18,16 +19,16 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
       appBar: KeralaAppBar(title: AppStrings.basicProfile),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.r),
           child: Form(
             key: controller.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(AppStrings.basicProfile, style: AppTextStyles.headlineSmall),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Text(AppStrings.basicProfileSubtitle, style: AppTextStyles.bodySmall),
-                const SizedBox(height: 32),
+                SizedBox(height: 32.h),
                 Center(
                   child: GestureDetector(
                     onTap: controller.pickAndUploadImage,
@@ -37,29 +38,29 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                       return Stack(
                         children: [
                           CircleAvatar(
-                            radius: 44,
+                            radius: 44.r,
                             backgroundColor: AppColors.grey200,
                             backgroundImage: path.isNotEmpty ? FileImage(File(path)) : null,
                             child: path.isEmpty
-                                ? const Icon(Icons.person, size: 44, color: AppColors.grey500)
+                                ? Icon(Icons.person, size: 44.r, color: AppColors.grey500)
                                 : null,
                           ),
                           if (uploading)
-                            const Positioned.fill(
+                            Positioned.fill(
                               child: CircleAvatar(
-                                radius: 44,
+                                radius: 44.r,
                                 backgroundColor: Colors.black38,
-                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                child: const CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
                               ),
                             ),
                           Positioned(
                             bottom: 0,
                             right: 0,
                             child: Container(
-                              width: 30,
-                              height: 30,
+                              width: 30.r,
+                              height: 30.r,
                               decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
-                              child: const Icon(Icons.camera_alt, color: Colors.white, size: 16),
+                              child: Icon(Icons.camera_alt, color: Colors.white, size: 16.r),
                             ),
                           ),
                         ],
@@ -67,23 +68,23 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                     }),
                   ),
                 ),
-                const SizedBox(height: 28),
+                SizedBox(height: 28.h),
                 TextFormField(
                   controller: controller.nameController,
                   validator: (v) => Validators.minLength(v, 2, 'Name'),
                   textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person_outline, size: 20),
+                    prefixIcon: Icon(Icons.person_outline, size: 20.r),
                     hintText: AppStrings.fullName,
                   ),
                 ),
-                const SizedBox(height: 14),
+                SizedBox(height: 14.h),
                 TextFormField(
                   controller: controller.emailController,
                   validator: Validators.email,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email_outlined, size: 20),
+                    prefixIcon: Icon(Icons.email_outlined, size: 20.r),
                     hintText: AppStrings.emailOptional,
                   ),
                 ),
@@ -95,7 +96,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                     isLoading: controller.loading.value,
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
               ],
             ),
           ),

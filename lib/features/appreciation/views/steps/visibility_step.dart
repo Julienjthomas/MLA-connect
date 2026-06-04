@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -13,38 +14,38 @@ class AppreciationVisibilityStep extends GetView<AppreciationController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.appreciateVisibilityHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.appreciateVisibilitySubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           Obx(() => Column(
                 children: SubmissionVisibility.values.map((v) {
                   final isSelected = controller.visibility.value == v;
                   return GestureDetector(
                     onTap: () => controller.visibility.value = v,
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.all(16),
+                      margin: EdgeInsets.only(bottom: 10.h),
+                      padding: EdgeInsets.all(16.r),
                       decoration: BoxDecoration(
                         color: isSelected ? AppColors.appreciateGreenLight : AppColors.surface,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(14.r),
                         border: Border.all(color: isSelected ? AppColors.appreciateGreen : AppColors.grey200, width: isSelected ? 2 : 1),
                       ),
                       child: Row(children: [
                         Container(
-                          width: 20, height: 20,
+                          width: 20.r, height: 20.r,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isSelected ? AppColors.appreciateGreen : Colors.transparent,
                             border: Border.all(color: isSelected ? AppColors.appreciateGreen : AppColors.grey400, width: 2),
                           ),
-                          child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
+                          child: isSelected ? Icon(Icons.check, color: Colors.white, size: 12.r) : null,
                         ),
-                        const SizedBox(width: 14),
+                        SizedBox(width: 14.w),
                         Expanded(child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -57,9 +58,9 @@ class AppreciationVisibilityStep extends GetView<AppreciationController> {
                   );
                 }).toList(),
               )),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           PrimaryButton(text: AppStrings.appreciateNextReview, onPressed: controller.nextStep, backgroundColor: AppColors.appreciateGreen),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );

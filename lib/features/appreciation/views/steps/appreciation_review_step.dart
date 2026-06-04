@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -21,14 +22,14 @@ class AppreciationReviewStep extends GetView<AppreciationController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.appreciateReviewHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.appreciateReviewSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Obx(() {
             final category = controller.recipientCategory.value;
             final message = controller.messageController.text.trim();
@@ -42,34 +43,34 @@ class AppreciationReviewStep extends GetView<AppreciationController> {
               ],
             );
           }),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           Obx(() => PrimaryButton(
                 text: AppStrings.appreciateSubmitBtn,
                 onPressed: controller.submit,
                 isLoading: controller.isSubmitting.value,
                 backgroundColor: AppColors.appreciateGreen,
-                icon: const Icon(Icons.favorite_rounded, color: Colors.white, size: 18),
+                icon: Icon(Icons.favorite_rounded, color: Colors.white, size: 18.r),
               )),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );
   }
 
   Widget _card(String title, List<Widget> rows) => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.grey200)),
+        padding: EdgeInsets.all(16.r),
+        decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14.r), border: Border.all(color: AppColors.grey200)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(title, style: AppTextStyles.titleSmall.copyWith(color: AppColors.appreciateGreen)),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           ...rows,
         ]),
       );
 
   Widget _row(String label, String value) => Padding(
-        padding: const EdgeInsets.only(bottom: 6),
+        padding: EdgeInsets.only(bottom: 6.h),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(width: 90, child: Text(label, style: AppTextStyles.caption)),
+          SizedBox(width: 90.w, child: Text(label, style: AppTextStyles.caption)),
           Expanded(child: Text(value, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w500))),
         ]),
       );

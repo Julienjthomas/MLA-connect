@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -16,14 +17,14 @@ class NotificationsSetupView extends GetView<NotificationsSetupController> {
       appBar: KeralaAppBar(title: AppStrings.notificationPrefs),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(AppStrings.notificationPrefs, style: AppTextStyles.headlineSmall),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               Text(AppStrings.notificationSubtitle, style: AppTextStyles.bodySmall),
-              const SizedBox(height: 28),
+              SizedBox(height: 28.h),
               Obx(
                 () => Column(
                   children: [
@@ -35,7 +36,7 @@ class NotificationsSetupView extends GetView<NotificationsSetupController> {
                       value: controller.issueUpdates.value,
                       onChanged: (v) => controller.issueUpdates.value = v,
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     _notifTile(
                       icon: Icons.campaign_outlined,
                       iconColor: AppColors.improveBlue,
@@ -44,7 +45,7 @@ class NotificationsSetupView extends GetView<NotificationsSetupController> {
                       value: controller.mlaAnnouncements.value,
                       onChanged: (v) => controller.mlaAnnouncements.value = v,
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     _notifTile(
                       icon: Icons.warning_amber_outlined,
                       iconColor: AppColors.reportOrange,
@@ -53,7 +54,7 @@ class NotificationsSetupView extends GetView<NotificationsSetupController> {
                       value: controller.emergencyAlerts.value,
                       onChanged: (v) => controller.emergencyAlerts.value = v,
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     _notifTile(
                       icon: Icons.event_outlined,
                       iconColor: AppColors.appreciateGreen,
@@ -73,7 +74,7 @@ class NotificationsSetupView extends GetView<NotificationsSetupController> {
                   isLoading: controller.loading.value,
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
             ],
           ),
         ),
@@ -90,24 +91,24 @@ class NotificationsSetupView extends GetView<NotificationsSetupController> {
     required ValueChanged<bool> onChanged,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: AppColors.grey200),
       ),
       child: Row(
         children: [
           Container(
-            width: 36,
-            height: 36,
+            width: 36.r,
+            height: 36.r,
             decoration: BoxDecoration(
               color: iconColor.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
-            child: Icon(icon, color: iconColor, size: 18),
+            child: Icon(icon, color: iconColor, size: 18.r),
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

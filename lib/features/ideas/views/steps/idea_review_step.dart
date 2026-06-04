@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -15,24 +16,24 @@ class IdeaReviewStep extends GetView<IdeaController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.ideaReviewHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           _card(AppStrings.ideaCardDetails, [
             _row(AppStrings.ideaRowTopic, controller.topic.value),
             _row(AppStrings.reportReviewRowTitle, controller.titleController.text),
             _row(AppStrings.reportReviewRowDescription, controller.descriptionController.text.isEmpty ? '–' : controller.descriptionController.text),
           ]),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           _card(AppStrings.ideaCardImpact, [
             _row(AppStrings.ideaRowBenefits, controller.benefitsController.text.isEmpty ? '–' : controller.benefitsController.text),
             _row(AppStrings.ideaRowBeneficiaries, controller.beneficiaries.isEmpty ? '–' : controller.beneficiaries.join(', ')),
             _row(AppStrings.ideaRowResources, controller.estimatedResources.value.isEmpty ? '–' : controller.estimatedResources.value),
           ]),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           _card(AppStrings.ideaCardVisibility, [
             _row(AppStrings.reportReviewRowVisibility, controller.visibility.value.label),
           ]),
@@ -41,20 +42,20 @@ class IdeaReviewStep extends GetView<IdeaController> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 Text('${AppStrings.photos} (${controller.selectedImages.length})', style: AppTextStyles.titleSmall),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 SizedBox(
-                  height: 70,
+                  height: 70.h,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: controller.selectedImages.length,
                     itemBuilder: (_, i) => Container(
-                      width: 70,
-                      height: 70,
-                      margin: const EdgeInsets.only(right: 8),
+                      width: 70.r,
+                      height: 70.r,
+                      margin: EdgeInsets.only(right: 8.w),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         image: DecorationImage(
                           image: FileImage(File(controller.selectedImages[i].path)),
                           fit: BoxFit.cover,
@@ -66,33 +67,32 @@ class IdeaReviewStep extends GetView<IdeaController> {
               ],
             );
           }),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           Obx(() => PrimaryButton(
                 text: AppStrings.ideaSubmitBtn,
                 onPressed: controller.submit,
                 isLoading: controller.isSubmitting.value,
                 backgroundColor: AppColors.ideaPurple,
               )),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );
   }
 
   Widget _card(String title, List<Widget> rows) => Container(
-        margin: const EdgeInsets.only(bottom: 0),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.grey200)),
+        padding: EdgeInsets.all(16.r),
+        decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(14.r), border: Border.all(color: AppColors.grey200)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(title, style: AppTextStyles.titleSmall.copyWith(color: AppColors.ideaPurple)),
-          const SizedBox(height: 10), ...rows,
+          SizedBox(height: 10.h), ...rows,
         ]),
       );
 
   Widget _row(String label, String value) => Padding(
-        padding: const EdgeInsets.only(bottom: 6),
+        padding: EdgeInsets.only(bottom: 6.h),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(width: 100, child: Text(label, style: AppTextStyles.caption)),
+          SizedBox(width: 100.w, child: Text(label, style: AppTextStyles.caption)),
           Expanded(child: Text(value, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w500))),
         ]),
       );

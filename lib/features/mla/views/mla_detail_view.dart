@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_colors.dart';
@@ -15,15 +16,15 @@ class MlaDetailView extends GetView<MlaController> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.loading.value) {
-        return const Scaffold(
+        return Scaffold(
           body: Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             child: Column(children: [
-              ShimmerBox(height: 240),
-              SizedBox(height: 16),
-              ShimmerBox(height: 80, borderRadius: 16),
-              SizedBox(height: 16),
-              ShimmerBox(height: 120, borderRadius: 16),
+              ShimmerBox(height: 240.h),
+              SizedBox(height: 16.h),
+              ShimmerBox(height: 80.h, borderRadius: 16),
+              SizedBox(height: 16.h),
+              ShimmerBox(height: 120.h, borderRadius: 16),
             ]),
           ),
         );
@@ -68,7 +69,7 @@ class MlaDetailView extends GetView<MlaController> {
                       right: 20,
                       child: Row(children: [
                         Container(
-                          width: 80, height: 80,
+                          width: 80.r, height: 80.r,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.white, width: 2.5),
@@ -79,12 +80,12 @@ class MlaDetailView extends GetView<MlaController> {
                               fit: BoxFit.cover,
                               errorWidget: (_, __, ___) => Container(
                                 color: Colors.white24,
-                                child: const Icon(Icons.person, color: Colors.white, size: 40),
+                                child: Icon(Icons.person, color: Colors.white, size: 40.r),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 14),
+                        SizedBox(width: 14.w),
                         Expanded(child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -93,11 +94,11 @@ class MlaDetailView extends GetView<MlaController> {
                               'MLA',
                               style: AppTextStyles.caption.copyWith(
                                 color: Colors.white60,
-                                fontSize: 11,
+                                fontSize: 11.sp,
                                 letterSpacing: 1.2,
                               ),
                             ),
-                            const SizedBox(height: 2),
+                            SizedBox(height: 2.h),
                             Text(mla.name, style: AppTextStyles.titleLarge.copyWith(color: Colors.white)),
                             Text(mla.constituency, style: AppTextStyles.bodySmall.copyWith(color: Colors.white70)),
                           ],
@@ -109,36 +110,34 @@ class MlaDetailView extends GetView<MlaController> {
               ),
             ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            SliverToBoxAdapter(child: SizedBox(height: 16.h)),
 
-            // About MLA — expandable
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: _ExpandableAbout(mla: mla),
               ),
             ),
 
-            // Photo gallery — hidden when empty.
             if (mla.galleryUrls.isNotEmpty)
               SliverToBoxAdapter(
                 child: _PhotoGallery(urls: mla.galleryUrls),
               ),
 
-            const SliverToBoxAdapter(child: SizedBox(height: 100)),
+            SliverToBoxAdapter(child: SizedBox(height: 100.h)),
           ],
         ),
         bottomNavigationBar: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (mla.contact.officeAddress != null) ...[
                   Row(
                     children: [
-                      const Icon(Icons.location_on_outlined, size: 16, color: AppColors.grey500),
-                      const SizedBox(width: 6),
+                      Icon(Icons.location_on_outlined, size: 16.r, color: AppColors.grey500),
+                      SizedBox(width: 6.w),
                       Expanded(
                         child: Text(
                           mla.contact.officeAddress!,
@@ -147,17 +146,17 @@ class MlaDetailView extends GetView<MlaController> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                 ],
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
                     onPressed: () => _call(mla.contact.phone),
-                    icon: const Icon(Icons.phone, size: 18),
+                    icon: Icon(Icons.phone, size: 18.r),
                     label: const Text('Call Office'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.appreciateGreen,
-                      minimumSize: const Size(0, 48),
+                      minimumSize: Size(0, 48.h),
                     ),
                   ),
                 ),
@@ -182,27 +181,27 @@ class _ExpandableAbout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(bottom: 16.h),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.grey200),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('About MLA', style: AppTextStyles.headlineSmall),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Text(_aboutText(mla), style: AppTextStyles.bodyMedium),
             if (mla.education != null) ...[
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.school_outlined, size: 16, color: AppColors.grey500),
-                  const SizedBox(width: 6),
+                  Icon(Icons.school_outlined, size: 16.r, color: AppColors.grey500),
+                  SizedBox(width: 6.w),
                   Expanded(child: Text(mla.education!, style: AppTextStyles.bodySmall)),
                 ],
               ),
@@ -240,33 +239,33 @@ class _PhotoGallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            child: Text('Gallery', style: AppTextStyles.headlineSmall),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: const Text('Gallery', style: AppTextStyles.headlineSmall),
           ),
           SizedBox(
-            height: 110,
+            height: 110.h,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: urls.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 10),
+              separatorBuilder: (_, __) => SizedBox(width: 10.w),
               itemBuilder: (_, i) {
                 return GestureDetector(
                   onTap: () => _openViewer(context, i),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     child: CachedNetworkImage(
                       imageUrl: urls[i],
-                      width: 140,
-                      height: 110,
+                      width: 140.w,
+                      height: 110.h,
                       fit: BoxFit.cover,
                       errorWidget: (_, __, ___) => Container(
-                        width: 140,
-                        height: 110,
+                        width: 140.w,
+                        height: 110.h,
                         color: AppColors.grey200,
                         child: const Icon(Icons.broken_image_outlined, color: AppColors.grey400),
                       ),

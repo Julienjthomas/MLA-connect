@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -29,40 +30,40 @@ class EventsListView extends StatelessWidget {
           );
         }
         return ListView.separated(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.r),
           itemCount: events.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          separatorBuilder: (_, __) => SizedBox(height: 12.h),
           itemBuilder: (_, i) {
             final e = events[i];
             return GestureDetector(
               onTap: () => Get.toNamed(Routes.eventDetail, arguments: e.id),
               child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.r),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(color: AppColors.grey200),
                 ),
                 child: Row(
                   children: [
                     Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10)),
-                      child: const Icon(Icons.event_rounded, color: AppColors.primary, size: 22),
+                      width: 40.r,
+                      height: 40.r,
+                      decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(10.r)),
+                      child: Icon(Icons.event_rounded, color: AppColors.primary, size: 22.r),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(e.title, style: AppTextStyles.titleSmall),
-                          const SizedBox(height: 2),
+                          SizedBox(height: 2.h),
                           Text(e.formattedTime, style: AppTextStyles.caption),
                         ],
                       ),
                     ),
-                    const Icon(Icons.chevron_right_rounded, color: AppColors.textTertiary, size: 20),
+                    Icon(Icons.chevron_right_rounded, color: AppColors.textTertiary, size: 20.r),
                   ],
                 ),
               ),

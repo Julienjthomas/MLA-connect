@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -14,29 +15,29 @@ class IdeaDetailsStep extends GetView<IdeaController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.ideaDetailsHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.ideaDetailsSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(AppStrings.ideaTopicLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Obx(
             () => Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: 8.w,
+              runSpacing: 8.h,
               children: controller.topics.map((t) {
                 final isSel = controller.topic.value == t;
                 return GestureDetector(
                   onTap: () => controller.topic.value = t,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
                     decoration: BoxDecoration(
                       color: isSel ? AppColors.ideaPurple : AppColors.grey100,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(20.r),
                       border: Border.all(color: isSel ? AppColors.ideaPurple : AppColors.grey300),
                     ),
                     child: Text(
@@ -56,9 +57,9 @@ class IdeaDetailsStep extends GetView<IdeaController> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 14),
+                SizedBox(height: 14.h),
                 Text(AppStrings.ideaCustomTopicLabel, style: AppTextStyles.titleSmall),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 TextField(
                   controller: controller.customTopicController,
                   decoration: InputDecoration(hintText: AppStrings.ideaCustomTopicHint),
@@ -66,30 +67,30 @@ class IdeaDetailsStep extends GetView<IdeaController> {
               ],
             );
           }),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(AppStrings.ideaTitleLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.titleController,
             decoration: InputDecoration(hintText: AppStrings.ideaTitleHint),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
           Text(AppStrings.ideaDescLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.descriptionController,
             maxLines: 5,
             maxLength: 1000,
             decoration: InputDecoration(
               hintText: AppStrings.ideaDescHint,
-              contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 56),
+              contentPadding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 56.h),
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Text(AppStrings.addVoiceNote, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           VoiceInputWidget(onRecorded: (path) => controller.voiceRecordingPath.value = path),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           Obx(
             () => UploadWidget(
               files: controller.selectedImages.toList(),
@@ -108,13 +109,13 @@ class IdeaDetailsStep extends GetView<IdeaController> {
               },
             ),
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           PrimaryButton(
             text: AppStrings.ideaNextImpact,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.ideaPurple,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );

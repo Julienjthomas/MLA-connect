@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import '../../../core/constants/app_strings.dart';
@@ -14,12 +15,12 @@ class OtpView extends GetView<OtpController> {
   @override
   Widget build(BuildContext context) {
     final defaultTheme = PinTheme(
-      width: 52,
-      height: 58,
+      width: 52.w,
+      height: 58.h,
       textStyle: AppTextStyles.headlineMedium,
       decoration: BoxDecoration(
         color: AppColors.grey100,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.grey300),
       ),
     );
@@ -28,26 +29,26 @@ class OtpView extends GetView<OtpController> {
       appBar: const KeralaAppBar(title: ''),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               Text(AppStrings.verifyOtp, style: AppTextStyles.headlineLarge),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.h),
               Text(AppStrings.otpSentTo, style: AppTextStyles.bodyMedium),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               Row(
                 children: [
                   Text('+91 ${controller.phone}', style: AppTextStyles.titleMedium),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.w),
                   GestureDetector(
                     onTap: () => Get.back(),
-                    child: const Icon(Icons.edit_outlined, size: 16, color: AppColors.primary),
+                    child: Icon(Icons.edit_outlined, size: 16.r, color: AppColors.primary),
                   ),
                 ],
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               Center(
                 child: Pinput(
                   controller: controller.otpController,
@@ -56,14 +57,14 @@ class OtpView extends GetView<OtpController> {
                   focusedPinTheme: defaultTheme.copyWith(
                     decoration: BoxDecoration(
                       color: AppColors.ideaPurpleLight,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                       border: Border.all(color: AppColors.primary, width: 2),
                     ),
                   ),
                   onCompleted: (_) => controller.verify(),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Center(
                 child: Obx(
                   () => controller.resendSeconds.value > 0
@@ -88,7 +89,7 @@ class OtpView extends GetView<OtpController> {
                   isLoading: controller.loading.value,
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Center(
                 child: GestureDetector(
                   onTap: () => Get.back(),
@@ -98,7 +99,7 @@ class OtpView extends GetView<OtpController> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
             ],
           ),
         ),

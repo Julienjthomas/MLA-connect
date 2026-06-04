@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -17,23 +18,23 @@ class HelpFaqView extends StatelessWidget {
         title: Text(AppStrings.helpFaq, style: AppTextStyles.titleMedium),
       ),
       body: ListView.separated(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         itemCount: faqs.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 8),
+        separatorBuilder: (_, __) => SizedBox(height: 8.h),
         itemBuilder: (_, i) {
           final f = faqs[i];
           return Container(
             decoration: BoxDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: AppColors.grey200),
             ),
             child: ExpansionTile(
               shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.transparent)),
               collapsedShape:
                   const RoundedRectangleBorder(side: BorderSide(color: Colors.transparent)),
-              tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              tilePadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+              childrenPadding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 16.h),
               title: Text(f.question, style: AppTextStyles.titleSmall),
               children: [
                 Align(

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -31,21 +32,21 @@ class ProfileView extends GetView<ProfileController> {
       body: ListView(
         children: [
           _UserCard(controller: controller),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _ChatWithMlaCard(),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _SectionLabel('Achievements'),
           Obx(() {
             final count = Get.find<AuthController>().user.value?.contributionCount ?? 0;
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
               child: BadgesWidget(contributionCount: count),
             );
           }),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _SectionLabel(AppStrings.notifications),
           _NotificationTiles(controller: controller),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _SectionLabel(AppStrings.general),
           _SettingsTile(
             icon: Icons.language_outlined,
@@ -57,9 +58,9 @@ class ProfileView extends GetView<ProfileController> {
                 Obx(() {
                   final lang = Get.find<AuthController>().user.value?.language ?? 'en';
                   final label = lang == 'ml' ? 'മലയാളം' : 'English';
-                  return Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13));
+                  return Text(label, style: TextStyle(color: AppColors.textSecondary, fontSize: 13.sp));
                 }),
-                const Icon(Icons.chevron_right, color: AppColors.grey400, size: 20),
+                Icon(Icons.chevron_right, color: AppColors.grey400, size: 20.r),
               ],
             ),
             onTap: () => controller.pickLanguage(context),
@@ -79,7 +80,7 @@ class ProfileView extends GetView<ProfileController> {
             title: AppStrings.privacyPolicy,
             onTap: () => Get.toNamed(Routes.privacyPolicy),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _SectionLabel(AppStrings.account),
           _SettingsTile(
             icon: Icons.logout_rounded,
@@ -88,7 +89,7 @@ class ProfileView extends GetView<ProfileController> {
             iconColor: AppColors.statusRejected,
             onTap: () => _confirmLogout(context),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _SettingsTile(
             icon: Icons.delete_forever_rounded,
             title: AppStrings.deleteAccountData,
@@ -96,14 +97,14 @@ class ProfileView extends GetView<ProfileController> {
             iconColor: AppColors.statusRejected.withValues(alpha: 0.7),
             onTap: () => _confirmDeleteAccount(context),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40.h),
           Center(
             child: Text(
               '${AppStrings.appName} v1.0.0',
               style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
         ],
       ),
     );
@@ -164,18 +165,18 @@ class _ChatWithMlaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Material(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         child: InkWell(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           onTap: () => Get.toNamed(Routes.chat),
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             decoration: BoxDecoration(
               color: AppColors.primary.withValues(alpha: 0.04),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(16.r),
               border: Border.all(color: AppColors.primary.withValues(alpha: 0.12)),
               boxShadow: [
                 BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
@@ -184,28 +185,28 @@ class _ChatWithMlaCard extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 44,
-                  height: 44,
+                  width: 44.r,
+                  height: 44.r,
                   decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
-                  child: const Icon(Icons.account_balance_rounded, color: AppColors.primary, size: 22),
+                  child: Icon(Icons.account_balance_rounded, color: AppColors.primary, size: 22.r),
                 ),
-                const SizedBox(width: 14),
+                SizedBox(width: 14.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [Text(AppStrings.chatWithYourMla, style: AppTextStyles.titleSmall)],
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 OutlinedButton.icon(
                   onPressed: () => Get.toNamed(Routes.chat),
-                  icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16),
+                  icon: Icon(Icons.chat_bubble_outline_rounded, size: 16.r),
                   label: Text(AppStrings.startChat),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: const BorderSide(color: AppColors.primary),
                     shape: const StadiumBorder(),
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
                     textStyle: AppTextStyles.labelMedium,
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -227,11 +228,11 @@ class _UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(20),
+      margin: EdgeInsets.all(16.r),
+      padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
       ),
       child: Obx(() {
@@ -239,8 +240,8 @@ class _UserCard extends StatelessWidget {
         return Row(
           children: [
             Container(
-              width: 64,
-              height: 64,
+              width: 64.r,
+              height: 64.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.surfaceVariant,
@@ -256,25 +257,25 @@ class _UserCard extends StatelessWidget {
                     : _defaultAvatar(controller.userName),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(controller.userName, style: AppTextStyles.titleMedium),
                   if (controller.userPhone != null) ...[
-                    const SizedBox(height: 2),
+                    SizedBox(height: 2.h),
                     Text(
                       controller.userPhone!.startsWith('+') ? controller.userPhone! : '+91 ${controller.userPhone!}',
                       style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
                     ),
                   ],
                   if (controller.wardName != null || controller.localBodyName != null) ...[
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4.h),
                     Row(
                       children: [
-                        const Icon(Icons.location_on_outlined, size: 13, color: AppColors.primary),
-                        const SizedBox(width: 3),
+                        Icon(Icons.location_on_outlined, size: 13.r, color: AppColors.primary),
+                        SizedBox(width: 3.w),
                         Expanded(
                           child: Text(
                             [
@@ -293,7 +294,7 @@ class _UserCard extends StatelessWidget {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.edit_outlined, size: 20, color: AppColors.textSecondary),
+              icon: Icon(Icons.edit_outlined, size: 20.r, color: AppColors.textSecondary),
               onPressed: () => Get.toNamed(Routes.profileEdit),
             ),
           ],
@@ -385,11 +386,11 @@ class _SwitchTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          leading: Icon(icon, color: AppColors.primary, size: 22),
+          leading: Icon(icon, color: AppColors.primary, size: 22.r),
           title: Text(title, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w500)),
           subtitle: Text(subtitle, style: AppTextStyles.caption),
           trailing: Switch.adaptive(value: value, onChanged: onChanged, activeThumbColor: AppColors.primary),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
         ),
         if (showDivider) const Divider(height: 1, indent: 56, endIndent: 16),
       ],
@@ -419,14 +420,14 @@ class _SettingsTile extends StatelessWidget {
     return Container(
       color: AppColors.surface,
       child: ListTile(
-        leading: Icon(icon, color: iconColor ?? AppColors.textSecondary, size: 22),
+        leading: Icon(icon, color: iconColor ?? AppColors.textSecondary, size: 22.r),
         title: Text(
           title,
           style: AppTextStyles.bodyMedium.copyWith(color: titleColor, fontWeight: FontWeight.w500),
         ),
-        trailing: trailing ?? const Icon(Icons.chevron_right, color: AppColors.grey400, size: 20),
+        trailing: trailing ?? Icon(Icons.chevron_right, color: AppColors.grey400, size: 20.r),
         onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
       ),
     );
   }
@@ -439,7 +440,7 @@ class _SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 8.h),
       child: Text(
         label.toUpperCase(),
         style: AppTextStyles.caption.copyWith(

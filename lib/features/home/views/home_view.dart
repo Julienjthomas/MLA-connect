@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
@@ -31,16 +32,16 @@ class HomeView extends GetView<HomeController> {
           child: CustomScrollView(
             slivers: [
               _buildAppBar(),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(child: SizedBox(height: 16.h)),
               _buildHeroBanner(),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              SliverToBoxAdapter(child: SizedBox(height: 20.h)),
               _buildWhatWouldYouLike(),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(child: SizedBox(height: 16.h)),
               _buildActionGrid(context),
               _buildRecentUpdatesSection(),
               _buildCommunityImpact(),
               _buildBottomSections(),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(child: SizedBox(height: 16.h)),
             ],
           ),
         ),
@@ -61,10 +62,10 @@ class HomeView extends GetView<HomeController> {
         return Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset('assets/images/nameless_logo.png', width: 49, height: 49, fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(8.r),
+              child: Image.asset('assets/images/nameless_logo.png', width: 49.r, height: 49.r, fit: BoxFit.cover),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,9 +73,9 @@ class HomeView extends GetView<HomeController> {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
                       color: AppColors.primary,
                     ),
@@ -98,8 +99,8 @@ class HomeView extends GetView<HomeController> {
               right: 10,
               top: 10,
               child: Container(
-                width: 8,
-                height: 8,
+                width: 8.r,
+                height: 8.r,
                 decoration: const BoxDecoration(color: AppColors.reportOrange, shape: BoxShape.circle),
               ),
             ),
@@ -114,7 +115,7 @@ class HomeView extends GetView<HomeController> {
       child: Obx(() {
         final mla = controller.mla.value;
         if (mla == null && controller.mlaLoading.value) {
-          return const SizedBox(height: 130, child: Center(child: CircularProgressIndicator()));
+          return SizedBox(height: 130.h, child: const Center(child: CircularProgressIndicator()));
         }
         if (mla == null) return const SizedBox.shrink();
         return MlaHeroBanner(mla: mla);
@@ -125,15 +126,15 @@ class HomeView extends GetView<HomeController> {
   SliverToBoxAdapter _buildWhatWouldYouLike() {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               AppStrings.whatWouldYouLike,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Poppins',
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
                 height: 1.3,
@@ -145,8 +146,6 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  // Tiles order: Report, Idea, Improve, Appreciate.
-  // IntrinsicHeight makes both tiles in a row match the tallest's natural height.
   SliverToBoxAdapter _buildActionGrid(BuildContext context) {
     final tiles = [
       ActionCard(
@@ -188,7 +187,7 @@ class HomeView extends GetView<HomeController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(child: a),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(child: b),
         ],
       ),
@@ -196,8 +195,8 @@ class HomeView extends GetView<HomeController> {
 
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(children: [row(tiles[0], tiles[1]), const SizedBox(height: 12), row(tiles[2], tiles[3])]),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(children: [row(tiles[0], tiles[1]), SizedBox(height: 12.h), row(tiles[2], tiles[3])]),
       ),
     );
   }
@@ -215,9 +214,9 @@ class HomeView extends GetView<HomeController> {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: SectionHeader(
                     title: AppStrings.recentUpdates,
                     actionLabel: AppStrings.viewAll,
@@ -230,12 +229,12 @@ class HomeView extends GetView<HomeController> {
                     },
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 SizedBox(
                   height: cardHeight,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
                     itemCount: items.length,
                     itemBuilder: (_, i) {
                       final item = items[i];
@@ -257,25 +256,24 @@ class HomeView extends GetView<HomeController> {
   SliverToBoxAdapter _buildCommunityImpact() {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
+        padding: EdgeInsets.fromLTRB(16.w, 24.h, 16.w, 0),
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.r),
           decoration: BoxDecoration(
             color: AppColors.surface,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(16.r),
             border: Border.all(color: AppColors.grey200),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Left — icon + title/subtitle
               Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(14)),
-                child: const Icon(Icons.bar_chart_rounded, color: AppColors.primary, size: 26),
+                width: 48.r,
+                height: 48.r,
+                decoration: BoxDecoration(color: AppColors.ideaPurpleLight, borderRadius: BorderRadius.circular(14.r)),
+                child: Icon(Icons.bar_chart_rounded, color: AppColors.primary, size: 26.r),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,8 +286,7 @@ class HomeView extends GetView<HomeController> {
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
-              // Right — 3 stats
+              SizedBox(width: 12.w),
               Obx(() {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
@@ -301,14 +298,14 @@ class HomeView extends GetView<HomeController> {
                       '${controller.impactReports.value}',
                       'Issues\nRaised',
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     _impactStat(
                       Icons.folder_open_rounded,
                       AppColors.appreciateGreen,
                       '${controller.impactIdeas.value}',
                       'Active\nProjects',
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16.w),
                     _impactStat(
                       Icons.people_alt_rounded,
                       AppColors.reportOrange,
@@ -331,19 +328,19 @@ class HomeView extends GetView<HomeController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: 40,
-          height: 40,
+          width: 40.r,
+          height: 40.r,
           decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
-          child: Icon(icon, color: color, size: 20),
+          child: Icon(icon, color: color, size: 20.r),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Text(
           value,
           style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.w700, color: color),
         ),
         Text(
           label,
-          style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 9, height: 1.2),
+          style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 9.sp, height: 1.2),
           textAlign: TextAlign.center,
         ),
       ],
@@ -357,37 +354,37 @@ class HomeView extends GetView<HomeController> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.r),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [Color(0xFF5B2EE2), Color(0xFF7B52F0)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Row(
                   children: [
                     Container(
-                      width: 52,
-                      height: 52,
+                      width: 52.r,
+                      height: 52.r,
                       decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), shape: BoxShape.circle),
-                      child: const Icon(Icons.campaign_rounded, color: Colors.white, size: 28),
+                      child: Icon(Icons.campaign_rounded, color: Colors.white, size: 28.r),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'Stay informed, stay connected!',
-                            style: AppTextStyles.titleSmall.copyWith(color: Colors.white, fontSize: 13),
+                            style: AppTextStyles.titleSmall.copyWith(color: Colors.white, fontSize: 13.sp),
                           ),
-                          const SizedBox(height: 2),
+                          SizedBox(height: 2.h),
                           Text(
                             'Get the latest announcements.',
                             style: AppTextStyles.caption.copyWith(color: Colors.white70),
@@ -395,7 +392,7 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     GestureDetector(
                       onTap: () {
                         try {
@@ -404,10 +401,10 @@ class HomeView extends GetView<HomeController> {
                         } catch (_) {}
                       },
                       child: Container(
-                        width: 36,
-                        height: 36,
+                        width: 36.r,
+                        height: 36.r,
                         decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                        child: const Icon(Icons.arrow_forward_rounded, color: AppColors.primary, size: 18),
+                        child: Icon(Icons.arrow_forward_rounded, color: AppColors.primary, size: 18.r),
                       ),
                     ),
                   ],
@@ -415,7 +412,7 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             if (events.isNotEmpty) ...[
-              const SizedBox(height: 24),
+              SizedBox(height: 24.h),
               _EventsCarousel(
                 events: events,
                 onViewAll: () {
@@ -432,21 +429,21 @@ class HomeView extends GetView<HomeController> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
                     child: SectionHeader(
                       title: 'MLA Posts',
                       actionLabel: AppStrings.viewAll,
                       onAction: () => Get.toNamed(Routes.postsList),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   SizedBox(
-                    height: 130,
+                    height: 130.h,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
                       itemCount: posts.take(5).length,
                       itemBuilder: (_, i) => _PostMiniCard(post: posts[i]),
                     ),
@@ -463,20 +460,20 @@ class HomeView extends GetView<HomeController> {
   Widget _activityCardPlaceholder(UpdateModel item) {
     final color = item.category.color;
     return Container(
-      height: 110,
+      height: 110.h,
       width: double.infinity,
       color: color.withValues(alpha: 0.12),
-      child: Icon(Icons.campaign_rounded, color: color, size: 36),
+      child: Icon(Icons.campaign_rounded, color: color, size: 36.r),
     );
   }
 
   Widget _activityCard(UpdateModel item, double width) {
     return Container(
       width: width,
-      margin: const EdgeInsets.only(right: 12),
+      margin: EdgeInsets.only(right: 12.w),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
       ),
       child: Column(
@@ -484,12 +481,12 @@ class HomeView extends GetView<HomeController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(14.r)),
             child: item.imageUrl != null
                 ? CachedNetworkImage(
                     imageUrl: item.imageUrl!,
                     cacheKey: item.imageCacheKey,
-                    height: 110,
+                    height: 110.h,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorWidget: (_, __, ___) => _activityCardPlaceholder(item),
@@ -497,30 +494,30 @@ class HomeView extends GetView<HomeController> {
                 : _activityCardPlaceholder(item),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+            padding: EdgeInsets.fromLTRB(8.w, 6.h, 8.w, 8.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   item.localTitle,
-                  style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600, fontSize: 12),
+                  style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w600, fontSize: 12.sp),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Row(
                   children: [
-                    const Icon(Icons.favorite_outline, size: 10, color: AppColors.textTertiary),
-                    const SizedBox(width: 3),
+                    Icon(Icons.favorite_outline, size: 10.r, color: AppColors.textTertiary),
+                    SizedBox(width: 3.w),
                     Text(
                       '${item.likes}',
-                      style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
+                      style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10.sp),
                     ),
                     const Spacer(),
                     Text(
                       DateFormatter.timeAgo(item.createdAt),
-                      style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10),
+                      style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10.sp),
                     ),
                   ],
                 ),
@@ -544,32 +541,32 @@ class _PostMiniCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.postDetail, arguments: {'id': post.id}),
       child: Container(
-        width: 160,
-        margin: const EdgeInsets.only(right: 12),
-        padding: const EdgeInsets.all(12),
+        width: 160.w,
+        margin: EdgeInsets.only(right: 12.w),
+        padding: EdgeInsets.all(12.r),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(14.r),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 28, height: 28,
+              width: 28.r, height: 28.r,
               decoration: const BoxDecoration(color: AppColors.ideaPurpleLight, shape: BoxShape.circle),
-              child: const Icon(Icons.article_rounded, color: AppColors.primary, size: 16),
+              child: Icon(Icons.article_rounded, color: AppColors.primary, size: 16.r),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Expanded(
               child: Text(post.title, style: AppTextStyles.bodySmall.copyWith(fontWeight: FontWeight.w600), maxLines: 3, overflow: TextOverflow.ellipsis),
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: 6.h),
             Row(
               children: [
-                const Icon(Icons.favorite_border_rounded, size: 12, color: AppColors.grey400),
-                const SizedBox(width: 3),
-                Text('${post.likes}', style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10)),
+                Icon(Icons.favorite_border_rounded, size: 12.r, color: AppColors.grey400),
+                SizedBox(width: 3.w),
+                Text('${post.likes}', style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary, fontSize: 10.sp)),
               ],
             ),
           ],
@@ -606,34 +603,34 @@ class _EventsCarouselState extends State<_EventsCarousel> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SectionHeader(title: 'Upcoming Events', actionLabel: AppStrings.viewAll, onAction: widget.onViewAll),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         SizedBox(
-          height: 110,
+          height: 110.h,
           child: PageView.builder(
             controller: _controller,
             itemCount: widget.events.length,
             onPageChanged: (i) => setState(() => _current = i),
             itemBuilder: (_, i) =>
-                Padding(padding: const EdgeInsets.symmetric(horizontal: 6), child: _eventCard(widget.events[i])),
+                Padding(padding: EdgeInsets.symmetric(horizontal: 6.w), child: _eventCard(widget.events[i])),
           ),
         ),
         if (widget.events.length > 1) ...[
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(widget.events.length, (i) {
               final active = i == _current;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                margin: const EdgeInsets.symmetric(horizontal: 3),
-                width: active ? 16 : 6,
-                height: 6,
+                margin: EdgeInsets.symmetric(horizontal: 3.w),
+                width: active ? 16.w : 6.w,
+                height: 6.h,
                 decoration: BoxDecoration(
                   color: active ? AppColors.primary : AppColors.primary.withValues(alpha: 0.25),
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(3.r),
                 ),
               );
             }),
@@ -649,7 +646,7 @@ class _EventsCarouselState extends State<_EventsCarousel> {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2))],
         ),
         child: IntrinsicHeight(
@@ -657,45 +654,45 @@ class _EventsCarouselState extends State<_EventsCarousel> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                width: 72,
-                decoration: const BoxDecoration(
+                width: 72.w,
+                decoration: BoxDecoration(
                   color: AppColors.ideaPurpleLight,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), bottomLeft: Radius.circular(16.r)),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(event.shortMonth, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
-                    const SizedBox(height: 2),
-                    Text('${event.startsAt.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
-                    const SizedBox(height: 4),
-                    Text(event.shortWeekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                    Text(event.shortMonth, style: TextStyle(fontFamily: 'Poppins', fontSize: 11.sp, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
+                    SizedBox(height: 2.h),
+                    Text('${event.startsAt.day}', style: TextStyle(fontFamily: 'Poppins', fontSize: 28.sp, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
+                    SizedBox(height: 4.h),
+                    Text(event.shortWeekday, style: TextStyle(fontFamily: 'Poppins', fontSize: 10.sp, fontWeight: FontWeight.w600, color: AppColors.primary)),
                   ],
                 ),
               ),
               Container(width: 1, color: AppColors.grey200),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 14, 12),
+                  padding: EdgeInsets.fromLTRB(16.w, 12.h, 14.w, 12.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(event.title, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: 8),
+                      Text(event.title, style: TextStyle(fontFamily: 'Poppins', fontSize: 15.sp, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
+                      SizedBox(height: 8.h),
                       Row(
                         children: [
-                          Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
-                          const SizedBox(width: 5),
-                          Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
+                          Icon(Icons.access_time_rounded, size: 14.r, color: AppColors.primary.withValues(alpha: 0.7)),
+                          SizedBox(width: 5.w),
+                          Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12.sp)),
                           if (event.venue.isNotEmpty) ...[
-                            Container(margin: const EdgeInsets.symmetric(horizontal: 10), width: 1, height: 12, color: AppColors.grey200),
-                            Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
-                            const SizedBox(width: 5),
-                            Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                            Container(margin: EdgeInsets.symmetric(horizontal: 10.w), width: 1, height: 12.h, color: AppColors.grey200),
+                            Icon(Icons.location_on_outlined, size: 14.r, color: AppColors.primary.withValues(alpha: 0.7)),
+                            SizedBox(width: 5.w),
+                            Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12.sp), maxLines: 1, overflow: TextOverflow.ellipsis)),
                           ],
                         ],
                       ),

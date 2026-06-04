@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -18,17 +19,17 @@ class ConstituencyView extends GetView<OnboardingController> {
       appBar: const KeralaAppBar(title: 'Assembly constituency', showBack: false),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Select your constituency', style: AppTextStyles.headlineSmall),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               Text(
                 'You can change detailed location (panchayath / ward) in the next steps.',
                 style: AppTextStyles.bodySmall,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Expanded(
                 child: Obx(() {
                   if (controller.loadingConstituencies.value) {
@@ -44,11 +45,11 @@ class ConstituencyView extends GetView<OnboardingController> {
                         return GestureDetector(
                           onTap: () => controller.selectConstituency(c),
                           child: Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                            margin: EdgeInsets.only(bottom: 10.h),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                             decoration: BoxDecoration(
                               color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
                                 color: isSelected ? AppColors.primary : AppColors.grey200,
                                 width: isSelected ? 2 : 1,
@@ -57,8 +58,8 @@ class ConstituencyView extends GetView<OnboardingController> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 20,
-                                  height: 20,
+                                  width: 20.r,
+                                  height: 20.r,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: isSelected ? AppColors.primary : Colors.transparent,
@@ -67,9 +68,9 @@ class ConstituencyView extends GetView<OnboardingController> {
                                       width: 2,
                                     ),
                                   ),
-                                  child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
+                                  child: isSelected ? Icon(Icons.check, color: Colors.white, size: 12.r) : null,
                                 ),
-                                const SizedBox(width: 12),
+                                SizedBox(width: 12.w),
                                 Expanded(
                                   child: Text(c.name, style: AppTextStyles.titleMedium),
                                 ),

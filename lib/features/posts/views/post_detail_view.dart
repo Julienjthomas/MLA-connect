@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -28,32 +29,32 @@ class PostDetailView extends GetView<PostsController> {
                 CachedNetworkImage(
                   imageUrl: post.imageUrl!,
                   width: double.infinity,
-                  height: 240,
+                  height: 240.h,
                   fit: BoxFit.cover,
-                  errorWidget: (_, __, ___) => Container(height: 240, color: AppColors.surfaceVariant),
+                  errorWidget: (_, __, ___) => Container(height: 240.h, color: AppColors.surfaceVariant),
                 ),
               Padding(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(post.title, style: AppTextStyles.headlineSmall),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Row(
                       children: [
-                        const Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.grey400),
-                        const SizedBox(width: 4),
+                        Icon(Icons.calendar_today_outlined, size: 14.r, color: AppColors.grey400),
+                        SizedBox(width: 4.w),
                         Text(
                           '${post.createdAt.day}/${post.createdAt.month}/${post.createdAt.year}',
                           style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     Text(post.body, style: AppTextStyles.bodyMedium),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     const Divider(),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       children: [
                         Obx(() => GestureDetector(
@@ -62,17 +63,17 @@ class PostDetailView extends GetView<PostsController> {
                             children: [
                               Icon(
                                 Icons.favorite_rounded,
-                                size: 22,
+                                size: 22.r,
                                 color: controller.liking.value ? AppColors.grey400 : AppColors.statusRejected,
                               ),
-                              const SizedBox(width: 6),
+                              SizedBox(width: 6.w),
                               Text('${post.likes}', style: AppTextStyles.bodyMedium),
                             ],
                           ),
                         )),
-                        const SizedBox(width: 24),
-                        const Icon(Icons.visibility_outlined, size: 20, color: AppColors.grey400),
-                        const SizedBox(width: 6),
+                        SizedBox(width: 24.w),
+                        Icon(Icons.visibility_outlined, size: 20.r, color: AppColors.grey400),
+                        SizedBox(width: 6.w),
                         Text('${post.views}', style: AppTextStyles.bodyMedium),
                       ],
                     ),

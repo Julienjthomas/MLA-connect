@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -24,24 +25,24 @@ class LeaderboardView extends GetView<LeaderboardController> {
         return RefreshIndicator(
           onRefresh: controller.loadLeaderboard,
           child: ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             itemCount: controller.entries.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            separatorBuilder: (_, __) => SizedBox(height: 8.h),
             itemBuilder: (_, i) {
               final entry = controller.entries[i];
               final isMe = entry.citizenId == controller.currentUserId;
               final badge = controller.badgeForCount(entry.contributionCount);
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                 decoration: BoxDecoration(
                   color: isMe ? AppColors.primary.withValues(alpha: 0.08) : AppColors.surface,
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(14.r),
                   border: isMe ? Border.all(color: AppColors.primary.withValues(alpha: 0.3)) : null,
                 ),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 28,
+                      width: 28.w,
                       child: Text(
                         '#${entry.rank}',
                         style: AppTextStyles.titleSmall.copyWith(
@@ -50,9 +51,9 @@ class LeaderboardView extends GetView<LeaderboardController> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     CircleAvatar(
-                      radius: 22,
+                      radius: 22.r,
                       backgroundColor: AppColors.surfaceVariant,
                       child: entry.avatarUrl != null && entry.avatarUrl!.isNotEmpty
                           ? ClipOval(child: CachedNetworkImage(imageUrl: entry.avatarUrl!, fit: BoxFit.cover))
@@ -61,7 +62,7 @@ class LeaderboardView extends GetView<LeaderboardController> {
                               style: AppTextStyles.titleSmall.copyWith(color: AppColors.primary),
                             ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,17 +71,17 @@ class LeaderboardView extends GetView<LeaderboardController> {
                             children: [
                               Text(entry.name, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600)),
                               if (isMe) ...[
-                                const SizedBox(width: 6),
+                                SizedBox(width: 6.w),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                  decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
-                                  child: const Text('You', style: TextStyle(color: Colors.white, fontSize: 11)),
+                                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                                  decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20.r)),
+                                  child: Text('You', style: TextStyle(color: Colors.white, fontSize: 11.sp)),
                                 ),
                               ],
                             ],
                           ),
                           if (badge != null) ...[
-                            const SizedBox(height: 2),
+                            SizedBox(height: 2.h),
                             Text('${badge.emoji} ${badge.name}', style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary)),
                           ],
                         ],

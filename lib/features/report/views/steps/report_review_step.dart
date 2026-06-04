@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -14,14 +15,14 @@ class ReportReviewStep extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.reportReviewHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.reportReviewSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
           _section(AppStrings.reportReviewSectionDetails, [
             _row(
@@ -39,7 +40,7 @@ class ReportReviewStep extends GetView<ReportController> {
             ),
           ]),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           Obx(
             () => _section(AppStrings.location, [
@@ -58,7 +59,7 @@ class ReportReviewStep extends GetView<ReportController> {
             ]),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
           Obx(
             () => _section(AppStrings.reportReviewRowVisibility, [
@@ -66,27 +67,26 @@ class ReportReviewStep extends GetView<ReportController> {
             ]),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
-          // Media preview
           Obx(() {
             if (controller.selectedImages.isEmpty) return const SizedBox();
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('${AppStrings.photos} (${controller.selectedImages.length})', style: AppTextStyles.titleSmall),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 SizedBox(
-                  height: 70,
+                  height: 70.h,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: controller.selectedImages.length,
                     itemBuilder: (_, i) => Container(
-                      width: 70,
-                      height: 70,
-                      margin: const EdgeInsets.only(right: 8),
+                      width: 70.r,
+                      height: 70.r,
+                      margin: EdgeInsets.only(right: 8.w),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         image: DecorationImage(
                           image: FileImage(File(controller.selectedImages[i].path)),
                           fit: BoxFit.cover,
@@ -95,7 +95,7 @@ class ReportReviewStep extends GetView<ReportController> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
               ],
             );
           }),
@@ -106,10 +106,10 @@ class ReportReviewStep extends GetView<ReportController> {
               onPressed: controller.submit,
               isLoading: controller.isSubmitting.value,
               backgroundColor: AppColors.reportOrange,
-              icon: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
+              icon: Icon(Icons.send_rounded, color: Colors.white, size: 18.r),
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );
@@ -117,17 +117,17 @@ class ReportReviewStep extends GetView<ReportController> {
 
   Widget _section(String title, List<Widget> rows) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: AppColors.grey200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: AppTextStyles.titleSmall.copyWith(color: AppColors.reportOrange)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           ...rows,
         ],
       ),
@@ -136,11 +136,11 @@ class ReportReviewStep extends GetView<ReportController> {
 
   Widget _row(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.only(bottom: 8.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 100, child: Text(label, style: AppTextStyles.caption)),
+          SizedBox(width: 100.w, child: Text(label, style: AppTextStyles.caption)),
           Expanded(
             child: Text(
               value,

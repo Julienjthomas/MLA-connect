@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../core/theme/app_colors.dart';
@@ -77,17 +78,17 @@ class _EventDetailViewState extends State<EventDetailView> {
             backgroundColor: AppColors.background,
             foregroundColor: AppColors.textPrimary,
             leading: Padding(
-              padding: const EdgeInsets.all(8),
+              padding: EdgeInsets.all(8.r),
               child: Material(
                 color: AppColors.surface.withValues(alpha: 0.7),
                 shape: const CircleBorder(),
                 child: InkWell(
                   customBorder: const CircleBorder(),
                   onTap: () => Get.back(),
-                  child: const SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20),
+                  child: SizedBox(
+                    width: 40.r,
+                    height: 40.r,
+                    child: Icon(Icons.arrow_back_rounded, color: Colors.black, size: 20.r),
                   ),
                 ),
               ),
@@ -110,7 +111,7 @@ class _EventDetailViewState extends State<EventDetailView> {
                           child: Center(
                             child: Icon(
                               Icons.event_rounded,
-                              size: 64,
+                              size: 64.r,
                               color: UpdateCategory.events.color.withValues(alpha: 0.5),
                             ),
                           ),
@@ -137,39 +138,39 @@ class _EventDetailViewState extends State<EventDetailView> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20 + MediaQuery.of(context).padding.bottom),
+              padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 20.h + MediaQuery.of(context).padding.bottom),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CategoryChip(label: UpdateCategory.events.label, color: UpdateCategory.events.color),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   Text(event.title, style: AppTextStyles.headlineMedium),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   Text(event.timeAgo, style: AppTextStyles.caption),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   Row(
                     children: [
-                      Icon(Icons.access_time_rounded, size: 16, color: AppColors.primary.withValues(alpha: 0.8)),
-                      const SizedBox(width: 6),
+                      Icon(Icons.access_time_rounded, size: 16.r, color: AppColors.primary.withValues(alpha: 0.8)),
+                      SizedBox(width: 6.w),
                       Text(event.formattedTime, style: AppTextStyles.bodyMedium),
                     ],
                   ),
                   if (event.venue.isNotEmpty) ...[
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.location_on_outlined, size: 16, color: AppColors.primary.withValues(alpha: 0.8)),
-                        const SizedBox(width: 6),
+                        Icon(Icons.location_on_outlined, size: 16.r, color: AppColors.primary.withValues(alpha: 0.8)),
+                        SizedBox(width: 6.w),
                         Expanded(child: Text(event.venue, style: AppTextStyles.bodyMedium)),
                       ],
                     ),
                   ],
                   if (event.description != null && event.description!.isNotEmpty) ...[
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     LinkableText(text: event.description!, style: AppTextStyles.bodyLarge),
                   ],
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24.h),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
@@ -180,7 +181,7 @@ class _EventDetailViewState extends State<EventDetailView> {
                         backgroundColor: _interested ? AppColors.statusResolved : AppColors.primary,
                         foregroundColor: Colors.white,
                         shape: const StadiumBorder(),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: EdgeInsets.symmetric(vertical: 14.h),
                       ),
                     ),
                   ),
@@ -259,10 +260,10 @@ class _FullImageView extends StatelessWidget {
               child: InkWell(
                 customBorder: const CircleBorder(),
                 onTap: () => Navigator.of(context).pop(),
-                child: const SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Icon(Icons.close_rounded, color: Colors.white, size: 22),
+                child: SizedBox(
+                  width: 40.r,
+                  height: 40.r,
+                  child: Icon(Icons.close_rounded, color: Colors.white, size: 22.r),
                 ),
               ),
             ),

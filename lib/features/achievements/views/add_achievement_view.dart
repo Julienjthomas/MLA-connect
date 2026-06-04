@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -15,35 +16,35 @@ class AddAchievementView extends GetView<AchievementsController> {
       backgroundColor: AppColors.background,
       appBar: const KeralaAppBar(title: 'Add Achievement'),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Achievement Details', style: AppTextStyles.headlineSmall),
-            const SizedBox(height: 4),
+            SizedBox(height: 4.h),
             const Text('Share a recognition for the Hall of Excellence', style: AppTextStyles.bodySmall),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             const Text('Achiever Name *', style: AppTextStyles.titleSmall),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             TextField(
               controller: controller.nameController,
               decoration: const InputDecoration(hintText: 'Full name'),
             ),
-            const SizedBox(height: 14),
+            SizedBox(height: 14.h),
             const Text('Institution *', style: AppTextStyles.titleSmall),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             TextField(
               controller: controller.institutionController,
               decoration: const InputDecoration(hintText: 'School or organization'),
             ),
-            const SizedBox(height: 14),
+            SizedBox(height: 14.h),
             const Text('Achievement *', style: AppTextStyles.titleSmall),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             TextField(
               controller: controller.achievementController,
               decoration: const InputDecoration(hintText: 'e.g. SSLC Full A+'),
             ),
-            const SizedBox(height: 28),
+            SizedBox(height: 28.h),
             PrimaryButton(
               text: 'Submit Achievement',
               onPressed: controller.submitAchievement,

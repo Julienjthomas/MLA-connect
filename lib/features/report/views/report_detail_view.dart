@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -34,15 +35,15 @@ class ReportDetailView extends GetView<ReportDetailController> {
       ),
       body: Obx(() {
         if (controller.loading.value) {
-          return const Padding(
-            padding: EdgeInsets.all(20),
+          return Padding(
+            padding: EdgeInsets.all(20.r),
             child: Column(
               children: [
-                ShimmerBox(height: 100),
-                SizedBox(height: 12),
-                ShimmerBox(height: 120),
-                SizedBox(height: 12),
-                ShimmerBox(height: 200),
+                ShimmerBox(height: 100.h),
+                SizedBox(height: 12.h),
+                ShimmerBox(height: 120.h),
+                SizedBox(height: 12.h),
+                ShimmerBox(height: 200.h),
               ],
             ),
           );
@@ -54,44 +55,42 @@ class ReportDetailView extends GetView<ReportDetailController> {
         final showDescription = description.isNotEmpty && description != title;
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 32.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Status banner
               _StatusBanner(status: report.status),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
-              // Main detail card
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.r),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: AppTextStyles.headlineSmall),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     const Divider(height: 1),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     Row(
                       children: [
-                        const Icon(Icons.receipt_outlined, size: 16, color: AppColors.primary),
-                        const SizedBox(width: 6),
+                        Icon(Icons.receipt_outlined, size: 16.r, color: AppColors.primary),
+                        SizedBox(width: 6.w),
                         Text(
                           'ID: ${report.shortId}',
                           style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
                         ),
                         Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          margin: EdgeInsets.symmetric(horizontal: 10.w),
                           width: 1,
-                          height: 14,
+                          height: 14.h,
                           color: AppColors.grey300,
                         ),
-                        const Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.grey400),
-                        const SizedBox(width: 4),
+                        Icon(Icons.calendar_today_outlined, size: 14.r, color: AppColors.grey400),
+                        SizedBox(width: 4.w),
                         Text(
                           report.timeAgo,
                           style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary),
@@ -99,40 +98,40 @@ class ReportDetailView extends GetView<ReportDetailController> {
                       ],
                     ),
                     if (showDescription) ...[
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       const Divider(height: 1),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       Text(AppStrings.description, style: AppTextStyles.labelMedium.copyWith(color: AppColors.textTertiary)),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.h),
                       Text(description, style: AppTextStyles.bodyMedium),
                     ],
                     if (report.mediaUrls.isNotEmpty) ...[
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       const Divider(height: 1),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       Text(
                         '${AppStrings.photos} (${report.mediaUrls.length})',
                         style: AppTextStyles.labelMedium.copyWith(color: AppColors.textTertiary),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       SizedBox(
-                        height: 160,
+                        height: 160.h,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: report.mediaUrls.length,
                           itemBuilder: (_, i) => Padding(
-                            padding: const EdgeInsets.only(right: 8),
+                            padding: EdgeInsets.only(right: 8.w),
                             child: SubmissionMediaImage(
                               reference: report.mediaUrls[i],
-                              width: 160,
-                              height: 160,
-                              borderRadius: BorderRadius.circular(12),
+                              width: 160.w,
+                              height: 160.h,
+                              borderRadius: BorderRadius.circular(12.r),
                               placeholder: Container(
-                                width: 160,
-                                height: 160,
+                                width: 160.w,
+                                height: 160.h,
                                 decoration: BoxDecoration(
                                   color: AppColors.grey200,
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12.r),
                                 ),
                               ),
                             ),
@@ -144,11 +143,10 @@ class ReportDetailView extends GetView<ReportDetailController> {
                 ),
               ),
 
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
-              // Comments
               Container(
-                decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16)),
+                decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(16.r)),
                 child: CommentsSection(
                   onLoad: () async {
                     final cid = Get.find<AuthController>().user.value?.constituencyId ?? '';
@@ -172,21 +170,20 @@ class ReportDetailView extends GetView<ReportDetailController> {
                 ),
               ),
 
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
-              // Need help
               GestureDetector(
                 onTap: () => Get.toNamed(Routes.chat),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                   decoration: BoxDecoration(
                     color: AppColors.surface,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(14.r),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.headset_mic_outlined, size: 22, color: AppColors.primary),
-                      const SizedBox(width: 12),
+                      Icon(Icons.headset_mic_outlined, size: 22.r, color: AppColors.primary),
+                      SizedBox(width: 12.w),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +196,7 @@ class ReportDetailView extends GetView<ReportDetailController> {
                           ],
                         ),
                       ),
-                      const Icon(Icons.chevron_right_rounded, size: 20, color: AppColors.grey400),
+                      Icon(Icons.chevron_right_rounded, size: 20.r, color: AppColors.grey400),
                     ],
                   ),
                 ),
@@ -237,23 +234,23 @@ class _StatusBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: status.bgColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
       ),
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: 44.r,
+            height: 44.r,
             decoration: BoxDecoration(
               color: status.color.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.report_rounded, color: AppColors.primary, size: 22),
+            child: Icon(Icons.report_rounded, color: AppColors.primary, size: 22.r),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,11 +259,11 @@ class _StatusBanner extends StatelessWidget {
                   'STATUS',
                   style: AppTextStyles.labelSmall.copyWith(color: AppColors.textTertiary, letterSpacing: 0.8),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2.h),
                 Row(
                   children: [
-                    Icon(Icons.circle, size: 8, color: status.color),
-                    const SizedBox(width: 6),
+                    Icon(Icons.circle, size: 8.r, color: status.color),
+                    SizedBox(width: 6.w),
                     Text(
                       status.label,
                       style: AppTextStyles.titleSmall.copyWith(color: status.color),

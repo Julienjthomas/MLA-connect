@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_strings.dart';
@@ -63,13 +64,13 @@ class _ContactMlaOfficeViewState extends State<ContactMlaOfficeView> {
                   child: Text(AppStrings.mlaOfficeDetailsUnavailable,
                       style: AppTextStyles.bodyMedium))
               : ListView(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.r),
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(16.r),
                       decoration: BoxDecoration(
                         color: AppColors.surface,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(16.r),
                         border: Border.all(color: AppColors.grey200),
                       ),
                       child: Column(
@@ -83,26 +84,26 @@ class _ContactMlaOfficeViewState extends State<ContactMlaOfficeView> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     if (_mla!.contact.phone.isEmpty &&
                         (_mla!.contact.email ?? '').isEmpty &&
                         (_mla!.contact.officeAddress ?? '').isEmpty)
                       Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: EdgeInsets.all(20.r),
                         decoration: BoxDecoration(
                           color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(color: AppColors.grey200),
                         ),
                         child: Column(
                           children: [
-                            const Icon(Icons.info_outline_rounded,
-                                size: 32, color: AppColors.grey400),
-                            const SizedBox(height: 8),
+                            Icon(Icons.info_outline_rounded,
+                                size: 32.r, color: AppColors.grey400),
+                            SizedBox(height: 8.h),
                             Text(AppStrings.contactDetailsUnavailable,
                                 style: AppTextStyles.bodyMedium,
                                 textAlign: TextAlign.center),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4.h),
                             Text(
                                 AppStrings.contactDetailsUnavailableMsg,
                                 style: AppTextStyles.caption
@@ -149,10 +150,10 @@ class _ContactMlaOfficeViewState extends State<ContactMlaOfficeView> {
     required VoidCallback onTap,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: EdgeInsets.only(bottom: 12.h),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.grey200),
       ),
       child: ListTile(

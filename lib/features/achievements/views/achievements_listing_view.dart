@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -22,11 +23,11 @@ class AchievementsListingView extends GetView<AchievementsController> {
       body: Obx(() {
         if (controller.loading.value) {
           return ListView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             itemCount: 4,
-            itemBuilder: (_, __) => const Padding(
-              padding: EdgeInsets.only(bottom: 12),
-              child: ShimmerCard(),
+            itemBuilder: (_, __) => Padding(
+              padding: EdgeInsets.only(bottom: 12.h),
+              child: const ShimmerCard(),
             ),
           );
         }
@@ -38,25 +39,25 @@ class AchievementsListingView extends GetView<AchievementsController> {
           );
         }
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.r),
           itemCount: items.length,
           itemBuilder: (_, i) {
             final entry = items[i];
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(16),
+              margin: EdgeInsets.only(bottom: 12.h),
+              padding: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
                 color: AppColors.surface,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(color: AppColors.grey200),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(entry.name, style: AppTextStyles.titleSmall),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(entry.institution, style: AppTextStyles.caption),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 6.h),
                   Text(entry.achievement, style: AppTextStyles.bodySmall),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -16,39 +17,38 @@ class ReportDetailsStep extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.reportDescribeProblem, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.reportDescribeSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
-          // Category chips
           Text(AppStrings.reportCategoryLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Obx(
             () => Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: 8.w,
+              runSpacing: 8.h,
               children: ReportCategory.values.map((cat) {
                 final isSelected = controller.selectedCategory.value == cat;
                 return GestureDetector(
                   onTap: () => controller.selectedCategory.value = cat,
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                     decoration: BoxDecoration(
                       color: isSelected ? AppColors.reportOrange : AppColors.grey100,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(20.r),
                       border: Border.all(color: isSelected ? AppColors.reportOrange : AppColors.grey300),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(cat.icon, size: 14, color: isSelected ? Colors.white : AppColors.grey600),
-                        const SizedBox(width: 6),
+                        Icon(cat.icon, size: 14.r, color: isSelected ? Colors.white : AppColors.grey600),
+                        SizedBox(width: 6.w),
                         Text(
                           cat.label,
                           style: AppTextStyles.labelSmall.copyWith(
@@ -71,9 +71,9 @@ class ReportDetailsStep extends GetView<ReportController> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 14),
+                SizedBox(height: 14.h),
                 Text(AppStrings.reportCategoryLabel, style: AppTextStyles.titleSmall),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 TextField(
                   controller: controller.customCategoryController,
                   decoration: InputDecoration(hintText: AppStrings.reportCategoryHint),
@@ -82,30 +82,28 @@ class ReportDetailsStep extends GetView<ReportController> {
             );
           }),
 
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
-          // Title
           Text(AppStrings.reportTitleLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.titleController,
             decoration: InputDecoration(hintText: AppStrings.reportCategoryHint),
           ),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Description — long form + expand
           Row(
             children: [
               Expanded(child: Text(AppStrings.reportDescriptionLabel, style: AppTextStyles.titleSmall)),
               IconButton(
                 tooltip: 'Expand editor',
-                icon: const Icon(Icons.open_in_full_rounded, size: 22),
+                icon: Icon(Icons.open_in_full_rounded, size: 22.r),
                 onPressed: () => Get.toNamed(Routes.longFormComposer, arguments: controller.descriptionController),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.descriptionController,
             minLines: 8,
@@ -114,18 +112,16 @@ class ReportDetailsStep extends GetView<ReportController> {
             decoration: InputDecoration(hintText: AppStrings.reportDescriptionHint),
           ),
 
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
-          // Voice note — separate section
           Text(AppStrings.addVoiceNote, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           VoiceInputWidget(onRecorded: (path) => controller.voiceRecordingPath.value = path),
 
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
-          // Panchayath dropdown — synced with DB by constituency
           Text(AppStrings.reportPanchayatLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Obx(() {
             if (controller.loadingLocalBodies.value) {
               return const _LoadingField();
@@ -150,11 +146,10 @@ class ReportDetailsStep extends GetView<ReportController> {
             );
           }),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Ward dropdown — synced with DB by selected panchayat
           Text(AppStrings.reportWardLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Obx(() {
             if (controller.loadingWards.value) {
               return const _LoadingField();
@@ -181,19 +176,17 @@ class ReportDetailsStep extends GetView<ReportController> {
             );
           }),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Location description — no GPS icon
           Text(AppStrings.landmark, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.locationController,
             decoration: InputDecoration(hintText: AppStrings.reportDetailsLocationHint),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
 
-          // Media upload with 10-file cap
           Obx(
             () => UploadWidget(
               files: controller.selectedImages.toList(),
@@ -213,14 +206,14 @@ class ReportDetailsStep extends GetView<ReportController> {
             ),
           ),
 
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
 
           PrimaryButton(
             text: AppStrings.reportNextReview,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.reportOrange,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );
@@ -232,15 +225,15 @@ class _LoadingField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 16.h),
       decoration: BoxDecoration(
         color: AppColors.grey100,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColors.grey200),
       ),
       child: Row(children: [
-        const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2)),
-        const SizedBox(width: 10),
+        SizedBox(width: 18.r, height: 18.r, child: const CircularProgressIndicator(strokeWidth: 2)),
+        SizedBox(width: 10.w),
         Text(AppStrings.loading, style: AppTextStyles.caption),
       ]),
     );

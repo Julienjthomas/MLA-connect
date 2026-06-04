@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../activity/views/activity_view.dart';
 import '../../home/views/home_view.dart';
@@ -10,8 +11,6 @@ import '../controllers/shell_controller.dart';
 
 class MainShellView extends GetView<ShellController> {
   const MainShellView({super.key});
-
-  static const _navIconSize = 24.0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class MainShellView extends GetView<ShellController> {
       bottomNavigationBar: Obx(() {
         AppLocale.languageCode.value;
         return NavigationBar(
-          height: 80,
+          height: 80.h,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           selectedIndex: controller.currentIndex.value,
           onDestinationSelected: controller.goTo,
@@ -56,9 +55,9 @@ class MainShellView extends GetView<ShellController> {
 
   Widget _navIcon(IconData icon) {
     return SizedBox(
-      width: _navIconSize,
-      height: _navIconSize,
-      child: Icon(icon, size: _navIconSize),
+      width: 24.r,
+      height: 24.r,
+      child: Icon(icon, size: 24.r),
     );
   }
 }

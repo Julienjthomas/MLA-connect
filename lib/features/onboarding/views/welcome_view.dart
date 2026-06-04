@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -49,27 +50,27 @@ class WelcomeView extends GetView<OnboardingController> {
           children: [
             // Header
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+              padding: EdgeInsets.fromLTRB(24.w, 20.h, 24.w, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.r),
                     child: Image.asset(
                       'assets/images/nameless_logo.png',
-                      width: 36,
-                      height: 36,
+                      width: 36.r,
+                      height: 36.r,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.w),
                   Obx(() {
                     final name = controller.savedConstituencyName.value;
                     return Text(
                       name.isNotEmpty ? name : 'MLA Connect',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
                         color: AppColors.primary,
                       ),
@@ -78,13 +79,13 @@ class WelcomeView extends GetView<OnboardingController> {
                 ],
               ),
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: 6.h),
             Text(
               AppStrings.welcomeSubtitle,
               style: AppTextStyles.bodySmall,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
 
             // Carousel
             Expanded(
@@ -98,23 +99,23 @@ class WelcomeView extends GetView<OnboardingController> {
 
             // Dots
             Obx(() => _DotsIndicator(count: _slides.length, current: currentPage.value)),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
 
             // CTA
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: PrimaryButton(
                 text: AppStrings.getStarted,
                 onPressed: () => Get.toNamed(Routes.phone),
               ),
             ),
-            const SizedBox(height: 12),
-            const Row(
+            SizedBox(height: 12.h),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.shield_outlined, size: 14, color: AppColors.grey500),
-                SizedBox(width: 4),
+                Icon(Icons.shield_outlined, size: 14.r, color: AppColors.grey500),
+                SizedBox(width: 4.w),
                 Text(
                   'Your information is safe and will never be shared.',
                   style: AppTextStyles.caption,
@@ -122,7 +123,7 @@ class WelcomeView extends GetView<OnboardingController> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
           ],
         ),
       ),
@@ -151,16 +152,16 @@ class _SlideContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Poppins',
-                fontSize: 30,
+                fontSize: 30.sp,
                 fontWeight: FontWeight.w800,
                 color: AppColors.textPrimary,
               ),
@@ -173,16 +174,16 @@ class _SlideContent extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(
             slide.subtitle,
             style: AppTextStyles.bodyMedium,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           Expanded(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
               child: Image.asset(
                 slide.image,
                 width: double.infinity,
@@ -209,12 +210,12 @@ class _DotsIndicator extends StatelessWidget {
         final active = i == current;
         return AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          width: active ? 20 : 8,
-          height: 8,
+          margin: EdgeInsets.symmetric(horizontal: 4.w),
+          width: active ? 20.w : 8.w,
+          height: 8.h,
           decoration: BoxDecoration(
             color: active ? AppColors.primary : AppColors.grey300,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(4.r),
           ),
         );
       }),

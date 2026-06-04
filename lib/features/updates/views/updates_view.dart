@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
@@ -69,7 +70,7 @@ class _TabContent extends GetView<UpdatesController> {
     return Obx(() {
       if (controller.loading.value) {
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.r),
           itemCount: 4,
           itemBuilder: (_, __) => const ShimmerCard(),
         );
@@ -77,7 +78,7 @@ class _TabContent extends GetView<UpdatesController> {
       if (controller.error.isNotEmpty) {
         return Center(
           child: Padding(
-            padding: const EdgeInsets.all(32),
+            padding: EdgeInsets.all(32.r),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -86,7 +87,7 @@ class _TabContent extends GetView<UpdatesController> {
                   style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.h),
                 TextButton(onPressed: controller.loadUpdates, child: const Text('Retry')),
               ],
             ),
@@ -101,7 +102,7 @@ class _TabContent extends GetView<UpdatesController> {
           child: boardItems.isEmpty
               ? CustomScrollView(slivers: [SliverFillRemaining(child: _UpdatesEmptyState(tab: tab))])
               : ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
                   itemCount: boardItems.length,
                   itemBuilder: (_, i) => _PublicBoardCard(item: boardItems[i]),
                 ),
@@ -115,7 +116,7 @@ class _TabContent extends GetView<UpdatesController> {
           child: eventItems.isEmpty
               ? CustomScrollView(slivers: [SliverFillRemaining(child: _UpdatesEmptyState(tab: tab))])
               : ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
                   itemCount: eventItems.length,
                   itemBuilder: (_, i) => _EventCard(event: eventItems[i]),
                 ),
@@ -136,7 +137,7 @@ class _TabContent extends GetView<UpdatesController> {
               )
             else
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
                 sliver: SliverList.builder(
                   itemCount: items.length,
                   itemBuilder: (_, i) => _UpdateCard(update: items[i]),
@@ -174,7 +175,7 @@ class _FeaturedCarouselState extends State<_FeaturedCarousel> {
     return Column(
       children: [
         SizedBox(
-          height: 220,
+          height: 220.h,
           child: PageView.builder(
             controller: _pageController,
             itemCount: widget.items.length,
@@ -183,23 +184,23 @@ class _FeaturedCarouselState extends State<_FeaturedCarousel> {
           ),
         ),
         if (widget.items.length > 1) ...[
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(widget.items.length, (i) {
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
-                margin: const EdgeInsets.symmetric(horizontal: 3),
-                width: _current == i ? 20 : 6,
-                height: 6,
+                margin: EdgeInsets.symmetric(horizontal: 3.w),
+                width: _current == i ? 20.w : 6.w,
+                height: 6.h,
                 decoration: BoxDecoration(
                   color: _current == i ? AppColors.primary : AppColors.grey300,
-                  borderRadius: BorderRadius.circular(3),
+                  borderRadius: BorderRadius.circular(3.r),
                 ),
               );
             }),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
         ],
       ],
     );
@@ -215,13 +216,12 @@ class _FeaturedCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.updateDetail, arguments: update.id),
       child: Container(
-        margin: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-        decoration: BoxDecoration(color: AppColors.textPrimary, borderRadius: BorderRadius.circular(20)),
+        margin: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 0),
+        decoration: BoxDecoration(color: AppColors.textPrimary, borderRadius: BorderRadius.circular(20.r)),
         clipBehavior: Clip.antiAlias,
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Background image
             if (update.imageUrl != null)
               CachedNetworkImage(
                 imageUrl: update.imageUrl!,
@@ -229,7 +229,6 @@ class _FeaturedCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 errorWidget: (_, __, ___) => Container(color: AppColors.primaryDark),
               ),
-            // Gradient overlay
             DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -239,21 +238,19 @@ class _FeaturedCard extends StatelessWidget {
                 ),
               ),
             ),
-            // Content
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Featured badge
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
+                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                    decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20.r)),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.star_rounded, size: 12, color: Colors.white),
-                        const SizedBox(width: 4),
+                        Icon(Icons.star_rounded, size: 12.r, color: Colors.white),
+                        SizedBox(width: 4.w),
                         Text(
                           'Featured',
                           style: AppTextStyles.labelSmall.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
@@ -264,21 +261,21 @@ class _FeaturedCard extends StatelessWidget {
                   const Spacer(),
                   Text(
                     update.localTitle,
-                    style: AppTextStyles.titleLarge.copyWith(color: Colors.white, fontSize: 18),
+                    style: AppTextStyles.titleLarge.copyWith(color: Colors.white, fontSize: 18.sp),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Spacer(),
-                  const SizedBox(height: 10),
+                  const Spacer(),
+                  SizedBox(height: 10.h),
                   Row(
                     children: [
-                      const Icon(Icons.calendar_today_outlined, size: 12, color: Colors.white70),
-                      const SizedBox(width: 4),
+                      Icon(Icons.calendar_today_outlined, size: 12.r, color: Colors.white70),
+                      SizedBox(width: 4.w),
                       Text(update.timeAgo, style: AppTextStyles.caption.copyWith(color: Colors.white70)),
                       const Spacer(),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                        decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
+                        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+                        decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20.r)),
                         child: Text(
                           'View Details →',
                           style: AppTextStyles.labelSmall.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
@@ -308,10 +305,10 @@ class _UpdateCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.updateDetail, arguments: update.id),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
+        margin: EdgeInsets.only(bottom: 16.h),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2)),
           ],
@@ -319,36 +316,34 @@ class _UpdateCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Thumbnail
             ClipRRect(
-              borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(16.r)),
               child: update.imageUrl != null
                   ? CachedNetworkImage(
                       imageUrl: update.imageUrl!,
                       cacheKey: update.imageCacheKey,
-                      width: 110,
-                      height: 120,
+                      width: 110.w,
+                      height: 120.h,
                       fit: BoxFit.cover,
                       errorWidget: (_, __, ___) => _UpdateCardPlaceholder(category: update.category),
                     )
                   : _UpdateCardPlaceholder(category: update.category),
             ),
-            // Text content
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(12.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CategoryChip(label: update.category.label, color: update.category.color),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6.h),
                     Text(
                       update.localTitle,
                       style: AppTextStyles.titleMedium,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Obx(() {
                       final liked = ctrl.likedIds.contains(update.id);
                       final current = ctrl.updates.firstWhereOrNull((u) => u.id == update.id);
@@ -363,10 +358,10 @@ class _UpdateCard extends StatelessWidget {
                               children: [
                                 Icon(
                                   liked ? Icons.favorite : Icons.favorite_outline,
-                                  size: 13,
+                                  size: 13.r,
                                   color: liked ? AppColors.statusRejected : AppColors.grey500,
                                 ),
-                                const SizedBox(width: 3),
+                                SizedBox(width: 3.w),
                                 Text('$likes', style: AppTextStyles.caption),
                               ],
                             ),
@@ -419,19 +414,19 @@ class _UpdatesEmptyState extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40),
+        padding: EdgeInsets.symmetric(horizontal: 40.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 80,
-              height: 80,
+              width: 80.r,
+              height: 80.r,
               decoration: BoxDecoration(color: lightColor, shape: BoxShape.circle),
-              child: Icon(icon, color: color, size: 36),
+              child: Icon(icon, color: color, size: 36.r),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             Text(title, style: AppTextStyles.headlineSmall, textAlign: TextAlign.center),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               message,
               style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textTertiary),
@@ -451,11 +446,11 @@ class _PublicBoardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(14),
+      margin: EdgeInsets.only(bottom: 12.h),
+      padding: EdgeInsets.all(14.r),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8, offset: const Offset(0, 2)),
         ],
@@ -464,12 +459,12 @@ class _PublicBoardCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(color: item.kindColorLight, borderRadius: BorderRadius.circular(12)),
-            child: Icon(item.kindIcon, color: item.kindColor, size: 22),
+            width: 48.r,
+            height: 48.r,
+            decoration: BoxDecoration(color: item.kindColorLight, borderRadius: BorderRadius.circular(12.r)),
+            child: Icon(item.kindIcon, color: item.kindColor, size: 22.r),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -477,17 +472,17 @@ class _PublicBoardCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                       decoration: BoxDecoration(
                         color: item.kindColorLight,
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(6.r),
                       ),
                       child: Text(
                         item.kindLabel,
                         style: AppTextStyles.caption.copyWith(
                           color: item.kindColor,
                           fontWeight: FontWeight.w600,
-                          fontSize: 11,
+                          fontSize: 11.sp,
                         ),
                       ),
                     ),
@@ -495,7 +490,7 @@ class _PublicBoardCard extends StatelessWidget {
                     Text(item.timeAgo, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
                   ],
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 Text(
                   item.title,
                   style: AppTextStyles.titleMedium,
@@ -503,16 +498,16 @@ class _PublicBoardCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 if (item.wardName != null) ...[
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Row(
                     children: [
-                      const Icon(Icons.location_on_outlined, size: 12, color: AppColors.textTertiary),
-                      const SizedBox(width: 3),
+                      Icon(Icons.location_on_outlined, size: 12.r, color: AppColors.textTertiary),
+                      SizedBox(width: 3.w),
                       Text(item.wardName!, style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
                     ],
                   ),
                 ],
-                const SizedBox(height: 6),
+                SizedBox(height: 6.h),
                 StatusChip(status: item.status),
               ],
             ),
@@ -532,10 +527,10 @@ class _UpdateCardPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 110,
-      height: 120,
+      width: 110.w,
+      height: 120.h,
       color: category.color.withValues(alpha: 0.12),
-      child: Icon(Icons.article_rounded, color: category.color.withValues(alpha: 0.5), size: 36),
+      child: Icon(Icons.article_rounded, color: category.color.withValues(alpha: 0.5), size: 36.r),
     );
   }
 }
@@ -551,10 +546,10 @@ class _EventCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.toNamed(Routes.eventDetail, arguments: event.id),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
+        margin: EdgeInsets.only(bottom: 12.h),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
         ),
         child: IntrinsicHeight(
@@ -562,43 +557,43 @@ class _EventCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                width: 72,
-                decoration: const BoxDecoration(
+                width: 72.w,
+                decoration: BoxDecoration(
                   color: AppColors.ideaPurpleLight,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), bottomLeft: Radius.circular(16.r)),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(event.shortMonth, style: const TextStyle(fontFamily: 'Poppins', fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
-                    const SizedBox(height: 2),
-                    Text('${event.startsAt.day}', style: const TextStyle(fontFamily: 'Poppins', fontSize: 28, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
-                    const SizedBox(height: 4),
-                    Text(event.shortWeekday, style: const TextStyle(fontFamily: 'Poppins', fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                    Text(event.shortMonth, style: TextStyle(fontFamily: 'Poppins', fontSize: 11.sp, fontWeight: FontWeight.w700, color: AppColors.primary, letterSpacing: 0.5)),
+                    SizedBox(height: 2.h),
+                    Text('${event.startsAt.day}', style: TextStyle(fontFamily: 'Poppins', fontSize: 28.sp, fontWeight: FontWeight.w800, color: AppColors.primary, height: 1)),
+                    SizedBox(height: 4.h),
+                    Text(event.shortWeekday, style: TextStyle(fontFamily: 'Poppins', fontSize: 10.sp, fontWeight: FontWeight.w600, color: AppColors.primary)),
                   ],
                 ),
               ),
               Container(width: 1, color: AppColors.grey200),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 14, 14, 14),
+                  padding: EdgeInsets.fromLTRB(16.w, 14.h, 14.w, 14.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(event.title, style: const TextStyle(fontFamily: 'Poppins', fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: 10),
+                      Text(event.title, style: TextStyle(fontFamily: 'Poppins', fontSize: 15.sp, fontWeight: FontWeight.w700, color: AppColors.textPrimary, height: 1.3), maxLines: 2, overflow: TextOverflow.ellipsis),
+                      SizedBox(height: 10.h),
                       Row(
                         children: [
-                          Icon(Icons.access_time_rounded, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
-                          const SizedBox(width: 5),
-                          Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12)),
+                          Icon(Icons.access_time_rounded, size: 14.r, color: AppColors.primary.withValues(alpha: 0.7)),
+                          SizedBox(width: 5.w),
+                          Text(event.formattedTime, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12.sp)),
                           if (event.venue.isNotEmpty) ...[
-                            Container(margin: const EdgeInsets.symmetric(horizontal: 10), width: 1, height: 12, color: AppColors.grey200),
-                            Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary.withValues(alpha: 0.7)),
-                            const SizedBox(width: 5),
-                            Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                            Container(margin: EdgeInsets.symmetric(horizontal: 10.w), width: 1, height: 12.h, color: AppColors.grey200),
+                            Icon(Icons.location_on_outlined, size: 14.r, color: AppColors.primary.withValues(alpha: 0.7)),
+                            SizedBox(width: 5.w),
+                            Expanded(child: Text(event.venue, style: AppTextStyles.caption.copyWith(color: AppColors.textSecondary, fontSize: 12.sp), maxLines: 1, overflow: TextOverflow.ellipsis)),
                           ],
                         ],
                       ),

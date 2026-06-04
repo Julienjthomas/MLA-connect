@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_text_styles.dart';
@@ -12,41 +13,41 @@ class MaintenanceScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 48.h),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 100,
-                height: 100,
+                width: 100.r,
+                height: 100.r,
                 decoration: const BoxDecoration(
                   color: AppColors.statusUnderReviewBg,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.build_rounded, size: 52, color: AppColors.statusUnderReview),
+                child: Icon(Icons.build_rounded, size: 52.r, color: AppColors.statusUnderReview),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               const Text(
                 'Under Maintenance',
                 style: AppTextStyles.headlineMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Text(
                 'MLA Connect is currently undergoing scheduled maintenance. We\'ll be back shortly.',
                 style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                  SizedBox(
+                    width: 16.r,
+                    height: 16.r,
+                    child: const CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12.w),
                   Text(
                     'Checking status…',
                     style: AppTextStyles.bodySmall.copyWith(color: AppColors.textTertiary),

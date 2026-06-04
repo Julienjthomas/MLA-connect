@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../theme/app_colors.dart';
@@ -18,26 +19,26 @@ class ForceUpdateScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 48.h),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
+                width: 100.r,
+                height: 100.r,
+                decoration: const BoxDecoration(
                   color: AppColors.ideaPurpleLight,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.system_update_rounded, size: 52, color: AppColors.primary),
+                child: Icon(Icons.system_update_rounded, size: 52.r, color: AppColors.primary),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32.h),
               const Text(
                 'Time for an Update',
                 style: AppTextStyles.headlineMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Text(
                 'A newer version of MLA Connect is available. Please update to continue using the app.',
                 style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
@@ -52,7 +53,7 @@ class ForceUpdateScreen extends StatelessWidget {
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
                     shape: const StadiumBorder(),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
                   ),
                   child: const Text('Update Now', style: AppTextStyles.titleSmall),
                 ),

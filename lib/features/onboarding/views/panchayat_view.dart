@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -17,20 +18,20 @@ class PanchayatView extends GetView<OnboardingController> {
       appBar: KeralaAppBar(title: AppStrings.selectPanchayat, showBack: false),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _stepHeader(context),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               TextField(
                 onChanged: (v) => controller.localBodySearch.value = v,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search, size: 20),
+                  prefixIcon: Icon(Icons.search, size: 20.r),
                   hintText: AppStrings.searchPanchayat,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Expanded(
                 child: Obx(() {
                   if (controller.loadingLocalBodies.value) {
@@ -46,11 +47,11 @@ class PanchayatView extends GetView<OnboardingController> {
                         return GestureDetector(
                           onTap: () => controller.selectLocalBody(p),
                           child: Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                            margin: EdgeInsets.only(bottom: 10.h),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                             decoration: BoxDecoration(
                               color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
                                 color: isSelected ? AppColors.primary : AppColors.grey200,
                                 width: isSelected ? 2 : 1,
@@ -59,8 +60,8 @@ class PanchayatView extends GetView<OnboardingController> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 20,
-                                  height: 20,
+                                  width: 20.r,
+                                  height: 20.r,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: isSelected ? AppColors.primary : Colors.transparent,
@@ -69,9 +70,9 @@ class PanchayatView extends GetView<OnboardingController> {
                                       width: 2,
                                     ),
                                   ),
-                                  child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
+                                  child: isSelected ? Icon(Icons.check, color: Colors.white, size: 12.r) : null,
                                 ),
-                                const SizedBox(width: 12),
+                                SizedBox(width: 12.w),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,9 +109,9 @@ class PanchayatView extends GetView<OnboardingController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _stepsIndicator(),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         Text(AppStrings.selectPanchayat, style: AppTextStyles.headlineSmall),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Text(AppStrings.panchayatHelp, style: AppTextStyles.bodySmall),
       ],
     );
@@ -123,11 +124,11 @@ class PanchayatView extends GetView<OnboardingController> {
         final isDone = false;
         return Expanded(
           child: Container(
-            height: 3,
-            margin: EdgeInsets.only(right: i < 4 ? 4 : 0),
+            height: 3.h,
+            margin: EdgeInsets.only(right: i < 4 ? 4.w : 0),
             decoration: BoxDecoration(
               color: isActive || isDone ? AppColors.primary : AppColors.grey200,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(2.r),
             ),
           ),
         );

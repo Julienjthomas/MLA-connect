@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -13,30 +14,30 @@ class ReportSuccessStep extends GetView<ReportController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24.r),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
             Container(
-              width: 100,
-              height: 100,
+              width: 100.r,
+              height: 100.r,
               decoration: const BoxDecoration(color: AppColors.reportOrange, shape: BoxShape.circle),
-              child: const Icon(Icons.check_rounded, color: Colors.white, size: 60),
+              child: Icon(Icons.check_rounded, color: Colors.white, size: 60.r),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             Text(
               AppStrings.reportSuccess,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Poppins',
-                fontSize: 22,
+                fontSize: 22.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
                 height: 1.3,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Text(AppStrings.reportSuccessMsg, style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const Spacer(),
             PrimaryButton(
@@ -46,7 +47,7 @@ class ReportSuccessStep extends GetView<ReportController> {
                 Get.until((r) => r.settings.name == '/home');
               },
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             SecondaryButton(
               text: AppStrings.reportAnother,
               onPressed: () {

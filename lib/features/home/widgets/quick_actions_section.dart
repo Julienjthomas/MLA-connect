@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_enums.dart';
 import '../../../core/constants/app_strings.dart';
@@ -11,18 +12,15 @@ import 'quick_action_tile.dart';
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key});
 
-  /// Row height for each tile; sized for icon chip + 2-line title + 2-line subtitle.
-  static const double _tileRowHeight = 96;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(color: AppColors.grey200),
         ),
         child: Column(
@@ -36,15 +34,15 @@ class QuickActionsSection extends StatelessWidget {
                 color: AppColors.textPrimary,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             GridView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                mainAxisExtent: _tileRowHeight,
+                crossAxisSpacing: 12.w,
+                mainAxisSpacing: 12.h,
+                mainAxisExtent: 96.h,
               ),
               children: [
                     QuickActionTile(

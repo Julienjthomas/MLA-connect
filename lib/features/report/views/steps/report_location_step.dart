@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -13,28 +14,27 @@ class ReportLocationStep extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.location, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.reportLocationSubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
 
-          // Panchayat (read-only from user profile for now)
           Text(AppStrings.reportPanchayatLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Container(
-            padding: const EdgeInsets.all(14),
+            padding: EdgeInsets.all(14.r),
             decoration: BoxDecoration(
               color: AppColors.grey100,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: AppColors.grey200),
             ),
             child: Row(children: [
-              const Icon(Icons.location_city_outlined, size: 18, color: AppColors.grey500),
-              const SizedBox(width: 10),
+              Icon(Icons.location_city_outlined, size: 18.r, color: AppColors.grey500),
+              SizedBox(width: 10.w),
               Text(
                 Get.find<AuthController>().user.value?.localBodyName ?? AppStrings.reportPanchayatLabel,
                 style: AppTextStyles.bodyMedium,
@@ -42,34 +42,31 @@ class ReportLocationStep extends GetView<ReportController> {
             ]),
           ),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Ward
           Text(AppStrings.reportWardLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
-          const TextField(
+          SizedBox(height: 8.h),
+          TextField(
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.map_outlined, size: 20),
+              prefixIcon: Icon(Icons.map_outlined, size: 20.r),
             ),
           ),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Landmark
           Text(AppStrings.reportLandmarkAreaLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.landmarkController,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.place_outlined, size: 20),
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.place_outlined, size: 20.r),
             ),
           ),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Location description
           Text(AppStrings.reportLocationDescLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.locationController,
             decoration: InputDecoration(
@@ -77,56 +74,54 @@ class ReportLocationStep extends GetView<ReportController> {
             ),
           ),
 
-          const SizedBox(height: 6),
+          SizedBox(height: 6.h),
           Row(children: [
-            const Icon(Icons.info_outline, size: 13, color: AppColors.textTertiary),
-            const SizedBox(width: 4),
+            Icon(Icons.info_outline, size: 13.r, color: AppColors.textTertiary),
+            SizedBox(width: 4.w),
             Text(AppStrings.reportGpsNote, style: AppTextStyles.caption),
           ]),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Map placeholder
           Container(
-            height: 140,
+            height: 140.h,
             decoration: BoxDecoration(
               color: AppColors.grey100,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(14.r),
               border: Border.all(color: AppColors.grey200),
             ),
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.map_outlined, size: 40, color: AppColors.grey400),
-                  const SizedBox(height: 8),
+                  Icon(Icons.map_outlined, size: 40.r, color: AppColors.grey400),
+                  SizedBox(height: 8.h),
                   Text(AppStrings.reportMapPin, style: AppTextStyles.bodySmall.copyWith(color: AppColors.grey500)),
                 ],
               ),
             ),
           ),
 
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
 
-          // Contact number
           Text(AppStrings.reportContactLabel, style: AppTextStyles.titleSmall),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           TextField(
             controller: controller.contactController,
             keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.phone_outlined, size: 20),
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.phone_outlined, size: 20.r),
             ),
           ),
 
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
 
           PrimaryButton(
             text: AppStrings.reportNextReview,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.reportOrange,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_colors.dart';
@@ -17,29 +18,29 @@ class WardView extends GetView<OnboardingController> {
       appBar: KeralaAppBar(title: AppStrings.selectWard),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               Text(AppStrings.selectWard, style: AppTextStyles.headlineSmall),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               Obx(
                 () => Text(
                   'Choose your ward in ${controller.selectedLocalBody.value?.name ?? ''}',
                   style: AppTextStyles.bodySmall,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
 
               TextField(
                 onChanged: (v) => controller.wardSearch.value = v,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search, size: 20),
+                  prefixIcon: Icon(Icons.search, size: 20.r),
                   hintText: AppStrings.searchWard,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Expanded(
                 child: Obx(() {
                   if (controller.loadingWards.value) {
@@ -55,11 +56,11 @@ class WardView extends GetView<OnboardingController> {
                         return GestureDetector(
                           onTap: () => controller.selectWard(w),
                           child: Container(
-                            margin: const EdgeInsets.only(bottom: 8),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            margin: EdgeInsets.only(bottom: 8.h),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                             decoration: BoxDecoration(
                               color: isSelected ? AppColors.ideaPurpleLight : AppColors.surface,
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(
                                 color: isSelected ? AppColors.primary : AppColors.grey200,
                                 width: isSelected ? 2 : 1,
@@ -68,8 +69,8 @@ class WardView extends GetView<OnboardingController> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 20,
-                                  height: 20,
+                                  width: 20.r,
+                                  height: 20.r,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: isSelected ? AppColors.primary : Colors.transparent,
@@ -78,9 +79,9 @@ class WardView extends GetView<OnboardingController> {
                                       width: 2,
                                     ),
                                   ),
-                                  child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
+                                  child: isSelected ? Icon(Icons.check, color: Colors.white, size: 12.r) : null,
                                 ),
-                                const SizedBox(width: 12),
+                                SizedBox(width: 12.w),
                                 Text(w.displayName, style: AppTextStyles.titleSmall),
                               ],
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_enums.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -13,14 +14,14 @@ class ReportVisibilityStep extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppStrings.reportVisibilityHeading, style: AppTextStyles.headlineSmall),
-          const SizedBox(height: 4),
+          SizedBox(height: 4.h),
           Text(AppStrings.reportVisibilitySubtitle, style: AppTextStyles.bodySmall),
-          const SizedBox(height: 24),
+          SizedBox(height: 24.h),
           Obx(
             () => Column(
               children: SubmissionVisibility.values.map((v) {
@@ -28,11 +29,11 @@ class ReportVisibilityStep extends GetView<ReportController> {
                 return GestureDetector(
                   onTap: () => controller.visibility.value = v,
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    padding: const EdgeInsets.all(16),
+                    margin: EdgeInsets.only(bottom: 10.h),
+                    padding: EdgeInsets.all(16.r),
                     decoration: BoxDecoration(
                       color: isSelected ? AppColors.reportOrange.withValues(alpha: 0.08) : AppColors.surface,
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(14.r),
                       border: Border.all(
                         color: isSelected ? AppColors.reportOrange : AppColors.grey200,
                         width: isSelected ? 2 : 1,
@@ -41,8 +42,8 @@ class ReportVisibilityStep extends GetView<ReportController> {
                     child: Row(
                       children: [
                         Container(
-                          width: 20,
-                          height: 20,
+                          width: 20.r,
+                          height: 20.r,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isSelected ? AppColors.reportOrange : Colors.transparent,
@@ -51,9 +52,9 @@ class ReportVisibilityStep extends GetView<ReportController> {
                               width: 2,
                             ),
                           ),
-                          child: isSelected ? const Icon(Icons.check, color: Colors.white, size: 12) : null,
+                          child: isSelected ? Icon(Icons.check, color: Colors.white, size: 12.r) : null,
                         ),
-                        const SizedBox(width: 14),
+                        SizedBox(width: 14.w),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,13 +71,13 @@ class ReportVisibilityStep extends GetView<ReportController> {
               }).toList(),
             ),
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32.h),
           PrimaryButton(
             text: AppStrings.reportNextReview,
             onPressed: controller.nextStep,
             backgroundColor: AppColors.reportOrange,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
         ],
       ),
     );

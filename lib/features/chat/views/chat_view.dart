@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -42,10 +43,10 @@ class ChatView extends GetView<ChatController> {
       ),
       body: Obx(() {
         if (auth.userId == null) {
-          return const Center(
+          return Center(
             child: Padding(
-              padding: EdgeInsets.all(24),
-              child: Text('Sign in to chat with the MLA office.', style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
+              padding: EdgeInsets.all(24.r),
+              child: const Text('Sign in to chat with the MLA office.', style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             ),
           );
         }
@@ -61,7 +62,7 @@ class ChatView extends GetView<ChatController> {
               Container(
                 width: double.infinity,
                 color: AppColors.grey200,
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
                 child: const Text('This conversation is closed.', style: AppTextStyles.bodySmall, textAlign: TextAlign.center),
               ),
             Expanded(child: _MessageList()),
@@ -83,10 +84,10 @@ class _MessageList extends GetView<ChatController> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.chat_bubble_outline_rounded, size: 48, color: AppColors.grey300),
-              const SizedBox(height: 12),
+              Icon(Icons.chat_bubble_outline_rounded, size: 48.r, color: AppColors.grey300),
+              SizedBox(height: 12.h),
               const Text('No messages yet.', style: AppTextStyles.bodyMedium),
-              const SizedBox(height: 6),
+              SizedBox(height: 6.h),
               const Text('Send a message to start the conversation.', style: AppTextStyles.bodySmall),
             ],
           ),
@@ -94,10 +95,10 @@ class _MessageList extends GetView<ChatController> {
       }
       return ListView.builder(
         controller: controller.scrollController,
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         itemCount: msgs.length,
         itemBuilder: (_, i) => Padding(
-          padding: const EdgeInsets.only(bottom: 12),
+          padding: EdgeInsets.only(bottom: 12.h),
           child: _MessageBubble(msg: msgs[i]),
         ),
       );
@@ -118,24 +119,24 @@ class _MessageBubble extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if (!_fromCitizen) ...[
-          const CircleAvatar(
-            radius: 18,
-            backgroundColor: Color(0xFFD8D0F5),
-            child: Icon(Icons.account_balance, size: 16, color: AppColors.primary),
+          CircleAvatar(
+            radius: 18.r,
+            backgroundColor: const Color(0xFFD8D0F5),
+            child: Icon(Icons.account_balance, size: 16.r, color: AppColors.primary),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w),
         ],
         Flexible(
           child: Container(
             constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.68),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
             decoration: BoxDecoration(
               color: _fromCitizen ? const Color(0xFFE8E0FF) : AppColors.surface,
               borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(18),
-                topRight: const Radius.circular(18),
-                bottomLeft: _fromCitizen ? const Radius.circular(18) : const Radius.circular(4),
-                bottomRight: _fromCitizen ? const Radius.circular(4) : const Radius.circular(18),
+                topLeft: Radius.circular(18.r),
+                topRight: Radius.circular(18.r),
+                bottomLeft: _fromCitizen ? Radius.circular(18.r) : Radius.circular(4.r),
+                bottomRight: _fromCitizen ? Radius.circular(4.r) : Radius.circular(18.r),
               ),
             ),
             child: Column(
@@ -143,21 +144,21 @@ class _MessageBubble extends StatelessWidget {
               children: [
                 if (!_fromCitizen) ...[
                   Text('MLA Office', style: AppTextStyles.labelSmall.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                 ],
                 Text(msg.body, style: AppTextStyles.bodyMedium),
-                const SizedBox(height: 4),
+                SizedBox(height: 4.h),
                 Text(_fmtTime(msg.createdAt), style: AppTextStyles.caption),
               ],
             ),
           ),
         ),
         if (_fromCitizen) ...[
-          const SizedBox(width: 8),
-          const CircleAvatar(
-            radius: 18,
-            backgroundColor: Color(0xFFD8D0F5),
-            child: Icon(Icons.person, size: 20, color: AppColors.primary),
+          SizedBox(width: 8.w),
+          CircleAvatar(
+            radius: 18.r,
+            backgroundColor: const Color(0xFFD8D0F5),
+            child: Icon(Icons.person, size: 20.r, color: AppColors.primary),
           ),
         ],
       ],
@@ -180,25 +181,25 @@ class _NoThreadsState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: EdgeInsets.symmetric(horizontal: 32.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 80,
-              height: 80,
+              width: 80.r,
+              height: 80.r,
               decoration: const BoxDecoration(color: Color(0xFFD8D0F5), shape: BoxShape.circle),
-              child: const Icon(Icons.chat_bubble_outline_rounded, size: 40, color: AppColors.primary),
+              child: Icon(Icons.chat_bubble_outline_rounded, size: 40.r, color: AppColors.primary),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             const Text('Start a conversation', style: AppTextStyles.titleLarge),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             const Text(
               'Send a message to the MLA office.\nWe\'ll get back to you soon.',
               style: AppTextStyles.bodyMedium,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24.h),
             ElevatedButton.icon(
               onPressed: onStart,
               icon: const Icon(Icons.add_rounded),
@@ -207,7 +208,7 @@ class _NoThreadsState extends StatelessWidget {
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 shape: const StadiumBorder(),
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
               ),
             ),
           ],
@@ -226,7 +227,7 @@ class _InputBar extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+        padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 12.h),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -234,35 +235,35 @@ class _InputBar extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(30.r),
                   boxShadow: const [BoxShadow(color: Color(0x14000000), blurRadius: 8, offset: Offset(0, 2))],
                 ),
                 child: TextField(
                   controller: controller.bodyController,
                   maxLines: 1,
                   style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textPrimary),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Type your message…',
                     hintStyle: AppTextStyles.bodyMedium,
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10.w),
             Obx(() => GestureDetector(
               onTap: controller.sending.value ? null : controller.send,
               child: AnimatedOpacity(
                 opacity: controller.sending.value ? 0.5 : 1.0,
                 duration: const Duration(milliseconds: 200),
                 child: Container(
-                  width: 50,
-                  height: 50,
+                  width: 50.r,
+                  height: 50.r,
                   decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
                   child: controller.sending.value
-                      ? const Padding(padding: EdgeInsets.all(14), child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                      : const Icon(Icons.send_rounded, color: Colors.white, size: 22),
+                      ? Padding(padding: EdgeInsets.all(14.r), child: const CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                      : Icon(Icons.send_rounded, color: Colors.white, size: 22.r),
                 ),
               ),
             )),

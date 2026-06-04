@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
@@ -24,7 +25,7 @@ class NotificationsView extends GetView<NotificationsController> {
         return RefreshIndicator(
           onRefresh: controller.loadNotifications,
           child: ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: EdgeInsets.symmetric(vertical: 8.h),
             itemCount: controller.notifications.length,
             separatorBuilder: (_, __) => const Divider(height: 1, indent: 56),
             itemBuilder: (_, i) => _NotificationTile(
@@ -50,20 +51,20 @@ class _NotificationTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         color: isUnread ? AppColors.primary.withValues(alpha: 0.04) : null,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 40,
-              height: 40,
+              width: 40.r,
+              height: 40.r,
               decoration: BoxDecoration(
                 color: _iconBg(notification.type),
                 shape: BoxShape.circle,
               ),
-              child: Icon(_icon(notification.type), color: _iconColor(notification.type), size: 20),
+              child: Icon(_icon(notification.type), color: _iconColor(notification.type), size: 20.r),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,9 +81,9 @@ class _NotificationTile extends StatelessWidget {
                       ),
                       if (isUnread)
                         Container(
-                          width: 8,
-                          height: 8,
-                          margin: const EdgeInsets.only(left: 8),
+                          width: 8.r,
+                          height: 8.r,
+                          margin: EdgeInsets.only(left: 8.w),
                           decoration: const BoxDecoration(
                             color: AppColors.primary,
                             shape: BoxShape.circle,
@@ -90,9 +91,9 @@ class _NotificationTile extends StatelessWidget {
                         ),
                     ],
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.h),
                   Text(notification.body, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(_timeAgo(notification.createdAt), style: AppTextStyles.caption.copyWith(color: AppColors.textTertiary)),
                 ],
               ),
@@ -159,14 +160,14 @@ class _EmptyState extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: 80.r,
+            height: 80.r,
             decoration: const BoxDecoration(color: AppColors.surfaceVariant, shape: BoxShape.circle),
-            child: const Icon(Icons.notifications_none_rounded, size: 40, color: AppColors.primary),
+            child: Icon(Icons.notifications_none_rounded, size: 40.r, color: AppColors.primary),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           const Text('No notifications yet', style: AppTextStyles.titleMedium),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           const Text(
             'Updates about your submissions\nwill appear here.',
             style: AppTextStyles.bodySmall,
